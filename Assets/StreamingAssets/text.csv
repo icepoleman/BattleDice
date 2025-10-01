@@ -1,0 +1,7 @@
+Chapter,ID,Speaker,Text,Position,Sprite,Background,Options,JumpTo,Note
+1,1,主角,「這裡是哪裡？」,Center,hero_smile.png,forest,,,開場
+1,2,？？？,「終於見到你了…」,Left,mystery.png,,,,背景沿用 forest
+1,3,Narrator,風吹過，樹葉沙沙作響。,None,,,,,敘事
+1,4,主角,「我該怎麼辦？」,Center,hero_smile.png,,"A:逃跑,B:靠近","A->10,B->20",分支選項
+1,10,Narrator,你轉身就跑。,None,,road,,,背景換成 road
+1,20,Narrator,你鼓起勇氣走向神秘人。,None,,house,,,換成 house

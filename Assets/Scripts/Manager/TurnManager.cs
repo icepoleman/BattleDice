@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public enum TurnState
 {
     rollDice,
-    chooseKeepDice,
+    chooseSkill,
     calculate,//結算
     endTurn
 }
@@ -20,8 +20,6 @@ public class TurnManager : MonoBehaviour
     Button btn_roll = null;//擲骰子按鈕
     [SerializeField]
     Button btn_check = null;//確認按鈕
-    [SerializeField]
-    Button btn_reRoll = null;//重擲按鈕
     [SerializeField]
     GameObject playerPrefab = null;
     [SerializeField]
@@ -40,6 +38,9 @@ public class TurnManager : MonoBehaviour
     Sprite[] rollDiceSprites;
     Player player;
     ICharacterData characterData;
+
+    //test
+    ISkillData skillData = new FireBall();
     void Start()
     {
         //生成玩家角色實例
@@ -53,6 +54,11 @@ public class TurnManager : MonoBehaviour
         //初始化擲骰子結果和保留骰子列表
         rollDiceResult = new List<int>();
         keepDice = new int[characterData.keepDiceCount];
+
+
+        skillData.AddDiceData(6);
+
+        Debug.Log(skillData.canUseSkill());
     }
     void Init()
     {
@@ -62,6 +68,10 @@ public class TurnManager : MonoBehaviour
     private void SetClickEvent()
     {
         btn_roll.onClick.AddListener(() => RollBtnClick());
+        btn_check.onClick.AddListener(() =>
+        {
+            currentState = TurnState.chooseSkill;
+        });
     }
 
     void RollBtnClick()
@@ -106,7 +116,7 @@ public class TurnManager : MonoBehaviour
             }
         }
         GameObject dice = Instantiate(dicePrefab, keepDiceParent);
-        dice.GetComponent<Image>().sprite = rollDiceSprites[_sideNum - 1];
+        dice.GetComponent<Image>().sprite = rollDiceSprites[_sideNum];
         dice.GetComponent<Button>().onClick.AddListener(() =>
         {
             Destroy(dice);
@@ -119,7 +129,7 @@ public class TurnManager : MonoBehaviour
     {
         rollDiceResult.Add(_sideNum);
         GameObject dice = Instantiate(dicePrefab, rollDiceParent);
-        dice.GetComponent<Image>().sprite = rollDiceSprites[_sideNum - 1];
+        dice.GetComponent<Image>().sprite = rollDiceSprites[_sideNum];
         dice.GetComponent<Button>().onClick.AddListener(() =>
         {
             if (CanKeepDice())
