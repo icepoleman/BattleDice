@@ -25,7 +25,7 @@ public class ChatWindow : MonoBehaviour
     }
     void Start()
     {
-        ShowDialogue("主角", str_dialogue);
+    //    ShowDialogue("主角", str_dialogue);
     }
     private void OnEnable()
     {

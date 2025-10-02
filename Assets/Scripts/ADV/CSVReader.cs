@@ -60,8 +60,8 @@ public class CSVReader
             data.Portrait = values.Length > 3 ? values[3] : "";
             data.Background = values.Length > 4 ? values[4] : "";
 
-            data.Choices = values.Length > 5 && !string.IsNullOrEmpty(values[5]) ? values[5].Split(',') : new string[0];
-            data.JumpTo = values.Length > 6 && !string.IsNullOrEmpty(values[6]) ? values[6].Split(',') : new string[0];
+            data.Choices = values.Length > 5 && !string.IsNullOrEmpty(values[5]) ? values[5].Split('|') : new string[0];
+            data.JumpTo = values.Length > 6 && !string.IsNullOrEmpty(values[6]) ? values[6].Split('|') : new string[0];
 
             data.Tag = values.Length > 7 ? values[7] : "";
             data.Anim = values.Length > 8 ? values[8] : "";

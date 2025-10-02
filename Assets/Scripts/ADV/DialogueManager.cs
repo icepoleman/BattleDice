@@ -10,33 +10,41 @@ public class DialogueManager : MonoBehaviour
     private List<DialogueData> lines = new List<DialogueData>();
     private int pageIndex = 0;
     private ChatWindow chatWindow;
-
     private PlayerInputActions inputActions;
 
     private List<string> jumpTo = new List<string>();
+
+    [SerializeField]
+    private GameObject chooseBtnPrefab;
+    [SerializeField]
+    private GameObject chooseBtnParent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         inputActions = new PlayerInputActions();
         inputActions.Player.Enable();
-        lines = CSVReader.Instance.LoadCSV("test2.csv");//依照章節讀取CSV
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
-        chatWindow.ShowDialogue(lines[pageIndex].Character, lines[pageIndex].Dialogue);
         AddClickEvent();
+
+        ShowDialogue("test3.csv");//讀取劇情
     }
-    void AddClickEvent()
+    public void ShowDialogue(string _chapter_csv)
     {
-        inputActions.Player.next.performed += OnNextClick;
+        lines = CSVReader.Instance.LoadCSV(_chapter_csv);//依照章節讀取CSV
+        pageIndex = 0;
+        nowChapter = lines[pageIndex].Chapter;
+        Debug.Log(nowChapter);
     }
-    private void OnDisable()
-    {
-        // 解除綁定，避免記憶體洩漏
-        inputActions.Player.next.performed -= OnNextClick;
-        inputActions.Player.Disable();
-    }
+    bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)
     {
+        if (nowChapter == "END")
+        {
+            Debug.Log("劇情結束");
+            return;//劇情結束不處理
+        }
+          
         //處理跳轉邏輯
         if (jumpTo.Count > 0)
         {
@@ -45,13 +53,29 @@ public class DialogueManager : MonoBehaviour
                 JumpToTag(jumpTo[0]);
                 jumpTo.Clear();
             }
-            else
+            else if (!onChoose)
             {
                 //多選一跳轉
                 Debug.Log("生成多選一按鈕");
+                onChoose = true;
+                for (int i = 0; i < jumpTo.Count; i++)
+                {
+                    int index = i;
+                    GameObject btn = Instantiate(chooseBtnPrefab, chooseBtnParent.transform);
+                    btn.GetComponentInChildren<TMPro.TMP_Text>().text = lines[pageIndex].Choices[i];
+                    //設定按鈕點擊事件
+                    btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+                    {
+                        JumpToTag(jumpTo[index]);
+                        jumpTo.Clear();
+                        onChoose = false;
+                        ClearChooseBtn();
+                    });
+                }
             }
             return;
         }
+        if (onChoose) return;//如果在選擇狀態則不處理下一步
 
         if (pageIndex < lines.Count - 1)
         {
@@ -62,6 +86,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("沒文本了!");
         }
+        
     }
     private void CheckDialogueCmd(int _page)
     {
@@ -70,6 +95,11 @@ public class DialogueManager : MonoBehaviour
         {
             nowChapter = lines[_page].Chapter;
             Debug.Log("目前章節:" + nowChapter);
+            if(nowChapter == "END")
+            {
+                chatWindow.HideWindow();
+                Debug.Log("劇情結束");
+            }
         }
         //紀錄跳轉
         if (lines[_page].JumpTo.Length > 0)
@@ -108,12 +138,30 @@ public class DialogueManager : MonoBehaviour
         {
             if (lines[i].Tag == _tag)
             {
+                Debug.Log("找到標籤:" + _tag);
                 pageIndex = i;
                 CheckDialogueCmd(pageIndex);
                 return;
             }
         }
         Debug.Log("找不到標籤:" + _tag);
+    }
+    void ClearChooseBtn()
+    {
+        foreach (Transform child in chooseBtnParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    void AddClickEvent()
+    {
+        inputActions.Player.next.performed += OnNextClick;
+    }
+    private void OnDisable()
+    {
+        // 解除綁定，避免記憶體洩漏
+        inputActions.Player.next.performed -= OnNextClick;
+        inputActions.Player.Disable();
     }
     // Update is called once per frame
     void Update()

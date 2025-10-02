@@ -1,0 +1,13 @@
+Chapter,Character,Dialogue,Portrait,Background,ChoiceText,JumpTo,Tag,Anim,Flag
+Prologue,JailerGril,你好,happy,jail,,,,,
+,Hero,嗨,normal,,,,,,
+,JailerGril,,,,,,,hide,
+,Choose,,,,門|洞,Door|Hole,,,
+,Hero,門鎖住了,normal,,,,Door,,xxx+10
+,Camera,,,,,,,shake,
+,Hero,幹,normal,,,,,,
+,Hero,回去躺,normal,,,,,,x>10
+END,,,,,,,,,
+,,逃跑成功,,park,,keep1,Hole,,
+,JailerGril,人呢,angry,jail,,,keep1,,
+END,,,,,,,,,
