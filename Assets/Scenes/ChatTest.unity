@@ -1594,52 +1594,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355676306}
   m_CullTransparentMesh: 1
---- !u!1 &1391425407
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1391425409}
-  - component: {fileID: 1391425408}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1391425408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391425407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7167b2ef28dd24c965de06548a1387, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CSVReader
-  fileName: text.csv
-  lines: []
---- !u!4 &1391425409
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391425407}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7297, y: 1.02719, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415677290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a2b32f402bfac45b4d9cdfa4908638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
+  lines: []
 --- !u!114 &1719483884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2910,7 +2865,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1317003362}
-  - {fileID: 1391425409}
   - {fileID: 153435936}
   - {fileID: 724158460}
   - {fileID: 1719483887}

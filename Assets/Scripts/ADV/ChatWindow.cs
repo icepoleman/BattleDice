@@ -43,14 +43,15 @@ public class ChatWindow : MonoBehaviour
      //   inputActions.Player.Disable();
     }
 
-    private void ShowDialogue(string speaker, string text)
+    public void ShowDialogue(string speaker, string text)
     {
         nameText.text = speaker;
+        str_dialogue = text;
         if (isTyping)
         {
             // 直接顯示完整文字
             StopAllCoroutines();
-            dialogueText.text = str_dialogue;
+            dialogueText.text = text;
             doneImg.SetActive(true);
             isTyping = false;
         }
