@@ -34,7 +34,11 @@ public class DialogueManager : MonoBehaviour
         lines = CSVReader.Instance.LoadCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
         nowChapter = lines[pageIndex].Chapter;
-        Debug.Log(nowChapter);
+        if(nowChapter=="")
+        {
+            Debug.LogError("❌ Chapter 欄位不可為空，請檢查 CSV 檔案");
+            return;
+        }
     }
     bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)
@@ -44,7 +48,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("劇情結束");
             return;//劇情結束不處理
         }
-          
+
         //處理跳轉邏輯
         if (jumpTo.Count > 0)
         {
@@ -85,21 +89,17 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("沒文本了!");
+            nowChapter = "END";
+            chatWindow.HideWindow();
         }
-        
+
     }
     private void CheckDialogueCmd(int _page)
     {
-        //紀錄章節
-        if (lines[_page].Chapter != "")
+        if (nowChapter == "END")
         {
-            nowChapter = lines[_page].Chapter;
-            Debug.Log("目前章節:" + nowChapter);
-            if(nowChapter == "END")
-            {
-                chatWindow.HideWindow();
-                Debug.Log("劇情結束");
-            }
+            chatWindow.HideWindow();
+            Debug.Log("劇情結束");
         }
         //紀錄跳轉
         if (lines[_page].JumpTo.Length > 0)

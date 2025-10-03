@@ -70,7 +70,6 @@ public class CSVReader
         }
 
         Debug.Log($"✅ 從 StreamingAssets 載入完成，共 {lines.Count} 行: {filePath}");
-        Debug.Log(lines[1].Dialogue); // 測試讀取第一行的對話內容
         return lines;
     }
 }
