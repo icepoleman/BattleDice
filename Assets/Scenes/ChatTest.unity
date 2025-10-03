@@ -2111,8 +2111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   nowChapter: 
   lines: []
-  chooseBtnPrefab: {fileID: 4021680389217731598, guid: 210940c6118f93045ad6a01cbca63f3b, type: 3}
-  chooseBtnParent: {fileID: 1138211751}
 --- !u!114 &1719483884
 MonoBehaviour:
   m_ObjectHideFlags: 0

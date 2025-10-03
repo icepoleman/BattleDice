@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class DialogueManager : MonoBehaviour
@@ -10,31 +9,49 @@ public class DialogueManager : MonoBehaviour
     private List<DialogueData> lines = new List<DialogueData>();
     private int pageIndex = 0;
     private ChatWindow chatWindow;
+    private ChooseBox chooseBox;
     private PlayerInputActions inputActions;
 
     private List<string> jumpTo = new List<string>();
 
-    [SerializeField]
-    private GameObject chooseBtnPrefab;
-    [SerializeField]
-    private GameObject chooseBtnParent;
-
+    bool isOpen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (isOpen) return;
+        isOpen = true;
         inputActions = new PlayerInputActions();
         inputActions.Player.Enable();
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
+        chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddClickEvent();
-
+        AddEvent();
         ShowDialogue("test3.csv");//讀取劇情
+    }
+    void AddEvent()
+    {
+        EventCenter.AddListener(GameEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+    }
+
+    void OnClickChoice(object[] args)
+    {
+        if (args.Length > 0 && args[0] is string targetTag)
+        {
+            JumpToTag(targetTag);
+            jumpTo.Clear();
+            onChoose = false;
+        }
+        else
+        {
+            Debug.LogWarning("❌ OnClickChoice: 無效的參數");
+        }
     }
     public void ShowDialogue(string _chapter_csv)
     {
         lines = CSVReader.Instance.LoadCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
         nowChapter = lines[pageIndex].Chapter;
-        if(nowChapter=="")
+        if (nowChapter == "")
         {
             Debug.LogError("❌ Chapter 欄位不可為空，請檢查 CSV 檔案");
             return;
@@ -62,20 +79,7 @@ public class DialogueManager : MonoBehaviour
                 //多選一跳轉
                 Debug.Log("生成多選一按鈕");
                 onChoose = true;
-                for (int i = 0; i < jumpTo.Count; i++)
-                {
-                    int index = i;
-                    GameObject btn = Instantiate(chooseBtnPrefab, chooseBtnParent.transform);
-                    btn.GetComponentInChildren<TMPro.TMP_Text>().text = lines[pageIndex].Choices[i];
-                    //設定按鈕點擊事件
-                    btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
-                    {
-                        JumpToTag(jumpTo[index]);
-                        jumpTo.Clear();
-                        onChoose = false;
-                        ClearChooseBtn();
-                    });
-                }
+                chooseBox.CreateChooseBtns(lines[pageIndex].Choices, lines[pageIndex].JumpTo);
             }
             return;
         }
@@ -121,6 +125,11 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("更換立繪:" + lines[_page].Portrait);
         }
+        //紀錄flag
+        if (lines[_page].Flag != "")
+        {
+            Debug.Log("紀錄flag:" + lines[_page].Flag);
+        }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
         {
@@ -146,13 +155,7 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("找不到標籤:" + _tag);
     }
-    void ClearChooseBtn()
-    {
-        foreach (Transform child in chooseBtnParent.transform)
-        {
-            Destroy(child.gameObject);
-        }
-    }
+
     void AddClickEvent()
     {
         inputActions.Player.next.performed += OnNextClick;
@@ -162,6 +165,7 @@ public class DialogueManager : MonoBehaviour
         // 解除綁定，避免記憶體洩漏
         inputActions.Player.next.performed -= OnNextClick;
         inputActions.Player.Disable();
+        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
     // Update is called once per frame
     void Update()

@@ -14,6 +14,7 @@ public class DialogueData
     public string[] JumpTo;
     public string Tag;
     public string Anim;
+    public string Flag;
 }
 
 public class CSVReader
@@ -65,6 +66,7 @@ public class CSVReader
 
             data.Tag = values.Length > 7 ? values[7] : "";
             data.Anim = values.Length > 8 ? values[8] : "";
+            data.Flag = values.Length > 9 ? values[9] : "";
 
             lines.Add(data);
         }
