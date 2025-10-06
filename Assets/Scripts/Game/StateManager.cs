@@ -1,7 +1,15 @@
 using UnityEngine;
 
-public class ChooseUseSkillView : MonoBehaviour
+public class StateManager : MonoBehaviour
 {
+    public enum GameState
+    {
+        MainMenu,
+        AVG,
+        DiceGame,
+        Map,
+        PreparationRoom
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
