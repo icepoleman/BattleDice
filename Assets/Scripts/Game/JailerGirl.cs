@@ -31,10 +31,7 @@ public class JailerGirl : MonoBehaviour
         diceResults = playerData.RollDice(diceCount);
         yield return new WaitForSeconds(0.5f);
         //生成骰子物件在diceBox下
-        foreach (Transform child in diceBox.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        ClearDiceBox();
         for (int i = 0; i < diceResults.Count; i++)
         {
             GameObject dice = new GameObject("dice");
@@ -46,6 +43,9 @@ public class JailerGirl : MonoBehaviour
             sr.sprite = diceSprites[diceResults[i] - 1];
             yield return new WaitForSeconds(0.1f);
         }
+        yield return new WaitForSeconds(0.5f);
+        EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.playerTurn);
+        ClearDiceBox();
     }
     //取得擲骰子結果
     public List<int> GetDiceResults()
@@ -79,5 +79,12 @@ public class JailerGirl : MonoBehaviour
         if (playerData.IsDead())
             Debug.Log("dead");
         return playerData.IsDead();
+    }
+    void ClearDiceBox()
+    {
+        foreach (Transform child in diceBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }
