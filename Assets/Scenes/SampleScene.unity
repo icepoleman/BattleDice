@@ -543,10 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4199e0ae1c2146b428140fd3562048e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameUiClickManager
-  btn_roll: {fileID: 646717056}
-  btn_turnEnd: {fileID: 1296713543}
-  btn_fight: {fileID: 703649006}
   dicePrefab: {fileID: 5558608361617925205, guid: 435865cc3607e7448a2ff0666b312e3f, type: 3}
+  onUseDice: 0
 --- !u!1 &357369130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.0050640106, y: 56.980488}
+  m_AnchoredPosition: {x: 0.0050640106, y: 56.980484}
   m_SizeDelta: {x: 40.06, y: 32.985}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &481770571
@@ -2083,7 +2081,7 @@ GameObject:
   - component: {fileID: 1296713544}
   - component: {fileID: 1296713543}
   m_Layer: 5
-  m_Name: btn_end
+  m_Name: btn_turnEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

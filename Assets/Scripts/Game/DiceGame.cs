@@ -10,9 +10,8 @@ public enum TurnState
     roundEnd,
 }
 public class DiceGame : MonoBehaviour
-{
-    //目前狀態
-    TurnState currentState;
+{    
+    TurnState currentState;//目前狀態
     int round = 0;   
     [SerializeField] GameObject jailerGirl_prefab = null;
     GameObject playerBurnPos = null;
@@ -20,6 +19,7 @@ public class DiceGame : MonoBehaviour
     ICharacterData characterData = new PlayerData();//之後會視實際情況改成讀取json
     ManaRoller manaRoller = null;
     ISkillData skillData = new FireBall();    //test
+    List<int> useDices = new List<int>();
     bool isOpen = false;
 
     void Awake()
@@ -48,15 +48,34 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
+        EventCenter.AddListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
     }
-    void Init()
+    void OnDisable()
     {
-
+        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
+        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
+        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
+        EventCenter.RemoveListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
     }
+    //狀態改變事件
     void ChangeStateEvent(object[] args)
     {
         TurnState newState = (TurnState)args[0];
         ChangeState(newState);
+    }
+    //玩家選擇使用技能需要骰子
+    void UseDiceEvent(object[] args)
+    {
+        int sideNum = (int)args[0];
+        bool isChosen = (bool)args[1];
+        
+        if (isChosen) 
+            useDices.Add(sideNum); 
+        else     
+            useDices.Remove(sideNum);
+        
+        Debug.Log("Use Dice: " + sideNum + " Chosen: " + isChosen);
     }
     void ChangeState(TurnState newState)
     {
@@ -95,23 +114,22 @@ public class DiceGame : MonoBehaviour
         if (currentState != TurnState.playerTurn) return;
         Debug.Log("Roll button clicked");
         manaRoller.RollDices();
-
-   
-        // 在這裡處理擲骰子的邏輯
-
-
-        //currentState = TurnState.chooseKeepDice;  
+    }
+    void FightBtnClick(object[] args)
+    {
+        if (currentState != TurnState.playerTurn) return;
+        Debug.Log("Fight button clicked");
+        Debug.Log(skillData.canUseSkill());
     }
     void TurnEndBtnClick(object[] args)
     {
         if (currentState != TurnState.playerTurn) return;
         Debug.Log("Turn End button clicked");
         // 在這裡處理結束回合的邏輯
-        currentState = TurnState.enemyTurn;
+        //currentState = TurnState.enemyTurn;
         // 這裡可以加入切換到敵人回合的邏輯
-    }
-    void FightBtnClick(object[] args)
-    {
-        
+
+        //借用按鈕事件
+        manaRoller.CheckCanUseDice(skillData.GetNeedDices());
     }
 }

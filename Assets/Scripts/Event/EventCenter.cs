@@ -66,7 +66,7 @@ public static class EventCenter
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[EventCenter] Dispatch: 事件 {eventName} 執行錯誤: {ex.Message}");
+                //Debug.LogError($"[EventCenter] Dispatch: 事件 {eventName} 執行錯誤: {ex.Message}");
             }
         }
         else
