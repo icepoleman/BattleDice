@@ -4,28 +4,28 @@ using System.Collections.Generic;
 using System;
 public enum TurnState
 {
+    gameStart,
     roundStart,
     playerTurn,
     enemyTurn,
     roundEnd,
 }
 public class DiceGame : MonoBehaviour
-{    
-    TurnState currentState;//目前狀態
+{
+    TurnState currentState = TurnState.gameStart;//目前狀態
     int round = 0;   
     [SerializeField] GameObject jailerGirl_prefab = null;
     GameObject playerBurnPos = null;
     JailerGirl jailerGirl = new JailerGirl();
     ICharacterData characterData = new PlayerData();//之後會視實際情況改成讀取json
     ManaRoller manaRoller = null;
-    ISkillData skillData = new FireBall();    //test
-    List<int> useDices = new List<int>();
     bool isOpen = false;
 
     void Awake()
     {
         playerBurnPos = GameObject.Find("playerPos");
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
+        manaRoller.Init();
     }
     void Start()
     {
@@ -35,12 +35,9 @@ public class DiceGame : MonoBehaviour
         GameObject playerObj = Instantiate(jailerGirl_prefab, playerBurnPos.transform);
         jailerGirl = playerObj.GetComponent<JailerGirl>();
         jailerGirl.SetData(characterData);
-
-        skillData.AddDiceData(6);
-
-        Debug.Log(skillData.canUseSkill());
+        manaRoller.SetAllSkill(characterData.skillData);
         AddEvent();
-        ChangeState( TurnState.roundStart);
+        ChangeState(TurnState.roundStart);
     }
     void AddEvent()
     {
@@ -49,6 +46,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
+        EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
     }
     void OnDisable()
     {
@@ -57,6 +55,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
     }
     //狀態改變事件
     void ChangeStateEvent(object[] args)
@@ -71,9 +70,9 @@ public class DiceGame : MonoBehaviour
         bool isChosen = (bool)args[1];
         
         if (isChosen) 
-            useDices.Add(sideNum); 
+            manaRoller.chosenSkillData.AddDiceData(sideNum);
         else     
-            useDices.Remove(sideNum);
+            manaRoller.chosenSkillData.RemoveDiceData(sideNum);
         
         Debug.Log("Use Dice: " + sideNum + " Chosen: " + isChosen);
     }
@@ -119,7 +118,7 @@ public class DiceGame : MonoBehaviour
     {
         if (currentState != TurnState.playerTurn) return;
         Debug.Log("Fight button clicked");
-        Debug.Log(skillData.canUseSkill());
+        //*Debug.Log(skillData.canUseSkill());
     }
     void TurnEndBtnClick(object[] args)
     {
@@ -128,8 +127,13 @@ public class DiceGame : MonoBehaviour
         // 在這裡處理結束回合的邏輯
         //currentState = TurnState.enemyTurn;
         // 這裡可以加入切換到敵人回合的邏輯
-
-        //借用按鈕事件
-        manaRoller.CheckCanUseDice(skillData.GetNeedDices());
+    }
+    void SkillCardClick(object[] args)
+    {
+        ISkillData _skill = (ISkillData)args[0];
+        if (currentState != TurnState.playerTurn || _skill == manaRoller.chosenSkillData) return;
+        Debug.Log("Skill Card clicked");
+        manaRoller.chosenSkillData = _skill;
+        EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ public class ManaRoller : MonoBehaviour
 {
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
-    Button btn_fight = null;//戰鬥按鈕
+    Button btn_fight, btn_cancelFight;//戰鬥按鈕
     Transform rollDiceParent;    //骰子生成位置
     Transform keepDiceParent;    //保留骰子生成位置
     List<int> rollDices = new List<int>();  //所有骰子
@@ -14,20 +15,29 @@ public class ManaRoller : MonoBehaviour
     int maxkeepCount; //最大保留數量
     bool isOpen = false;
     [SerializeField] GameObject dicePrefab = null;
-    public bool onUseDice = false;
-    void Start()
+    [SerializeField] GameObject skillPrefab = null;
+    Transform skillParent;    //技能生成位置
+    public ISkillData chosenSkillData = null; 
+    public void Init()
     {
         if (isOpen) return;
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
         keepDiceParent = GameObject.Find("diceBox/keep").transform;
+        skillParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
         btn_fight = GameObject.Find("btn_fight").GetComponent<Button>();
+        btn_cancelFight = GameObject.Find("btn_cancelFight").GetComponent<Button>();
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });
         btn_fight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_FIGHT); });
+        btn_cancelFight.onClick.AddListener(() =>
+        {
+            EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
+            chosenSkillData = null;
+        });
 
         isOpen = true;
     }
@@ -41,13 +51,27 @@ public class ManaRoller : MonoBehaviour
             burnRollDice(sideNum);
         }
     }
+    public void SetAllSkill(List<ISkillData> iskList)
+    {
+        foreach (var isk in iskList)
+        {
+            //生成技能物件
+            GameObject skillObj = Instantiate(skillPrefab, skillParent);
+            SkillCard skillCard = skillObj.GetComponent<SkillCard>();
+            skillCard.SetData(isk);
+        }
+    }
+    public void AddSkill(ISkillData isk)
+    {
+        //新增技能
+    }
     public void RollDices()
     {
         int totalDice = rollDices.Count;
         ClearAllDices();
         for (int i = 0; i < totalDice; i++)
         {
-            int side = Random.Range(1, 7); //假設骰子面數為6
+            int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
             burnRollDice(side);
         }
     }
@@ -58,40 +82,6 @@ public class ManaRoller : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-    }
-    public void CheckCanUseDice(List<int> skillNeedDices)
-    {
-        if (skillNeedDices == null || skillNeedDices.Count == 0)
-        {
-            Debug.Log("技能不需要骰子");
-            return;
-        }
-
-        //判斷是否是技能需要的骰子 不是的按鈕無法點擊 變灰
-        foreach (Transform child in rollDiceParent)
-        {
-            ManaRollerDice diceScript = child.GetComponent<ManaRollerDice>();
-            if (diceScript != null)
-            {
-                int sideNum = diceScript.GetSideNum();
-                Debug.Log("檢查骰子面數: " + sideNum);
-                //檢查這個骰子是否在技能需求中
-                if (skillNeedDices.Contains(sideNum))
-                {
-                    //這個骰子是技能需求的一部分，可以使用
-                    //可以在這裡添加額外的邏輯，例如改變骰子的外觀等
-                    diceScript.IsSkillDice();
-                }
-                else
-                {
-                    //這個骰子不是技能需求的一部分，不能使用
-                    //可以在這裡添加額外的邏輯，例如改變骰子的外觀等
-                    diceScript.UnSkillDice();
-                }
-            }
-        }
-       
-        //onUseDice = rollDices.Count > 0;
     }
     bool CanKeepDice()
     {

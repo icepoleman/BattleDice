@@ -20,7 +20,7 @@ public class ChooseBox : MonoBehaviour
             //設定按鈕點擊事件
             btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
             {
-                EventCenter.Dispatch(GameEvent.EVENT_CLICK_CHOICE, targetTag[index]);
+                EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index]);
                 ClearChooseBtn();
             });
         }

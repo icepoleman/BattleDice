@@ -8,6 +8,7 @@ public interface ICharacterData
     int[] diceSides { get; set; }
     int diceCount { get; set; }
     int keepDiceCount { get; set; }
+    List<ISkillData> skillData { get; set; }
 }
 public class PlayerData : ICharacterData
 {
@@ -16,6 +17,7 @@ public class PlayerData : ICharacterData
     public int[] diceSides { get; set; } = { 1, 2, 3, 4, 5, 6 };
     public int diceCount { get; set; } = 5;
     public int keepDiceCount { get; set; } = 2;
+    public List<ISkillData> skillData { get; set; } = new List<ISkillData>() { new FireBall(), new Kaminari() };
 
     public void Hurt(float damage)
     {

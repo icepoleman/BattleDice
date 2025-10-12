@@ -30,7 +30,7 @@ public class DialogueManager : MonoBehaviour
     }
     void AddEvent()
     {
-        EventCenter.AddListener(GameEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+        EventCenter.AddListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
 
     void OnClickChoice(object[] args)
@@ -165,7 +165,7 @@ public class DialogueManager : MonoBehaviour
         // 解除綁定，避免記憶體洩漏
         inputActions.Player.next.performed -= OnNextClick;
         inputActions.Player.Disable();
-        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+        EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
     // Update is called once per frame
     void Update()

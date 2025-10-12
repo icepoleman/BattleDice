@@ -6,16 +6,19 @@ using System.Linq;
 public interface ISkillData
 {
     string skillName { get; set; }
+    string cardTitle { get; set; }
     float damage { get; set; }
     List<int> diceBox { get; set; }
     public bool canUseSkill();
     public void AddDiceData(int _dice);
+    public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
 }
 
 public class FireBall : ISkillData
 {
     public string skillName { get; set; } = "火球";
+    public string cardTitle { get; set; } = "火球術 1,2,3   造成50點傷害";
     public float damage { get; set; } = 50f;
     public List<int> diceBox { get; set; } = new List<int>();
     public int[] needDicesData { get; set; } = new int[] { 1, 2, 3 };
@@ -29,6 +32,10 @@ public class FireBall : ISkillData
     {
         diceBox.Add(_dice);
     }
+    public void RemoveDiceData(int _dice)
+    {
+        diceBox.Remove(_dice);
+    }
     public List<int> GetNeedDices()
     {
         //回傳needDicesData但要移除diceBox已有的
@@ -41,6 +48,7 @@ public class FireBall : ISkillData
 public class Kaminari : ISkillData
 {
     public string skillName { get; set; } = "雷電";
+    public string cardTitle { get; set; } = "雷電 相同兩個   造成30點傷害";
     public float damage { get; set; } = 30f;
     public List<int> diceBox { get; set; } = new List<int>();
     public bool canUseSkill()
@@ -50,6 +58,10 @@ public class Kaminari : ISkillData
     public void AddDiceData(int _dice)
     {
         diceBox.Add(_dice);
+    }
+    public void RemoveDiceData(int _dice)
+    {
+        diceBox.Remove(_dice);
     }
     public List<int> GetNeedDices()
     {
@@ -73,6 +85,7 @@ public class Kaminari : ISkillData
 public class WindBlade : ISkillData
 {
     public string skillName { get; set; } = "風刃";
+    public string cardTitle { get; set; } = "風刃 點數>5   造成10點傷害";
     public float damage { get; set; } = 10f;
     public List<int> diceBox { get; set; } = new List<int>();
     public bool canUseSkill()
@@ -82,6 +95,10 @@ public class WindBlade : ISkillData
     public void AddDiceData(int _dice)
     {
         diceBox.Add(_dice);
+    }
+    public void RemoveDiceData(int _dice)
+    {
+        diceBox.Remove(_dice);
     }
     public List<int> GetNeedDices()
     {
