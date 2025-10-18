@@ -16,7 +16,7 @@ public class SkillCard : MonoBehaviour
         btn_choose.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, skillData); });
         EventCenter.AddListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, SkillChoosenEvent);
     }
-    void OnDisable()
+    void OnDestroy()
     {
         EventCenter.RemoveListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, SkillChoosenEvent);

@@ -5,6 +5,7 @@ using System.Linq;
 
 public interface ISkillData
 {
+    bool isDebuff { get; set; }
     string skillName { get; set; }
     string cardTitle { get; set; }
     float damage { get; set; }
@@ -13,20 +14,19 @@ public interface ISkillData
     public void AddDiceData(int _dice);
     public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
+    public void Use();
 }
-
-public class FireBall : ISkillData
+public class BaseSkill : ISkillData
 {
-    public string skillName { get; set; } = "火球";
-    public string cardTitle { get; set; } = "火球術 1,2,3   造成50點傷害";
-    public float damage { get; set; } = 50f;
+    public bool isDebuff { get; set; } = false;
+    public string skillName { get; set; } = "BaseSkill";
+    public string cardTitle { get; set; } = "BaseSkill";
+    public float damage { get; set; } = 0f;
     public List<int> diceBox { get; set; } = new List<int>();
-    public int[] needDicesData { get; set; } = new int[] { 1, 2, 3 };
-    public bool canUseSkill()
+    public int[] needDicesData { get; set; } = new int[] { 1 };
+    public virtual bool canUseSkill()
     {
-        // 檢查是否同時有 1,2,3
-        bool has123 = needDicesData.All(n => diceBox.Contains(n));
-        return has123;
+        return false;
     }
     public void AddDiceData(int _dice)
     {
@@ -36,34 +36,85 @@ public class FireBall : ISkillData
     {
         diceBox.Remove(_dice);
     }
-    public List<int> GetNeedDices()
+    public virtual List<int> GetNeedDices()
     {
         //回傳needDicesData但要移除diceBox已有的
         List<int> needDices = new List<int>(needDicesData);
         needDices.RemoveAll(n => diceBox.Contains(n));
         return needDices;
     }
+    public virtual void Use()
+    {
+        //使用技能後清空骰子
+        diceBox.Clear();
+    }
 }
 
-public class Kaminari : ISkillData
+public class FireBall : BaseSkill
 {
-    public string skillName { get; set; } = "雷電";
-    public string cardTitle { get; set; } = "雷電 相同兩個   造成30點傷害";
-    public float damage { get; set; } = 30f;
-    public List<int> diceBox { get; set; } = new List<int>();
-    public bool canUseSkill()
+    public FireBall()
+    {
+        skillName = "火球";
+        cardTitle = "火球術 1,2,3   造成50點傷害";
+        damage = 50f;
+        needDicesData = new int[] { 1, 2, 3 };
+    }
+
+    public override bool canUseSkill()
+    {
+        // 檢查是否同時有 1,2,3
+        return needDicesData.All(n => diceBox.Contains(n));
+    }
+    public override void Use()
+    {
+        //使用技能後清空骰子
+        base.Use();
+        //額外效果: 造成傷害
+        UnityEngine.Debug.Log($"{skillName} used, dealing {damage} damage!");
+    }
+}
+public class DeBuffPoison : BaseSkill
+{
+    public DeBuffPoison()
+    {
+        isDebuff = true;
+        skillName = "毒素";
+        cardTitle = "中毒 1,2,3   回合結束扣除10點生命";
+        damage = 10f;
+        needDicesData = new int[] { 1, 2, 3 };
+    }
+
+    public override bool canUseSkill()
+    {
+        // 檢查是否同時有 1,2,3
+        return needDicesData.All(n => diceBox.Contains(n));
+    }
+    public override void Use()
+    {
+        if (canUseSkill())
+            //使用技能後清空骰子 + 移除debuff通知
+            base.Use();
+        else
+            //額外效果: 造成傷害 通知扣血
+            UnityEngine.Debug.Log($"{skillName} used, applying poison effect!");
+    }
+}
+
+public class Kaminari : BaseSkill
+{
+    public Kaminari()
+    {
+        skillName = "雷電";
+        cardTitle = "雷電 相同兩個   造成30點傷害";
+        damage = 30f;
+    }
+    
+    public override bool canUseSkill()
     {
         return diceBox.GroupBy(x => x).Any(g => g.Count() >= 2);
     }
-    public void AddDiceData(int _dice)
-    {
-        diceBox.Add(_dice);
-    }
-    public void RemoveDiceData(int _dice)
-    {
-        diceBox.Remove(_dice);
-    }
-    public List<int> GetNeedDices()
+    
+    public override List<int> GetNeedDices()
     {
         //回傳重複的骰子
         List<int> needDices = new List<int>();
@@ -82,27 +133,23 @@ public class Kaminari : ISkillData
         return needDices;
     }
 }
-public class WindBlade : ISkillData
+public class WindBlade : BaseSkill
 {
-    public string skillName { get; set; } = "風刃";
-    public string cardTitle { get; set; } = "風刃 點數>5   造成10點傷害";
-    public float damage { get; set; } = 10f;
-    public List<int> diceBox { get; set; } = new List<int>();
-    public bool canUseSkill()
+    public WindBlade()
     {
-        return diceBox.Sum() > 5;
+        skillName = "風刃";
+        cardTitle = "風刃 點數>3   造成10點傷害";
+        damage = 10f;
     }
-    public void AddDiceData(int _dice)
+    
+    public override bool canUseSkill()
     {
-        diceBox.Add(_dice);
+        return diceBox.Sum() > 3;
     }
-    public void RemoveDiceData(int _dice)
+    
+    public override List<int> GetNeedDices()
     {
-        diceBox.Remove(_dice);
-    }
-    public List<int> GetNeedDices()
-    {
-        //回傳重複的骰子
+        //回傳所有骰子
         List<int> needDices = new List<int>();
         for (int i = 1; i <= 6; i++)
         {

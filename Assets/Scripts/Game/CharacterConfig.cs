@@ -9,39 +9,77 @@ public interface ICharacterData
     int diceCount { get; set; }
     int keepDiceCount { get; set; }
     List<ISkillData> skillData { get; set; }
+    int maxRollCount { get; set; } //最大擲骰次數
+    List<int> rollDiceResult { get; set; }
+    void TakeDamage(float damage);
+    void Heal(float heal);
+    List<int> RollDice(int _rollCount);
+    bool IsDead();
 }
-public class PlayerData : ICharacterData
-{
-    public float maxBlood { get; set; } = 30f;
-    public float currentBlood { get; set; } = 30f;
-    public int[] diceSides { get; set; } = { 1, 2, 3, 4, 5, 6 };
-    public int diceCount { get; set; } = 5;
-    public int keepDiceCount { get; set; } = 2;
-    public List<ISkillData> skillData { get; set; } = new List<ISkillData>() { new FireBall(), new Kaminari() };
 
-    public void Hurt(float damage)
+// 基礎角色類別，實作共同邏輯
+public abstract class BaseCharacterData : ICharacterData
+{
+    public float maxBlood { get; set; }
+    public float currentBlood { get; set; }
+    public int[] diceSides { get; set; }
+    public int diceCount { get; set; }
+    public int keepDiceCount { get; set; }
+    public List<ISkillData> skillData { get; set; }
+    public int maxRollCount { get; set; }
+    public List<int> rollDiceResult { get; set; } = new List<int>();
+    
+    public virtual void TakeDamage(float damage)
     {
         currentBlood -= damage;
         if (currentBlood < 0) currentBlood = 0;
     }
-    public void Heal(float heal)
+    
+    public virtual void Heal(float heal)
     {
         currentBlood += heal;
         if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
-    public List<int> RollDice(int _rollCount)
+    
+    public virtual List<int> RollDice(int _rollCount)
     {
-        List<int> results = new List<int>();
+        rollDiceResult.Clear(); // 清空之前的結果
         for (int i = 0; i < _rollCount; i++)
         {
             int side = diceSides[Random.Range(0, diceSides.Length)];
-            results.Add(side);
+            rollDiceResult.Add(side);
         }
-        return results;
+        return rollDiceResult;
     }
-    public bool IsDead()
+    
+    public virtual bool IsDead()
     {
         return currentBlood <= 0;
+    }
+}
+public class PlayerData : BaseCharacterData
+{
+    public PlayerData()
+    {
+        maxBlood = 30f;
+        currentBlood = 30f;
+        diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
+        diceCount = 5;
+        keepDiceCount = 2;
+        skillData = new List<ISkillData>() { new FireBall(), new Kaminari() };
+        maxRollCount = 3; //最大擲骰次數
+    }
+}
+public class SlimeData : BaseCharacterData
+{
+    public SlimeData()
+    {
+        maxBlood = 20f;
+        currentBlood = 20f;
+        diceSides = new int[] { 1, 2, 3 };
+        diceCount = 3;
+        skillData = new List<ISkillData>() { new Kaminari() };
+        maxRollCount = 1; //最大擲骰次數
     }
 }
 

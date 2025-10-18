@@ -160,7 +160,7 @@ public class DialogueManager : MonoBehaviour
     {
         inputActions.Player.next.performed += OnNextClick;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         // 解除綁定，避免記憶體洩漏
         inputActions.Player.next.performed -= OnNextClick;

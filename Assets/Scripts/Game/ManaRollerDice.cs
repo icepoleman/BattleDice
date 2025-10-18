@@ -10,7 +10,7 @@ public class ManaRollerDice : MonoBehaviour
     private Button diceButton;
     private Button skillDiceButton;
     private GameObject obj_onChoose;
-    private bool isChosen = false;
+    public bool isChosen = false;
     private int sideNum;
     private static Sprite[] diceSprites;
 
@@ -31,13 +31,14 @@ public class ManaRollerDice : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, CheckIsSkillDice);
         EventCenter.AddListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDice);
     }
-    void OnDisable()
+    void OnDestroy()
     {
         EventCenter.RemoveListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, CheckIsSkillDice);
         EventCenter.RemoveListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDice);
     }
     void CheckIsSkillDice(object[] args)
     {
+        if (isChosen) return;
         StopUseDice(null);
         ISkillData chosenSkill = (ISkillData)args[0];
         List<int> skillNums = chosenSkill.GetNeedDices();
@@ -83,10 +84,7 @@ public class ManaRollerDice : MonoBehaviour
     }
     public void UseDice()
     {
-        if (isChosen)
-        {
-            Destroy(gameObject);
-        }    
+        Destroy(gameObject);  
     }
     void OnSkillDiceClick()
     {
