@@ -177,6 +177,7 @@ public class ManaRoller : MonoBehaviour
     }
     public void CancelSkillUse()
     {
+        if(chosenSkillData == null) return;
         chosenSkillData.diceBox.Clear();
         chosenSkillData = null;
     }

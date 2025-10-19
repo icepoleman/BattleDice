@@ -14,20 +14,16 @@ public class DiceGame : MonoBehaviour
 {
     TurnState currentState = TurnState.gameStart;//目前狀態
     int round = 0;
-    [SerializeField] GameObject jailerGirl_prefab = null;//之後改成動態載入
-    [SerializeField] GameObject slime_prefab = null;//之後改成動態載入
-    GameObject playerBurnPos = null;
     CharacterView playerView = null;
     CharacterView enemyView = null;
     ICharacterData playerData = new PlayerData();//之後會視實際情況改成讀取json
-    ICharacterData enemyData = new SlimeData();
+    ICharacterData enemyData = new SlimeData();//之後會視實際情況改成讀取關卡資料
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
 
     void Awake()
     {
-        playerBurnPos = GameObject.Find("playerPos");
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         manaRoller.Init();
     }
@@ -35,12 +31,23 @@ public class DiceGame : MonoBehaviour
     {
         if (isOpen) return;
         isOpen = true;
-        //生成玩家角色實例
-        GameObject playerObj = Instantiate(jailerGirl_prefab, playerBurnPos.transform);
-        playerView = playerObj.GetComponent<CharacterView>();
+        
+        // 生成角色實例
+        playerView = CreateCharacter("character/jailerGirl", "playerPos");
+        enemyView = CreateCharacter("character/slime", "enemyPos");
+        
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
         ChangeState(TurnState.roundStart);
+    }
+    // 通用角色生成方法
+    CharacterView CreateCharacter(string prefabPath, string positionName)
+    {
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        GameObject characterObj = Instantiate(prefab, GameObject.Find(positionName).transform);
+        CharacterView characterView = characterObj.AddComponent<CharacterView>();
+        characterView.Init();
+        return characterView;
     }
     void AddEvent()
     {
@@ -80,8 +87,10 @@ public class DiceGame : MonoBehaviour
                 //round廣播事件
                 //EventCenter.Dispatch(GameEvent.EVENT_ROUND_START, round);
                 Debug.Log("Round " + round + " Start");
-                StartCoroutine(playerView.ShowRollAnimation(playerData.RollDice(playerData.diceCount)));
-                currentState = TurnState.playerTurn;
+                StartCoroutine(playerView.ShowRollAnimation(playerData.RollDice(), () =>
+                {
+                    ChangeState(TurnState.playerTurn);
+                }));
                 break;
             case TurnState.playerTurn:
                 manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
@@ -92,6 +101,13 @@ public class DiceGame : MonoBehaviour
             case TurnState.enemyTurn:
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
+                List<int> enemyRoll = enemyData.RollDice();
+                StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, () =>
+                {
+                    //敵人使用技能;
+                    enemyData.skillData[0].diceBox = enemyRoll;
+                    enemyData.skillData[0].Use();
+                }));
                 //enemy特寫擲骰 顯示使用技能
                 break;
             case TurnState.roundEnd:
@@ -151,11 +167,11 @@ public class DiceGame : MonoBehaviour
     }
     void TurnEndBtnClick(object[] args)
     {
-        if (currentState != TurnState.playerTurn) return;
         Debug.Log("Turn End button clicked");
         // 在這裡處理結束回合的邏輯
-        currentState = TurnState.enemyTurn;
+        ChangeState(TurnState.enemyTurn);
         // 這裡可以加入切換到敵人回合的邏輯
+        manaRoller.ClearAllRollDices();
         manaRoller.BtnMode(manaRollerMode.Off);
     }
     void CancelFightClick(object[] args)
@@ -169,6 +185,8 @@ public class DiceGame : MonoBehaviour
     {
         ISkillData _skill = (ISkillData)args[0];
         if (currentState != TurnState.playerTurn || _skill == manaRoller.chosenSkillData) return;
+        EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
+        manaRoller.CancelSkillUse();
         Debug.Log("Skill Card clicked" + _skill.skillName);
         manaRoller.chosenSkillData = _skill;
         EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
@@ -177,7 +195,6 @@ public class DiceGame : MonoBehaviour
     void OnSkillAttack(object[] args)
     {
         float damage = (float)args[0];
-        string skillName = (string)args[1];
         
         // 根據當前回合狀態判斷攻擊目標
         if (currentState == TurnState.playerTurn)
@@ -185,15 +202,19 @@ public class DiceGame : MonoBehaviour
             // 玩家回合：攻擊敵人
             enemyData.TakeDamage(damage);
             enemyView.PlayAnim("Hurt");
+            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
+            enemyView.CreateFlyText(damage);
         }
         else if (currentState == TurnState.enemyTurn)
         {
             // 敵人回合：攻擊玩家
             playerData.TakeDamage(damage);
             playerView.PlayAnim("Hurt");
+            playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
+            playerView.CreateFlyText(damage);
         }
         
-        Debug.Log($"{skillName} 造成 {damage} 點傷害");
+        Debug.Log($" 造成 {damage} 點傷害");
     }
     void AddDeBuffEvent(object[] args)
     {

@@ -38,6 +38,7 @@ public class BaseSkill : ISkillData
     }
     public virtual List<int> GetNeedDices()
     {
+       // if (canUseSkill()) return null;
         //回傳needDicesData但要移除diceBox已有的
         List<int> needDices = new List<int>(needDicesData);
         needDices.RemoveAll(n => diceBox.Contains(n));
@@ -45,7 +46,16 @@ public class BaseSkill : ISkillData
     }
     public virtual void Use()
     {
-        //使用技能後清空骰子
+        if (canUseSkill())
+        {
+            EventCenter.Dispatch(GameEvent.EVENT_SKILL_ATTACK, damage);
+            UnityEngine.Debug.Log($"{skillName} used, dealing {damage} damage!");
+        }
+        else
+        {
+            UnityEngine.Debug.Log($"{skillName} cannot be used, insufficient dice!");
+        }
+            //使用技能後清空骰子
         diceBox.Clear();
     }
 }
@@ -64,13 +74,6 @@ public class FireBall : BaseSkill
     {
         // 檢查是否同時有 1,2,3
         return needDicesData.All(n => diceBox.Contains(n));
-    }
-    public override void Use()
-    {
-        //使用技能後清空骰子
-        base.Use();
-        //額外效果: 造成傷害
-        UnityEngine.Debug.Log($"{skillName} used, dealing {damage} damage!");
     }
 }
 public class DeBuffPoison : BaseSkill
@@ -130,6 +133,8 @@ public class Kaminari : BaseSkill
                 needDices.Add(i);
             }
         }
+        if (canUseSkill())
+            return new List<int> { 666 };
         return needDices;
     }
 }

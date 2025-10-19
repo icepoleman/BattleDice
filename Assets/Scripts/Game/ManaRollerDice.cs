@@ -42,7 +42,7 @@ public class ManaRollerDice : MonoBehaviour
         StopUseDice(null);
         ISkillData chosenSkill = (ISkillData)args[0];
         List<int> skillNums = chosenSkill.GetNeedDices();
-        if (skillNums.Contains(sideNum))
+        if (skillNums.Contains(sideNum) && skillNums != null)
         {
             IsSkillDice();
         }

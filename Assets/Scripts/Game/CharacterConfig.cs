@@ -13,7 +13,7 @@ public interface ICharacterData
     List<int> rollDiceResult { get; set; }
     void TakeDamage(float damage);
     void Heal(float heal);
-    List<int> RollDice(int _rollCount);
+    List<int> RollDice();
     bool IsDead();
 }
 
@@ -41,10 +41,10 @@ public abstract class BaseCharacterData : ICharacterData
         if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
     
-    public virtual List<int> RollDice(int _rollCount)
+    public virtual List<int> RollDice()
     {
         rollDiceResult.Clear(); // 清空之前的結果
-        for (int i = 0; i < _rollCount; i++)
+        for (int i = 0; i < diceCount; i++)
         {
             int side = diceSides[Random.Range(0, diceSides.Length)];
             rollDiceResult.Add(side);
@@ -61,8 +61,8 @@ public class PlayerData : BaseCharacterData
 {
     public PlayerData()
     {
-        maxBlood = 30f;
-        currentBlood = 30f;
+        maxBlood = 100f;
+        currentBlood = 100f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         diceCount = 5;
         keepDiceCount = 2;
@@ -74,10 +74,10 @@ public class SlimeData : BaseCharacterData
 {
     public SlimeData()
     {
-        maxBlood = 20f;
-        currentBlood = 20f;
+        maxBlood = 50f;
+        currentBlood = 50f;
         diceSides = new int[] { 1, 2, 3 };
-        diceCount = 3;
+        diceCount = 2;
         skillData = new List<ISkillData>() { new Kaminari() };
         maxRollCount = 1; //最大擲骰次數
     }

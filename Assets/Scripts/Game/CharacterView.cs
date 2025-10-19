@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 public class CharacterView : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    GameObject diceBox = null;
+    private Animator animator;
+    private GameObject diceBox = null;
     //todo
-    //血量顯示相關
+    private TextMeshProUGUI txt_blood = null;
+    private Slider slider_blood = null;
     //生成彈出文字
-    Sprite[] diceSprites;
+    private Sprite[] diceSprites;
 
-    public void Awake()
+    public void Init()
     {
         diceBox = gameObject.transform.Find("diceBox").gameObject;
         diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
-        
-        //if (animator == null)
-          //  animator = GetComponent<Animator>();
+        txt_blood = gameObject.transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
+        slider_blood = gameObject.transform.Find("slider_blood").GetComponent<Slider>();
+        animator = GetComponent<Animator>(); 
     }
     
 
     // 只負責顯示骰子動畫，不處理數值邏輯
-    public IEnumerator ShowRollAnimation(List<int> rollResults)
+    public IEnumerator ShowRollAnimation(List<int> rollResults, System.Action onComplete = null)
     {
         Debug.Log("顯示擲骰子動畫");
         ClearDiceBox();
@@ -42,17 +45,44 @@ public class CharacterView : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(0.5f);
-        EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.playerTurn);
         ClearDiceBox();
+        
+        // 執行回調，讓調用者決定後續行為
+        onComplete?.Invoke();
     }
-    
+    public void UpdateBlood(float currentBlood, float maxBlood)
+    {
+        txt_blood.text = $"{currentBlood}/{maxBlood}";
+        slider_blood.value = currentBlood / maxBlood;
+    }
     // 公開方法供 DiceGame 直接呼叫
     public void PlayAnim(string animName)
     {
         animator.SetTrigger(animName);
         Debug.Log("播放" + animName + "動畫");
     }
-    
+    //生成飛行文字
+    public void CreateFlyText(float damageAmount)
+    {
+        GameObject damageText = new GameObject("DamageText");
+        damageText.transform.SetParent(transform);
+        damageText.transform.position = transform.position;
+        damageText.transform.localScale = new Vector3(1, 1, 1);
+
+        TextMeshProUGUI textMesh = damageText.AddComponent<TextMeshProUGUI>();
+        textMesh.text = $"-{damageAmount}";
+        textMesh.fontSize = 24;
+        textMesh.color = Color.red;
+        textMesh.alignment = TextAlignmentOptions.Center;
+
+        // 添加飛行動畫
+        //dottween動畫
+        damageText.GetComponent<RectTransform>().DOMoveY(damageText.transform.position.y + 1, 1).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            Destroy(damageText);
+        });
+    }
+
     void ClearDiceBox()
     {
         foreach (Transform child in diceBox.transform)
