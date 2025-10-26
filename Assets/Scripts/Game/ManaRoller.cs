@@ -164,14 +164,14 @@ public class ManaRoller : MonoBehaviour
             }
             else
             {
-                //Debug.Log("不能再保留骰子了");
+                UnityEngine.Debug.Log("已達到最大保留骰子數量");
             }
         });
     }
     public void UseSkill()//消耗使用的技能骰
     {
         UseDices(rollDiceParent);
-        UseDices(keepDiceParent);
+        UseDices(keepDiceParent, true);
         chosenSkillData.Use();
         chosenSkillData = null;
     }
@@ -181,7 +181,7 @@ public class ManaRoller : MonoBehaviour
         chosenSkillData.diceBox.Clear();
         chosenSkillData = null;
     }
-    void UseDices(Transform diceBox)
+    void UseDices(Transform diceBox, bool isKeepDice = false)
     {
         //使用選取的骰子
         foreach (Transform child in diceBox)
@@ -189,7 +189,11 @@ public class ManaRoller : MonoBehaviour
             ManaRollerDice diceScript = child.GetComponent<ManaRollerDice>();
             if (diceScript != null && diceScript.isChosen)
             {
-                rollDices.Remove(diceScript.GetSideNum());
+                if (isKeepDice)
+                    keepDices.Remove(diceScript.GetSideNum());
+                else
+                    rollDices.Remove(diceScript.GetSideNum());
+
                 diceScript.UseDice();
             }
         }

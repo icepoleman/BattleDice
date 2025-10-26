@@ -21,25 +21,31 @@ public class DiceGame : MonoBehaviour
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
-
+    [SerializeField]TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
     void Awake()
     {
-        manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
-        manaRoller.Init();
+    
     }
     void Start()
     {
         if (isOpen) return;
         isOpen = true;
-        
+        manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
+        manaRoller.Init();
         // 生成角色實例
         playerView = CreateCharacter("character/jailerGirl", "playerPos");
         enemyView = CreateCharacter("character/slime", "enemyPos");
+        playerData.currentBlood = LevelDataManager.testPlayerBlood; //測試用
+        enemyData = LevelDataManager.testEnemyData; //測試用
+
+        playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
+        enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
         
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
         ChangeState(TurnState.roundStart);
     }
+    
     // 通用角色生成方法
     CharacterView CreateCharacter(string prefabPath, string positionName)
     {
@@ -107,6 +113,8 @@ public class DiceGame : MonoBehaviour
                     //敵人使用技能;
                     enemyData.skillData[0].diceBox = enemyRoll;
                     enemyData.skillData[0].Use();
+                    txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
+                    ChangeState(TurnState.roundEnd);
                 }));
                 //enemy特寫擲骰 顯示使用技能
                 break;
@@ -119,6 +127,8 @@ public class DiceGame : MonoBehaviour
                     Debug.Log("Game Over");
                     // 在這裡處理遊戲結束的邏輯
                 }
+               // else
+                    ChangeState(TurnState.roundStart);
                 break;
             default:
                 break;
@@ -131,13 +141,15 @@ public class DiceGame : MonoBehaviour
         int sideNum = (int)args[0];
         bool isChosen = (bool)args[1];
 
-        if (isChosen && !manaRoller.chosenSkillData.canUseSkill())
+        if (isChosen)
         {
-            onChooseSkillDice.Add(sideNum);
-            manaRoller.chosenSkillData.AddDiceData(sideNum);
+            if (!manaRoller.chosenSkillData.canUseSkill() || manaRoller.chosenSkillData.acceptMoreDice)
+            {
+                onChooseSkillDice.Add(sideNum);
+                manaRoller.chosenSkillData.AddDiceData(sideNum);
+            }
         }
-         
-        if (!isChosen)
+        else
         {
             onChooseSkillDice.Remove(sideNum);
             manaRoller.chosenSkillData.RemoveDiceData(sideNum);

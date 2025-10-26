@@ -71,7 +71,7 @@ public class CharacterView : MonoBehaviour
 
         TextMeshProUGUI textMesh = damageText.AddComponent<TextMeshProUGUI>();
         textMesh.text = $"-{damageAmount}";
-        textMesh.fontSize = 24;
+        textMesh.fontSize = 48;
         textMesh.color = Color.red;
         textMesh.alignment = TextAlignmentOptions.Center;
 

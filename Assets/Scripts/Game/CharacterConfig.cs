@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public interface ICharacterData
 {
@@ -56,7 +57,56 @@ public abstract class BaseCharacterData : ICharacterData
     {
         return currentBlood <= 0;
     }
+    
+    // 轉換為可存檔的資料
+    public virtual CharacterSaveData ToSaveData()
+    {
+        return new CharacterSaveData
+        {
+            maxBlood = maxBlood,
+            currentBlood = currentBlood,
+            diceSides = diceSides,
+            diceCount = diceCount,
+            keepDiceCount = keepDiceCount,
+            maxRollCount = maxRollCount,
+            rollDiceResult = new List<int>(rollDiceResult),
+            skillIDs = skillData.Select(skill => (int)SkillFactory.GetSkillID(skill)).ToList()
+        };
+    }
+    
+    // 從存檔資料載入
+    public virtual void LoadFromSaveData(CharacterSaveData saveData)
+    {
+        maxBlood = saveData.maxBlood;
+        currentBlood = saveData.currentBlood;
+        diceSides = saveData.diceSides;
+        diceCount = saveData.diceCount;
+        keepDiceCount = saveData.keepDiceCount;
+        maxRollCount = saveData.maxRollCount;
+        rollDiceResult = new List<int>(saveData.rollDiceResult);
+        
+        // 從技能ID重建技能列表
+        skillData = saveData.skillIDs
+            .Select(id => SkillFactory.CreateSkill((SkillID)id))
+            .Where(skill => skill != null)
+            .ToList();
+    }
 }
+
+// 存檔資料類別
+[System.Serializable]
+public class CharacterSaveData
+{
+    public float maxBlood;
+    public float currentBlood;
+    public int[] diceSides;
+    public int diceCount;
+    public int keepDiceCount;
+    public int maxRollCount;
+    public List<int> rollDiceResult = new List<int>();
+    public List<int> skillIDs = new List<int>(); // 存技能ID
+}
+
 public class PlayerData : BaseCharacterData
 {
     public PlayerData()
@@ -64,10 +114,10 @@ public class PlayerData : BaseCharacterData
         maxBlood = 100f;
         currentBlood = 100f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        diceCount = 5;
+        diceCount = 3;
         keepDiceCount = 2;
-        skillData = new List<ISkillData>() { new FireBall(), new Kaminari() };
-        maxRollCount = 3; //最大擲骰次數
+        skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new Punch() };
+        maxRollCount = 1; //最大擲骰次數
     }
 }
 public class SlimeData : BaseCharacterData
@@ -76,11 +126,22 @@ public class SlimeData : BaseCharacterData
     {
         maxBlood = 50f;
         currentBlood = 50f;
-        diceSides = new int[] { 1, 2, 3 };
+        diceSides = new int[] { 1, 2 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new Kaminari() };
         maxRollCount = 1; //最大擲骰次數
     }
 }
-
+public class WolfData : BaseCharacterData
+{
+    public WolfData()
+    {
+        maxBlood = 150f;
+        currentBlood = 150f;
+        diceSides = new int[] { 1, 2, 3, 4 };
+        diceCount = 6;
+        skillData = new List<ISkillData>() { new Punch() };
+        maxRollCount = 1; //最大擲骰次數
+    }
+}
 
