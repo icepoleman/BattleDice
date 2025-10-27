@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageID: 
-  stageName: 
   stageType: 0
   enemyId: 0
   nextNodes: []
@@ -530,7 +529,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageID: 
-  stageName: 
   stageType: 1
   enemyId: 2
   nextNodes: []
@@ -1167,7 +1165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageID: 
-  stageName: 
   stageType: 1
   enemyId: 1
   nextNodes: []
@@ -1645,11 +1642,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageID: 0
-  stageName: safeHouse
   stageType: 1
   enemyId: 0
   nextNodes:
-  - {fileID: 0}
+  - 
   lockedVisual: {fileID: 0}
   unlockedVisual: {fileID: 0}
   completedVisual: {fileID: 0}

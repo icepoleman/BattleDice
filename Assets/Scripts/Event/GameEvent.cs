@@ -10,6 +10,7 @@ public class GameEvent
     public const string EVENT_STOP_USE_DICE = "GameEvent_StopUseDice";//停止選取技能骰子
     public const string EVENT_CHANGE_STATE = "GameEvent_ChangeState";//改變狀態
     public const string EVENT_SKILL_ATTACK = "GameEvent_SkillAttack";//技能攻擊
+    public const string EVENT_ENTER_DICEGAME = "GameEvent_EnterDiceGame";//進入骰子遊戲
 }
 public class AdvEvent
 {

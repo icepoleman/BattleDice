@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,17 +18,17 @@ public class StageNode : MonoBehaviour
         Battle,    // 戰鬥關卡
         Shop,      // 商店
         Boss,       // 頭目關卡
-        SavePoint   // 整備室
+        SavePoint,  // 整備室
+        Item       // 道具關卡
     }
     [Header("關卡設定")]
     public string stageID;              // 關卡唯一ID //物件名稱
-    public string stageName;            // 關卡名稱
     public StageType stageType;         // 關卡類型
     //敵人設定? 測試用
     public int enemyId;
 
     [Header("連接設定")]
-    public List<StageNode> nextNodes = new List<StageNode>(); // 完成後解鎖的節點
+    public List<string> nextNodes = new List<string>(); // 完成後解鎖的節點
 
     [Header("視覺設定")]
     public GameObject lockedVisual;     // 鎖定時的視覺
@@ -86,27 +85,7 @@ public class StageNode : MonoBehaviour
     void OnNodeClick()
     {
         //測試用
-        StateManager.Instance.ChangeState(StateManager.GameState.DiceGame);
-        switch (enemyId)
-        {
-            case 1:
-                LevelDataManager.testEnemyData = new SlimeData();
-                break;
-            case 2:
-                LevelDataManager.testEnemyData = new WolfData();
-                break;
-            case 3:
-                //  StageDataManager.testEnemyData = new GoblinData();
-                break;
-            case 4:
-                //  StageDataManager.testEnemyData = new OrcData();
-                break;
-            default:
-                LevelDataManager.testEnemyData = new SlimeData();
-                break;
-        }
-        //進入關卡場景 unity讀取scene
-        SceneManager.LoadScene("DiceGame");
+        EventCenter.Dispatch(GameEvent.EVENT_ENTER_DICEGAME, enemyId);
         if (currentState == StageState.Unlocked)
         {
             //  StageMapManager.Instance.SelectStage(this);
@@ -121,12 +100,6 @@ public class StageNode : MonoBehaviour
     public void CompleteStage()
     {
         SetState(StageState.Completed);
-
-        // 解鎖後續節點
-        foreach (var nextNode in nextNodes)
-        {
-            nextNode.SetState(StageState.Unlocked);
-        }
 
         // 儲存進度
         //StageMapManager.Instance.SaveProgress();

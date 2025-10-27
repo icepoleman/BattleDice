@@ -1,8 +1,7 @@
 
-public static class LevelDataManager
+public static class LevelDataManager//關卡資料管理 進關卡前會設定這些資料
 {
-    //TODO 因該從JASON讀取關卡資料
-    //測試用
-    public static ICharacterData testEnemyData;
-    public static float testPlayerBlood = 100f;
+    public static ICharacterData PlayerData;
+    public static ICharacterData EnemyData;
+    public static EnemyConfig enemyConfig;
 }

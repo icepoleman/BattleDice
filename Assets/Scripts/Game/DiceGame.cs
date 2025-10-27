@@ -16,8 +16,8 @@ public class DiceGame : MonoBehaviour
     int round = 0;
     CharacterView playerView = null;
     CharacterView enemyView = null;
-    ICharacterData playerData = new PlayerData();//之後會視實際情況改成讀取json
-    ICharacterData enemyData = new SlimeData();//之後會視實際情況改成讀取關卡資料
+    ICharacterData playerData = new PlayerData();//藉由LevelDataManager取得
+    ICharacterData enemyData;//藉由LevelDataManager取得
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
@@ -34,13 +34,13 @@ public class DiceGame : MonoBehaviour
         manaRoller.Init();
         // 生成角色實例
         playerView = CreateCharacter("character/jailerGirl", "playerPos");
-        enemyView = CreateCharacter("character/slime", "enemyPos");
-        playerData.currentBlood = LevelDataManager.testPlayerBlood; //測試用
-        enemyData = LevelDataManager.testEnemyData; //測試用
+        enemyView = CreateCharacter(LevelDataManager.enemyConfig.prefabPath, "enemyPos");
+        playerData = LevelDataManager.PlayerData;
+        enemyData = LevelDataManager.EnemyData;
 
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
-        
+
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
         ChangeState(TurnState.roundStart);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
@@ -40,21 +41,33 @@ public class StateManager : MonoBehaviour
     // 註冊事件監聽
     void AddEventListeners()
     {
+        EventCenter.AddListener(GameEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
       //  EventCenter.AddListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
        // EventCenter.AddListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
      //   EventCenter.AddListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
       //  EventCenter.AddListener(GameEvent.EVENT_ENTER_AVG, OnEnterAVG);
         // 添加其他事件監聽...
     }
-    
     void RemoveEventListeners()
     {
+        EventCenter.RemoveListener(GameEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
       //  EventCenter.RemoveListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
       //  EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
       //  EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
       //  EventCenter.RemoveListener(GameEvent.EVENT_ENTER_AVG, OnEnterAVG);
     }
-    
+    void EnterDiceGame(object[] args)
+    {
+        int enemyId = (int)args[0];
+        LevelDataManager.EnemyData = EnemyFactory.CreateEnemy(enemyId);
+        LevelDataManager.enemyConfig = EnemyFactory.GetEnemyConfig(enemyId);
+
+        //TODO: 設定玩家資料
+        LevelDataManager.PlayerData = new PlayerData();
+        //進入關卡場景 unity讀取scene
+        SceneManager.LoadScene("DiceGame");
+        ChangeState(GameState.DiceGame);
+    }
     // 切換遊戲狀態
     public void ChangeState(GameState newState)
     {
