@@ -8,10 +8,10 @@ public class GameSaveData
     public string playerName;
     public int currentChapter;        // 當前章節
     public string currentStage;          // 當前關卡
-    public float totalPlayTime;       // 總遊玩時間（秒）
     public System.DateTime lastSaveTime; // 最後存檔時間
     public CharacterSaveData playerData;   // 玩家角色資料
     //public SettingsSaveData settings;      // 遊戲設定
+    //TODO: 取得的關鍵道具 個角色好感度
 }
 [System.Serializable]
 public class SettingsSaveData

@@ -36,7 +36,7 @@ public class CSVReader
     {
         List<DialogueData> lines = new List<DialogueData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, _fileName);
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", _fileName);
 
         if (!File.Exists(filePath))
         {

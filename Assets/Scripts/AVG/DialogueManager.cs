@@ -24,15 +24,22 @@ public class DialogueManager : MonoBehaviour
         inputActions.Player.Enable();
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
-        AddClickEvent();
         AddEvent();
-        ShowDialogue("test3.csv");//讀取劇情
+        //ShowDialogue("test3.csv");//讀取劇情
+        ShowDialogue(AvgData.chapter);//讀取劇情
     }
     void AddEvent()
     {
+        inputActions.Player.next.performed += OnNextClick;
         EventCenter.AddListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
-
+    private void OnDestroy()
+    {
+        // 解除綁定，避免記憶體洩漏
+        inputActions.Player.next.performed -= OnNextClick;
+        inputActions.Player.Disable();
+        EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+    }
     void OnClickChoice(object[] args)
     {
         if (args.Length > 0 && args[0] is string targetTag)
@@ -156,17 +163,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("找不到標籤:" + _tag);
     }
 
-    void AddClickEvent()
-    {
-        inputActions.Player.next.performed += OnNextClick;
-    }
-    private void OnDestroy()
-    {
-        // 解除綁定，避免記憶體洩漏
-        inputActions.Player.next.performed -= OnNextClick;
-        inputActions.Player.Disable();
-        EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
-    }
+
     // Update is called once per frame
     void Update()
     {

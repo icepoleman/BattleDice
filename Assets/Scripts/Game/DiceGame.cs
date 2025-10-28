@@ -22,10 +22,7 @@ public class DiceGame : MonoBehaviour
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
     [SerializeField]TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
-    void Awake()
-    {
-    
-    }
+
     void Start()
     {
         if (isOpen) return;
@@ -34,9 +31,9 @@ public class DiceGame : MonoBehaviour
         manaRoller.Init();
         // 生成角色實例
         playerView = CreateCharacter("character/jailerGirl", "playerPos");
-        enemyView = CreateCharacter(LevelDataManager.enemyConfig.prefabPath, "enemyPos");
-        playerData = LevelDataManager.PlayerData;
-        enemyData = LevelDataManager.EnemyData;
+        enemyView = CreateCharacter(LevelData.enemyConfig.prefabPath, "enemyPos");
+        playerData = LevelData.PlayerData;
+        enemyData = LevelData.EnemyData;
 
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);

@@ -85,7 +85,7 @@ public class StageNode : MonoBehaviour
     void OnNodeClick()
     {
         //測試用
-        EventCenter.Dispatch(GameEvent.EVENT_ENTER_DICEGAME, enemyId);
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, enemyId);
         if (currentState == StageState.Unlocked)
         {
             //  StageMapManager.Instance.SelectStage(this);
