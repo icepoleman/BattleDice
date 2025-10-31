@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
-        //ShowDialogue("test3.csv");//讀取劇情
+       // ShowDialogue("test3");//讀取劇情
         ShowDialogue(AvgData.chapter);//讀取劇情
     }
     void AddEvent()
@@ -55,7 +55,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void ShowDialogue(string _chapter_csv)
     {
-        lines = CSVReader.Instance.LoadCSV(_chapter_csv);//依照章節讀取CSV
+        lines = CSVReader.Instance.LoadDialogueCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
         nowChapter = lines[pageIndex].Chapter;
         if (nowChapter == "")
@@ -63,6 +63,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("❌ Chapter 欄位不可為空，請檢查 CSV 檔案");
             return;
         }
+        CheckDialogueCmd(pageIndex);
     }
     bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)

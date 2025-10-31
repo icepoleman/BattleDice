@@ -16,6 +16,13 @@ public class DialogueData
     public string Anim;
     public string Flag;
 }
+[System.Serializable]
+public class MapData
+{
+    public string stageID;
+    public string type;
+    public string stageInfo;
+}
 
 public class CSVReader
 {
@@ -32,15 +39,17 @@ public class CSVReader
             return instance;
         }
     }
-    public List<DialogueData> LoadCSV(string _fileName)
+    
+    // 載入對話資料
+    public List<DialogueData> LoadDialogueCSV(string fileName)
     {
         List<DialogueData> lines = new List<DialogueData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", _fileName);
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", fileName+".csv");
 
         if (!File.Exists(filePath))
         {
-            Debug.LogError("❌ 找不到 CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到對話 CSV 檔案: " + filePath);
             return null;
         }
 
@@ -71,8 +80,81 @@ public class CSVReader
             lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入完成，共 {lines.Count} 行: {filePath}");
+        Debug.Log($"✅ 從 StreamingAssets 載入對話資料完成，共 {lines.Count} 行: {filePath}");
         return lines;
     }
-}
+    
+    // 載入地圖資料
+    public List<MapData> LoadMapCSV(string fileName)
+    {
+        List<MapData> lines = new List<MapData>();
 
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Map/", fileName+".csv");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("❌ 找不到地圖 CSV 檔案: " + filePath);
+            return null;
+        }
+
+        string[] allLines = File.ReadAllLines(filePath);
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; } // 跳過表頭
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] values = line.Split(',');
+
+            MapData data = new MapData();
+            data.stageID = values.Length > 0 ? values[0] : "";
+            data.type = values.Length > 1 ? values[1] : "";
+            data.stageInfo = values.Length > 2 ? values[2] : "";
+
+            lines.Add(data);
+        }
+
+        Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {filePath}");
+        return lines;
+    }
+    
+    // 通用 CSV 載入方法（可指定子資料夾）
+    public List<T> LoadGenericCSV<T>(string fileName, string subFolder, System.Func<string[], T> parseFunction) where T : class
+    {
+        List<T> lines = new List<T>();
+
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/" + subFolder + "/", fileName);
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError($"❌ 找不到 CSV 檔案: {filePath}");
+            return null;
+        }
+
+        string[] allLines = File.ReadAllLines(filePath);
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; } // 跳過表頭
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] values = line.Split(',');
+            T data = parseFunction(values);
+            
+            if (data != null)
+                lines.Add(data);
+        }
+
+        Debug.Log($"✅ 從 StreamingAssets/{subFolder} 載入完成，共 {lines.Count} 行: {filePath}");
+        return lines;
+    }
+
+    // 舊方法保持兼容性（已棄用）
+    [System.Obsolete("請使用 LoadDialogueCSV 方法")]
+    public List<DialogueData> LoadCSV(string fileName)
+    {
+        return LoadDialogueCSV(fileName);
+    }
+}

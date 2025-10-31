@@ -1,0 +1,11 @@
+Chapter,Character,Dialogue,Portrait,Background,ChoiceText,JumpTo,Tag,Anim,Flag
+Prologue1_1,Hero,被關在這裡也有一陣子了。,normal,jail,,,,,
+,Hero,但只要我完成了這個，出去的日子指日可待！,happy,jail,,,,,
+,Hero,可惜目前還差幾個零件...,sad,jail,,,,,
+,Hero,該怎麼辦呢?,sad,jail,,,,,
+,Camera,,,,,,,shake,
+,Hero,哇！發生什麼事了?,normal,jail,,,,Run,
+,Hero,好像是...地震?,normal,jail,,,,,
+,Hero,嗯?門好像被震開了?,normal,jail,,,,,
+,Hero,總之先出去看看情況吧。,happy,jail,,,,,
+END,,,,,,,,,
