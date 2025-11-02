@@ -45,6 +45,7 @@ public class StateManager : MonoBehaviour
     {
         EventCenter.AddListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
       //  EventCenter.AddListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
        // EventCenter.AddListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
      //   EventCenter.AddListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
@@ -54,21 +55,10 @@ public class StateManager : MonoBehaviour
     {
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
       //  EventCenter.RemoveListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
       //  EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
       //  EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
-    }
-    void EnterDiceGame(object[] args)
-    {
-        int enemyId = (int)args[0];
-        LevelData.EnemyData = EnemyFactory.CreateEnemy(enemyId);
-        LevelData.enemyConfig = EnemyFactory.GetEnemyConfig(enemyId);
-
-        //TODO: 設定玩家資料
-        LevelData.PlayerData = new PlayerData();
-        //進入關卡場景 unity讀取scene
-        SceneLoader.LoadScene("DiceGame");
-        ChangeState(GameState.DiceGame);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -131,14 +121,34 @@ public class StateManager : MonoBehaviour
         // 可能切換到戰利品界面或直接完成關卡
         // 這裡可以根據具體需求決定是否切換狀態
     }
-    
+    void EnterDiceGame(object[] args)
+    {
+        int enemyId = (int)args[0];
+        Debug.Log("StateManager: 進入 骰子遊戲 模式 Enemy" + enemyId);
+        GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
+ 
+        //TODO: 設定玩家資料
+        GameDataManager.PlayerData = new PlayerData();
+        //進入關卡場景 unity讀取scene
+        SceneLoader.LoadScene("DiceGame");
+        ChangeState(GameState.DiceGame);
+    }
     void OnEnterAVG(object[] args)
     {
         string _chapter = (string)args[0];
-        AvgData.chapter = _chapter;
+        GameDataManager.AvgChapter = _chapter;
         SceneLoader.LoadScene("AVGScene");
         Debug.Log("StateManager: 進入 AVG 模式");
         ChangeState(GameState.AVG);
+    }
+    
+    void OnEnterMap(object[] args)
+    {
+        int _map = (int)args[0];
+        GameDataManager.CurrentMap = _map;
+        SceneLoader.LoadScene("StageMap");
+        Debug.Log("StateManager: 進入地圖模式");
+        ChangeState(GameState.Map);
     }
     
     // 靜態便利方法

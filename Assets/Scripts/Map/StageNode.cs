@@ -16,8 +16,6 @@ public class StageNode : MonoBehaviour
     public int row;//橫排編號
     public int col;//直排編號
     public string stageInfo;       //關卡資訊
-    //敵人設定? 測試用
-    public int enemyId;
 
     Image stageImage;
 
@@ -38,10 +36,11 @@ public class StageNode : MonoBehaviour
         stageID = id;
         stageType = type;
         stageInfo = info;
+        stageImage.sprite = Resources.Load<Sprite>($"StageIcon/" + type);
         SetRowColFromID();
     }
     //轉換字串"1-1"給row col
-    public void SetRowColFromID()
+    void SetRowColFromID()
     {
         string[] parts = stageID.Split('-');
         if (parts.Length == 2)
@@ -61,10 +60,6 @@ public class StageNode : MonoBehaviour
             Debug.LogError($"關卡ID格式錯誤: {stageID}");
         }
     }
-    public void Initialize(StageState state)
-    {
-        SetState(state);
-    }
 
     public void SetState(StageState newState)
     {
@@ -74,7 +69,6 @@ public class StageNode : MonoBehaviour
 
     void UpdateVisuals()
     {
-
         // 設定按鈕互動性
         // nodeButton.interactable = currentState != StageState.Locked;
 
@@ -101,8 +95,9 @@ public class StageNode : MonoBehaviour
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
                 break;
             case "Battle":
-                int rep = stageInfo.IndexOf("敵人ID:");
-                Debug.Log($"進入戰鬥關卡: {stageID}{stageInfo}" + rep);
+                //string to int
+                int rep = int.Parse(stageInfo);
+                Debug.Log($"進入戰鬥關卡: {stageID}" + rep);
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, rep);
                 break;
             case "Shop":

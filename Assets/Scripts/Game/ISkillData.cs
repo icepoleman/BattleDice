@@ -24,6 +24,7 @@ public static class SkillFactory
             SkillID.Kaminari => new Kaminari(),
             SkillID.WindBlade => new WindBlade(),
             SkillID.DeBuffPoison => new DeBuffPoison(),
+            SkillID.Punch => new Punch(),
             _ => null
         };
     }
@@ -36,6 +37,7 @@ public static class SkillFactory
             Kaminari => SkillID.Kaminari,
             WindBlade => SkillID.WindBlade,
             DeBuffPoison => SkillID.DeBuffPoison,
+            Punch => SkillID.Punch,
             _ => SkillID.None
         };
     }

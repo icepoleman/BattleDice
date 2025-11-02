@@ -1,65 +1,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class EnemyConfig
+[CreateAssetMenu(fileName = "EnemyDatabase", menuName = "Game/Enemy Database")]
+public class EnemyDatabase : ScriptableObject
 {
-    public int enemyId;
-    public string enemyName;
-    public string prefabPath;
-    public System.Type dataType;
-}
-
-public static class EnemyFactory
-{
-    private static readonly Dictionary<int, EnemyConfig> enemyConfigs = 
-        new Dictionary<int, EnemyConfig>();
+    public List<EnemyConfig> enemies = new List<EnemyConfig>();
     
-    // 靜態初始化
-    static EnemyFactory()
+    private Dictionary<int, EnemyConfig> enemyLookup;
+    
+    void OnEnable()
     {
-        InitializeEnemies();
+        BuildLookupTable();
     }
     
-    static void InitializeEnemies()
+    void BuildLookupTable()
     {
-        // 註冊所有敵人
-        RegisterEnemyType<SlimeData>(1, "史萊姆", "character/Slime");
-        RegisterEnemyType<WolfData>(2, "狼", "character/Wolf");
-    }
-    
-    static void RegisterEnemyType<T>(int id, string name, string prefabPath) where T : ICharacterData, new()
-    {
-        enemyConfigs[id] = new EnemyConfig
+        enemyLookup = new Dictionary<int, EnemyConfig>();
+        foreach (var enemy in enemies)
         {
-            enemyId = id,
-            enemyName = name,
-            prefabPath = prefabPath,
-            dataType = typeof(T)
-        };
+            enemyLookup[enemy.enemyId] = enemy;
+        }
     }
     
-    public static ICharacterData CreateEnemy(int enemyId)
+    public EnemyData CreateEnemy(int enemyId)
     {
-        if (enemyConfigs.TryGetValue(enemyId, out var config))
+        if (enemyLookup == null) BuildLookupTable();
+        
+        if (enemyLookup.TryGetValue(enemyId, out var config))
         {
-            // 使用反射創建敵人實例
-            return (ICharacterData)System.Activator.CreateInstance(config.dataType);
+            var enemy = new EnemyData();
+            enemy.LoadFromConfig(config);
+            return enemy;
         }
         
-        Debug.LogWarning($"未找到敵人 ID: {enemyId}");
-        return new SlimeData();
+        return null;
+    }
+}
+
+// 工廠改為使用 ScriptableObject
+public static class EnemyFactory
+{
+    private static EnemyDatabase database;
+    
+    public static EnemyDatabase Database
+    {
+        get
+        {
+            if (database == null)
+            {
+                database = Resources.Load<EnemyDatabase>("EnemyDatabase");
+                if (database == null)
+                {
+                    Debug.LogError("找不到 EnemyDatabase！創建預設資料庫");
+                }
+            }
+            return database;
+        }
     }
     
-    public static EnemyConfig GetEnemyConfig(int enemyId)
+    public static EnemyData CreateEnemy(int enemyId)
     {
-        enemyConfigs.TryGetValue(enemyId, out var config);
-        return config;
+        var enemy = Database?.CreateEnemy(enemyId);
+        if (enemy == null)
+        {
+            Debug.LogWarning($"無法創建敵人 ID: {enemyId}，使用預設敵人");
+            enemy = CreateDefaultEnemy();
+        }
+        return enemy;
     }
     
-    public static string GetEnemyName(int enemyId)
+    // 創建預設敵人（測試用）
+    static EnemyData CreateDefaultEnemy()
     {
-        var config = GetEnemyConfig(enemyId);
-        return config?.enemyName ?? "未知敵人";
+        var enemy = new EnemyData();
+        var defaultConfig = new EnemyConfig
+        {
+            enemyId = 1,
+            enemyName = "測試史萊姆",
+            maxHP = 50f,
+            skillIds = new List<SkillID> { SkillID.Punch },
+            prefabPath = "character/Slime",
+            goldReward = 5
+        };
+        
+        enemy.LoadFromConfig(defaultConfig);
+        return enemy;
     }
 }

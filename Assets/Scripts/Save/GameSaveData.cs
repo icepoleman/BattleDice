@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameSaveData
 {
     public string playerName;
-    public int currentChapter;        // 當前章節
+    public int currentMap;        // 當前地圖
     public string currentStage;          // 當前關卡
-    public System.DateTime lastSaveTime; // 最後存檔時間
+    public System.DateTime saveTime; // 最後存檔時間
     public CharacterSaveData playerData;   // 玩家角色資料
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度

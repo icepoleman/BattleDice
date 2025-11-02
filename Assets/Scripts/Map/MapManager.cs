@@ -19,8 +19,9 @@ public class MapManager : MonoBehaviour
     public GameObject obj_stageNode; //關卡節點預製物件
     public Transform stageBurnPos;
     Transform nowRowTrans;
-    public List<StageNode> stageNodes = new List<StageNode>();
+    public List<StageNode> list_stageNodes = new List<StageNode>();
     public List<MapData> mapDatas = new List<MapData>();
+    public List<int> list_rowCount = new List<int>(); // row=1~5
     void Start()
     {
         btn_test.onClick.AddListener(() =>
@@ -33,10 +34,11 @@ public class MapManager : MonoBehaviour
         obj_rowParent.SetActive(false);
         obj_stageNode.SetActive(false);
 
-        mapDatas = CSVReader.Instance.LoadMapCSV("map1");
+        mapDatas = CSVReader.Instance.LoadMapCSV("map" + GameDataManager.CurrentMap);
         int burnRow = 0;
         //mapDatas 資料要完全相反
         mapDatas.Reverse();
+        list_rowCount = new List<int>();
         foreach (var mapData in mapDatas)
         {
             int row = 0, col = 0;
@@ -54,11 +56,22 @@ public class MapManager : MonoBehaviour
             stageNodeObj.SetActive(true);
             StageNode stageNode = stageNodeObj.GetComponent<StageNode>();
             stageNode.SetData(mapData.stageID, mapData.type, mapData.stageInfo);
-            stageNodes.Add(stageNode);
+            list_stageNodes.Add(stageNode);
             Debug.Log($"MapData: {mapData.stageID}, {mapData.type}, {mapData.stageInfo}");
         }
+        int repRow = 0;
+        foreach (StageNode stageNode in list_stageNodes)
+        {
+            if (stageNode.row != repRow)
+            {
+                repRow = stageNode.row;
+                list_rowCount.Add(1);
+            }
+            else
+                list_rowCount[repRow - 1]++;
+        }
     }
-    public void SetRowColFromID(string stageID, ref int row, ref int col)
+    void SetRowColFromID(string stageID, ref int row, ref int col)
     {
         string[] parts = stageID.Split('-');
         if (parts.Length == 2)
@@ -83,31 +96,30 @@ public class MapManager : MonoBehaviour
     {
 
     }
-    int[] rowCount = { 1, 1, 5, 5, 3, 1 }; // row=1~5
 
     public void GetNextLevels(int row, int col)
     {
         int _row = currentRow - 1;
         int nextRow = _row + 1;
 
-        if (nextRow >= rowCount.Length)
+        if (nextRow >= list_rowCount.Count)
         {
             Debug.Log("No Next Level");
             return; // 沒下一排了
         }
 
 
-        if (rowCount[_row] == 1 || rowCount[nextRow] == 1)
+        if (list_rowCount[_row] == 1 || list_rowCount[nextRow] == 1)
         {
             Debug.Log($"Next Level: Row {row + 1}, 全開");
         }
 
-        if (rowCount[_row] == 3 && rowCount[nextRow] == 5)
+        if (list_rowCount[_row] == 3 && list_rowCount[nextRow] == 5)
         {
             Debug.Log($"Next Level: Row {row + 1}, col {col}, col+1 {col + 1}, col+2 {col + 2}開");
         }
 
-        if (rowCount[_row] == 5 && rowCount[nextRow] == 5)
+        if (list_rowCount[_row] == 5 && list_rowCount[nextRow] == 5)
         {
             if (col == 1)
                 Debug.Log($"Next Level: Row {row + 1}, col {col}, col+1 {col + 1}開");
@@ -116,7 +128,7 @@ public class MapManager : MonoBehaviour
             else
                 Debug.Log($"Next Level: Row {row + 1}, col {col - 1},col {col}, col{col + 1}開");
         }
-        if (rowCount[_row] == 5 && rowCount[nextRow] == 3)
+        if (list_rowCount[_row] == 5 && list_rowCount[nextRow] == 3)
         {
             if (col == 1)
                 Debug.Log($"Next Level: Row {row + 1}, col {col}");

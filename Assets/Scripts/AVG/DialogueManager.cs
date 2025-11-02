@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
        // ShowDialogue("test3");//讀取劇情
-        ShowDialogue(AvgData.chapter);//讀取劇情
+        ShowDialogue(GameDataManager.AvgChapter);//讀取劇情
     }
     void AddEvent()
     {

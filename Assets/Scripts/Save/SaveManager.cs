@@ -24,7 +24,7 @@ public static class SaveManager
     {
         try
         {
-            currentSave.lastSaveTime = System.DateTime.Now;
+            currentSave.saveTime = System.DateTime.Now;
             string json = JsonUtility.ToJson(currentSave, true);
             System.IO.File.WriteAllText(filePath, json);
             Debug.Log($"{saveType}成功: " + filePath);
@@ -74,7 +74,7 @@ public static class SaveManager
         currentSave = new GameSaveData
         {
             playerName = "玩家",
-            currentChapter = 1,
+            currentMap = 1,
             currentStage = "1-1",
             playerData = new PlayerData().ToSaveData(),
             //settings = new SettingsSaveData()

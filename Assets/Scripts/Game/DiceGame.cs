@@ -16,8 +16,8 @@ public class DiceGame : MonoBehaviour
     int round = 0;
     CharacterView playerView = null;
     CharacterView enemyView = null;
-    ICharacterData playerData = new PlayerData();//藉由LevelDataManager取得
-    ICharacterData enemyData;//藉由LevelDataManager取得
+    PlayerData playerData = new PlayerData();//藉由GameDataManager取得
+    EnemyData enemyData;//藉由GameDataManager取得
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
@@ -31,12 +31,12 @@ public class DiceGame : MonoBehaviour
         manaRoller.Init();
         // 生成角色實例
         playerView = CreateCharacter("character/jailerGirl", "playerPos");
-        enemyView = CreateCharacter(LevelData.enemyConfig.prefabPath, "enemyPos");
-        playerData = LevelData.PlayerData;
-        enemyData = LevelData.EnemyData;
+        enemyView = CreateCharacter(GameDataManager.TmpEnemyData.prefabPath, "enemyPos");
+        playerData = GameDataManager.PlayerData;
+        enemyData = GameDataManager.TmpEnemyData;
 
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
-        enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
+        enemyView.UpdateBlood(enemyData.currentHP, enemyData.maxHP);
 
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
@@ -211,7 +211,7 @@ public class DiceGame : MonoBehaviour
             // 玩家回合：攻擊敵人
             enemyData.TakeDamage(damage);
             enemyView.PlayAnim("Hurt");
-            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
+            enemyView.UpdateBlood(enemyData.currentHP, enemyData.maxHP);
             enemyView.CreateFlyText(damage);
         }
         else if (currentState == TurnState.enemyTurn)
