@@ -1,89 +1,90 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyDatabase", menuName = "Game/Enemy Database")]
-public class EnemyDatabase : ScriptableObject
+public static class EnemyFactory
 {
-    public List<EnemyConfig> enemies = new List<EnemyConfig>();
-    
-    private Dictionary<int, EnemyConfig> enemyLookup;
-    
-    void OnEnable()
+    private static readonly Dictionary<int, EnemyConfig> enemyConfigs =
+        new Dictionary<int, EnemyConfig>();
+
+    static EnemyFactory()
     {
-        BuildLookupTable();
+        InitializeEnemies();
     }
-    
-    void BuildLookupTable()
+
+    static void InitializeEnemies()
     {
-        enemyLookup = new Dictionary<int, EnemyConfig>();
-        foreach (var enemy in enemies)
+        // 直接註冊配置，不需要泛型
+        RegisterEnemy(new EnemyConfig
         {
-            enemyLookup[enemy.enemyId] = enemy;
-        }
+            enemyId = 1,
+            enemyName = "史萊姆",
+            maxHP = 50f,
+            skillIds = new List<SkillID> { SkillID.Punch },
+            prefabPath = "character/Slime",
+            diceSides = new int[] { 1, 2 },
+            diceCount = 2,
+            goldReward = 500
+        });
+
+        RegisterEnemy(new EnemyConfig
+        {
+            enemyId = 2,
+            enemyName = "哥布林",
+            maxHP = 80f,
+            skillIds = new List<SkillID> { SkillID.Kaminari },
+            prefabPath = "character/Goblin",
+            diceSides = new int[] { 1, 2 },
+            diceCount = 2,
+            goldReward = 800
+        });
     }
-    
-    public EnemyData CreateEnemy(int enemyId)
+
+    static void RegisterEnemy(EnemyConfig config)
     {
-        if (enemyLookup == null) BuildLookupTable();
-        
-        if (enemyLookup.TryGetValue(enemyId, out var config))
+        enemyConfigs[config.enemyId] = config;
+        Debug.Log($"註冊敵人: {config.enemyName} (ID: {config.enemyId})");
+    }
+
+    // 創建敵人 - 不再需要反射！
+    public static EnemyData CreateEnemy(int enemyId)
+    {
+        if (enemyConfigs.TryGetValue(enemyId, out var config))
         {
             var enemy = new EnemyData();
             enemy.LoadFromConfig(config);
             return enemy;
         }
-        
-        return null;
-    }
-}
 
-// 工廠改為使用 ScriptableObject
-public static class EnemyFactory
-{
-    private static EnemyDatabase database;
-    
-    public static EnemyDatabase Database
-    {
-        get
-        {
-            if (database == null)
-            {
-                database = Resources.Load<EnemyDatabase>("EnemyDatabase");
-                if (database == null)
-                {
-                    Debug.LogError("找不到 EnemyDatabase！創建預設資料庫");
-                }
-            }
-            return database;
-        }
+        Debug.LogWarning($"未找到敵人 ID: {enemyId}，建立預設敵人");
+        return CreateDefaultEnemy();
     }
-    
-    public static EnemyData CreateEnemy(int enemyId)
-    {
-        var enemy = Database?.CreateEnemy(enemyId);
-        if (enemy == null)
-        {
-            Debug.LogWarning($"無法創建敵人 ID: {enemyId}，使用預設敵人");
-            enemy = CreateDefaultEnemy();
-        }
-        return enemy;
-    }
-    
-    // 創建預設敵人（測試用）
+
     static EnemyData CreateDefaultEnemy()
     {
-        var enemy = new EnemyData();
         var defaultConfig = new EnemyConfig
         {
             enemyId = 1,
-            enemyName = "測試史萊姆",
-            maxHP = 50f,
-            skillIds = new List<SkillID> { SkillID.Punch },
-            prefabPath = "character/Slime",
-            goldReward = 5
+            enemyName = "預設敵人",
+            maxHP = 30f,
+            diceSides = new int[] { 1, 2 },
+            diceCount = 2,
+            skillIds = new List<SkillID> { SkillID.Punch }
         };
-        
+
+        var enemy = new EnemyData();
         enemy.LoadFromConfig(defaultConfig);
         return enemy;
+    }
+
+    public static EnemyConfig GetEnemyConfig(int enemyId)
+    {
+        enemyConfigs.TryGetValue(enemyId, out var config);
+        return config;
+    }
+
+    public static string GetEnemyName(int enemyId)
+    {
+        var config = GetEnemyConfig(enemyId);
+        return config?.enemyName ?? "未知敵人";
     }
 }

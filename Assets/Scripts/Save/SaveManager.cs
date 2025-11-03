@@ -22,6 +22,11 @@ public static class SaveManager
     // 統一存檔邏輯
     private static void SaveToFile(string filePath, string saveType)
     {
+        // 將資料存到存檔
+        currentSave.playerName = GameDataManager.PlayerName;
+        currentSave.playerData = GameDataManager.PlayerData.ToSaveData();
+        currentSave.currentStage = GameDataManager.CurrentStage;
+        currentSave.currentMap = GameDataManager.CurrentMap;
         try
         {
             currentSave.saveTime = System.DateTime.Now;

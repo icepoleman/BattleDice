@@ -16,6 +16,7 @@ public class StateEvent
     public const string EVENT_ENTER_DICEGAME = "StateEvent_EnterDiceGame";//進入骰子遊戲
     public const string EVENT_ENTER_AVG = "StateEvent_EnterAVG";//進入劇情
     public const string EVENT_ENTER_MAP = "StateEvent_EnterMap";//進入地圖
+    public const string EVENT_ENTER_PREPARATION_ROOM = "StateEvent_EnterPreparationRoom";//進入整備室
 }
 public class AdvEvent
 {

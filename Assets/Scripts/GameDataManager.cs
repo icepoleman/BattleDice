@@ -1,6 +1,7 @@
 // 統一的資料管理器
 public static class GameDataManager
 {
+    public static string PlayerName = "Player";
     // 玩家資料
     public static PlayerData PlayerData { get; set; } = new PlayerData();
     // 當前關卡資料
@@ -23,6 +24,7 @@ public static class GameDataManager
         // 從存檔載入資料
         if (SaveManager.LoadGame(loadAutoSave))
         {
+            PlayerName = SaveManager.currentSave.playerName;
             PlayerData.LoadFromSaveData(SaveManager.currentSave.playerData);
             CurrentStage = SaveManager.currentSave.currentStage;
             CurrentMap = SaveManager.currentSave.currentMap;
@@ -30,10 +32,6 @@ public static class GameDataManager
     }
     public static void SaveGameData(bool saveAutoSave = false)
     {
-        // 將資料存到存檔
-        SaveManager.currentSave.playerData = PlayerData.ToSaveData();
-        SaveManager.currentSave.currentStage = CurrentStage;
-        SaveManager.currentSave.currentMap = CurrentMap;
         if (saveAutoSave)
             SaveManager.AutoSave();
         else

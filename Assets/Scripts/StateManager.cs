@@ -46,6 +46,8 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
+        
       //  EventCenter.AddListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
        // EventCenter.AddListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
      //   EventCenter.AddListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
@@ -56,6 +58,7 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
       //  EventCenter.RemoveListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
       //  EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
       //  EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
@@ -141,7 +144,7 @@ public class StateManager : MonoBehaviour
         Debug.Log("StateManager: 進入 AVG 模式");
         ChangeState(GameState.AVG);
     }
-    
+
     void OnEnterMap(object[] args)
     {
         int _map = (int)args[0];
@@ -149,6 +152,12 @@ public class StateManager : MonoBehaviour
         SceneLoader.LoadScene("StageMap");
         Debug.Log("StateManager: 進入地圖模式");
         ChangeState(GameState.Map);
+    }
+    void OnEnterPreparationRoom(object[] args)
+    {
+        SceneLoader.LoadScene("PreparationRoom");
+        Debug.Log("StateManager: 進入準備室模式");
+        ChangeState(GameState.PreparationRoom);
     }
     
     // 靜態便利方法

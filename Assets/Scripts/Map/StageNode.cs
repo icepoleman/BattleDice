@@ -107,7 +107,7 @@ public class StageNode : MonoBehaviour
                 Debug.Log($"進入頭目關卡: {stageID}{stageInfo}");
                 break;
             case "SavePoint":
-                Debug.Log($"進入整備室: {stageID}{stageInfo}");
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 break;
             case "Item":
                 Debug.Log($"進入道具關卡: {stageID}{stageInfo}");
