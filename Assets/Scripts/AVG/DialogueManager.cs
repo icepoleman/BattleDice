@@ -13,6 +13,9 @@ public class DialogueManager : MonoBehaviour
     private PlayerInputActions inputActions;
 
     private List<string> jumpTo = new List<string>();
+    
+    // 文本替換的特殊暗號
+    private readonly string PLAYER_NAME_TOKEN = "{PlayerName}";
 
     bool isOpen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +74,7 @@ public class DialogueManager : MonoBehaviour
         if (nowChapter == "END")
         {
             Debug.Log("劇情結束");
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
             return;//劇情結束不處理
         }
 
@@ -95,6 +99,12 @@ public class DialogueManager : MonoBehaviour
 
         if (pageIndex < lines.Count - 1)
         {
+            if(chatWindow.isTyping)
+            {
+                //如果正在打字則直接顯示完整文本
+                chatWindow.CompleteDialogue();
+                return;
+            }
             pageIndex++;
             CheckDialogueCmd(pageIndex);
         }
@@ -112,6 +122,7 @@ public class DialogueManager : MonoBehaviour
         {
             chatWindow.HideWindow();
             Debug.Log("劇情結束");
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
         }
         //紀錄跳轉
         if (lines[_page].JumpTo.Length > 0)
@@ -141,7 +152,11 @@ public class DialogueManager : MonoBehaviour
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
         {
-            chatWindow.ShowDialogue(lines[pageIndex].Character, lines[pageIndex].Dialogue);
+            // 替換文本中的玩家名字
+            string processedDialogue = ReplacePlayerName(lines[pageIndex].Dialogue);
+            string processedCharacter = ReplacePlayerName(lines[pageIndex].Character);
+            
+            chatWindow.ShowDialogue(processedCharacter, processedDialogue);
         }
         else
         {
@@ -149,6 +164,37 @@ public class DialogueManager : MonoBehaviour
             OnNextClick(new InputAction.CallbackContext());
         }
     }
+    
+    // 替換玩家名字的方法
+    private string ReplacePlayerName(string originalText)
+    {
+        if (string.IsNullOrEmpty(originalText))
+            return originalText;
+        
+        if (originalText.Contains(PLAYER_NAME_TOKEN))
+        {
+            string playerName = GetPlayerName();
+            string processedText = originalText.Replace(PLAYER_NAME_TOKEN, playerName);
+            Debug.Log($"文本替換: {PLAYER_NAME_TOKEN} → {playerName}");
+            return processedText;
+        }
+        
+        return originalText;
+    }
+    
+    // 獲取玩家名字
+    private string GetPlayerName()
+    {
+        // 從存檔獲取玩家名字
+        if (GameDataManager.PlayerName != null)
+        {
+            return GameDataManager.PlayerName;
+        }
+        
+        // 預設名字
+        return "主角";
+    }
+    
     void JumpToTag(string _tag)
     {
         for (int i = 0; i < lines.Count; i++)
@@ -162,12 +208,5 @@ public class DialogueManager : MonoBehaviour
             }
         }
         Debug.Log("找不到標籤:" + _tag);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -10,17 +10,15 @@ public enum StageState
 }
 public class StageNode : MonoBehaviour
 {
-    [Header("關卡設定")]
-    public string stageID;              // 關卡唯一ID 1-1
-    public string stageType;         // 關卡類型
-    public int row;//橫排編號
-    public int col;//直排編號
-    public string stageInfo;       //關卡資訊
+    //"關卡設定"
+    string stageID;              // 關卡唯一ID 1-1
+    string stageType;         // 關卡類型
+    string stageInfo;       //關卡資訊
+    int myRow;                    //關卡橫排
 
     Image stageImage;
-
-    private Button nodeButton;
-    private StageState currentState;
+    Button nodeButton;
+    StageState currentState;
 
     void Awake()
     {
@@ -28,40 +26,40 @@ public class StageNode : MonoBehaviour
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
 
-        //test
-        //SetData("10-10", "Battle", "敵人ID:1");
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_STAGE_NODE, OnOpenStageNode);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_ROW_STAGE_NODE, OnOpenRowStageNode);
     }
-    public void SetData(string id, string type, string info)
+    void OnDestroy()
+    {
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_STAGE_NODE, OnOpenStageNode);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_ROW_STAGE_NODE, OnOpenRowStageNode);
+    }
+    public void SetData(string id, string type, string info, int row)
     {
         stageID = id;
         stageType = type;
         stageInfo = info;
         stageImage.sprite = Resources.Load<Sprite>($"StageIcon/" + type);
-        SetRowColFromID();
+        myRow = row;
+        SetState(StageState.Locked);
     }
-    //轉換字串"1-1"給row col
-    void SetRowColFromID()
+    void OnOpenStageNode(object[] param)
     {
-        string[] parts = stageID.Split('-');
-        if (parts.Length == 2)
+        List<string> targetStageID = (List<string>)param[0];
+        if (targetStageID.Contains(stageID))
         {
-            if (int.TryParse(parts[0], out int r) && int.TryParse(parts[1], out int c))
-            {
-                row = r;
-                col = c;
-            }
-            else
-            {
-                Debug.LogError($"無法解析關卡ID: {stageID}");
-            }
-        }
-        else
-        {
-            Debug.LogError($"關卡ID格式錯誤: {stageID}");
+            SetState(StageState.Unlocked);
         }
     }
-
-    public void SetState(StageState newState)
+    void OnOpenRowStageNode(object[] param)
+    {
+        int targetRow = (int)param[0];
+        if (myRow == targetRow)
+        {
+            SetState(StageState.Unlocked);
+        }
+    }
+    void SetState(StageState newState)
     {
         currentState = newState;
         UpdateVisuals();
@@ -70,7 +68,7 @@ public class StageNode : MonoBehaviour
     void UpdateVisuals()
     {
         // 設定按鈕互動性
-        // nodeButton.interactable = currentState != StageState.Locked;
+        nodeButton.interactable = currentState == StageState.Unlocked;
 
         // 根據狀態顯示對應視覺
         switch (currentState)
@@ -89,50 +87,57 @@ public class StageNode : MonoBehaviour
 
     void OnNodeClick()
     {
-        switch (stageType)
-        {
-            case "Story":
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
-                break;
-            case "Battle":
-                //string to int
-                int rep = int.Parse(stageInfo);
-                Debug.Log($"進入戰鬥關卡: {stageID}" + rep);
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, rep);
-                break;
-            case "Shop":
-                Debug.Log($"進入商店關卡: {stageID}{stageInfo}");
-                break;
-            case "Boss":
-                Debug.Log($"進入頭目關卡: {stageID}{stageInfo}");
-                break;
-            case "SavePoint":
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
-                break;
-            case "Item":
-                Debug.Log($"進入道具關卡: {stageID}{stageInfo}");
-                break;
-        }
         if (currentState == StageState.Unlocked)
         {
-            //  StageMapManager.Instance.SelectStage(this);
+            switch (stageType)
+            {
+                case "Story":
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
+                    break;
+                case "Battle":
+                    //string to int
+                    int rep = int.Parse(stageInfo);
+                    Debug.Log($"進入戰鬥關卡: {stageID}" + rep);
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, rep);
+                    break;
+                case "Shop":
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_SHOP);
+                    Debug.Log($"進入商店關卡: {stageID}{stageInfo}");
+                    break;
+                case "Boss":
+                    Debug.Log($"進入頭目關卡: {stageID}{stageInfo}");
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(stageInfo));
+                    break;
+                case "SavePoint":
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
+                    break;
+                case "Item":
+                    Debug.Log($"進入道具關卡: {stageID}{stageInfo}");
+                    break;
+                case "Blood":
+                    Debug.Log($"回復血量");
+                    break;
+                case "Gold":
+                    Debug.Log($"金幣: {stageInfo}");
+                    break;
+                case "Skill":
+                    Debug.Log($"技能: {stageInfo}");
+                    break;
+            }
+            GameDataManager.CurrentStage = stageID;
         }
         else if (currentState == StageState.Completed)
         {
             // 已完成的關卡可以重複挑戰
-            // StageMapManager.Instance.SelectStage(this);
+
         }
     }
 
-    public void CompleteStage()
+    void CompleteStage()
     {
         SetState(StageState.Completed);
 
         // 儲存進度
         //StageMapManager.Instance.SaveProgress();
     }
-
-
-
-    public StageState GetState() => currentState;
 }

@@ -20,18 +20,18 @@ public class CharacterView : MonoBehaviour
         diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
         txt_blood = gameObject.transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
         slider_blood = gameObject.transform.Find("slider_blood").GetComponent<Slider>();
-        animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>();
     }
-    
+
 
     // 只負責顯示骰子動畫，不處理數值邏輯
     public IEnumerator ShowRollAnimation(List<int> rollResults, System.Action onComplete = null)
     {
         Debug.Log("顯示擲骰子動畫");
         ClearDiceBox();
-        
+
         yield return new WaitForSeconds(0.5f);
-        
+
         //生成骰子物件在diceBox下
         for (int i = 0; i < rollResults.Count; i++)
         {
@@ -46,7 +46,7 @@ public class CharacterView : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         ClearDiceBox();
-        
+
         // 執行回調，讓調用者決定後續行為
         onComplete?.Invoke();
     }
@@ -80,6 +80,13 @@ public class CharacterView : MonoBehaviour
         damageText.GetComponent<RectTransform>().DOMoveY(damageText.transform.position.y + 1, 1).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             Destroy(damageText);
+            //TODO 暫時放這
+            if (slider_blood.value <= 0)
+            {
+                PlayAnim("Die");
+                //todo die動畫完成後使用
+                EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
+            }
         });
     }
 

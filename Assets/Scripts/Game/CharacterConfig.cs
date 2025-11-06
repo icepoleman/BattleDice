@@ -57,40 +57,6 @@ public abstract class BaseCharacterData : ICharacterData
     {
         return currentBlood <= 0;
     }
-    
-    // 轉換為可存檔的資料
-    public virtual CharacterSaveData ToSaveData()
-    {
-        return new CharacterSaveData
-        {
-            maxBlood = maxBlood,
-            currentBlood = currentBlood,
-            diceSides = diceSides,
-            diceCount = diceCount,
-            keepDiceCount = keepDiceCount,
-            maxRollCount = maxRollCount,
-            rollDiceResult = new List<int>(rollDiceResult),
-            skillIDs = skillData.Select(skill => (int)SkillFactory.GetSkillID(skill)).ToList()
-        };
-    }
-    
-    // 從存檔資料載入
-    public virtual void LoadFromSaveData(CharacterSaveData saveData)
-    {
-        maxBlood = saveData.maxBlood;
-        currentBlood = saveData.currentBlood;
-        diceSides = saveData.diceSides;
-        diceCount = saveData.diceCount;
-        keepDiceCount = saveData.keepDiceCount;
-        maxRollCount = saveData.maxRollCount;
-        rollDiceResult = new List<int>(saveData.rollDiceResult);
-        
-        // 從技能ID重建技能列表
-        skillData = saveData.skillIDs
-            .Select(id => SkillFactory.CreateSkill((SkillID)id))
-            .Where(skill => skill != null)
-            .ToList();
-    }
 }
 
 // 存檔資料類別
@@ -103,7 +69,6 @@ public class CharacterSaveData
     public int diceCount;
     public int keepDiceCount;
     public int maxRollCount;
-    public List<int> rollDiceResult = new List<int>();
     public List<int> skillIDs = new List<int>(); // 存技能ID
 }
 
@@ -119,29 +84,36 @@ public class PlayerData : BaseCharacterData
         skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new Punch() };
         maxRollCount = 1; //最大擲骰次數
     }
-}
-public class SlimeData : BaseCharacterData
-{
-    public SlimeData()
+        // 轉換為可存檔的資料
+    public CharacterSaveData ToSaveData()
     {
-        maxBlood = 50f;
-        currentBlood = 50f;
-        diceSides = new int[] { 1, 2 };
-        diceCount = 2;
-        skillData = new List<ISkillData>() { new Kaminari() };
-        maxRollCount = 1; //最大擲骰次數
+        return new CharacterSaveData
+        {
+            maxBlood = maxBlood,
+            currentBlood = currentBlood,
+            diceSides = diceSides,
+            diceCount = diceCount,
+            keepDiceCount = keepDiceCount,
+            maxRollCount = maxRollCount,
+            skillIDs = skillData.Select(skill => (int)SkillFactory.GetSkillID(skill)).ToList()
+        };
     }
-}
-public class WolfData : BaseCharacterData
-{
-    public WolfData()
+    
+    // 從存檔資料載入
+    public void LoadFromSaveData(CharacterSaveData saveData)
     {
-        maxBlood = 150f;
-        currentBlood = 150f;
-        diceSides = new int[] { 1, 2, 3, 4 };
-        diceCount = 6;
-        skillData = new List<ISkillData>() { new Punch() };
-        maxRollCount = 1; //最大擲骰次數
+        maxBlood = saveData.maxBlood;
+        currentBlood = saveData.currentBlood;
+        diceSides = saveData.diceSides;
+        diceCount = saveData.diceCount;
+        keepDiceCount = saveData.keepDiceCount;
+        maxRollCount = saveData.maxRollCount;
+        
+        // 從技能ID重建技能列表
+        skillData = saveData.skillIDs
+            .Select(id => SkillFactory.CreateSkill((SkillID)id))
+            .Where(skill => skill != null)
+            .ToList();
     }
 }
 

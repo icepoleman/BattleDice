@@ -13,7 +13,8 @@ public class StateManager : MonoBehaviour
         DiceGame,
         Map,
         PreparationRoom,
-        H_EVENT
+        H_EVENT,
+        Shop
     }
 
     [Header("當前遊戲狀態")]
@@ -47,10 +48,8 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
         
-      //  EventCenter.AddListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
-       // EventCenter.AddListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
-     //   EventCenter.AddListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -59,9 +58,7 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
-      //  EventCenter.RemoveListener(GameEvent.EVENT_STAGE_COMPLETE, OnStageComplete);
-      //  EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_DIED, OnPlayerDied);
-      //  EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_DIED, OnEnemyDied);
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -106,24 +103,6 @@ public class StateManager : MonoBehaviour
     }
     
     // 事件響應方法 - 只處理狀態切換邏輯
-    void OnStageComplete(object[] args)
-    {
-        Debug.Log("StateManager: 接收到關卡完成事件");
-        ChangeState(GameState.Map);
-    }
-    
-    void OnPlayerDied(object[] args)
-    {
-        Debug.Log("StateManager: 接收到玩家死亡事件");
-        ChangeState(GameState.MainMenu);
-    }
-    
-    void OnEnemyDied(object[] args)
-    {
-        Debug.Log("StateManager: 接收到敵人死亡事件");
-        // 可能切換到戰利品界面或直接完成關卡
-        // 這裡可以根據具體需求決定是否切換狀態
-    }
     void EnterDiceGame(object[] args)
     {
         int enemyId = (int)args[0];
@@ -144,11 +123,8 @@ public class StateManager : MonoBehaviour
         Debug.Log("StateManager: 進入 AVG 模式");
         ChangeState(GameState.AVG);
     }
-
     void OnEnterMap(object[] args)
     {
-        int _map = (int)args[0];
-        GameDataManager.CurrentMap = _map;
         SceneLoader.LoadScene("StageMap");
         Debug.Log("StateManager: 進入地圖模式");
         ChangeState(GameState.Map);
@@ -158,6 +134,12 @@ public class StateManager : MonoBehaviour
         SceneLoader.LoadScene("PreparationRoom");
         Debug.Log("StateManager: 進入準備室模式");
         ChangeState(GameState.PreparationRoom);
+    }
+    void OnEnterShop(object[] args)
+    {
+        SceneLoader.LoadScene("ShopScene");
+        Debug.Log("StateManager: 進入商店模式");
+        ChangeState(GameState.Shop);
     }
     
     // 靜態便利方法

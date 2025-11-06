@@ -9,8 +9,9 @@ public enum SkillID
     FireBall = 1,
     Kaminari = 2,
     WindBlade = 3,
-    DeBuffPoison = 4,
-    Punch = 5
+    //DeBuffPoison = 4,
+    Punch = 4,
+    ClawAttack = 5
 }
 
 // 技能工廠
@@ -23,8 +24,9 @@ public static class SkillFactory
             SkillID.FireBall => new FireBall(),
             SkillID.Kaminari => new Kaminari(),
             SkillID.WindBlade => new WindBlade(),
-            SkillID.DeBuffPoison => new DeBuffPoison(),
+            //SkillID.DeBuffPoison => new DeBuffPoison(),
             SkillID.Punch => new Punch(),
+            SkillID.ClawAttack => new ClawAttack(),
             _ => null
         };
     }
@@ -36,8 +38,9 @@ public static class SkillFactory
             FireBall => SkillID.FireBall,
             Kaminari => SkillID.Kaminari,
             WindBlade => SkillID.WindBlade,
-            DeBuffPoison => SkillID.DeBuffPoison,
+            // DeBuffPoison => SkillID.DeBuffPoison,
             Punch => SkillID.Punch,
+            ClawAttack => SkillID.ClawAttack,
             _ => SkillID.None
         };
     }
@@ -124,7 +127,7 @@ public class DeBuffPoison : BaseSkill
 {
     public DeBuffPoison()
     {
-        skillID = SkillID.DeBuffPoison;
+        //skillID = SkillID.DeBuffPoison;
         isDebuff = true;
         skillName = "毒素";
         cardTitle = "中毒 1,2,3   回合結束扣除10點生命";
@@ -190,23 +193,19 @@ public class WindBlade : BaseSkill
     {
         skillID = SkillID.WindBlade;
         skillName = "風刃";
-        cardTitle = "風刃 點數>3   造成10點傷害";
+        cardTitle = "風刃 點數大於6   造成10點傷害";
         damage = 10f;
     }
 
     public override bool canUseSkill()
     {
-        return diceBox.Sum() > 3;
+        return diceBox.Sum() > 6;
     }
 
     public override List<int> GetNeedDices()
     {
         //回傳所有骰子
-        List<int> needDices = new List<int>();
-        for (int i = 1; i <= 6; i++)
-        {
-            needDices.Add(i);
-        }
+        List<int> needDices = new List<int> { 1, 2, 3, 4, 5, 6 };
         return needDices;
     }
 }
@@ -233,6 +232,32 @@ public class Punch : BaseSkill
     public override void Use()
     {
         damage = diceBox.Sum();
+        base.Use();
+    }
+}
+public class ClawAttack : BaseSkill
+{
+    public ClawAttack()
+    {
+        skillID = SkillID.ClawAttack;
+        skillName = "爪擊";
+        cardTitle = "爪擊 任何骰子 總和*2";
+        damage = 0f;
+        acceptMoreDice = true;
+    }
+
+    public override bool canUseSkill()
+    {
+        return diceBox.Count >= 1;
+    }
+    public override List<int> GetNeedDices()
+    {
+        List<int> needDices = new List<int> { 1, 2, 3, 4, 5, 6 };
+        return needDices;
+    }
+    public override void Use()
+    {
+        damage = diceBox.Sum() * 2;
         base.Use();
     }
 }

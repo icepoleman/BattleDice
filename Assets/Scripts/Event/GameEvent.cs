@@ -17,6 +17,12 @@ public class StateEvent
     public const string EVENT_ENTER_AVG = "StateEvent_EnterAVG";//進入劇情
     public const string EVENT_ENTER_MAP = "StateEvent_EnterMap";//進入地圖
     public const string EVENT_ENTER_PREPARATION_ROOM = "StateEvent_EnterPreparationRoom";//進入整備室
+    public const string EVENT_ENTER_SHOP = "StateEvent_EnterShop";//進入商店
+}
+public class MapEvent
+{ 
+    public const string EVENT_OPEN_STAGE_NODE = "MapEvent_OpenStageNode"; //開啟關卡節點事件
+    public const string EVENT_OPEN_ROW_STAGE_NODE = "MapEvent_OpenRowStageNode"; //開啟整排row關卡節點事件
 }
 public class AdvEvent
 {

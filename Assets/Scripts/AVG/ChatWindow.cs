@@ -10,11 +10,11 @@ public class ChatWindow : MonoBehaviour
     [SerializeField] private GameObject doneImg; // 對話結束圖示
 
     private Animator animator;
-    [SerializeField] private float typingSpeed = 0.01f; // 逐字顯示速度
+    [SerializeField] private float typingSpeed = 0.05f; // 逐字顯示速度
 
     private string str_dialogue = "你好，這是一個簡易的文字冒險範例。";
 
-    private bool isTyping = false;
+    public bool isTyping = false;
 
     private PlayerInputActions inputActions;
 
@@ -25,7 +25,7 @@ public class ChatWindow : MonoBehaviour
     }
     void Start()
     {
-    //    ShowDialogue("主角", str_dialogue);
+        //    ShowDialogue("主角", str_dialogue);
     }
     private void OnEnable()
     {
@@ -33,27 +33,30 @@ public class ChatWindow : MonoBehaviour
         inputActions.Player.Enable();
 
         // 綁定事件 callback
-      // inputActions.Player.next.performed += HideWindow;
+        // inputActions.Player.next.performed += HideWindow;
     }
 
     private void OnDisable()
     {
         // 解除綁定，避免記憶體洩漏
-       // inputActions.Player.next.performed -= OnJump;
-     //   inputActions.Player.Disable();
+        // inputActions.Player.next.performed -= OnJump;
+        inputActions.Player.Disable();
     }
-
+    public void CompleteDialogue()
+    {
+        // 直接顯示完整文字
+        StopAllCoroutines();
+        dialogueText.text = str_dialogue;
+        doneImg.SetActive(true);
+        isTyping = false;
+    }
     public void ShowDialogue(string speaker, string text)
     {
         nameText.text = speaker;
         str_dialogue = text;
         if (isTyping)
         {
-            // 直接顯示完整文字
-            StopAllCoroutines();
-            dialogueText.text = text;
-            doneImg.SetActive(true);
-            isTyping = false;
+            CompleteDialogue();
         }
         else
         {

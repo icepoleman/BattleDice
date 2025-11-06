@@ -21,7 +21,8 @@ public class DiceGame : MonoBehaviour
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
-    [SerializeField]TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
+    [SerializeField] TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
+    [SerializeField] TMPro.TextMeshProUGUI txt_enemyDescription = null;//測試用
 
     void Start()
     {
@@ -34,9 +35,11 @@ public class DiceGame : MonoBehaviour
         enemyView = CreateCharacter(GameDataManager.TmpEnemyData.prefabPath, "enemyPos");
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
+        txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
+        txt_enemyDescription.text = enemyData.description; //測試用
 
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
-        enemyView.UpdateBlood(enemyData.currentHP, enemyData.maxHP);
+        enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
 
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
@@ -48,6 +51,7 @@ public class DiceGame : MonoBehaviour
     {
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
         GameObject characterObj = Instantiate(prefab, GameObject.Find(positionName).transform);
+        characterObj.transform.localPosition = Vector3.zero;
         CharacterView characterView = characterObj.AddComponent<CharacterView>();
         characterView.Init();
         return characterView;
@@ -110,7 +114,6 @@ public class DiceGame : MonoBehaviour
                     //敵人使用技能;
                     enemyData.skillData[0].diceBox = enemyRoll;
                     enemyData.skillData[0].Use();
-                    txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
                     ChangeState(TurnState.roundEnd);
                 }));
                 //enemy特寫擲骰 顯示使用技能
@@ -122,9 +125,14 @@ public class DiceGame : MonoBehaviour
                 if (playerData.IsDead() || enemyData.IsDead())
                 {
                     Debug.Log("Game Over");
-                    // 在這裡處理遊戲結束的邏輯
+                    GameObject winlosePanel = Instantiate(Resources.Load<GameObject>("UI/winLosePanel"), transform);
+                    winlosePanel.GetComponent<WinLoseView>().PlayWinAnimation(enemyData.IsDead(), () =>
+                    {
+                        // 在這裡處理遊戲結束的邏輯
+                        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
+                    });
                 }
-               // else
+                else
                     ChangeState(TurnState.roundStart);
                 break;
             default:
@@ -211,7 +219,7 @@ public class DiceGame : MonoBehaviour
             // 玩家回合：攻擊敵人
             enemyData.TakeDamage(damage);
             enemyView.PlayAnim("Hurt");
-            enemyView.UpdateBlood(enemyData.currentHP, enemyData.maxHP);
+            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
             enemyView.CreateFlyText(damage);
         }
         else if (currentState == TurnState.enemyTurn)

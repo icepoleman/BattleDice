@@ -1,7 +1,7 @@
 // 統一的資料管理器
 public static class GameDataManager
 {
-    public static string PlayerName = "Player";
+    public static string PlayerName = "阿祥";
     // 玩家資料
     public static PlayerData PlayerData { get; set; } = new PlayerData();
     // 當前關卡資料

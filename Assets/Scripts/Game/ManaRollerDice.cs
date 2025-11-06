@@ -72,14 +72,12 @@ public class ManaRollerDice : MonoBehaviour
     }
     public void UnSkillDice()
     {
-        Debug.Log("UnSkillDice");
         diceButton.interactable = false;
         Color color = diceImage.color;
         color.a = 0.5f; // 半透明
     }
     public void IsSkillDice()
     {
-        Debug.Log("IsSkillDice");
         skillDiceButton.gameObject.SetActive(true);
     }
     public void UseDice()

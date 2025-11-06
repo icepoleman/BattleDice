@@ -3,88 +3,92 @@ using UnityEngine;
 
 public static class EnemyFactory
 {
-    private static readonly Dictionary<int, EnemyConfig> enemyConfigs =
-        new Dictionary<int, EnemyConfig>();
-
-    static EnemyFactory()
-    {
-        InitializeEnemies();
-    }
-
-    static void InitializeEnemies()
-    {
-        // 直接註冊配置，不需要泛型
-        RegisterEnemy(new EnemyConfig
-        {
-            enemyId = 1,
-            enemyName = "史萊姆",
-            maxHP = 50f,
-            skillIds = new List<SkillID> { SkillID.Punch },
-            prefabPath = "character/Slime",
-            diceSides = new int[] { 1, 2 },
-            diceCount = 2,
-            goldReward = 500
-        });
-
-        RegisterEnemy(new EnemyConfig
-        {
-            enemyId = 2,
-            enemyName = "哥布林",
-            maxHP = 80f,
-            skillIds = new List<SkillID> { SkillID.Kaminari },
-            prefabPath = "character/Goblin",
-            diceSides = new int[] { 1, 2 },
-            diceCount = 2,
-            goldReward = 800
-        });
-    }
-
-    static void RegisterEnemy(EnemyConfig config)
-    {
-        enemyConfigs[config.enemyId] = config;
-        Debug.Log($"註冊敵人: {config.enemyName} (ID: {config.enemyId})");
-    }
-
-    // 創建敵人 - 不再需要反射！
     public static EnemyData CreateEnemy(int enemyId)
     {
-        if (enemyConfigs.TryGetValue(enemyId, out var config))
+        switch (enemyId)
         {
-            var enemy = new EnemyData();
-            enemy.LoadFromConfig(config);
-            return enemy;
+            case 1:
+                return new SlimeData();
+            case 2:
+                return new WolfData();
+            case 3:
+                return new WolfGirlData();
+            default:
+                Debug.LogError("EnemyFactory: 未知的敵人 ID " + enemyId);
+                return null;
         }
-
-        Debug.LogWarning($"未找到敵人 ID: {enemyId}，建立預設敵人");
-        return CreateDefaultEnemy();
     }
+}
 
-    static EnemyData CreateDefaultEnemy()
+public class EnemyData : BaseCharacterData
+{
+    [Header("基本資訊")]
+    public int enemyId = 0;
+    public string enemyName = "敵人";
+    public string description = "";
+    public string prefabPath = "";
+    public int goldReward = 0;
+    public virtual void UseSkill()
     {
-        var defaultConfig = new EnemyConfig
-        {
-            enemyId = 1,
-            enemyName = "預設敵人",
-            maxHP = 30f,
-            diceSides = new int[] { 1, 2 },
-            diceCount = 2,
-            skillIds = new List<SkillID> { SkillID.Punch }
-        };
-
-        var enemy = new EnemyData();
-        enemy.LoadFromConfig(defaultConfig);
-        return enemy;
+        // 預設技能使用邏輯
+        skillData[0].diceBox = rollDiceResult;
+        skillData[0].Use();
     }
+}
 
-    public static EnemyConfig GetEnemyConfig(int enemyId)
+public class SlimeData : EnemyData
+{
+    public SlimeData()
     {
-        enemyConfigs.TryGetValue(enemyId, out var config);
-        return config;
+        enemyId = 1;
+        enemyName = "史萊姆";
+        prefabPath = "character/Slime";
+        maxBlood = 50f;
+        currentBlood = 50f;
+        diceSides = new int[] { 1, 2 };
+        diceCount = 2;
+        skillData = new List<ISkillData>() { new Kaminari() };
+        maxRollCount = 1; //最大擲骰次數
     }
-
-    public static string GetEnemyName(int enemyId)
+}
+public class WolfData : EnemyData
+{
+    public WolfData()
     {
-        var config = GetEnemyConfig(enemyId);
-        return config?.enemyName ?? "未知敵人";
+        enemyId = 2;
+        enemyName = "哥布林";
+        prefabPath = "character/wolf";
+        maxBlood = 150f;
+        currentBlood = 150f;
+        diceSides = new int[] { 1, 2, 3, 4 };
+        diceCount = 6;
+        skillData = new List<ISkillData>() { new Punch() };
+        maxRollCount = 1; //最大擲骰次數
+    }
+}
+public class WolfGirlData : EnemyData
+{
+    public WolfGirlData()
+    {
+        enemyId = 3;
+        enemyName = "狼女";
+        description = "受傷會增加骰子數量，使用技能會減少骰子數量。";
+        prefabPath = "character/wolfGirl";
+        maxBlood = 150f;
+        currentBlood = 150f;
+        diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
+        diceCount = 2;
+        skillData = new List<ISkillData>() { new ClawAttack() };
+        maxRollCount = 1; //最大擲骰次數
+    }
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        diceCount += 6;
+    }
+    public override void UseSkill()
+    {
+        base.UseSkill();
+        diceCount -= 6;
     }
 }
