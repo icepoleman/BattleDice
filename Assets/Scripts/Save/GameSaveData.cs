@@ -10,6 +10,8 @@ public class GameSaveData
     public string currentStage;          // 當前關卡
     public System.DateTime saveTime; // 最後存檔時間
     public CharacterSaveData playerData;   // 玩家角色資料
+    public List<ISkillData> hasSkills = new List<ISkillData>();    // 擁有的技能資料
+    public int gold;                     // 當前金幣數量
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度
 }

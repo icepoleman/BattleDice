@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField]
@@ -13,7 +14,10 @@ public class DialogueManager : MonoBehaviour
     private PlayerInputActions inputActions;
 
     private List<string> jumpTo = new List<string>();
-    
+
+    //test
+    public Image testImage;
+
     // 文本替換的特殊暗號
     private readonly string PLAYER_NAME_TOKEN = "{PlayerName}";
 
@@ -28,8 +32,8 @@ public class DialogueManager : MonoBehaviour
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
-       // ShowDialogue("test3");//讀取劇情
-        ShowDialogue(GameDataManager.AvgChapter);//讀取劇情
+         ShowDialogue("Prologue1_1");//讀取劇情
+        //ShowDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
     }
     void AddEvent()
     {
@@ -41,6 +45,7 @@ public class DialogueManager : MonoBehaviour
         // 解除綁定，避免記憶體洩漏
         inputActions.Player.next.performed -= OnNextClick;
         inputActions.Player.Disable();
+        PortraitManager.UnloadAll();
         EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
     void OnClickChoice(object[] args)
@@ -99,7 +104,7 @@ public class DialogueManager : MonoBehaviour
 
         if (pageIndex < lines.Count - 1)
         {
-            if(chatWindow.isTyping)
+            if (chatWindow.isTyping)
             {
                 //如果正在打字則直接顯示完整文本
                 chatWindow.CompleteDialogue();
@@ -116,7 +121,7 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
-    private void CheckDialogueCmd(int _page)
+    private async void CheckDialogueCmd(int _page)
     {
         if (nowChapter == "END")
         {
@@ -140,8 +145,13 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("更換背景:" + lines[_page].Background);
         }
         //更換立繪
-        if (lines[_page].Portrait != "")
+        if (lines[_page].Portrait != ""&& lines[_page].Character != "Hero")
         {
+            // 先載入角色立繪（如果尚未載入）
+            await PortraitManager.LoadRoleIfNeeded(lines[_page].Character);
+
+            // 顯示指定表情
+            testImage.sprite = PortraitManager.Show(lines[_page].Character, lines[_page].Portrait);
             Debug.Log("更換立繪:" + lines[_page].Portrait);
         }
         //紀錄flag
@@ -149,13 +159,17 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("紀錄flag:" + lines[_page].Flag);
         }
+        if(lines[_page].Character=="Camera"&&lines[_page].Anim=="shake")
+        {
+            EventCenter.Dispatch(MapEvent.EVENT_SHAKE_CAMERA);
+        }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
         {
             // 替換文本中的玩家名字
             string processedDialogue = ReplacePlayerName(lines[pageIndex].Dialogue);
             string processedCharacter = ReplacePlayerName(lines[pageIndex].Character);
-            
+
             chatWindow.ShowDialogue(processedCharacter, processedDialogue);
         }
         else
@@ -164,13 +178,13 @@ public class DialogueManager : MonoBehaviour
             OnNextClick(new InputAction.CallbackContext());
         }
     }
-    
+
     // 替換玩家名字的方法
     private string ReplacePlayerName(string originalText)
     {
         if (string.IsNullOrEmpty(originalText))
             return originalText;
-        
+
         if (originalText.Contains(PLAYER_NAME_TOKEN))
         {
             string playerName = GetPlayerName();
@@ -178,10 +192,10 @@ public class DialogueManager : MonoBehaviour
             Debug.Log($"文本替換: {PLAYER_NAME_TOKEN} → {playerName}");
             return processedText;
         }
-        
+
         return originalText;
     }
-    
+
     // 獲取玩家名字
     private string GetPlayerName()
     {
@@ -190,11 +204,11 @@ public class DialogueManager : MonoBehaviour
         {
             return GameDataManager.PlayerName;
         }
-        
+
         // 預設名字
         return "主角";
     }
-    
+
     void JumpToTag(string _tag)
     {
         for (int i = 0; i < lines.Count; i++)

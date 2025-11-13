@@ -7,14 +7,15 @@ public class DialogueData
 {
     public string Chapter;
     public string Character;
-    public string Dialogue;
-    public string Portrait;
-    public string Background;
+    public string Dialogue;//對話內容
+    public string Portrait;//表情立繪
+    public string Pos;
     public string[] Choices;
     public string[] JumpTo;
     public string Tag;
     public string Anim;
     public string Flag;
+    public string Background;
 }
 [System.Serializable]
 public class MapData
@@ -39,13 +40,13 @@ public class CSVReader
             return instance;
         }
     }
-    
+
     // 載入對話資料
     public List<DialogueData> LoadDialogueCSV(string fileName)
     {
         List<DialogueData> lines = new List<DialogueData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", fileName+".csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", fileName + ".csv");
 
         if (!File.Exists(filePath))
         {
@@ -68,7 +69,7 @@ public class CSVReader
             data.Character = values.Length > 1 ? values[1] : "";
             data.Dialogue = values.Length > 2 ? values[2] : "";
             data.Portrait = values.Length > 3 ? values[3] : "";
-            data.Background = values.Length > 4 ? values[4] : "";
+            data.Pos = values.Length > 4 ? values[4] : "";
 
             data.Choices = values.Length > 5 && !string.IsNullOrEmpty(values[5]) ? values[5].Split('|') : new string[0];
             data.JumpTo = values.Length > 6 && !string.IsNullOrEmpty(values[6]) ? values[6].Split('|') : new string[0];
@@ -76,20 +77,20 @@ public class CSVReader
             data.Tag = values.Length > 7 ? values[7] : "";
             data.Anim = values.Length > 8 ? values[8] : "";
             data.Flag = values.Length > 9 ? values[9] : "";
-
+            data.Background = values.Length > 10 ? values[10] : "";
             lines.Add(data);
         }
 
         Debug.Log($"✅ 從 StreamingAssets 載入對話資料完成，共 {lines.Count} 行: {filePath}");
         return lines;
     }
-    
+
     // 載入地圖資料
     public List<MapData> LoadMapCSV(string fileName)
     {
         List<MapData> lines = new List<MapData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Map/", fileName+".csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Map/", fileName + ".csv");
 
         if (!File.Exists(filePath))
         {
@@ -118,7 +119,7 @@ public class CSVReader
         Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {filePath}");
         return lines;
     }
-    
+
     // 通用 CSV 載入方法（可指定子資料夾）
     public List<T> LoadGenericCSV<T>(string fileName, string subFolder, System.Func<string[], T> parseFunction) where T : class
     {
@@ -142,7 +143,7 @@ public class CSVReader
 
             string[] values = line.Split(',');
             T data = parseFunction(values);
-            
+
             if (data != null)
                 lines.Add(data);
         }

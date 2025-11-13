@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ChatWindow : MonoBehaviour
 {
-    [SerializeField] private TMP_Text dialogueText; // 對話框文字
-    [SerializeField] private TMP_Text nameText; // 角色名稱文字
+    [SerializeField] private Text dialogueText; // 對話框文字
+    [SerializeField] private Text nameText; // 角色名稱文字
     [SerializeField] private GameObject doneImg; // 對話結束圖示
 
     private Animator animator;

@@ -23,6 +23,7 @@ public class DiceGame : MonoBehaviour
     bool isOpen = false;
     [SerializeField] TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
     [SerializeField] TMPro.TextMeshProUGUI txt_enemyDescription = null;//測試用
+    [SerializeField] TMPro.TextMeshProUGUI txt_enemyDiceCount = null;//測試用
 
     void Start()
     {
@@ -45,7 +46,11 @@ public class DiceGame : MonoBehaviour
         AddEvent();
         ChangeState(TurnState.roundStart);
     }
-    
+    void Update()
+    {
+        //測試用 顯示敵人骰子數量
+        txt_enemyDiceCount.text = enemyData.diceCount.ToString();
+    }
     // 通用角色生成方法
     CharacterView CreateCharacter(string prefabPath, string positionName)
     {
@@ -112,8 +117,7 @@ public class DiceGame : MonoBehaviour
                 StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, () =>
                 {
                     //敵人使用技能;
-                    enemyData.skillData[0].diceBox = enemyRoll;
-                    enemyData.skillData[0].Use();
+                    enemyData.UseSkill();
                     ChangeState(TurnState.roundEnd);
                 }));
                 //enemy特寫擲骰 顯示使用技能
@@ -152,6 +156,7 @@ public class DiceGame : MonoBehaviour
             {
                 onChooseSkillDice.Add(sideNum);
                 manaRoller.chosenSkillData.AddDiceData(sideNum);
+                Debug.Log("Added dice " + sideNum + " to skill ");
             }
         }
         else

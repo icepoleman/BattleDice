@@ -118,7 +118,7 @@ public class StateManager : MonoBehaviour
     void OnEnterAVG(object[] args)
     {
         string _chapter = (string)args[0];
-        GameDataManager.AvgChapter = _chapter;
+        GameDataManager.TmpAvgChapter = _chapter;
         SceneLoader.LoadScene("AVGScene");
         Debug.Log("StateManager: 進入 AVG 模式");
         ChangeState(GameState.AVG);

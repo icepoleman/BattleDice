@@ -49,6 +49,7 @@ public class ManaRollerDice : MonoBehaviour
         else
         {
             UnSkillDice();
+            Debug.Log("此骰子不符合技能需求");
         }
     }
     //取消選取技能骰

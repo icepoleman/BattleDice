@@ -9,9 +9,9 @@ public static class EnemyFactory
         {
             case 1:
                 return new SlimeData();
-            case 2:
-                return new WolfData();
-            case 3:
+            case 102:
+                return new GoblinData();
+            case 103:
                 return new WolfGirlData();
             default:
                 Debug.LogError("EnemyFactory: 未知的敵人 ID " + enemyId);
@@ -30,7 +30,16 @@ public class EnemyData : BaseCharacterData
     public int goldReward = 0;
     public virtual void UseSkill()
     {
-        // 預設技能使用邏輯
+        //從skillData最後面的開始使用技能 成功使出一個技能就結束
+        /*for (int i = skillData.Count - 1; i >= 0; i--)
+        {
+            skillData[i].diceBox = rollDiceResult;
+            skillData[i].Use();
+            if (skillData[i].canUseSkill())
+            {
+                break;
+            }
+        }*/
         skillData[0].diceBox = rollDiceResult;
         skillData[0].Use();
     }
@@ -51,17 +60,17 @@ public class SlimeData : EnemyData
         maxRollCount = 1; //最大擲骰次數
     }
 }
-public class WolfData : EnemyData
+public class GoblinData : EnemyData
 {
-    public WolfData()
+    public GoblinData()
     {
-        enemyId = 2;
+        enemyId = 102;
         enemyName = "哥布林";
-        prefabPath = "character/wolf";
-        maxBlood = 150f;
-        currentBlood = 150f;
-        diceSides = new int[] { 1, 2, 3, 4 };
-        diceCount = 6;
+        prefabPath = "character/Goblin";
+        maxBlood = 100f;
+        currentBlood = 100f;
+        diceSides = new int[] { 1, 2, 3, 4, 5 };
+        diceCount = 4;
         skillData = new List<ISkillData>() { new Punch() };
         maxRollCount = 1; //最大擲骰次數
     }
@@ -70,13 +79,13 @@ public class WolfGirlData : EnemyData
 {
     public WolfGirlData()
     {
-        enemyId = 3;
+        enemyId = 103;
         enemyName = "狼女";
-        description = "受傷會增加骰子數量，使用技能會減少骰子數量。";
+        description = "受傷回合會增加骰子數量";
         prefabPath = "character/wolfGirl";
         maxBlood = 150f;
         currentBlood = 150f;
-        diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
+        diceSides = new int[] { 1, 2, 3, 4, 5 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new ClawAttack() };
         maxRollCount = 1; //最大擲骰次數
@@ -84,11 +93,18 @@ public class WolfGirlData : EnemyData
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        diceCount += 6;
+        //一回合只加一次骰子數量
+        if (diceCount < 4)
+        {
+            diceCount += 4;
+        }
     }
     public override void UseSkill()
     {
         base.UseSkill();
-        diceCount -= 6;
+        if (diceCount >= 4)
+        {
+            diceCount -= 4;
+        }
     }
 }

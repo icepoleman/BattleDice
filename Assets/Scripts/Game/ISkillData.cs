@@ -3,51 +3,43 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-public enum SkillID
+// 技能需求類型枚舉
+public enum SkillRequirementType
 {
-    None = 0,
-    FireBall = 1,
-    Kaminari = 2,
-    WindBlade = 3,
-    //DeBuffPoison = 4,
-    Punch = 4,
-    ClawAttack = 5
+    SpecificDices,    // 特定的骰子組合 (如 1,2,3)
+    SameDices,        // 相同的骰子 (如 兩個相同)
+    DiceSum,          // 骰子總和
+    AnyDice           // 任意骰子
 }
 
 // 技能工廠
 public static class SkillFactory
 {
-    public static ISkillData CreateSkill(SkillID skillId)
+    public static ISkillData CreateSkill(int skillId)
     {
-        return skillId switch
+        switch (skillId)
         {
-            SkillID.FireBall => new FireBall(),
-            SkillID.Kaminari => new Kaminari(),
-            SkillID.WindBlade => new WindBlade(),
-            //SkillID.DeBuffPoison => new DeBuffPoison(),
-            SkillID.Punch => new Punch(),
-            SkillID.ClawAttack => new ClawAttack(),
-            _ => null
-        };
-    }
-
-    public static SkillID GetSkillID(ISkillData skill)
-    {
-        return skill switch
-        {
-            FireBall => SkillID.FireBall,
-            Kaminari => SkillID.Kaminari,
-            WindBlade => SkillID.WindBlade,
-            // DeBuffPoison => SkillID.DeBuffPoison,
-            Punch => SkillID.Punch,
-            ClawAttack => SkillID.ClawAttack,
-            _ => SkillID.None
-        };
+            case 1:
+                return new FireBall();
+            case 2:
+                return new Kaminari();
+            case 3:
+                return new WindBlade();
+            // case (int)SkillID.DeBuffPoison:
+            //     return new DeBuffPoison();
+            case 4:
+                return new Punch();
+            case 5:
+                return new ClawAttack();
+            default:
+                UnityEngine.Debug.LogError("SkillFactory: 未知的技能 ID " + skillId);
+                return null;
+        }
     }
 }
 public interface ISkillData
 {
-    SkillID skillID { get; set; }
+    int skillID { get; set; }
     bool isDebuff { get; set; }
     bool acceptMoreDice { get; set; } // 新增：是否可以持續放入骰子
     string skillName { get; set; }
@@ -62,7 +54,7 @@ public interface ISkillData
 }
 public class BaseSkill : ISkillData
 {
-    public SkillID skillID { get; set; } = SkillID.None;
+    public int skillID { get; set; } = 0;
     public bool isDebuff { get; set; } = false;
     public bool acceptMoreDice { get; set; } = false;
     public string skillName { get; set; } = "BaseSkill";
@@ -70,26 +62,67 @@ public class BaseSkill : ISkillData
     public float damage { get; set; } = 0f;
     public List<int> diceBox { get; set; } = new List<int>();
     public int[] needDicesData { get; set; } = new int[] { 1 };
+    
+    // 技能需求配置
+    protected SkillRequirementType requirementType = SkillRequirementType.SpecificDices;
+    protected int requiredSum = 0;        // 需要的總和
+    protected int requiredSameCount = 2;  // 需要的相同數量
+    
     public virtual bool canUseSkill()
     {
         return false;
     }
+    
     public void AddDiceData(int _dice)
     {
         diceBox.Add(_dice);
     }
+    
     public void RemoveDiceData(int _dice)
     {
         diceBox.Remove(_dice);
     }
+    
     public virtual List<int> GetNeedDices()
     {
-        // if (canUseSkill()) return null;
-        //回傳needDicesData但要移除diceBox已有的
+        // 達成條件且不接受更多骰子時返回無效值
+        if (!acceptMoreDice && canUseSkill())
+        {
+            return new List<int> { 666 };
+        }
+        
+        // 根據需求類型返回對應的骰子需求
+        return requirementType switch
+        {
+            SkillRequirementType.SpecificDices => GetSpecificDicesRequired(),
+            SkillRequirementType.SameDices => GetSameDicesRequired(),
+            SkillRequirementType.DiceSum => GetSumDicesRequired(),
+            SkillRequirementType.AnyDice => new List<int> { 1, 2, 3, 4, 5, 6 },
+            _ => new List<int>()
+        };
+    }
+    
+    protected virtual List<int> GetSpecificDicesRequired()
+    {
         List<int> needDices = new List<int>(needDicesData);
         needDices.RemoveAll(n => diceBox.Contains(n));
         return needDices;
     }
+    
+    protected virtual List<int> GetSameDicesRequired()
+    {
+        if (diceBox.Count > 0)
+        {
+            return new List<int> { diceBox[0] };
+        }
+        return new List<int> { 1, 2, 3, 4, 5, 6 };
+    }
+    
+    protected virtual List<int> GetSumDicesRequired()
+    {
+        return new List<int> { 1, 2, 3, 4, 5, 6 };
+    }
+    
     public virtual void Use()
     {
         if (canUseSkill())
@@ -110,13 +143,14 @@ public class FireBall : BaseSkill
 {
     public FireBall()
     {
-        skillID = SkillID.FireBall;
+        skillID = 1;
         skillName = "火球";
         cardTitle = "火球術 1,2,3   造成80點傷害";
         damage = 80f;
         needDicesData = new int[] { 1, 2, 3 };
+        requirementType = SkillRequirementType.SpecificDices;  // 設定需求類型
     }
-
+    
     public override bool canUseSkill()
     {
         // 檢查是否同時有 1,2,3
@@ -155,80 +189,53 @@ public class Kaminari : BaseSkill
 {
     public Kaminari()
     {
-        skillID = SkillID.Kaminari;
+        skillID = 2;
         skillName = "雷電";
         cardTitle = "雷電 相同兩個   造成30點傷害";
         damage = 30f;
+        requirementType = SkillRequirementType.SameDices;
+        requiredSameCount = 2;
     }
 
     public override bool canUseSkill()
     {
-        return diceBox.GroupBy(x => x).Any(g => g.Count() >= 2);
-    }
-
-    public override List<int> GetNeedDices()
-    {
-        //回傳重複的骰子
-        List<int> needDices = new List<int>();
-        if (diceBox != null && diceBox.Count > 0)
-        {
-            needDices.Add(diceBox[0]);
-        }
-        else
-        {
-            //如果是空就會傳1~6
-            for (int i = 1; i <= 6; i++)
-            {
-                needDices.Add(i);
-            }
-        }
-        if (canUseSkill())
-            return new List<int> { 666 };
-        return needDices;
+        return diceBox.GroupBy(x => x).Any(g => g.Count() >= requiredSameCount);
     }
 }
 public class WindBlade : BaseSkill
 {
     public WindBlade()
     {
-        skillID = SkillID.WindBlade;
+        skillID = 3;
         skillName = "風刃";
         cardTitle = "風刃 點數大於6   造成10點傷害";
         damage = 10f;
+        requirementType = SkillRequirementType.DiceSum;
+        requiredSum = 6;
     }
 
     public override bool canUseSkill()
     {
-        return diceBox.Sum() > 6;
-    }
-
-    public override List<int> GetNeedDices()
-    {
-        //回傳所有骰子
-        List<int> needDices = new List<int> { 1, 2, 3, 4, 5, 6 };
-        return needDices;
+        return diceBox.Sum() >= requiredSum;
     }
 }
 public class Punch : BaseSkill
 {
     public Punch()
     {
-        skillID = SkillID.Punch;
+        skillID = 4;
         skillName = "拳頭";
         cardTitle = "拳頭 任何骰子 總和";
         damage = 0f;
         acceptMoreDice = true;
+        requirementType = SkillRequirementType.AnyDice;
     }
 
     public override bool canUseSkill()
     {
         return diceBox.Count >= 1;
     }
-    public override List<int> GetNeedDices()
-    {
-        List<int> needDices = new List<int> { 1, 2, 3, 4, 5, 6 };
-        return needDices;
-    }
+    
     public override void Use()
     {
         damage = diceBox.Sum();
@@ -239,22 +246,19 @@ public class ClawAttack : BaseSkill
 {
     public ClawAttack()
     {
-        skillID = SkillID.ClawAttack;
+        skillID = 5;
         skillName = "爪擊";
         cardTitle = "爪擊 任何骰子 總和*2";
         damage = 0f;
         acceptMoreDice = true;
+        requirementType = SkillRequirementType.AnyDice;
     }
 
     public override bool canUseSkill()
     {
         return diceBox.Count >= 1;
     }
-    public override List<int> GetNeedDices()
-    {
-        List<int> needDices = new List<int> { 1, 2, 3, 4, 5, 6 };
-        return needDices;
-    }
+    
     public override void Use()
     {
         damage = diceBox.Sum() * 2;

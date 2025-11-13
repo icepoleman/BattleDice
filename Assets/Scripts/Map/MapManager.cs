@@ -1,16 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum StageType
-{
-    Story,     // 劇情關卡
-    Battle,    // 戰鬥關卡
-    Shop,      // 商店
-    Boss,       // 頭目關卡
-    SavePoint,  // 整備室
-    Item       // 道具關卡
-}
 public class MapManager : MonoBehaviour
 {
     [SerializeField] int currentRow = 1;//橫排編號
@@ -20,6 +12,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Transform stageBurnPos;
     [SerializeField] Slider slider_blood;
     [SerializeField] Text slider_blood_text;
+    [SerializeField] Text text_gold;
     Transform nowRowTrans;
     List<MapData> mapDatas = new List<MapData>();//關卡資料
     List<int> list_rowCount = new List<int>(); // row=1~5
@@ -29,7 +22,7 @@ public class MapManager : MonoBehaviour
         obj_stageNode.SetActive(false);
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
-
+        text_gold.text = GameDataManager.Gold.ToString();
         SetRowColFromID(GameDataManager.CurrentStage, ref currentRow, ref currentCol);
         mapDatas = CSVReader.Instance.LoadMapCSV("map" + GameDataManager.CurrentMap);
         int burnRow = 0;
@@ -55,9 +48,47 @@ public class MapManager : MonoBehaviour
             stageNodeObj.name = "StageNode_" + mapData.stageID;
             stageNodeObj.SetActive(true);
             StageNode stageNode = stageNodeObj.GetComponent<StageNode>();
-            stageNode.SetData(mapData.stageID, mapData.type, mapData.stageInfo, row);     
+            stageNode.SetData(mapData.stageID, mapData.type, mapData.stageInfo, row);
         }
         GetNextRowOpenStage(currentRow, currentCol);
+        AddEvent();
+    }
+    void AddEvent()
+    {
+        EventCenter.AddListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
+        EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+    }
+    void OnDestroy()
+    {
+        EventCenter.RemoveListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
+        EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+    }
+    void OnRecoverHealth(object[] param)
+    {
+        int recoverAmount = (int)param[0];
+        GameDataManager.PlayerData.currentBlood += recoverAmount;
+        if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
+        {
+            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+        }
+        slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
+        slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
+        GoNextRowOpenStage();
+    }
+    void OnGetGold(object[] param)
+    {
+        int goldAmount = (int)param[0];
+        GameDataManager.Gold += goldAmount;
+        text_gold.text = GameDataManager.Gold.ToString();
+        Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
+        GoNextRowOpenStage();
+    }
+    void GoNextRowOpenStage()
+    {
+        SetRowColFromID(GameDataManager.CurrentStage, ref currentRow, ref currentCol);
+        GetNextRowOpenStage(currentRow, currentCol);
+        EventCenter.Dispatch(MapEvent.EVENT_CLOSE_ROW_STAGE_NODE, currentRow);
+        Debug.Log("關閉第 " + (currentRow - 1) + " 排關卡節點");
     }
     void SetRowColFromID(string stageID, ref int row, ref int col)
     {
@@ -84,7 +115,7 @@ public class MapManager : MonoBehaviour
     {
         int _nowRow = list_rowCount[row - 1];
         int _nextRow = list_rowCount[row];
-        
+
         if (_nextRow >= list_rowCount.Count)
         {
             Debug.Log("No Next Level");
@@ -153,7 +184,7 @@ public class MapManager : MonoBehaviour
             else if (col == 4)
             {
                 openStages.Add($"{row + 1}-" + (col - 2));
-                openStages.Add($"{row + 1}-" + (col - 1));  
+                openStages.Add($"{row + 1}-" + (col - 1));
             }
             else if (col == 5)
                 openStages.Add($"{row + 1}-" + (col - 2));

@@ -23,6 +23,10 @@ public class MapEvent
 { 
     public const string EVENT_OPEN_STAGE_NODE = "MapEvent_OpenStageNode"; //開啟關卡節點事件
     public const string EVENT_OPEN_ROW_STAGE_NODE = "MapEvent_OpenRowStageNode"; //開啟整排row關卡節點事件
+    public const string EVENT_CLOSE_ROW_STAGE_NODE = "MapEvent_CloseRowStageNode"; //關閉整排row關卡節點事件
+    public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
+    public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知
+    public const string EVENT_SHAKE_CAMERA = "MapEvent_ShakeCamera"; //震動camera
 }
 public class AdvEvent
 {

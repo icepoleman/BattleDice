@@ -24,5 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ShopScene.unity
     guid: a7806eb323daf36499210e6410a0f0ca
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 12ac664b45e94ca4c87e7ad23adc325a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0

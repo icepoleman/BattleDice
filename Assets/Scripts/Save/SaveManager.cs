@@ -27,6 +27,8 @@ public static class SaveManager
         currentSave.playerData = GameDataManager.PlayerData.ToSaveData();
         currentSave.currentStage = GameDataManager.CurrentStage;
         currentSave.currentMap = GameDataManager.CurrentMap;
+        currentSave.hasSkills = GameDataManager.HasSkills;
+        currentSave.gold = GameDataManager.Gold;
         try
         {
             currentSave.saveTime = System.DateTime.Now;
@@ -51,6 +53,12 @@ public static class SaveManager
             {
                 string json = System.IO.File.ReadAllText(targetFilePath);
                 currentSave = JsonUtility.FromJson<GameSaveData>(json);
+                GameDataManager.PlayerName = currentSave.playerName;
+                GameDataManager.PlayerData.LoadFromSaveData(currentSave.playerData);
+                GameDataManager.CurrentStage = currentSave.currentStage;
+                GameDataManager.CurrentMap = currentSave.currentMap;
+                GameDataManager.HasSkills = currentSave.hasSkills;
+                GameDataManager.Gold = currentSave.gold;
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
             }

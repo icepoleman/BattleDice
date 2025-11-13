@@ -524,10 +524,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: game
       objectReference: {fileID: 0}
-    - target: {fileID: 6428730135399880518, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7162778131677427164, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

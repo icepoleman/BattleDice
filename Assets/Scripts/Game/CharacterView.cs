@@ -13,6 +13,7 @@ public class CharacterView : MonoBehaviour
     private Slider slider_blood = null;
     //生成彈出文字
     private Sprite[] diceSprites;
+    private Text text_diceCount;
 
     public void Init()
     {
@@ -20,6 +21,7 @@ public class CharacterView : MonoBehaviour
         diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
         txt_blood = gameObject.transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
         slider_blood = gameObject.transform.Find("slider_blood").GetComponent<Slider>();
+        text_diceCount = gameObject.transform.Find("img_dice/txt_diceCount").GetComponent<Text>();
         animator = GetComponent<Animator>();
     }
 

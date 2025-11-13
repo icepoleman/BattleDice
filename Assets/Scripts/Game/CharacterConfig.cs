@@ -81,7 +81,7 @@ public class PlayerData : BaseCharacterData
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         diceCount = 3;
         keepDiceCount = 2;
-        skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new Punch() };
+        skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new WindBlade() };
         maxRollCount = 1; //最大擲骰次數
     }
         // 轉換為可存檔的資料
@@ -95,7 +95,7 @@ public class PlayerData : BaseCharacterData
             diceCount = diceCount,
             keepDiceCount = keepDiceCount,
             maxRollCount = maxRollCount,
-            skillIDs = skillData.Select(skill => (int)SkillFactory.GetSkillID(skill)).ToList()
+            skillIDs = skillData.Select(skill => skill.skillID).ToList()
         };
     }
     
@@ -111,7 +111,7 @@ public class PlayerData : BaseCharacterData
         
         // 從技能ID重建技能列表
         skillData = saveData.skillIDs
-            .Select(id => SkillFactory.CreateSkill((SkillID)id))
+            .Select(id => SkillFactory.CreateSkill(id))
             .Where(skill => skill != null)
             .ToList();
     }
