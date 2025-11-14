@@ -6,42 +6,7 @@ public class PortraitStageManager : MonoBehaviour
     float spacing = 350f; // 角色間距
     //字典 名稱 對應 RoleView
     Dictionary<string, RoleView> roleViews = new Dictionary<string, RoleView>();
-    private void Start()
-    {
-        PortraitManager.LoadRoleIfNeeded("JailerGirl");
-        PortraitManager.LoadRoleIfNeeded("WolfGirl");
-        PortraitManager.LoadRoleIfNeeded("Witch");
-    }
-    private void Update()
-    {
-        //按下空白鍵 測試用
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            // Alice 出現在 Left
-            SetCharacter("JailerGirl", PortraitManager.Show("JailerGirl", "angry"), "", "Right");
-        }
-        //按下a
-        if (Input.GetKeyDown(KeyCode.A))
-            // Alice 出現在 Left
-            SetCharacter("JailerGirl", PortraitManager.Show("JailerGirl", "happy"), "", "Left");
 
-        //按下a
-        if (Input.GetKeyDown(KeyCode.S))
-            // Alice 出現在 Left
-            SetCharacter("JailerGirl", PortraitManager.Show("JailerGirl", "angry"), "", "Center");
-
-        //按下z
-        if (Input.GetKeyDown(KeyCode.Z))
-            // Alice 離開舞台
-            SetCharacter("JailerGirl", PortraitManager.Show("JailerGirl", "happy"), "", "Left");
-        if (Input.GetKeyDown(KeyCode.X))
-            // Alice 離開舞台
-            SetCharacter("Witch", PortraitManager.Show("Witch", "happy"), "", "Center");
-        if (Input.GetKeyDown(KeyCode.C))
-            // Alice 離開舞台
-            SetCharacter("WolfGirl", PortraitManager.Show("WolfGirl", "happy"), "", "Right");
-
-    }
     public void SetCharacter(string characterName, Sprite _newPortrait, string _animationName, string portraitPos)
     {
         string oldPosition = null;
@@ -64,6 +29,8 @@ public class PortraitStageManager : MonoBehaviour
             RoleView roleView = roleViewObj.GetComponent<RoleView>();
             roleViews[characterName] = roleView;
 
+            if(portraitPos=="")
+                portraitPos = "Center";
             // 先設置角色信息，但不執行位置動畫
             roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
 

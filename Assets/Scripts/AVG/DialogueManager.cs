@@ -15,8 +15,7 @@ public class DialogueManager : MonoBehaviour
 
     private List<string> jumpTo = new List<string>();
 
-    //test
-    public Image testImage;
+    public PortraitStageManager stageManager;
 
     // 文本替換的特殊暗號
     private readonly string PLAYER_NAME_TOKEN = "{PlayerName}";
@@ -32,8 +31,8 @@ public class DialogueManager : MonoBehaviour
         chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
-         ShowDialogue("Prologue1_1");//讀取劇情
-        //ShowDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
+        // ShowDialogue("Prologue1_1");//讀取劇情
+        ShowDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
     }
     void AddEvent()
     {
@@ -79,7 +78,10 @@ public class DialogueManager : MonoBehaviour
         if (nowChapter == "END")
         {
             Debug.Log("劇情結束");
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+            if (GameDataManager.TestMode)
+                UnityEngine.SceneManagement.SceneManager.LoadScene("TestAdvMenu");
+            else
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
             return;//劇情結束不處理
         }
 
@@ -134,24 +136,19 @@ public class DialogueManager : MonoBehaviour
         {
             jumpTo = new List<string>(lines[_page].JumpTo);
         }
-        //播放動畫
-        if (lines[_page].Anim != "")
-        {
-            Debug.Log("播放動畫:" + lines[_page].Anim);
-        }
         //更換背景
         if (lines[_page].Background != "")
         {
             Debug.Log("更換背景:" + lines[_page].Background);
         }
         //更換立繪
-        if (lines[_page].Portrait != ""&& lines[_page].Character != "Hero")
+        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Camera")
         {
             // 先載入角色立繪（如果尚未載入）
             await PortraitManager.LoadRoleIfNeeded(lines[_page].Character);
 
-            // 顯示指定表情
-            testImage.sprite = PortraitManager.Show(lines[_page].Character, lines[_page].Portrait);
+            Sprite _sprite = PortraitManager.Show(lines[_page].Character, lines[_page].Portrait);
+            stageManager.SetCharacter(lines[_page].Character, _sprite, lines[_page].Anim, lines[_page].Pos);
             Debug.Log("更換立繪:" + lines[_page].Portrait);
         }
         //紀錄flag
@@ -159,7 +156,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("紀錄flag:" + lines[_page].Flag);
         }
-        if(lines[_page].Character=="Camera"&&lines[_page].Anim=="shake")
+        if (lines[_page].Character == "Camera" && lines[_page].Anim == "shake")
         {
             EventCenter.Dispatch(MapEvent.EVENT_SHAKE_CAMERA);
         }
