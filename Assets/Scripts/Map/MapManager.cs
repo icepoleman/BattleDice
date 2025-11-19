@@ -2,66 +2,46 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] int currentRow = 1;//橫排編號
-    [SerializeField] int currentCol = 1;//直排編號
-    [SerializeField] GameObject obj_rowParent; //行父物件
-    [SerializeField] GameObject obj_stageNode; //關卡節點預製物件
-    [SerializeField] Transform stageBurnPos;
     [SerializeField] Slider slider_blood;
     [SerializeField] Text slider_blood_text;
     [SerializeField] Text text_gold;
-    Transform nowRowTrans;
-    List<MapData> mapDatas = new List<MapData>();//關卡資料
-    List<int> list_rowCount = new List<int>(); // row=1~5
+    [SerializeField] Transform trans_mapParent;
+
+    private AsyncOperationHandle<GameObject> mapHandle;
+    private GameObject currentMapInstance;
+    //List<MapData> mapDatas = new List<MapData>();//關卡資料
     void Start()
     {
-        obj_rowParent.SetActive(false);
-        obj_stageNode.SetActive(false);
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
-        SetRowColFromID(GameDataManager.CurrentStage, ref currentRow, ref currentCol);
-        mapDatas = CSVReader.Instance.LoadMapCSV("map" + GameDataManager.CurrentMap);
-        int burnRow = 0;
-        list_rowCount = new List<int>();
-        foreach (var mapData in mapDatas)
-        {
-            int row = 0, col = 0;
-            SetRowColFromID(mapData.stageID, ref row, ref col);
-            if (burnRow != row)
-            {
-                burnRow = row;
-                GameObject rowObj = Instantiate(obj_rowParent, stageBurnPos);
-                rowObj.name = "Row_" + row.ToString();
-                nowRowTrans = rowObj.transform;
-                rowObj.SetActive(true);
-                list_rowCount.Add(1);
-            }
-            else
-            {
-                list_rowCount[row - 1]++;
-            }
-            GameObject stageNodeObj = Instantiate(obj_stageNode, nowRowTrans);
-            stageNodeObj.name = "StageNode_" + mapData.stageID;
-            stageNodeObj.SetActive(true);
-            StageNode stageNode = stageNodeObj.GetComponent<StageNode>();
-            stageNode.SetData(mapData.stageID, mapData.type, mapData.stageInfo, row);
-        }
-        GetNextRowOpenStage(currentRow, currentCol);
+
+        // Addressables載入地圖prefab
+        LoadMapPrefab("Map" + GameDataManager.CurrentMap);
+
         AddEvent();
     }
     void AddEvent()
     {
         EventCenter.AddListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
+        EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
     }
     void OnDestroy()
     {
         EventCenter.RemoveListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
+        EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
+
+        // 卸載 Addressables 資源
+        UnloadMapPrefab();
     }
     void OnRecoverHealth(object[] param)
     {
@@ -73,7 +53,7 @@ public class MapManager : MonoBehaviour
         }
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
-        GoNextRowOpenStage();
+        GoNextOpenStage();
     }
     void OnGetGold(object[] param)
     {
@@ -81,115 +61,70 @@ public class MapManager : MonoBehaviour
         GameDataManager.Gold += goldAmount;
         text_gold.text = GameDataManager.Gold.ToString();
         Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
-        GoNextRowOpenStage();
+        GoNextOpenStage();
     }
-    void GoNextRowOpenStage()
+    void OnGetGear(object[] param)
     {
-        SetRowColFromID(GameDataManager.CurrentStage, ref currentRow, ref currentCol);
-        GetNextRowOpenStage(currentRow, currentCol);
-        EventCenter.Dispatch(MapEvent.EVENT_CLOSE_ROW_STAGE_NODE, currentRow);
-        Debug.Log("關閉第 " + (currentRow - 1) + " 排關卡節點");
+        int gearAmount = (int)param[0];
+        GameDataManager.GearNum += gearAmount;
+        Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.GearNum}");
+        GoNextOpenStage();
     }
-    void SetRowColFromID(string stageID, ref int row, ref int col)
+    //特殊道具用
+    void OnGetItem(object[] param)
     {
-        string[] parts = stageID.Split('-');
-        if (parts.Length == 2)
+        string itemName = (string)param[0];
+        GoNextOpenStage();
+    }
+    void GoNextOpenStage()
+    {
+        EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
+    }
+
+    // 載入地圖 Prefab
+    private async void LoadMapPrefab(string mapPrefabAddress)
+    {
+        try
         {
-            if (int.TryParse(parts[0], out int r) && int.TryParse(parts[1], out int c))
+            Debug.Log($"開始載入地圖: {mapPrefabAddress}");
+
+            mapHandle = Addressables.LoadAssetAsync<GameObject>(mapPrefabAddress);
+            GameObject mapPrefab = await mapHandle.Task;
+
+            if (mapHandle.Status == AsyncOperationStatus.Succeeded)
             {
-                row = r;
-                col = c;
+                // 實例化地圖 prefab
+                currentMapInstance = Instantiate(mapPrefab, trans_mapParent);
+                currentMapInstance.transform.localPosition = Vector3.zero;
+                currentMapInstance.transform.localScale = Vector3.one;
+                GoNextOpenStage();
+                Debug.Log("地圖載入並實例化成功");
             }
             else
             {
-                Debug.LogError($"無法解析關卡ID: {stageID}");
+                Debug.LogError($"載入地圖失敗: {mapHandle.OperationException}");
             }
         }
-        else
+        catch (System.Exception e)
         {
-            Debug.LogError($"關卡ID格式錯誤: {stageID}");
+            Debug.LogError($"載入地圖時發生錯誤: {e.Message}");
         }
     }
 
-    void GetNextRowOpenStage(int row, int col)
+    // 卸載地圖 Prefab
+    private void UnloadMapPrefab()
     {
-        int _nowRow = list_rowCount[row - 1];
-        int _nextRow = list_rowCount[row];
-
-        if (_nextRow >= list_rowCount.Count)
+        if (currentMapInstance != null)
         {
-            Debug.Log("No Next Level");
-            return; // 沒下一排了
+            Destroy(currentMapInstance);
+            currentMapInstance = null;
+            Debug.Log("地圖實例已銷毀");
         }
 
-        if (_nowRow == 1 || _nextRow == 1)
+        if (mapHandle.IsValid())
         {
-            EventCenter.Dispatch(MapEvent.EVENT_OPEN_ROW_STAGE_NODE, row + 1);
-            Debug.Log($"第 {row + 1} 排全開");
-        }
-
-        if (_nowRow == 3 && _nextRow == 5)
-        {
-            List<string> openStages = new List<string>();
-            openStages.Add($"{row + 1}-" + col);
-            openStages.Add($"{row + 1}-" + (col + 1));
-            openStages.Add($"{row + 1}-" + (col + 2));
-            EventCenter.Dispatch(MapEvent.EVENT_OPEN_STAGE_NODE, openStages);
-            Debug.Log($"Next Level: Row {openStages}");
-        }
-
-        if (_nowRow == 5 && _nextRow == 5)
-        {
-            List<string> openStages = new List<string>();
-            if (col == 1)
-            {
-                openStages.Add($"{row + 1}-" + col);
-                openStages.Add($"{row + 1}-" + (col + 1));
-            }
-            else if (col == 5)
-            {
-                openStages.Add($"{row + 1}-" + (col - 1));
-                openStages.Add($"{row + 1}-" + col);
-            }
-            else
-            {
-                openStages.Add($"{row + 1}-" + (col - 1));
-                openStages.Add($"{row + 1}-" + col);
-                openStages.Add($"{row + 1}-" + (col + 1));
-            }
-            EventCenter.Dispatch(MapEvent.EVENT_OPEN_STAGE_NODE, openStages);
-            //log出openStages
-            foreach (var stage in openStages)
-            {
-                Debug.Log(stage);
-            }
-        }
-        if (_nowRow == 5 && _nextRow == 3)
-        {
-            List<string> openStages = new List<string>();
-
-            if (col == 1)
-                openStages.Add($"{row + 1}-" + col);
-            else if (col == 2)
-            {
-                openStages.Add($"{row + 1}-" + (col - 1));
-                openStages.Add($"{row + 1}-" + col);
-            }
-            else if (col == 3)
-            {
-                openStages.Add($"{row + 1}-" + (col - 2));
-                openStages.Add($"{row + 1}-" + (col - 1));
-                openStages.Add($"{row + 1}-" + col);
-            }
-            else if (col == 4)
-            {
-                openStages.Add($"{row + 1}-" + (col - 2));
-                openStages.Add($"{row + 1}-" + (col - 1));
-            }
-            else if (col == 5)
-                openStages.Add($"{row + 1}-" + (col - 2));
-            EventCenter.Dispatch(MapEvent.EVENT_OPEN_STAGE_NODE, openStages);
-            Debug.Log($"Next Level: Row {openStages}");
+            Addressables.Release(mapHandle);
+            Debug.Log("地圖 Addressables 資源已釋放");
         }
     }
 }

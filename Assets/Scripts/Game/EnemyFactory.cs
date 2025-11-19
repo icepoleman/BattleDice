@@ -9,7 +9,7 @@ public static class EnemyFactory
         {
             case 1:
                 return new SlimeData();
-            case 102:
+            case 2:
                 return new GoblinData();
             case 103:
                 return new WolfGirlData();
@@ -26,7 +26,7 @@ public class EnemyData : BaseCharacterData
     public int enemyId = 0;
     public string enemyName = "敵人";
     public string description = "";
-    public string prefabPath = "";
+    public string spriteLabel = "";
     public int goldReward = 0;
     public virtual void UseSkill()
     {
@@ -51,7 +51,7 @@ public class SlimeData : EnemyData
     {
         enemyId = 1;
         enemyName = "史萊姆";
-        prefabPath = "character/Slime";
+        spriteLabel = "Slime_G";
         maxBlood = 50f;
         currentBlood = 50f;
         diceSides = new int[] { 1, 2 };
@@ -64,9 +64,9 @@ public class GoblinData : EnemyData
 {
     public GoblinData()
     {
-        enemyId = 102;
+        enemyId = 2;
         enemyName = "哥布林";
-        prefabPath = "character/Goblin";
+        spriteLabel = "Goblin_G";
         maxBlood = 100f;
         currentBlood = 100f;
         diceSides = new int[] { 1, 2, 3, 4, 5 };
@@ -81,11 +81,11 @@ public class WolfGirlData : EnemyData
     {
         enemyId = 103;
         enemyName = "狼女";
-        description = "受傷回合會增加骰子數量";
-        prefabPath = "character/wolfGirl";
+        description = "受傷回合骰子數量變6顆 攻擊後回復";
+        spriteLabel = "WolfGirl_G";
         maxBlood = 150f;
-        currentBlood = 150f;
-        diceSides = new int[] { 1, 2, 3, 4, 5 };
+        currentBlood = 15f;
+        diceSides = new int[] { 1, 2, 3, 4 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new ClawAttack() };
         maxRollCount = 1; //最大擲骰次數

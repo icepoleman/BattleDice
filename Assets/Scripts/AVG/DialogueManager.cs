@@ -75,16 +75,6 @@ public class DialogueManager : MonoBehaviour
     bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)
     {
-        if (nowChapter == "END")
-        {
-            Debug.Log("劇情結束");
-            if (GameDataManager.TestMode)
-                UnityEngine.SceneManagement.SceneManager.LoadScene("TestAdvMenu");
-            else
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
-            return;//劇情結束不處理
-        }
-
         //處理跳轉邏輯
         if (jumpTo.Count > 0)
         {
@@ -118,18 +108,31 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("沒文本了!");
-            nowChapter = "END";
             chatWindow.HideWindow();
         }
 
+        if (nowChapter == "END")
+        {
+            Debug.Log("劇情結束");
+            if (GameDataManager.TestMode)
+                UnityEngine.SceneManagement.SceneManager.LoadScene("TestAdvMenu");
+            else
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+            return;//劇情結束不處理
+        }
+        if (nowChapter == "Battle")
+        {
+            chatWindow.HideWindow();
+            Debug.Log("劇情結束 進入戰鬥"+int.Parse(lines[pageIndex].Flag));
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
+        }
     }
     private async void CheckDialogueCmd(int _page)
     {
-        if (nowChapter == "END")
+        if (lines[_page].Chapter != "")
         {
-            chatWindow.HideWindow();
-            Debug.Log("劇情結束");
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+            nowChapter = lines[_page].Chapter;
+            Debug.Log("切換章節:" + nowChapter);
         }
         //紀錄跳轉
         if (lines[_page].JumpTo.Length > 0)
@@ -158,7 +161,7 @@ public class DialogueManager : MonoBehaviour
         }
         if (lines[_page].Character == "Camera" && lines[_page].Anim == "shake")
         {
-            EventCenter.Dispatch(MapEvent.EVENT_SHAKE_CAMERA);
+            EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_CAMERA);
         }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")

@@ -6,25 +6,23 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class CharacterView : MonoBehaviour
 {
-    private Animator animator;
+    private Animator anim;
     private GameObject diceBox = null;
     //todo
     private TextMeshProUGUI txt_blood = null;
     private Slider slider_blood = null;
-    //生成彈出文字
     private Sprite[] diceSprites;
     private Text text_diceCount;
 
-    public void Init()
+    public virtual void Init()
     {
-        diceBox = gameObject.transform.Find("diceBox").gameObject;
+        diceBox = transform.Find("diceBox").gameObject;
         diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
-        txt_blood = gameObject.transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
-        slider_blood = gameObject.transform.Find("slider_blood").GetComponent<Slider>();
-        text_diceCount = gameObject.transform.Find("img_dice/txt_diceCount").GetComponent<Text>();
-        animator = GetComponent<Animator>();
+        txt_blood = transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
+        slider_blood = transform.Find("slider_blood").GetComponent<Slider>();
+        text_diceCount = transform.Find("img_dice/txt_diceCount").GetComponent<Text>();
+        anim = transform.GetComponent<Animator>();
     }
-
 
     // 只負責顯示骰子動畫，不處理數值邏輯
     public IEnumerator ShowRollAnimation(List<int> rollResults, System.Action onComplete = null)
@@ -52,16 +50,27 @@ public class CharacterView : MonoBehaviour
         // 執行回調，讓調用者決定後續行為
         onComplete?.Invoke();
     }
+    void ClearDiceBox()
+    {
+        foreach (Transform child in diceBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     public void UpdateBlood(float currentBlood, float maxBlood)
     {
         txt_blood.text = $"{currentBlood}/{maxBlood}";
         slider_blood.value = currentBlood / maxBlood;
     }
     // 公開方法供 DiceGame 直接呼叫
-    public void PlayAnim(string animName)
+    public virtual void PlayAnim(string animName)
     {
-        animator.SetTrigger(animName);
+        anim.Play(animName);
         Debug.Log("播放" + animName + "動畫");
+    }
+    public void UpdateDiceCount(int count)
+    {
+        text_diceCount.text = count.ToString();
     }
     //生成飛行文字
     public void CreateFlyText(float damageAmount)
@@ -82,21 +91,6 @@ public class CharacterView : MonoBehaviour
         damageText.GetComponent<RectTransform>().DOMoveY(damageText.transform.position.y + 1, 1).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             Destroy(damageText);
-            //TODO 暫時放這
-            if (slider_blood.value <= 0)
-            {
-                PlayAnim("Die");
-                //todo die動畫完成後使用
-                EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
-            }
         });
-    }
-
-    void ClearDiceBox()
-    {
-        foreach (Transform child in diceBox.transform)
-        {
-            Destroy(child.gameObject);
-        }
     }
 }

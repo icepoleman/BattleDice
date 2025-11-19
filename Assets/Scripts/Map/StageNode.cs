@@ -8,71 +8,63 @@ public enum StageState
     Unlocked,  // 解鎖但未完成
     Completed  // 已完成
 }
+public enum StageType
+{
+    Story,
+    Battle,
+    SavePoint,
+    Item,
+    Blood,
+    Gold,
+    Skill,
+    Gear
+}
 public class StageNode : MonoBehaviour
 {
     //"關卡設定"
-    string stageID;              // 關卡唯一ID 1-1
-    string stageType;         // 關卡類型
-    string stageInfo;       //關卡資訊
-    int myRow;                    //關卡橫排
+    [Header("關卡編號")]
+    [SerializeField] string stageID;              // 關卡唯一ID 1-1
+    [Header("關卡類型")]
+    [SerializeField] StageType stageType;
+    [Header("關卡資訊")]
+    [SerializeField] string stageInfo;       //關卡資訊
 
     Image stageImage;
     Button nodeButton;
     StageState currentState;
-
+    [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
     void Awake()
     {
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_STAGE_NODE, OnOpenStageNode);
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_ROW_STAGE_NODE, OnOpenRowStageNode);
-        EventCenter.AddListener(MapEvent.EVENT_CLOSE_ROW_STAGE_NODE, OnCloseRowStageNode);
+        SetState(StageState.Locked);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
     }
     void OnDestroy()
     {
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_STAGE_NODE, OnOpenStageNode);
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_ROW_STAGE_NODE, OnOpenRowStageNode);
-        EventCenter.RemoveListener(MapEvent.EVENT_CLOSE_ROW_STAGE_NODE, OnCloseRowStageNode);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
     }
-    public void SetData(string id, string type, string info, int row)
+    public void OnOpenNextStageNode(object[] param)
     {
-        stageID = id;
-        stageType = type;
-        stageInfo = info;
-        stageImage.sprite = Resources.Load<Sprite>($"StageIcon/" + type);
-        //todo 暫時寫法
-        if (type == "Battle" && int.Parse(stageInfo) > 100)
-            stageImage.sprite = Resources.Load<Sprite>($"StageIcon/" + type + "Taff");
-        myRow = row;
-        SetState(StageState.Locked);
-    }
-    void OnOpenStageNode(object[] param)
-    {
-        List<string> targetStageID = (List<string>)param[0];
-        if (targetStageID.Contains(stageID))
+        string targetStage = (string)param[0];
+        if (targetStage != stageID) return;
+        Debug.Log("OnOpenNextStageNode called");
+        SetState(StageState.Completed);
+        if (nextStageNodes.Count > 0)
         {
-            SetState(StageState.Unlocked);
+            foreach (var node in nextStageNodes)
+            {
+                node.SetState(StageState.Unlocked);
+            }
+        }
+        else
+        {
+            Debug.Log("已完成所有關卡!");
         }
     }
-    void OnOpenRowStageNode(object[] param)
-    {
-        int targetRow = (int)param[0];
-        if (myRow == targetRow)
-        {
-            SetState(StageState.Unlocked);
-        }
-    }
-    void OnCloseRowStageNode(object[] param)
-    {
-        int targetRow = (int)param[0];
-        if (myRow == targetRow)
-        {
-            SetState(StageState.Locked);
-        }
-    }
-    void SetState(StageState newState)
+
+    public void SetState(StageState newState)
     {
         currentState = newState;
         UpdateVisuals();
@@ -80,10 +72,8 @@ public class StageNode : MonoBehaviour
 
     void UpdateVisuals()
     {
-        //test 
-        //currentState = StageState.Unlocked;
         // 設定按鈕互動性
-       // nodeButton.interactable = currentState == StageState.Unlocked;
+        nodeButton.interactable = currentState == StageState.Unlocked;
 
         // 根據狀態顯示對應視覺
         switch (currentState)
@@ -107,38 +97,34 @@ public class StageNode : MonoBehaviour
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
-                case "Story":
+                case StageType.Story:
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
                     break;
-                case "Battle":
+                case StageType.Battle:
                     //string to int
-                    int rep = int.Parse(stageInfo);
-                    Debug.Log($"進入戰鬥關卡: {stageID}" + rep);
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, rep);
-                    break;
-                case "Shop":
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_SHOP);
-                    Debug.Log($"進入商店關卡: {stageID}{stageInfo}");
-                    break;
-                case "Boss":
-                    Debug.Log($"進入頭目關卡: {stageID}{stageInfo}");
+                    Debug.Log($"進入戰鬥關卡: {stageID}{stageInfo}");
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(stageInfo));
                     break;
-                case "SavePoint":
+                case StageType.SavePoint:
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                     break;
-                case "Item":
-                    Debug.Log($"進入道具關卡: {stageID}{stageInfo}");
+                case StageType.Item:
+                    Debug.Log($"取得道具: {stageID}{stageInfo}");
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_ITEM, stageInfo); //取得道具
                     break;
-                case "Blood":
+                case StageType.Gear:
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                    Debug.Log($"齒輪: {stageInfo}");
+                    break;
+                case StageType.Blood:
                     EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, int.Parse(stageInfo)); //回血
                     Debug.Log($"回復血量");
                     break;
-                case "Gold":
+                case StageType.Gold:
                     EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
                     Debug.Log($"金幣: {stageInfo}");
                     break;
-                case "Skill":
+                case StageType.Skill:
                     Debug.Log($"技能: {stageInfo}");
                     break;
             }
@@ -148,13 +134,5 @@ public class StageNode : MonoBehaviour
             // 已完成的關卡可以重複挑戰
 
         }
-    }
-
-    void CompleteStage()
-    {
-        SetState(StageState.Completed);
-
-        // 儲存進度
-        //StageMapManager.Instance.SaveProgress();
     }
 }

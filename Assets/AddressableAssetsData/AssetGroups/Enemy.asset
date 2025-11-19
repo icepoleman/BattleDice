@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Enemy
+  m_GUID: ae85fc4576fece745bd7af22acdb45d6
+  m_SerializeEntries:
+  - m_GUID: 07d08373bb66f2241882e9a9beecc6c2
+    m_Address: defeat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WolfGirl_G
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d0830d18ba62a841a410d9d9d1dd47d
+    m_Address: idle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WolfGirl_G
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9db1415fd1df0524ba19bc72f5f26487
+    m_Address: hurt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WolfGirl_G
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb2f37745e52b8d4d9e8d355fa7df52b
+    m_Address: atk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WolfGirl_G
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4bcf985bd16ced241b69ec9a9c685649, type: 2}
+    - {fileID: 11400000, guid: 615097cea98675349b79d18011a9a3eb, type: 2}

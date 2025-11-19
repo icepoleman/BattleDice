@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
+using UnityEngine.UI;
 public enum TurnState
 {
     gameStart,
@@ -15,15 +14,15 @@ public class DiceGame : MonoBehaviour
     TurnState currentState = TurnState.gameStart;//目前狀態
     int round = 0;
     CharacterView playerView = null;
-    CharacterView enemyView = null;
+    EnemyView enemyView = null;
     PlayerData playerData = new PlayerData();//藉由GameDataManager取得
     EnemyData enemyData;//藉由GameDataManager取得
     ManaRoller manaRoller = null;
     List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
-    [SerializeField] TMPro.TextMeshProUGUI txt_enemySkill = null;//測試用
-    [SerializeField] TMPro.TextMeshProUGUI txt_enemyDescription = null;//測試用
-    [SerializeField] TMPro.TextMeshProUGUI txt_enemyDiceCount = null;//測試用
+    [SerializeField] Text txt_enemySkill = null;//測試用
+    [SerializeField] Text txt_enemyDescription = null;//測試用
+    [SerializeField] Text txt_enemyDiceCount = null;//測試用
 
     void Start()
     {
@@ -32,8 +31,8 @@ public class DiceGame : MonoBehaviour
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         manaRoller.Init();
         // 生成角色實例
-        playerView = CreateCharacter("character/jailerGirl", "playerPos");
-        enemyView = CreateCharacter(GameDataManager.TmpEnemyData.prefabPath, "enemyPos");
+        CreateCharacter("character/jailerGirl", "playerPos", true);
+        CreateCharacter("character/enemy", "enemyPos", false);
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
         txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
@@ -44,22 +43,36 @@ public class DiceGame : MonoBehaviour
 
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
+        LoadData();
+    }
+    async void LoadData()
+    {
+        //載入遊戲數據
+        await EnemyPortraitManager.LoadEnemyIfNeeded(enemyData.spriteLabel);
+        enemyView.SetEnemyLabel(enemyData.spriteLabel);
         ChangeState(TurnState.roundStart);
     }
     void Update()
     {
         //測試用 顯示敵人骰子數量
-        txt_enemyDiceCount.text = enemyData.diceCount.ToString();
+        //txt_enemyDiceCount.text = enemyData.diceCount.ToString();
     }
     // 通用角色生成方法
-    CharacterView CreateCharacter(string prefabPath, string positionName)
+    void CreateCharacter(string prefabPath, string positionName, bool isPlayer)
     {
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
         GameObject characterObj = Instantiate(prefab, GameObject.Find(positionName).transform);
         characterObj.transform.localPosition = Vector3.zero;
-        CharacterView characterView = characterObj.AddComponent<CharacterView>();
-        characterView.Init();
-        return characterView;
+        if (isPlayer)
+        {
+            playerView = characterObj.AddComponent<CharacterView>();
+            playerView.Init();
+        }
+        else
+        {
+            enemyView = characterObj.AddComponent<EnemyView>();
+            enemyView.Init();
+        }
     }
     void AddEvent()
     {
@@ -82,6 +95,8 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
         EventCenter.RemoveListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
+
+        EnemyPortraitManager.UnloadAllEnemies();
     }
     //狀態改變事件
     void ChangeStateEvent(object[] args)
@@ -163,7 +178,7 @@ public class DiceGame : MonoBehaviour
         {
             onChooseSkillDice.Remove(sideNum);
             manaRoller.chosenSkillData.RemoveDiceData(sideNum);
-        }            
+        }
 
         //放完骰子重新判斷是否能使用技能
         if (manaRoller.chosenSkillData.canUseSkill())
@@ -217,26 +232,53 @@ public class DiceGame : MonoBehaviour
     void OnSkillAttack(object[] args)
     {
         float damage = (float)args[0];
-        
+
         // 根據當前回合狀態判斷攻擊目標
         if (currentState == TurnState.playerTurn)
         {
             // 玩家回合：攻擊敵人
+            playerView.PlayAnim("atk");
             enemyData.TakeDamage(damage);
-            enemyView.PlayAnim("Hurt");
+            enemyView.PlayAnim("hurt");
             enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
             enemyView.CreateFlyText(damage);
         }
         else if (currentState == TurnState.enemyTurn)
         {
             // 敵人回合：攻擊玩家
+            enemyView.PlayAnim("atk");
             playerData.TakeDamage(damage);
-            playerView.PlayAnim("Hurt");
+            playerView.PlayAnim("hurt");
             playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
             playerView.CreateFlyText(damage);
         }
-        
+        //todo 結算回合
+        //if (playerData.IsDead() || enemyData.IsDead())
+        // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
         Debug.Log($" 造成 {damage} 點傷害");
+        //等一秒CheckLive
+        Invoke("CheckLive", 1f);
+    }
+    void CheckLive()
+    {
+        if (playerData.IsDead() || enemyData.IsDead())
+        {
+            if (playerData.IsDead())
+            {
+                playerView.PlayAnim("defeat");
+            }
+            if (enemyData.IsDead())
+            {
+                enemyView.PlayAnim("defeat");
+            }
+            Debug.Log("Game Over");
+            EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
+        }
+        else
+        {
+            playerView.PlayAnim("idle");
+            enemyView.PlayAnim("idle");
+        }
     }
     void AddDeBuffEvent(object[] args)
     {

@@ -18,17 +18,18 @@ public class StateEvent
     public const string EVENT_ENTER_MAP = "StateEvent_EnterMap";//進入地圖
     public const string EVENT_ENTER_PREPARATION_ROOM = "StateEvent_EnterPreparationRoom";//進入整備室
     public const string EVENT_ENTER_SHOP = "StateEvent_EnterShop";//進入商店
+    public const string EVENT_LOADING_SCREEN = "StateEvent_ShowLoadingScreen";//載入畫面開關
 }
 public class MapEvent
 { 
-    public const string EVENT_OPEN_STAGE_NODE = "MapEvent_OpenStageNode"; //開啟關卡節點事件
-    public const string EVENT_OPEN_ROW_STAGE_NODE = "MapEvent_OpenRowStageNode"; //開啟整排row關卡節點事件
-    public const string EVENT_CLOSE_ROW_STAGE_NODE = "MapEvent_CloseRowStageNode"; //關閉整排row關卡節點事件
+    public const string EVENT_OPEN_NEXT_STAGE_NODE = "MapEvent_OpenNextStageNode"; //開啟關卡節點事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知
-    public const string EVENT_SHAKE_CAMERA = "MapEvent_ShakeCamera"; //震動camera
+    public const string EVENT_GET_GEAR = "MapEvent_GetGear"; //取得齒輪通知
+    public const string EVENT_GET_ITEM = "MapEvent_GetItem";//取得道具通知(特殊道具)
 }
 public class AdvEvent
 {
     public const string EVENT_CLICK_CHOICE = "AdvEvent_ClickChoice";//點擊選項
+    public const string EVENT_SHAKE_CAMERA = "AdvEvent_ShakeCamera"; //震動camera
 }

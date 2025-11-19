@@ -29,6 +29,7 @@ public static class SaveManager
         currentSave.currentMap = GameDataManager.CurrentMap;
         currentSave.hasSkills = GameDataManager.HasSkills;
         currentSave.gold = GameDataManager.Gold;
+        currentSave.gearNum = GameDataManager.GearNum;
         try
         {
             currentSave.saveTime = System.DateTime.Now;
@@ -59,6 +60,7 @@ public static class SaveManager
                 GameDataManager.CurrentMap = currentSave.currentMap;
                 GameDataManager.HasSkills = currentSave.hasSkills;
                 GameDataManager.Gold = currentSave.gold;
+                GameDataManager.GearNum = currentSave.gearNum;
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
             }

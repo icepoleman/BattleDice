@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - WolfGirl
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 385fdce7dd652ee44ae1b9351c2ffda3
+    m_Address: WolfGirl/shy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WolfGirl
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43f7d094569de854cb0b86cfa8f7ed29
     m_Address: JailerGirl/sad
     m_ReadOnly: 0
@@ -63,8 +69,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e88909ab62b8024fbe6d6cb7a4f7f0f
+    m_Address: Witch/shy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Witch
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a180b15f68e9134e8547c5a048315f6
     m_Address: JailerGirl/angry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a90c98397d50aa3478481867edb4e4d1
+    m_Address: JailerGirl/shy
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl

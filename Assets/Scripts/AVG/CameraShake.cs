@@ -12,19 +12,19 @@ public class CameraShake : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         originalSize = mainCamera.orthographicSize;
-        EventCenter.AddListener(MapEvent.EVENT_SHAKE_CAMERA, ShakeCamera);
+        EventCenter.AddListener(AdvEvent.EVENT_SHAKE_CAMERA, ShakeCamera);
     }
     void OnDestroy()
     {
         StopShake();
-        EventCenter.RemoveListener(MapEvent.EVENT_SHAKE_CAMERA, ShakeCamera);
+        EventCenter.RemoveListener(AdvEvent.EVENT_SHAKE_CAMERA, ShakeCamera);
     }
     // 公開方法供其他腳本調用
     public void ShakeCamera(object[] args)
     {
         if (!isShaking)
         {
-            StartCoroutine(Shake(1.5f, 0.2f));
+            StartCoroutine(Shake(1f, 0.08f));
         }
     }
     
