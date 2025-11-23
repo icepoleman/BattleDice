@@ -43,7 +43,9 @@ public interface ISkillData
     bool isDebuff { get; set; }
     bool acceptMoreDice { get; set; } // 新增：是否可以持續放入骰子
     string skillName { get; set; }
-    string cardTitle { get; set; }
+    string conditionText { get; set; }// 技能條件描述
+    string effectText { get; set; } // 技能效果描述
+    int[] needDicesData { get; set; } // 需求骰子資料
     float damage { get; set; }
     List<int> diceBox { get; set; }
     public bool canUseSkill();
@@ -58,10 +60,11 @@ public class BaseSkill : ISkillData
     public bool isDebuff { get; set; } = false;
     public bool acceptMoreDice { get; set; } = false;
     public string skillName { get; set; } = "BaseSkill";
-    public string cardTitle { get; set; } = "BaseSkill";
+    public string conditionText { get; set; } = "";
+    public string effectText { get; set; } = "";
     public float damage { get; set; } = 0f;
     public List<int> diceBox { get; set; } = new List<int>();
-    public int[] needDicesData { get; set; } = new int[] { 1 };
+    public int[] needDicesData { get; set; } = new int[] { };
     
     // 技能需求配置
     protected SkillRequirementType requirementType = SkillRequirementType.SpecificDices;
@@ -145,7 +148,7 @@ public class FireBall : BaseSkill
     {
         skillID = 1;
         skillName = "火球";
-        cardTitle = "火球術 1,2,3   造成80點傷害";
+        effectText = "造成80點傷害";
         damage = 80f;
         needDicesData = new int[] { 1, 2, 3 };
         requirementType = SkillRequirementType.SpecificDices;  // 設定需求類型
@@ -164,7 +167,7 @@ public class DeBuffPoison : BaseSkill
         //skillID = SkillID.DeBuffPoison;
         isDebuff = true;
         skillName = "毒素";
-        cardTitle = "中毒 1,2,3   回合結束扣除10點生命";
+      //  cardTitle = "中毒 1,2,3   回合結束扣除10點生命";
         damage = 10f;
         needDicesData = new int[] { 1, 2, 3 };
     }
@@ -191,7 +194,8 @@ public class Kaminari : BaseSkill
     {
         skillID = 2;
         skillName = "雷電";
-        cardTitle = "雷電 相同兩個   造成30點傷害";
+        conditionText = "相同點數骰子x2";
+        effectText = "造成30點傷害";
         damage = 30f;
         requirementType = SkillRequirementType.SameDices;
         requiredSameCount = 2;
@@ -208,10 +212,11 @@ public class WindBlade : BaseSkill
     {
         skillID = 3;
         skillName = "風刃";
-        cardTitle = "風刃 點數大於6   造成10點傷害";
+        conditionText = "點數總和5以上";
+        effectText = "造成10點傷害";
         damage = 10f;
         requirementType = SkillRequirementType.DiceSum;
-        requiredSum = 6;
+        requiredSum = 5;
     }
 
     public override bool canUseSkill()
@@ -225,7 +230,8 @@ public class Punch : BaseSkill
     {
         skillID = 4;
         skillName = "拳頭";
-        cardTitle = "拳頭 任何骰子 總和";
+        conditionText = "任何骰子";
+        effectText = "造成骰子點數總和的傷害";
         damage = 0f;
         acceptMoreDice = true;
         requirementType = SkillRequirementType.AnyDice;
@@ -248,7 +254,8 @@ public class ClawAttack : BaseSkill
     {
         skillID = 5;
         skillName = "爪擊";
-        cardTitle = "爪擊 任何骰子 總和*2";
+        conditionText = "任何骰子";
+        effectText = "造成骰子點數總和的兩倍傷害";
         damage = 0f;
         acceptMoreDice = true;
         requirementType = SkillRequirementType.AnyDice;

@@ -57,7 +57,6 @@ public class PortraitStageManager : MonoBehaviour
         else
             UpdateStagePos(portraitPos);
     }
-
     // 隱藏角色
     public void HideCharacter(string characterName)
     {
@@ -94,7 +93,7 @@ public class PortraitStageManager : MonoBehaviour
         if (characterCount == 1)
         {
             // 只有一個角色，放在基準位置
-            charactersAtPos[0].MovePosition(new Vector2(baseX, 0));
+            charactersAtPos[0].MovePosition(new Vector2(baseX, charactersAtPos[0].transform.localPosition.y));
             Debug.Log($"單一角色移動到: {baseX}");
         }
         else if (characterCount > 1)
@@ -102,7 +101,7 @@ public class PortraitStageManager : MonoBehaviour
             for (int i = 0; i < characterCount; i++)
             {
                 float offsetX = CalculateOffsetX(i, characterCount, spacing);
-                Vector2 targetPos = new Vector2(baseX + offsetX, 0);
+                Vector2 targetPos = new Vector2(baseX + offsetX, charactersAtPos[i].transform.localPosition.y);
                 charactersAtPos[i].MovePosition(targetPos);
 
                 Debug.Log($"角色 {i} (總共{characterCount}個) 偏移: {offsetX}, 最終位置: {targetPos.x}");
@@ -125,7 +124,21 @@ public class PortraitStageManager : MonoBehaviour
                 return 0f;
         }
     }
-
+    // 獲取基準位置的 Y 座標
+    float GetBasePositionY(string characterName)
+    {
+        switch (characterName)
+        {
+            case "WolfGirl":
+                return 0;
+            case "Witch":
+                return -90;
+            case "JailerGirl":
+                return 50;
+            default:
+                return 0;
+        }
+    }
     // 計算角色的偏移量
     float CalculateOffsetX(int index, int totalCount, float spacing)
     {
@@ -166,15 +179,16 @@ public class PortraitStageManager : MonoBehaviour
         int newCharacterIndex = charactersAtPos.Count; // 新角色的索引
 
         float baseX = GetBasePositionX(portraitPos);
+        float baseY = GetBasePositionY(characterName);
 
         if (characterCount == 1)
         {
-            return new Vector2(baseX, 0);
+            return new Vector2(baseX, baseY);
         }
         else
         {
             float offsetX = CalculateOffsetX(newCharacterIndex, characterCount, spacing);
-            return new Vector2(baseX + offsetX, 0);
+            return new Vector2(baseX + offsetX, baseY);
         }
     }
 }

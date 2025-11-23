@@ -12,11 +12,9 @@ public class ManaRollerDice : MonoBehaviour
     private GameObject obj_onChoose;
     public bool isChosen = false;
     private int sideNum;
-    private static Sprite[] diceSprites;
 
     void Awake()
     {
-        diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
         skillDiceButton = transform.Find("btn_skillon").GetComponent<Button>();
         obj_onChoose = transform.Find("img_onChoose").gameObject;
         skillDiceButton.gameObject.SetActive(false);
@@ -66,8 +64,8 @@ public class ManaRollerDice : MonoBehaviour
     public void SetDice(int _sideNum, Action<int> onClickCallback)
     {
         sideNum = _sideNum;
-        diceImage.sprite = diceSprites[_sideNum - 1];
-        
+        diceImage.sprite = ResourcesLoader.GetDiceSprite(_sideNum);
+
         diceButton.onClick.RemoveAllListeners();
         diceButton.onClick.AddListener(() => onClickCallback?.Invoke(sideNum));
     }
@@ -83,7 +81,7 @@ public class ManaRollerDice : MonoBehaviour
     }
     public void UseDice()
     {
-        Destroy(gameObject);  
+        Destroy(gameObject);
     }
     void OnSkillDiceClick()
     {

@@ -81,7 +81,7 @@ public class WolfGirlData : EnemyData
     {
         enemyId = 103;
         enemyName = "狼女";
-        description = "受傷回合骰子數量變6顆 攻擊後回復";
+        description = "受傷回合，骰子數量變為6，攻擊後回復";
         spriteLabel = "WolfGirl_G";
         maxBlood = 150f;
         currentBlood = 15f;

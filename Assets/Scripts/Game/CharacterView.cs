@@ -11,13 +11,11 @@ public class CharacterView : MonoBehaviour
     //todo
     private TextMeshProUGUI txt_blood = null;
     private Slider slider_blood = null;
-    private Sprite[] diceSprites;
     private Text text_diceCount;
 
     public virtual void Init()
     {
         diceBox = transform.Find("diceBox").gameObject;
-        diceSprites = Resources.LoadAll<Sprite>("dice/dice_base");
         txt_blood = transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
         slider_blood = transform.Find("slider_blood").GetComponent<Slider>();
         text_diceCount = transform.Find("img_dice/txt_diceCount").GetComponent<Text>();
@@ -41,7 +39,7 @@ public class CharacterView : MonoBehaviour
             rt.sizeDelta = new Vector2(25, 25);
             rt.localScale = new Vector3(1, 1, 1);
             Image sr = dice.AddComponent<Image>();
-            sr.sprite = diceSprites[rollResults[i] - 1];
+            sr.sprite = ResourcesLoader.GetDiceSprite(rollResults[i]);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(0.5f);

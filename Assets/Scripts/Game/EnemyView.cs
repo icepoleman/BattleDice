@@ -23,8 +23,10 @@ public class EnemyView : CharacterView
         {
             if (animName == "idle")
                 img_character.sprite = EnemyPortraitManager.GetEnemySprite(enemyLabel, "idle");
-            else
+            else if(EnemyPortraitManager.GetEnemySprite(enemyLabel, animName)!= null)
                 img_characterEffect.sprite = EnemyPortraitManager.GetEnemySprite(enemyLabel, animName);
+            img_characterEffect.SetNativeSize();
+            img_character.SetNativeSize();
         }
         base.PlayAnim(animName);
     }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7e6874d43c10a784dac5ae5057c47d0a
+guid: fd08e5941c48f2c4a8cafee327919208
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8016014460715027800
-    second: fantasy_goblin_0
+      213: -5306010165893201774
+    second: animal_melt3_rabbit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fantasy_goblin_0
+      name: animal_melt3_rabbit_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 350
-        height: 390
+        x: 21
+        y: 39
+        width: 696
+        height: 382
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a2bfa2915561c090800000000000000
-      internalID: -8016014460715027800
+      spriteID: 2900357ddd34d56b0800000000000000
+      internalID: -5306010165893201774
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fantasy_goblin_0: -8016014460715027800
+      animal_melt3_rabbit_0: -5306010165893201774
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

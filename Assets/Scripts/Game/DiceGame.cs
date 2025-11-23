@@ -35,7 +35,11 @@ public class DiceGame : MonoBehaviour
         CreateCharacter("character/enemy", "enemyPos", false);
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
-        txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
+
+        //test
+       // enemyData = EnemyFactory.CreateEnemy(1);
+       // playerData=new PlayerData();
+        //txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
         txt_enemyDescription.text = enemyData.description; //測試用
 
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 53f01c95f6a51d747804bf4a0bebf2e3
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 7035ec1fd340fa587d54d95e416a4c51
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -107,6 +107,8 @@ MonoBehaviour:
     - Witch
     - WolfGirl
     - WolfGirl_G
+    - Goblin_G
+    - Slime_G
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 76f406041695fc74a8807120104f9707, type: 2}

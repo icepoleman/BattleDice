@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - WolfGirl_G
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e6874d43c10a784dac5ae5057c47d0a
+    m_Address: idle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Goblin_G
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9db1415fd1df0524ba19bc72f5f26487
     m_Address: hurt
     m_ReadOnly: 0
@@ -38,6 +44,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - WolfGirl_G
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd08e5941c48f2c4a8cafee327919208
+    m_Address: idle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Slime_G
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}
