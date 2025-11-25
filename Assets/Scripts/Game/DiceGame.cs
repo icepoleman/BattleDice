@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 public enum TurnState
 {
     gameStart,
@@ -18,7 +19,6 @@ public class DiceGame : MonoBehaviour
     PlayerData playerData = new PlayerData();//藉由GameDataManager取得
     EnemyData enemyData;//藉由GameDataManager取得
     ManaRoller manaRoller = null;
-    List<int> onChooseSkillDice = new List<int>();//紀錄選取技能骰子
     bool isOpen = false;
     [SerializeField] Text txt_enemySkill = null;//測試用
     [SerializeField] Text txt_enemyDescription = null;//測試用
@@ -37,8 +37,8 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-       // enemyData = EnemyFactory.CreateEnemy(1);
-       // playerData=new PlayerData();
+        enemyData = EnemyFactory.CreateEnemy(1);
+        playerData = new PlayerData();
         //txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
         txt_enemyDescription.text = enemyData.description; //測試用
 
@@ -82,23 +82,24 @@ public class DiceGame : MonoBehaviour
     {
         EventCenter.AddListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
-        EventCenter.AddListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
-        EventCenter.AddListener(GameEvent.EVENT_CLICK_CANCEL_SKILL, CancelFightClick);
         EventCenter.AddListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
-        EventCenter.AddListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
+        EventCenter.AddListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
+
         EventCenter.AddListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
+        EventCenter.AddListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
+        EventCenter.AddListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
     }
     void OnDestroy()
     {
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
-        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_FIGHT, FightBtnClick);
-        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_CANCEL_SKILL, CancelFightClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
-        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_USE_DICE, UseDiceEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
+
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
         EventCenter.RemoveListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
+        EventCenter.RemoveListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
 
         EnemyPortraitManager.UnloadAllEnemies();
     }
@@ -130,6 +131,7 @@ public class DiceGame : MonoBehaviour
                 manaRoller.BtnMode(manaRollerMode.RollDice);
                 break;
             case TurnState.enemyTurn:
+                manaRoller.BtnMode(manaRollerMode.Off);
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
                 List<int> enemyRoll = enemyData.RollDice();
@@ -138,6 +140,7 @@ public class DiceGame : MonoBehaviour
                     //敵人使用技能;
                     enemyData.UseSkill();
                     ChangeState(TurnState.roundEnd);
+                    enemyData.TurnEndBuffDecrease();
                 }));
                 //enemy特寫擲骰 顯示使用技能
                 break;
@@ -164,33 +167,19 @@ public class DiceGame : MonoBehaviour
         currentState = newState;
     }
     //玩家選擇使用技能需要骰子
-    void UseDiceEvent(object[] args)
+    void AddPowerDiceEvent(object[] args)
     {
         int sideNum = (int)args[0];
-        bool isChosen = (bool)args[1];
 
-        if (isChosen)
-        {
-            if (!manaRoller.chosenSkillData.canUseSkill() || manaRoller.chosenSkillData.acceptMoreDice)
-            {
-                onChooseSkillDice.Add(sideNum);
-                manaRoller.chosenSkillData.AddDiceData(sideNum);
-                Debug.Log("Added dice " + sideNum + " to skill ");
-            }
-        }
-        else
-        {
-            onChooseSkillDice.Remove(sideNum);
-            manaRoller.chosenSkillData.RemoveDiceData(sideNum);
-        }
+        playerData.AddPowerDice(sideNum);//new
+                                         //todo 技能達成時要關閉manaRoller
+                                         //manaRoller.chosenSkillData.acceptMoreDice 
 
-        //放完骰子重新判斷是否能使用技能
-        if (manaRoller.chosenSkillData.canUseSkill())
-            manaRoller.BtnMode(manaRollerMode.CanFight);
-        else
-            manaRoller.BtnMode(manaRollerMode.UseDice);
+        manaRoller.BtnMode(manaRollerMode.UseDice);
 
-        EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
+        //開始倒數放骰時間 時間到player自動施放技能
+
+        // EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
     }
     void RollBtnClick(object[] args)
     {
@@ -198,16 +187,9 @@ public class DiceGame : MonoBehaviour
         Debug.Log("Roll button clicked");
         manaRoller.RollDices();
     }
-    void FightBtnClick(object[] args)
-    {
-        Debug.Log("Fight button clicked");
-        manaRoller.UseSkill();
-        manaRoller.BtnMode(manaRollerMode.RollDice);
-        EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
-        //*Debug.Log(skillData.canUseSkill());
-    }
     void TurnEndBtnClick(object[] args)
     {
+        playerData.TurnEndBuffDecrease();
         Debug.Log("Turn End button clicked");
         // 在這裡處理結束回合的邏輯
         ChangeState(TurnState.enemyTurn);
@@ -215,46 +197,75 @@ public class DiceGame : MonoBehaviour
         manaRoller.ClearAllRollDices();
         manaRoller.BtnMode(manaRollerMode.Off);
     }
-    void CancelFightClick(object[] args)
-    {
-        Debug.Log("Cancel Fight button clicked");
-        manaRoller.CancelSkillUse();
-        manaRoller.BtnMode(manaRollerMode.RollDice);
-        EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
-    }
     void SkillCardClick(object[] args)
     {
         ISkillData _skill = (ISkillData)args[0];
-        if (currentState != TurnState.playerTurn || _skill == manaRoller.chosenSkillData) return;
+
+        if (currentState != TurnState.playerTurn) return;
+        playerData.SetWantUseSkill(_skill);
+        manaRoller.BtnMode(manaRollerMode.UseDice);
         EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
-        manaRoller.CancelSkillUse();
         Debug.Log("Skill Card clicked" + _skill.skillName);
-        manaRoller.chosenSkillData = _skill;
-        EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
+        // EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
         manaRoller.BtnMode(manaRollerMode.UseDice);
     }
-    void OnSkillAttack(object[] args)
+    //todo keep點下
+    void OnSkillAttack(object[] args)//todo 改成玩家或怪物受傷
     {
         float damage = (float)args[0];
+        bool isPlayer = (bool)args[1];
+
+        if (isPlayer)
+        {
+            playerData.Attack(damage);
+        }
+        else
+        {
+            enemyData.Attack(damage);
+        }
+        //todo 結算回合
+        //if (playerData.IsDead() || enemyData.IsDead())
+        // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
+        Debug.Log($" 造成 {damage} 點傷害");
+        //等一秒CheckLive
+        Invoke("CheckLive", 1f);
+    }
+    void OnSkillHeal(object[] args)
+    {
+        float healAmount = (float)args[0];
+        bool isPlayer = (bool)args[1];//治療對象
+        if (isPlayer)
+        {
+            playerData.Heal(healAmount);
+        }
+        else
+        {
+            enemyData.Heal(healAmount);
+        }
+        Debug.Log($" 恢復 {healAmount} 點血量");
+        Invoke("CheckLive", 1f);
+    }
+    void OnAttackCharacter(object[] args)
+    {
+        float damage = (float)args[0];
+        bool isPlayer = (bool)args[1];//攻擊對象
 
         // 根據當前回合狀態判斷攻擊目標
-        if (currentState == TurnState.playerTurn)
+        if (isPlayer)
         {
-            // 玩家回合：攻擊敵人
-            playerView.PlayAnim("atk");
-            enemyData.TakeDamage(damage);
-            enemyView.PlayAnim("hurt");
-            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
-            enemyView.CreateFlyText(damage);
-        }
-        else if (currentState == TurnState.enemyTurn)
-        {
-            // 敵人回合：攻擊玩家
-            enemyView.PlayAnim("atk");
             playerData.TakeDamage(damage);
+            enemyView.PlayAnim("atk");
             playerView.PlayAnim("hurt");
             playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
             playerView.CreateFlyText(damage);
+        }
+        else
+        {
+            enemyData.TakeDamage(damage);
+            playerView.PlayAnim("atk");
+            enemyView.PlayAnim("hurt");
+            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
+            enemyView.CreateFlyText(damage);
         }
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())

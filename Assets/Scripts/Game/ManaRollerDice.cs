@@ -1,65 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Linq;
-using System.Collections.Generic;
 
 public class ManaRollerDice : MonoBehaviour
 {
     private Image diceImage;
     private Button diceButton;
-    private Button skillDiceButton;
-    private GameObject obj_onChoose;
-    public bool isChosen = false;
     private int sideNum;
-
     void Awake()
     {
-        skillDiceButton = transform.Find("btn_skillon").GetComponent<Button>();
-        obj_onChoose = transform.Find("img_onChoose").gameObject;
-        skillDiceButton.gameObject.SetActive(false);
-        obj_onChoose.SetActive(false);
-        diceImage = GetComponent<Image>();
-        diceButton = GetComponent<Button>();
-        skillDiceButton.onClick.AddListener(() => OnSkillDiceClick());
-        AddEvent();
-    }
-    void AddEvent()
-    {
-        EventCenter.AddListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, CheckIsSkillDice);
-        EventCenter.AddListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDice);
-    }
-    void OnDestroy()
-    {
-        EventCenter.RemoveListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, CheckIsSkillDice);
-        EventCenter.RemoveListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDice);
-    }
-    void CheckIsSkillDice(object[] args)
-    {
-        if (isChosen) return;
-        StopUseDice(null);
-        ISkillData chosenSkill = (ISkillData)args[0];
-        List<int> skillNums = chosenSkill.GetNeedDices();
-        if (skillNums.Contains(sideNum) && skillNums != null)
-        {
-            IsSkillDice();
-        }
-        else
-        {
-            UnSkillDice();
-            Debug.Log("此骰子不符合技能需求");
-        }
-    }
-    //取消選取技能骰
-    void StopUseDice(object[] args)
-    {
-        diceButton.interactable = true;
-        Color color = diceImage.color;
-        color.a = 1f; // 不透明
-        diceImage.color = color;
-        skillDiceButton.gameObject.SetActive(false);
-        isChosen = false;
-        obj_onChoose.SetActive(false);
+        diceImage = transform.GetComponent<Image>();
+        diceButton = transform.GetComponent<Button>();
     }
     public void SetDice(int _sideNum, Action<int> onClickCallback)
     {
@@ -69,25 +20,4 @@ public class ManaRollerDice : MonoBehaviour
         diceButton.onClick.RemoveAllListeners();
         diceButton.onClick.AddListener(() => onClickCallback?.Invoke(sideNum));
     }
-    public void UnSkillDice()
-    {
-        diceButton.interactable = false;
-        Color color = diceImage.color;
-        color.a = 0.5f; // 半透明
-    }
-    public void IsSkillDice()
-    {
-        skillDiceButton.gameObject.SetActive(true);
-    }
-    public void UseDice()
-    {
-        Destroy(gameObject);
-    }
-    void OnSkillDiceClick()
-    {
-        isChosen = !isChosen;
-        obj_onChoose.SetActive(isChosen);
-        EventCenter.Dispatch(GameEvent.EVENT_CLICK_USE_DICE, sideNum, isChosen);
-    }
-    public int GetSideNum() => sideNum;
 }

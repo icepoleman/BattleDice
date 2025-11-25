@@ -9,47 +9,46 @@ public enum manaRollerMode
     Off,
     RollDice,
     UseDice,
-    CanFight,
+    KeepDice,
 }
 public class ManaRoller : MonoBehaviour
 {
+    manaRollerMode currentMode = manaRollerMode.Off;
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
-    Button btn_fight, btn_cancelFight;//戰鬥按鈕
     Transform rollDiceParent;    //骰子生成位置
     Transform keepDiceParent;    //保留骰子生成位置
     List<int> rollDices = new List<int>();  //所有骰子
     List<int> keepDices = new List<int>();    //保留骰子
     int maxkeepCount; //最大保留數量
-    bool isOpen = false;
+    int rollCount = 0; //最大擲骰次數
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] GameObject skillPrefab = null;
-    Transform skillParent;    //技能生成位置
-    public ISkillData chosenSkillData = null;
-    public List<ISkillData> skillDeBuffList = new List<ISkillData>();
+    Transform skillCardParent;    //技能生成位置
     TextMeshProUGUI txt_rollCount = null;//擲骰次數顯示
-    int rollCount = 0; //最大擲骰次數
+    bool isOpen = false;
     public void Init()
     {
         if (isOpen) return;
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
         keepDiceParent = GameObject.Find("diceBox/keep").transform;
-        skillParent = GameObject.Find("skillBox").transform;
+        skillCardParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
-        btn_fight = GameObject.Find("rollerBtns/btn_fight").GetComponent<Button>();
-        btn_cancelFight = GameObject.Find("rollerBtns/btn_cancelFight").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
         txt_rollCount = GameObject.Find("rollerBtns/btn_roll/txt_rollCount").GetComponent<TextMeshProUGUI>();
+
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
-        btn_fight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_FIGHT); });//戰鬥
-        btn_cancelFight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_CANCEL_SKILL); });//取消戰鬥
+        //btn_cancelFight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_CANCEL_SKILL); });//取消戰鬥
 
-        isOpen = true;
+
         BtnMode(manaRollerMode.Off);
+        isOpen = true;
     }
+
+
     //獲取初始骰子
     public void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
@@ -63,35 +62,32 @@ public class ManaRoller : MonoBehaviour
             burnRollDice(sideNum);
         }
     }
+    public manaRollerMode GetCurrentMode()
+    {
+        return currentMode;
+    }
     public void BtnMode(manaRollerMode mode)
     {
         switch (mode)
         {
             case manaRollerMode.Off:
-                btn_roll.gameObject.SetActive(false);
-                btn_turnEnd.gameObject.SetActive(false);
-                btn_fight.gameObject.SetActive(false);
-                btn_cancelFight.gameObject.SetActive(false);
+                btn_roll.interactable = false;
+                btn_turnEnd.interactable = false;
                 break;
             case manaRollerMode.RollDice:
-                btn_roll.gameObject.SetActive(true);
-                btn_turnEnd.gameObject.SetActive(true);
-                btn_fight.gameObject.SetActive(false);
-                btn_cancelFight.gameObject.SetActive(false);
+                btn_roll.interactable = true;
+                btn_turnEnd.interactable = true;
                 break;
             case manaRollerMode.UseDice:
-                btn_roll.gameObject.SetActive(false);
-                btn_turnEnd.gameObject.SetActive(true);
-                btn_fight.gameObject.SetActive(false);
-                btn_cancelFight.gameObject.SetActive(true);
+                btn_roll.interactable = false;
+                btn_turnEnd.interactable = true;
                 break;
-            case manaRollerMode.CanFight:
-                btn_roll.gameObject.SetActive(false);
-                btn_turnEnd.gameObject.SetActive(true);
-                btn_fight.gameObject.SetActive(true);
-                btn_cancelFight.gameObject.SetActive(true);
+            case manaRollerMode.KeepDice:
+                btn_roll.interactable = false;
+                btn_turnEnd.interactable = true;
                 break;
         }
+        currentMode = mode;
     }
     //生成技能卡
     public void SetAllSkill(List<ISkillData> iskList)
@@ -99,7 +95,7 @@ public class ManaRoller : MonoBehaviour
         foreach (var isk in iskList)
         {
             //生成技能物件
-            GameObject skillObj = Instantiate(skillPrefab, skillParent);
+            GameObject skillObj = Instantiate(skillPrefab, skillCardParent);
             SkillCard skillCard = skillObj.GetComponent<SkillCard>();
             skillCard.SetData(isk);
         }
@@ -119,7 +115,7 @@ public class ManaRoller : MonoBehaviour
             int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
             burnRollDice(side);
         }
-        if(rollCount <= 0)
+        if (rollCount <= 0)
         {
             btn_roll.interactable = false;
         }
@@ -143,9 +139,21 @@ public class ManaRoller : MonoBehaviour
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
         diceScript.SetDice(_sideNum, (sideNum) =>
         {
-            Destroy(dice);
-            keepDices.Remove(sideNum);
-            burnRollDice(sideNum);
+            switch (currentMode)
+            {
+                case manaRollerMode.KeepDice:
+                    if (CanKeepDice())
+                    {
+                        Destroy(dice);
+                        keepDices.Remove(sideNum);
+                        burnRollDice(sideNum);
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log("已達到最大保留骰子數量");
+                    }
+                    break;
+            }
         });
     }
 
@@ -156,46 +164,27 @@ public class ManaRoller : MonoBehaviour
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
         diceScript.SetDice(_sideNum, (sideNum) =>
         {
-            if (CanKeepDice())
+            switch (currentMode)
             {
-                Destroy(dice);
-                rollDices.Remove(sideNum);
-                burnKeepDice(sideNum);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("已達到最大保留骰子數量");
+                case manaRollerMode.UseDice:
+                case manaRollerMode.RollDice:
+                    Destroy(dice);
+                    rollDices.Remove(sideNum);
+                    EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);
+                    break;
+                case manaRollerMode.KeepDice:
+                    if (CanKeepDice())
+                    {
+                        Destroy(dice);
+                        rollDices.Remove(sideNum);
+                        burnKeepDice(sideNum);
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log("已達到最大保留骰子數量");
+                    }
+                    break;
             }
         });
-    }
-    public void UseSkill()//消耗使用的技能骰
-    {
-        UseDices(rollDiceParent);
-        UseDices(keepDiceParent, true);
-        chosenSkillData.Use();
-        chosenSkillData = null;
-    }
-    public void CancelSkillUse()
-    {
-        if(chosenSkillData == null) return;
-        chosenSkillData.diceBox.Clear();
-        chosenSkillData = null;
-    }
-    void UseDices(Transform diceBox, bool isKeepDice = false)
-    {
-        //使用選取的骰子
-        foreach (Transform child in diceBox)
-        {
-            ManaRollerDice diceScript = child.GetComponent<ManaRollerDice>();
-            if (diceScript != null && diceScript.isChosen)
-            {
-                if (isKeepDice)
-                    keepDices.Remove(diceScript.GetSideNum());
-                else
-                    rollDices.Remove(diceScript.GetSideNum());
-
-                diceScript.UseDice();
-            }
-        }
     }
 }

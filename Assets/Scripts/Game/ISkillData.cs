@@ -52,7 +52,7 @@ public interface ISkillData
     public void AddDiceData(int _dice);
     public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
-    public void Use();
+    public void Use(bool _isPlayer);
 }
 public class BaseSkill : ISkillData
 {
@@ -126,11 +126,11 @@ public class BaseSkill : ISkillData
         return new List<int> { 1, 2, 3, 4, 5, 6 };
     }
     
-    public virtual void Use()
+    public virtual void Use(bool _isPlayer)
     {
         if (canUseSkill())
         {
-            EventCenter.Dispatch(GameEvent.EVENT_SKILL_ATTACK, damage);
+            EventCenter.Dispatch(GameEvent.EVENT_SKILL_ATTACK, damage,_isPlayer);
             UnityEngine.Debug.Log($"{skillName} used, dealing {damage} damage!");
         }
         else
@@ -158,33 +158,6 @@ public class FireBall : BaseSkill
     {
         // 檢查是否同時有 1,2,3
         return needDicesData.All(n => diceBox.Contains(n));
-    }
-}
-public class DeBuffPoison : BaseSkill
-{
-    public DeBuffPoison()
-    {
-        //skillID = SkillID.DeBuffPoison;
-        isDebuff = true;
-        skillName = "毒素";
-      //  cardTitle = "中毒 1,2,3   回合結束扣除10點生命";
-        damage = 10f;
-        needDicesData = new int[] { 1, 2, 3 };
-    }
-
-    public override bool canUseSkill()
-    {
-        // 檢查是否同時有 1,2,3
-        return needDicesData.All(n => diceBox.Contains(n));
-    }
-    public override void Use()
-    {
-        if (canUseSkill())
-            //使用技能後清空骰子 + 移除debuff通知
-            base.Use();
-        else
-            //額外效果: 造成傷害 通知扣血
-            UnityEngine.Debug.Log($"{skillName} used, applying poison effect!");
     }
 }
 
@@ -242,10 +215,10 @@ public class Punch : BaseSkill
         return diceBox.Count >= 1;
     }
     
-    public override void Use()
+    public override void Use(bool _isPlayer)
     {
         damage = diceBox.Sum();
-        base.Use();
+        base.Use(_isPlayer);
     }
 }
 public class ClawAttack : BaseSkill
@@ -266,9 +239,9 @@ public class ClawAttack : BaseSkill
         return diceBox.Count >= 1;
     }
     
-    public override void Use()
+    public override void Use(bool _isPlayer)
     {
         damage = diceBox.Sum() * 2;
-        base.Use();
+        base.Use(_isPlayer);
     }
 }

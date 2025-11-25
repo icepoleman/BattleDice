@@ -28,7 +28,7 @@ public class EnemyData : BaseCharacterData
     public string description = "";
     public string spriteLabel = "";
     public int goldReward = 0;
-    public virtual void UseSkill()
+    public override void UseSkill()
     {
         //從skillData最後面的開始使用技能 成功使出一個技能就結束
         /*for (int i = skillData.Count - 1; i >= 0; i--)
@@ -41,7 +41,7 @@ public class EnemyData : BaseCharacterData
             }
         }*/
         skillData[0].diceBox = rollDiceResult;
-        skillData[0].Use();
+        skillData[0].Use(isPlayer);
     }
 }
 
@@ -88,6 +88,7 @@ public class WolfGirlData : EnemyData
         diceSides = new int[] { 1, 2, 3, 4 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new ClawAttack() };
+        buffData = new List<IBuffData>() { new ShieldBuff() };
         maxRollCount = 1; //最大擲骰次數
     }
     public override void TakeDamage(float damage)
