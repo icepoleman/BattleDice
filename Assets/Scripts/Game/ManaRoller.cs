@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public enum manaRollerMode
 {
     Off,
-    RollDice,
+    Idle,
     UseDice,
     KeepDice,
 }
@@ -16,6 +16,7 @@ public class ManaRoller : MonoBehaviour
     manaRollerMode currentMode = manaRollerMode.Off;
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
+    [SerializeField] Button btn_keep = null;//保留骰子按鈕
     Transform rollDiceParent;    //骰子生成位置
     Transform keepDiceParent;    //保留骰子生成位置
     List<int> rollDices = new List<int>();  //所有骰子
@@ -23,7 +24,7 @@ public class ManaRoller : MonoBehaviour
     int maxkeepCount; //最大保留數量
     int rollCount = 0; //最大擲骰次數
     [SerializeField] GameObject dicePrefab = null;
-    [SerializeField] GameObject skillPrefab = null;
+    [SerializeField] GameObject skillCardPrefab = null;
     Transform skillCardParent;    //技能生成位置
     TextMeshProUGUI txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
@@ -32,7 +33,7 @@ public class ManaRoller : MonoBehaviour
         if (isOpen) return;
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
-        keepDiceParent = GameObject.Find("diceBox/keep").transform;
+        keepDiceParent = GameObject.Find("keep").transform;
         skillCardParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
@@ -41,6 +42,7 @@ public class ManaRoller : MonoBehaviour
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
+        btn_keep.onClick.AddListener(() => { BtnMode(manaRollerMode.KeepDice); });//保留骰子
         //btn_cancelFight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_CANCEL_SKILL); });//取消戰鬥
 
 
@@ -73,31 +75,54 @@ public class ManaRoller : MonoBehaviour
             case manaRollerMode.Off:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
+                btn_keep.interactable = false;
                 break;
-            case manaRollerMode.RollDice:
-                btn_roll.interactable = true;
+            case manaRollerMode.Idle:
+                btn_roll.interactable = rollCount > 0;
                 btn_turnEnd.interactable = true;
+                btn_keep.interactable = true;
+                btn_keep.image.color = new Color32(255, 255, 255, 255);
+                keepDiceParent.localScale = new Vector3(0.3f, 0.3f, 1);
                 break;
             case manaRollerMode.UseDice:
                 btn_roll.interactable = false;
-                btn_turnEnd.interactable = true;
+                btn_turnEnd.interactable = false;
+                btn_keep.interactable = false;
+                btn_keep.image.color = new Color32(255, 255, 255, 255);
+                keepDiceParent.localScale = new Vector3(0.3f, 0.3f, 1);
                 break;
             case manaRollerMode.KeepDice:
-                btn_roll.interactable = false;
-                btn_turnEnd.interactable = true;
+                btn_keep.image.color = new Color32(255, 255, 0, 255);
+                keepDiceParent.localScale = new Vector3(1f, 1f, 1);
+                EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
                 break;
         }
         currentMode = mode;
     }
+    bool firstSetSkill = false;
     //生成技能卡
     public void SetAllSkill(List<ISkillData> iskList)
     {
         foreach (var isk in iskList)
         {
             //生成技能物件
-            GameObject skillObj = Instantiate(skillPrefab, skillCardParent);
+            GameObject skillObj = Instantiate(skillCardPrefab, skillCardParent);
             SkillCard skillCard = skillObj.GetComponent<SkillCard>();
-            skillCard.SetData(isk);
+            skillCard.SetData(isk, () =>
+            {
+                if(currentMode == manaRollerMode.UseDice||currentMode == manaRollerMode.Off)
+                    return;
+                EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
+                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
+                BtnMode(manaRollerMode.Idle);
+                skillCard.SkillChoosenEvent();
+            });
+            if (!firstSetSkill)
+            {
+                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
+                skillCard.SkillChoosenEvent();
+                firstSetSkill = true;
+            }
         }
     }
     public void AddSkill(ISkillData isk)
@@ -141,17 +166,10 @@ public class ManaRoller : MonoBehaviour
         {
             switch (currentMode)
             {
-                case manaRollerMode.KeepDice:
-                    if (CanKeepDice())
-                    {
-                        Destroy(dice);
-                        keepDices.Remove(sideNum);
-                        burnRollDice(sideNum);
-                    }
-                    else
-                    {
-                        UnityEngine.Debug.Log("已達到最大保留骰子數量");
-                    }
+                case manaRollerMode.KeepDice://保留骰子模式下點擊保留骰子，將其丟回擲骰區
+                    Destroy(dice);
+                    keepDices.Remove(sideNum);
+                    burnRollDice(sideNum);
                     break;
             }
         });
@@ -167,7 +185,7 @@ public class ManaRoller : MonoBehaviour
             switch (currentMode)
             {
                 case manaRollerMode.UseDice:
-                case manaRollerMode.RollDice:
+                case manaRollerMode.Idle:
                     Destroy(dice);
                     rollDices.Remove(sideNum);
                     EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);

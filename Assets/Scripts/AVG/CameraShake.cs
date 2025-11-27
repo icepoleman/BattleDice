@@ -36,8 +36,8 @@ public class CameraShake : MonoBehaviour
         
         while (elapsed < duration)
         {
-            // 隨機調整相機 size，在原始 size 基礎上加減 magnitude
-            float randomOffset = Random.Range(-magnitude, magnitude);
+            // 隨機調整相機 size，只能縮小不能放大
+            float randomOffset = Random.Range(-magnitude, 0);
             mainCamera.orthographicSize = originalSize + randomOffset;
             
             elapsed += Time.deltaTime;

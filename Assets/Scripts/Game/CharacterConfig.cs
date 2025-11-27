@@ -126,37 +126,32 @@ public class CharacterSaveData
 
 public class PlayerData : BaseCharacterData
 {
-    ISkillData wantUseSkill;
-    List<int> powerDices = new List<int>();
+    public ISkillData wantUseSkill;
     public PlayerData()
     {
         isPlayer = true;
         maxBlood = 100f;
         currentBlood = 100f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        diceCount = 3;
+        diceCount = 6;
         keepDiceCount = 2;
         skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new WindBlade() };
-        buffData = new List<IBuffData>(){new ShieldBuff() };
+        buffData = new List<IBuffData>() { new ShieldBuff() };
         maxRollCount = 1; //最大擲骰次數
-    }
-    public void SetWantUseSkill(ISkillData skill)
-    {
-        wantUseSkill = skill;
     }
     public void AddPowerDice(int dice)
     {
-        powerDices.Add(dice);
+        wantUseSkill.diceBox.Add(dice);
+        //達成條件直接使用技能
+        if (wantUseSkill.canUseSkill() && wantUseSkill.acceptMoreDice == false)
+        {
+            EventCenter.Dispatch(GameEvent.EVENT_PLAYER_USE_SKILL);
+        }
     }
     public override void UseSkill()
     {
-        if (wantUseSkill != null)
-        {
-            wantUseSkill.diceBox = powerDices;
-            wantUseSkill.Use(isPlayer);
-            powerDices.Clear();
-            wantUseSkill = null; // 使用後清除
-        }
+        base.UseSkill();
+        wantUseSkill.Use(isPlayer);
     }
     // 轉換為可存檔的資料
     public CharacterSaveData ToSaveData()

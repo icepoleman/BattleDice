@@ -3,17 +3,17 @@ public class GameEvent
     //按鈕 色子裝置事件
     public const string EVENT_CLICK_ROLL = "GameEvent_ClickRoll";//刷新骰子
     public const string EVENT_CLICK_TURN_END = "GameEvent_ClickTurnEnd";//結束回合
-    public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子
     public const string EVENT_SELECT_SKILL = "GameEvent_SelectSkill";//選取技能
-    public const string EVENT_CONFIRM_SELECT_SKILL = "GameEvent_ConfirmSelectSkill";//確認選取技能
-    public const string EVENT_STOP_USE_DICE = "GameEvent_StopUseDice";//停止選取技能骰子
+    public const string EVENT_CLEAR_CHOOSE_SKILL = "GameEvent_ClearChooseSkill";//停止選取技能
     //遊戲狀態
     public const string EVENT_CHANGE_STATE = "GameEvent_ChangeState";//改變狀態
 
     //角色用
-    public const string EVENT_SKILL_ATTACK = "GameEvent_SkillAttack";//技能攻擊
-    public const string EVENT_SKILL_HEAL = "GameEvent_SkillHeal";//技能回復
-    public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//攻擊需要計算後再傳出
+    public const string EVENT_SKILL_ATTACK = "GameEvent_SkillAttack";//使用攻擊技能
+    public const string EVENT_SKILL_HEAL = "GameEvent_SkillHeal";//對角色回復血量
+    public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//對角色造成傷害
+    public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子
+    public const string EVENT_PLAYER_USE_SKILL = "GameEvent_UseSkill";//使用技能
 }
 public class StateEvent
 {
@@ -25,7 +25,7 @@ public class StateEvent
     public const string EVENT_LOADING_SCREEN = "StateEvent_ShowLoadingScreen";//載入畫面開關
 }
 public class MapEvent
-{ 
+{
     public const string EVENT_OPEN_NEXT_STAGE_NODE = "MapEvent_OpenNextStageNode"; //開啟關卡節點事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知

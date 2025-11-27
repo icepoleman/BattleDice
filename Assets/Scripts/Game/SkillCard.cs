@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class SkillCard : MonoBehaviour
 {
@@ -13,20 +14,18 @@ public class SkillCard : MonoBehaviour
     [SerializeField] Button btn_choose;
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
     ISkillData skillData;
-    public void SetData(ISkillData _skillData)
+    public void SetData(ISkillData _skillData, Action onClickCallback=null)
     {
         skillData = _skillData;
-        // skillInfoText.text = skillData.cardTitle;
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
         text_skillEffect.text = skillData.effectText;
         if (skillData.conditionText == "")
             BurnConditionDices();
-        btn_choose.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, skillData); });
-        EventCenter.AddListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDiceEvent);
-        EventCenter.AddListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, SkillChoosenEvent);
+        btn_choose.onClick.AddListener(() => { onClickCallback?.Invoke(); });
+        EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, StopUseSkill);
     }
-    void BurnConditionDices()
+    void BurnConditionDices()//如果沒有條件骰子就不顯示
     {
         text_skillCondition.gameObject.SetActive(false);
         for (int i = 0; i < skillData.needDicesData.Length; i++)
@@ -41,15 +40,13 @@ public class SkillCard : MonoBehaviour
     }
     void OnDestroy()
     {
-        EventCenter.RemoveListener(GameEvent.EVENT_STOP_USE_DICE, StopUseDiceEvent);
-        EventCenter.RemoveListener(GameEvent.EVENT_CONFIRM_SELECT_SKILL, SkillChoosenEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, StopUseSkill);
     }
-    void SkillChoosenEvent(object[] args)
+    public void SkillChoosenEvent()
     {
-        ISkillData chosenSkill = (ISkillData)args[0];
-        obj_choose.SetActive(chosenSkill == skillData);
+        obj_choose.SetActive(true);
     }
-    void StopUseDiceEvent(object[] args)
+    void StopUseSkill(object[] args)
     {
         obj_choose.SetActive(false);
     }

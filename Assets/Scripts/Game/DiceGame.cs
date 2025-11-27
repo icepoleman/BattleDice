@@ -42,6 +42,8 @@ public class DiceGame : MonoBehaviour
         //txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
         txt_enemyDescription.text = enemyData.description; //測試用
 
+        playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
+
         playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
 
@@ -55,11 +57,6 @@ public class DiceGame : MonoBehaviour
         await EnemyPortraitManager.LoadEnemyIfNeeded(enemyData.spriteLabel);
         enemyView.SetEnemyLabel(enemyData.spriteLabel);
         ChangeState(TurnState.roundStart);
-    }
-    void Update()
-    {
-        //測試用 顯示敵人骰子數量
-        //txt_enemyDiceCount.text = enemyData.diceCount.ToString();
     }
     // 通用角色生成方法
     void CreateCharacter(string prefabPath, string positionName, bool isPlayer)
@@ -85,10 +82,12 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
         EventCenter.AddListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
+        EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
         EventCenter.AddListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
         EventCenter.AddListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
         EventCenter.AddListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
+        EventCenter.AddListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
     }
     void OnDestroy()
     {
@@ -96,10 +95,13 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CHANGE_STATE, ChangeStateEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
         EventCenter.RemoveListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
         EventCenter.RemoveListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
+        EventCenter.RemoveListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
+        EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
 
         EnemyPortraitManager.UnloadAllEnemies();
     }
@@ -128,7 +130,7 @@ public class DiceGame : MonoBehaviour
                 manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
                 // 在這裡處理玩家回合的邏輯
                 Debug.Log("Player's Turn");
-                manaRoller.BtnMode(manaRollerMode.RollDice);
+                manaRoller.BtnMode(manaRollerMode.Idle);
                 break;
             case TurnState.enemyTurn:
                 manaRoller.BtnMode(manaRollerMode.Off);
@@ -166,21 +168,53 @@ public class DiceGame : MonoBehaviour
         }
         currentState = newState;
     }
+    bool onPlayerPowerCharge = false;
     //玩家選擇使用技能需要骰子
     void AddPowerDiceEvent(object[] args)
     {
         int sideNum = (int)args[0];
-
-        playerData.AddPowerDice(sideNum);//new
-                                         //todo 技能達成時要關閉manaRoller
-                                         //manaRoller.chosenSkillData.acceptMoreDice 
-
+        autoUseSkillDelay = 2f;
+        onPlayerPowerCharge = true;
+        playerView.PlayAnim("charge");
         manaRoller.BtnMode(manaRollerMode.UseDice);
 
-        //開始倒數放骰時間 時間到player自動施放技能
-
-        // EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
+        playerData.AddPowerDice(sideNum);//一定要放最後面
     }
+    float autoUseSkillDelay = 0f;
+    void OnPlayerUseSkill(object[] args)
+    {
+        onPlayerPowerCharge = false;
+        autoUseSkillDelay = 100f;
+        Debug.Log(playerData.wantUseSkill.diceBox);
+        if (playerData.wantUseSkill.canUseSkill())
+        {
+            playerData.UseSkill();
+            playerView.PlayAnim("fight");
+        }
+        else
+        {
+            playerData.wantUseSkill.diceBox.Clear();
+            playerView.PlayAnim("fail");
+            Debug.Log("Skill cannot be used yet.");
+        }
+        manaRoller.BtnMode(manaRollerMode.Idle);
+    }
+
+    private void Update()
+    {
+        if (onPlayerPowerCharge)
+        {
+            if (autoUseSkillDelay > 0f)
+            {
+                autoUseSkillDelay -= Time.deltaTime;
+                if (autoUseSkillDelay <= 0f)
+                {
+                    OnPlayerUseSkill(null);
+                }
+            }
+        }
+    }
+
     void RollBtnClick(object[] args)
     {
         if (currentState != TurnState.playerTurn) return;
@@ -200,14 +234,13 @@ public class DiceGame : MonoBehaviour
     void SkillCardClick(object[] args)
     {
         ISkillData _skill = (ISkillData)args[0];
-
         if (currentState != TurnState.playerTurn) return;
-        playerData.SetWantUseSkill(_skill);
-        manaRoller.BtnMode(manaRollerMode.UseDice);
-        EventCenter.Dispatch(GameEvent.EVENT_STOP_USE_DICE);
+        playerData.wantUseSkill = _skill;
         Debug.Log("Skill Card clicked" + _skill.skillName);
-        // EventCenter.Dispatch(GameEvent.EVENT_CONFIRM_SELECT_SKILL, manaRoller.chosenSkillData);
-        manaRoller.BtnMode(manaRollerMode.UseDice);
+    }
+    void ClearChooseSkill(object[] args)
+    {
+        playerData.wantUseSkill = null;
     }
     //todo keep點下
     void OnSkillAttack(object[] args)//todo 改成玩家或怪物受傷
