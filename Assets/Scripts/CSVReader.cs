@@ -119,6 +119,40 @@ public class CSVReader
         Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {filePath}");
         return lines;
     }
+    //載入BUFF資料
+    public List<BaseBuff> LoadBuffCSV()
+    {
+         List<BaseBuff> lines = new List<BaseBuff>();
+
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Buff/", "BuffData.csv");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("❌ 找不到 Buff CSV 檔案: " + filePath);
+            return null;
+        }
+
+        string[] allLines = File.ReadAllLines(filePath);
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; } // 跳過表頭
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] values = line.Split(',');
+
+            BaseBuff data = new BaseBuff();
+           // data.stageID = values.Length > 0 ? values[0] : "";
+            //data.type = values.Length > 1 ? values[1] : "";
+//data.stageInfo = values.Length > 2 ? values[2] : "";
+
+            lines.Add(data);
+        }
+
+        Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {filePath}");
+        return lines;
+    }
 
     // 通用 CSV 載入方法（可指定子資料夾）
     public List<T> LoadGenericCSV<T>(string fileName, string subFolder, System.Func<string[], T> parseFunction) where T : class
@@ -150,12 +184,5 @@ public class CSVReader
 
         Debug.Log($"✅ 從 StreamingAssets/{subFolder} 載入完成，共 {lines.Count} 行: {filePath}");
         return lines;
-    }
-
-    // 舊方法保持兼容性（已棄用）
-    [System.Obsolete("請使用 LoadDialogueCSV 方法")]
-    public List<DialogueData> LoadCSV(string fileName)
-    {
-        return LoadDialogueCSV(fileName);
     }
 }

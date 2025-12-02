@@ -25,6 +25,7 @@ public class ManaRoller : MonoBehaviour
     int rollCount = 0; //最大擲骰次數
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] GameObject skillCardPrefab = null;
+    [SerializeField] GameObject diceOFF;
     Transform skillCardParent;    //技能生成位置
     TextMeshProUGUI txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
@@ -50,17 +51,20 @@ public class ManaRoller : MonoBehaviour
         isOpen = true;
     }
 
-
+    int maxRollCount = 6;//測試用 test 
     //獲取初始骰子
     public void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
-        btn_roll.interactable = true;
         rollCount = _maxRollCount;
-        txt_rollCount.text = "擲骰次數：" + rollCount.ToString();
+        txt_rollCount.text = "重骰次數：" + rollCount.ToString();
         maxkeepCount = _keepDiceCount;
-        rollDices.Clear();
+        //rollDices.Clear();
         foreach (var sideNum in _dices)
         {
+            if (rollDices.Count >= maxRollCount)
+            {
+                break;
+            }
             burnRollDice(sideNum);
         }
     }
@@ -70,6 +74,7 @@ public class ManaRoller : MonoBehaviour
     }
     public void BtnMode(manaRollerMode mode)
     {
+        diceOFF.SetActive(mode == manaRollerMode.Off);
         switch (mode)
         {
             case manaRollerMode.Off:
@@ -78,7 +83,7 @@ public class ManaRoller : MonoBehaviour
                 btn_keep.interactable = false;
                 break;
             case manaRollerMode.Idle:
-                btn_roll.interactable = rollCount > 0;
+                btn_roll.interactable = rollCount > 0 && rollDices.Count > 0;
                 btn_turnEnd.interactable = true;
                 btn_keep.interactable = true;
                 btn_keep.image.color = new Color32(255, 255, 255, 255);
@@ -110,7 +115,7 @@ public class ManaRoller : MonoBehaviour
             SkillCard skillCard = skillObj.GetComponent<SkillCard>();
             skillCard.SetData(isk, () =>
             {
-                if(currentMode == manaRollerMode.UseDice||currentMode == manaRollerMode.Off)
+                if (currentMode == manaRollerMode.UseDice || currentMode == manaRollerMode.Off)
                     return;
                 EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
                 EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
@@ -132,7 +137,7 @@ public class ManaRoller : MonoBehaviour
     public void RollDices()
     {
         rollCount--;
-        txt_rollCount.text = "擲骰次數：" + rollCount.ToString();
+        txt_rollCount.text = "重骰次數：" + rollCount.ToString();
         int totalDice = rollDices.Count;
         ClearAllRollDices();
         for (int i = 0; i < totalDice; i++)

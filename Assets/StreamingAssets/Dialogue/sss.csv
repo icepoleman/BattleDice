@@ -1,0 +1,8 @@
+Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Tag,Anim,Flag,Background,
+Prologue1_2,WolfGirl,<監獄某間牢房>,angry,Center,,,,,,jail,
+,Hero,嗨,normal,,,,,,,,
+,Choose,,,,101|666,101|666,,,,,
+,JailerGirl,辣妹101,happy,,,,101,jump,,,
+END,,,,,,,,,,,
+,WolfGirl,666,angry,,,,666,,,,
+Battle,,,,,,,,,1,,這能進戰鬥 Flag怪物編號

@@ -15,41 +15,20 @@ MonoBehaviour:
   m_GroupName: Enemy
   m_GUID: ae85fc4576fece745bd7af22acdb45d6
   m_SerializeEntries:
-  - m_GUID: 07d08373bb66f2241882e9a9beecc6c2
-    m_Address: defeat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - WolfGirl_G
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d0830d18ba62a841a410d9d9d1dd47d
-    m_Address: idle
+    m_Address: enemy_3
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - WolfGirl_G
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e6874d43c10a784dac5ae5057c47d0a
-    m_Address: idle
+    m_Address: enemy_2
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Goblin_G
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9db1415fd1df0524ba19bc72f5f26487
-    m_Address: hurt
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - WolfGirl_G
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bb2f37745e52b8d4d9e8d355fa7df52b
-    m_Address: atk
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - WolfGirl_G
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd08e5941c48f2c4a8cafee327919208
-    m_Address: idle
+    m_Address: enemy_1
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Slime_G
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}

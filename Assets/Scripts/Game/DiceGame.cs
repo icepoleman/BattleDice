@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 public enum TurnState
 {
     gameStart,
@@ -24,21 +26,29 @@ public class DiceGame : MonoBehaviour
     [SerializeField] Text txt_enemyDescription = null;//測試用
     [SerializeField] Text txt_enemyDiceCount = null;//測試用
 
+    Transform enemyPos = null;//敵人位置
+    Transform playerPos = null;//玩家位置
+    [SerializeField] Transform powerDiceBurnPos = null;//骰子燃燒位置
+    [SerializeField] GameObject diceTrailPrefab = null;//骰子特效預置物
+
     void Start()
     {
         if (isOpen) return;
         isOpen = true;
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         manaRoller.Init();
+        enemyPos = GameObject.Find("enemyPos").transform;
+        playerPos = GameObject.Find("playerPos").transform;
         // 生成角色實例
-        CreateCharacter("character/jailerGirl", "playerPos", true);
-        CreateCharacter("character/enemy", "enemyPos", false);
+        CreateCharacter("character/jailerGirl", playerPos, true);
+        CreateCharacter("character/enemy", enemyPos, false);
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
+        playerData.AddBuff(new ShieldBuff(), 0, 2);
         //txt_enemySkill.text = enemyData.skillData[0].cardTitle; //測試用
         txt_enemyDescription.text = enemyData.description; //測試用
 
@@ -54,15 +64,15 @@ public class DiceGame : MonoBehaviour
     async void LoadData()
     {
         //載入遊戲數據
-        await EnemyPortraitManager.LoadEnemyIfNeeded(enemyData.spriteLabel);
-        enemyView.SetEnemyLabel(enemyData.spriteLabel);
+        Sprite enemySprite = await AddressableManager.LoadAssetAsync<Sprite>("enemy_" + enemyData.enemyId);
+        enemyView.SetEnemySprite(enemySprite);
         ChangeState(TurnState.roundStart);
     }
     // 通用角色生成方法
-    void CreateCharacter(string prefabPath, string positionName, bool isPlayer)
+    void CreateCharacter(string prefabPath, Transform positionTransform, bool isPlayer)
     {
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
-        GameObject characterObj = Instantiate(prefab, GameObject.Find(positionName).transform);
+        GameObject characterObj = Instantiate(prefab, positionTransform);
         characterObj.transform.localPosition = Vector3.zero;
         if (isPlayer)
         {
@@ -103,7 +113,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
         EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
 
-        EnemyPortraitManager.UnloadAllEnemies();
+        AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
     }
     //狀態改變事件
     void ChangeStateEvent(object[] args)
@@ -169,11 +179,17 @@ public class DiceGame : MonoBehaviour
         currentState = newState;
     }
     bool onPlayerPowerCharge = false;
+    float playerPowerChargeTime = 1.5f;
     //玩家選擇使用技能需要骰子
     void AddPowerDiceEvent(object[] args)
     {
+        BurnDiceTrail();
         int sideNum = (int)args[0];
-        autoUseSkillDelay = 2f;
+        playerView.BurnDice(sideNum);
+        if (!playerData.wantUseSkill.acceptMoreDice || manaRoller.GetCurrentMode() != manaRollerMode.UseDice)
+        {
+            autoUseSkillDelay = playerPowerChargeTime;
+        }
         onPlayerPowerCharge = true;
         playerView.PlayAnim("charge");
         manaRoller.BtnMode(manaRollerMode.UseDice);
@@ -185,21 +201,33 @@ public class DiceGame : MonoBehaviour
     {
         onPlayerPowerCharge = false;
         autoUseSkillDelay = 100f;
+        playerView.UpdateCD(0f);
         Debug.Log(playerData.wantUseSkill.diceBox);
         if (playerData.wantUseSkill.canUseSkill())
         {
-            playerData.UseSkill();
-            playerView.PlayAnim("fight");
+            StartCoroutine(PlayerFight());
         }
         else
         {
             playerData.wantUseSkill.diceBox.Clear();
             playerView.PlayAnim("fail");
             Debug.Log("Skill cannot be used yet.");
+            manaRoller.BtnMode(manaRollerMode.Idle);
+            playerView.ClearDiceBox();
         }
-        manaRoller.BtnMode(manaRollerMode.Idle);
     }
-
+    IEnumerator PlayerFight()
+    {
+        manaRoller.BtnMode(manaRollerMode.Off);
+        yield return new WaitForSeconds(0.2f);
+        playerView.CreateFlyText(playerData.wantUseSkill.skillName, Color.white, 0.5f, Ease.OutBack);
+        // 等待動畫播放完成後切換回合
+        yield return new WaitForSeconds(1f);
+        playerData.UseSkill();
+        playerView.PlayAnim("fight");
+        manaRoller.BtnMode(manaRollerMode.Idle);
+        playerView.ClearDiceBox();
+    }
     private void Update()
     {
         if (onPlayerPowerCharge)
@@ -207,6 +235,7 @@ public class DiceGame : MonoBehaviour
             if (autoUseSkillDelay > 0f)
             {
                 autoUseSkillDelay -= Time.deltaTime;
+                playerView.UpdateCD(autoUseSkillDelay / playerPowerChargeTime);
                 if (autoUseSkillDelay <= 0f)
                 {
                     OnPlayerUseSkill(null);
@@ -228,7 +257,7 @@ public class DiceGame : MonoBehaviour
         // 在這裡處理結束回合的邏輯
         ChangeState(TurnState.enemyTurn);
         // 這裡可以加入切換到敵人回合的邏輯
-        manaRoller.ClearAllRollDices();
+        //manaRoller.ClearAllRollDices();
         manaRoller.BtnMode(manaRollerMode.Off);
     }
     void SkillCardClick(object[] args)
@@ -288,17 +317,13 @@ public class DiceGame : MonoBehaviour
         {
             playerData.TakeDamage(damage);
             enemyView.PlayAnim("atk");
-            playerView.PlayAnim("hurt");
             playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
-            playerView.CreateFlyText(damage);
         }
         else
         {
             enemyData.TakeDamage(damage);
             playerView.PlayAnim("atk");
-            enemyView.PlayAnim("hurt");
             enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
-            enemyView.CreateFlyText(damage);
         }
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())
@@ -328,13 +353,23 @@ public class DiceGame : MonoBehaviour
             enemyView.PlayAnim("idle");
         }
     }
-    void AddDeBuffEvent(object[] args)
+    void BurnDiceTrail()
+    {
+        if (diceTrailPrefab != null)
+        {
+            GameObject trail = Instantiate(diceTrailPrefab, powerDiceBurnPos.position, Quaternion.identity);
+            //DOTween移動trail position _burnPos to playerPos
+            trail.transform.DOMove(playerPos.position, 0.1f).SetEase(Ease.Linear);
+            Destroy(trail, 1f); // 假設特效持續2秒
+        }
+    }
+    void AddBuffEvent(object[] args)
     {
         string debuffName = (string)args[0];
         //給予玩家debuff
         //技能卡
     }
-    void RemoveDeBuffEvent(object[] args)
+    void RemoveBuffEvent(object[] args)
     {
         string debuffName = (string)args[0];
         //移除玩家debuff

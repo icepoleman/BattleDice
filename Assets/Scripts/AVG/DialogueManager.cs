@@ -45,6 +45,7 @@ public class DialogueManager : MonoBehaviour
         inputActions.Player.next.performed -= OnNextClick;
         inputActions.Player.Disable();
         PortraitManager.UnloadAll();
+        AddressableManager.ReleaseAll();
         EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
     }
     void OnClickChoice(object[] args)
@@ -82,6 +83,7 @@ public class DialogueManager : MonoBehaviour
             {
                 JumpToTag(jumpTo[0]);
                 jumpTo.Clear();
+                return;
             }
             else if (!onChoose)
             {
@@ -90,7 +92,6 @@ public class DialogueManager : MonoBehaviour
                 onChoose = true;
                 chooseBox.CreateChooseBtns(lines[pageIndex].Choices, lines[pageIndex].JumpTo);
             }
-            return;
         }
         if (onChoose) return;//如果在選擇狀態則不處理下一步
 
@@ -123,7 +124,7 @@ public class DialogueManager : MonoBehaviour
         if (nowChapter == "Battle")
         {
             chatWindow.HideWindow();
-            Debug.Log("劇情結束 進入戰鬥"+int.Parse(lines[pageIndex].Flag));
+            Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
         }
     }
@@ -145,7 +146,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("更換背景:" + lines[_page].Background);
         }
         //更換立繪
-        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Camera")
+        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Camera" && lines[_page].Character != "Choose")
         {
             // 先載入角色立繪（如果尚未載入）
             await PortraitManager.LoadRoleIfNeeded(lines[_page].Character);
@@ -159,9 +160,10 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("紀錄flag:" + lines[_page].Flag);
         }
-        if (lines[_page].Character == "Camera" && lines[_page].Anim == "shake")
+        if (lines[_page].Character == "Camera")
         {
-            EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_CAMERA);
+            if (lines[_page].Anim == "shake")
+                EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_CAMERA);
         }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")

@@ -19,7 +19,7 @@ public interface ICharacterData
     void Heal(float heal);
     void Attack(float damage);
     void UseSkill();//TODO:新增使用技能介面
-    void ApplyBuff(IBuffData buff);//新增套用Buff介面
+    void AddBuff(IBuffData buff,int usageCount,int duration);//新增套用Buff介面
     void RemoveBuff(IBuffData buff);//新增移除Buff介面
     List<int> RollDice();
     bool IsDead();
@@ -85,8 +85,9 @@ public abstract class BaseCharacterData : ICharacterData
         currentBlood += heal;
         if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
-    public virtual void ApplyBuff(IBuffData buff)
+    public virtual void AddBuff(IBuffData buff,int usageCount,int duration)
     {
+        buff.ApplyBuff(usageCount, duration);
         buffData.Add(buff);
         float dummyValue = 0f;
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this, ref dummyValue);
@@ -133,10 +134,9 @@ public class PlayerData : BaseCharacterData
         maxBlood = 100f;
         currentBlood = 100f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        diceCount = 6;
+        diceCount = 3;
         keepDiceCount = 2;
-        skillData = new List<ISkillData>() { new FireBall(), new Kaminari(), new WindBlade() };
-        buffData = new List<IBuffData>() { new ShieldBuff() };
+        skillData = new List<ISkillData>() { new Punch(), new WindBlade(), new Kaminari(), new FireBall() };
         maxRollCount = 1; //最大擲骰次數
     }
     public void AddPowerDice(int dice)

@@ -8,6 +8,10 @@ public class test : MonoBehaviour
     {
         ChangeBlood(playerBlood, -10);
         Debug.Log(playerBlood);
+        BaseBuff baseBuff = new BaseBuff();
+        baseBuff.ApplyBuff(3, 2);
+
+        Debug.Log(LanguageManager.GetFormat("T_AutoSit_cardTypeHint", 6,1));
     }
 
     void ChangeBlood(int _characterData, int value)
