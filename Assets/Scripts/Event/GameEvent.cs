@@ -1,12 +1,10 @@
 public class GameEvent
 {
-    //按鈕 色子裝置事件
+    //按鈕 裝置事件
     public const string EVENT_CLICK_ROLL = "GameEvent_ClickRoll";//刷新骰子
     public const string EVENT_CLICK_TURN_END = "GameEvent_ClickTurnEnd";//結束回合
     public const string EVENT_SELECT_SKILL = "GameEvent_SelectSkill";//選取技能
     public const string EVENT_CLEAR_CHOOSE_SKILL = "GameEvent_ClearChooseSkill";//停止選取技能
-    //遊戲狀態
-    public const string EVENT_CHANGE_STATE = "GameEvent_ChangeState";//改變狀態
 
     //角色用
     public const string EVENT_SKILL_ATTACK = "GameEvent_SkillAttack";//使用攻擊技能
@@ -14,6 +12,11 @@ public class GameEvent
     public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//對角色造成傷害
     public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子
     public const string EVENT_PLAYER_USE_SKILL = "GameEvent_UseSkill";//使用技能
+    public const string EVENT_ADD_BUFF = "GameEvent_AddBuff";//新增buff
+    public const string EVENT_REMOVE_BUFF = "GameEvent_RemoveBuff";//移除buff
+
+    //UI
+    public const string EVENT_UPDATE_MANA_DICE = "GameEvent_UpdateManaDice";//更新能量骰子顯示
 }
 public class StateEvent
 {

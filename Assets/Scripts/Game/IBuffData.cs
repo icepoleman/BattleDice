@@ -40,13 +40,14 @@ public interface IBuffData
     string describe { get; set; } // Buff 效果描述
     int usageCount { get; set; } //使用次數
     int duration { get; set; } // 持續時間（回合數）
-    List<float> effectValues { get; set; } // Buff 效果數值
+    List<int> effectValues { get; set; } // Buff 效果數值
     BuffTrigger buffTrigger { get; set; }
     BuffEffectType buffEffectType { get; set; }
-    void ApplyBuff(int _usageCount, int _duration); // 套用 Buff 效果
+    void SetBuffData(int _usageCount, int _duration); // 套用 Buff 效果
     void CheckBuffTrigger(BuffTrigger trigger, ICharacterData _character, ref float value);//value 傳入傷害或治療數值
     bool CanUseBuff();    //確認使否還能使用
     void DurationDecrease(); //回合結束時減少持續時間
+    void RemoveBuffEffect(ICharacterData character); // 移除 Buff 效果
 }
 public class BaseBuff : IBuffData
 {
@@ -57,9 +58,11 @@ public class BaseBuff : IBuffData
     public int usageCount { get; set; } = 1;
     public BuffTrigger buffTrigger { get; set; }
     public BuffEffectType buffEffectType { get; set; }
-    public List<float> effectValues { get; set; } = new List<float>();
+    public List<int> effectValues { get; set; } = new List<int>();
     private BuffType buffType;
-    public void ApplyBuff(int _usageCount = 0, int _duration = 0)
+    //紀錄玩家骰子數量
+    public int recordedDiceCount { get; set; } = 0;
+    public void SetBuffData(int _usageCount = 0, int _duration = 0)
     {
         usageCount = _usageCount;
         duration = _duration;
@@ -85,21 +88,141 @@ public class BaseBuff : IBuffData
     {
         if (trigger == buffTrigger && CanUseBuff())
         {
-            UseBuff(ref value);
+            UseBuff(_character, ref value);
         }
     }
-    protected void UseBuff(ref float value)
+    protected void UseBuff(ICharacterData character, ref float value)
     {
         usageCount--;
         switch (buffEffectType)
         {
-            case BuffEffectType.Defense:
-                value -= effectValues[0];
-                if (value < 0) value = 0;
-                Debug.Log($"{buffName} 減少了 {effectValues[0]} 點傷害！");
+            case BuffEffectType.HP:
+                // 對自己治療
+                float healAmount = effectValues[0];
+                character.Heal(healAmount);
+                Debug.Log($"{buffName} 治療了 {healAmount} 點生命！");
                 break;
-            // 可以擴展其他 BuffType 的效果
+
+            case BuffEffectType.EnemyHP:
+                // 對敵人造成傷害（透過事件系統）
+                float damageToEnemy = effectValues[0];
+                EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, damageToEnemy, !character.isPlayer);
+                Debug.Log($"{buffName} 對敵人造成了 {damageToEnemy} 點傷害！");
+                break;
+
+            case BuffEffectType.BothHP:
+                // 同時對自己和對敵人傷害
+                float _damage = effectValues[0];
+
+                EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, _damage, !character.isPlayer);
+                character.TakeDamage(_damage);
+                Debug.Log($"對雙方造成 {_damage} 點傷害！");
+                break;
+
+            case BuffEffectType.MaxHP:
+                // 增加最大生命值
+                float maxHpIncrease = effectValues[0];
+                character.maxBlood += maxHpIncrease;
+                character.currentBlood += maxHpIncrease; // 同時增加當前血量
+                Debug.Log($"{buffName} 增加了 {maxHpIncrease} 點最大生命！");
+                break;
+
+            case BuffEffectType.AttackPower:
+                // 增加攻擊力（修改傷害值）
+                float attackBonus = effectValues[0];
+                value += attackBonus;
+                Debug.Log($"{buffName} 增加了 {attackBonus} 點攻擊力！");
+                break;
+
+            case BuffEffectType.Defense:
+                // 減少受到的傷害
+                float damageReduction = effectValues[0];
+                value -= damageReduction;
+                if (value < 0) value = 0;
+                Debug.Log($"{buffName} 減少了 {damageReduction} 點傷害！");
+                break;
+
+            case BuffEffectType.BornDice:
+                // 額外生成骰子（需要在骰子系統中處理）
+                int extraDice = (int)effectValues[0];
+                character.diceCount += extraDice;
+                Debug.Log($"{buffName} 額外獲得 {extraDice} 顆骰子！");
+                break;
+
+            case BuffEffectType.LimitBornDice:
+                // 限制生成骰子數量
+                int diceLimit = (int)effectValues[0];
+                character.limitDiceCount = diceLimit;
+                Debug.Log($"{buffName} 限制骰子數量為 {diceLimit}！");
+                break;
+
+            case BuffEffectType.Stun:
+                // 暈眩效果（跳過行動）
+                character.state = CharacterState.Stunned;
+                Debug.Log($"{buffName} 使目標暈眩，無法行動！");
+                // 可以設置一個標記，讓角色跳過回合
+                break;
+
+            case BuffEffectType.Sleep:
+                // 睡眠效果（受到傷害時解除）
+                character.state = CharacterState.Sleep;
+                Debug.Log($"{buffName} 使目標進入睡眠狀態！");
+                break;
+
+            case BuffEffectType.LimitDiceRollResults:
+                // 限制骰子結果（例如只能擲出特定點數）
+                // effectValues[0] = 最小值, effectValues[1] = 最大值
+                character.limitDiceSides = effectValues;
+
+                Debug.Log($"{buffName} 限制骰子點數在 {effectValues} 之間！");
+                break;
+
             default:
+                Debug.LogWarning($"{buffName} 未處理的 BuffEffectType: {buffEffectType}");
+                break;
+        }
+    }
+    public void RemoveBuffEffect(ICharacterData character)
+    {
+        // 根據 buffEffectType 反向移除效果
+        switch (buffEffectType)
+        {
+            case BuffEffectType.MaxHP:
+                float maxHpDecrease = effectValues[0];
+                character.maxBlood -= maxHpDecrease;
+                if (character.currentBlood > character.maxBlood)
+                {
+                    character.currentBlood = character.maxBlood;
+                }
+                Debug.Log($"{buffName} 移除了 {maxHpDecrease} 點最大生命！");
+                break;
+            case BuffEffectType.BornDice:
+                int extraDice = (int)effectValues[0];
+                character.diceCount -= extraDice;
+                if (character.diceCount < 0)
+                {
+                    character.diceCount = 0;
+                }
+                Debug.Log($"{buffName} 移除了 {extraDice} 顆骰子！");
+                break;
+            case BuffEffectType.LimitBornDice:
+                character.limitDiceCount = 0;
+                Debug.Log($"{buffName} 移除了骰子數量限制！");
+                break;
+            case BuffEffectType.Stun:
+                if (character.state == CharacterState.Stunned)
+                {
+                    character.state = CharacterState.Idle;
+                    Debug.Log($"{buffName} 移除了暈眩效果！");
+                }
+                break;
+            case BuffEffectType.LimitDiceRollResults:
+                character.limitDiceSides.Clear();
+                Debug.Log($"{buffName} 移除了骰子點數限制！");
+                break;
+            // 其他效果通常不需要反向移除，因為它們是即時效果
+            default:
+                Debug.Log($"{buffName} 無需移除效果或未實作移除邏輯。");
                 break;
         }
     }
@@ -126,28 +249,14 @@ public class BaseBuff : IBuffData
 }
 public class ShieldBuff : BaseBuff
 {
-    public ShieldBuff()
+    public ShieldBuff(int _usageCount, int _duration)
     {
         buffID = 1;
         buffName = "護盾";
-        describe = "減少受到的傷害";
+        describe = "減少5點受到的傷害";
+        effectValues.Add(5); // 減少5點傷害
         buffTrigger = BuffTrigger.OnDamageTaken;
         buffEffectType = BuffEffectType.Defense;
-    }
-}
-public class BuffFactory
-{
-    public static IBuffData CreateBuff(int buffId)
-    {
-        switch (buffId)
-        {
-            case 1:
-                return new ShieldBuff();
-            case 2:
-            // return new RegenerationBuff();
-            default:
-                Debug.LogError("BuffFactory: 未知的 Buff ID " + buffId);
-                return null;
-        }
+        SetBuffData(_usageCount, _duration);
     }
 }

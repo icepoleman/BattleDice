@@ -102,6 +102,10 @@ public static class LanguageManager
                 string key = trimmedLine.Substring(0, separatorIndex).Trim();
                 string value = trimmedLine.Substring(separatorIndex + 1).Trim();
                 
+                // 處理轉義字符
+                value = value.Replace("\\n", "\n");
+                value = value.Replace("\\t", "\t");
+                
                 if (!languageData.ContainsKey(key))
                 {
                     languageData[key] = value;

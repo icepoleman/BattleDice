@@ -2,14 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-
+public enum CharacterState
+{
+    Idle,
+    Stunned,
+    Sleep
+}
 public interface ICharacterData
 {
+    CharacterState state { get; set; }
     bool isPlayer { get; set; }
     float maxBlood { get; set; }
     float currentBlood { get; set; }
     int[] diceSides { get; set; }
+    List<int> limitDiceSides { get; set; }
     int diceCount { get; set; }
+    int limitDiceCount { get; set; }//限制生成骰子數量
     int keepDiceCount { get; set; }
     List<ISkillData> skillData { get; set; }
     List<IBuffData> buffData { get; set; }
@@ -19,21 +27,25 @@ public interface ICharacterData
     void Heal(float heal);
     void Attack(float damage);
     void UseSkill();//TODO:新增使用技能介面
-    void AddBuff(IBuffData buff,int usageCount,int duration);//新增套用Buff介面
+    void AddBuff(IBuffData buff);//新增套用Buff介面
     void RemoveBuff(IBuffData buff);//新增移除Buff介面
     List<int> RollDice();
     bool IsDead();
     void TurnEndBuffDecrease(); //回合結束時Buff持續時間減少
+    void TurnStartBuffEffect(); //回合開始時Buff效果觸發
 }
 
 // 基礎角色類別，實作共同邏輯
 public abstract class BaseCharacterData : ICharacterData
 {
+    public CharacterState state { get; set; } = CharacterState.Idle;
     public bool isPlayer { get; set; } = false;
     public float maxBlood { get; set; }
     public float currentBlood { get; set; }
     public int[] diceSides { get; set; }
+    public List<int> limitDiceSides { get; set; } = new List<int>();
     public int diceCount { get; set; }
+    public int limitDiceCount { get; set; }//限制生成骰子數量
     public int keepDiceCount { get; set; }
     public List<ISkillData> skillData { get; set; } = new List<ISkillData>();
     public List<IBuffData> buffData { get; set; } = new List<IBuffData>();
@@ -41,10 +53,25 @@ public abstract class BaseCharacterData : ICharacterData
     public List<int> rollDiceResult { get; set; } = new List<int>();
     public virtual List<int> RollDice()
     {
+        if (state == CharacterState.Stunned || state == CharacterState.Sleep)
+        {
+            Debug.Log($"{(isPlayer ? "玩家" : "敵人")} 因為狀態無法擲骰子");
+            rollDiceResult.Clear();
+            return rollDiceResult;
+        }
+        int useDice = diceCount;
+        if (limitDiceCount > 0)//有設定限制數量時使用
+        {
+            useDice = limitDiceCount;
+        }
         rollDiceResult.Clear(); // 清空之前的結果
-        for (int i = 0; i < diceCount; i++)
+        for (int i = 0; i < useDice; i++)
         {
             int side = diceSides[UnityEngine.Random.Range(0, diceSides.Length)];
+            if (limitDiceSides.Count > 0)//有設定限制點數時使用
+            {
+                side = limitDiceSides[UnityEngine.Random.Range(0, limitDiceSides.Count)];
+            }
             rollDiceResult.Add(side);
         }
         return rollDiceResult;
@@ -68,6 +95,11 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void TakeDamage(float damage)
     {
+        if (state == CharacterState.Sleep)
+        {
+            //解除狀態
+            state = CharacterState.Idle;
+        }
         foreach (var buff in buffData)
         {
             buff.CheckBuffTrigger(BuffTrigger.OnDamageTaken, this, ref damage);
@@ -85,22 +117,42 @@ public abstract class BaseCharacterData : ICharacterData
         currentBlood += heal;
         if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
-    public virtual void AddBuff(IBuffData buff,int usageCount,int duration)
+    public virtual void AddBuff(IBuffData buff)
     {
-        buff.ApplyBuff(usageCount, duration);
-        buffData.Add(buff);
+        //如果已經有相同的 Buff ID，則刷新效果
+        if (buffData.Any(b => b.buffID == buff.buffID))
+        {
+            buffData.Remove(buffData.First(b => b.buffID == buff.buffID));
+        }
         float dummyValue = 0f;
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this, ref dummyValue);
+        buffData.Add(buff);
     }
     public virtual void RemoveBuff(IBuffData buff)
     {
-        buffData.Remove(buff);
         float dummyValue = 0f;
         buff.CheckBuffTrigger(BuffTrigger.OnRemove, this, ref dummyValue);
+        foreach (var b in buffData)
+        {
+            if (b.buffID == buff.buffID)
+            {
+                b.RemoveBuffEffect(this);
+                buffData.Remove(b);
+                break;
+            }
+        }
     }
     public virtual bool IsDead()
     {
         return currentBlood <= 0;
+    }
+    public virtual void TurnStartBuffEffect()
+    {
+        foreach (var buff in buffData)
+        {
+            float dummyValue = 0f;
+            buff.CheckBuffTrigger(BuffTrigger.OnTurnStart, this, ref dummyValue);
+        }
     }
     public virtual void TurnEndBuffDecrease()
     {

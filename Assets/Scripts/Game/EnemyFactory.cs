@@ -25,7 +25,6 @@ public class EnemyData : BaseCharacterData
     [Header("基本資訊")]
     public int enemyId = 0;
     public string enemyName = "敵人";
-    public string description = "";
     public int goldReward = 0;
     public override void UseSkill()
     {
@@ -55,6 +54,7 @@ public class SlimeData : EnemyData
         diceSides = new int[] { 1, 2 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new Kaminari() };
+        buffData.Add (new ShieldBuff(0,0)); 
         maxRollCount = 1; //最大擲骰次數
     }
 }
@@ -78,13 +78,12 @@ public class WolfGirlData : EnemyData
     {
         enemyId = 103;
         enemyName = "狼女";
-        description = "受傷回合，骰子數量變為6，攻擊後回復";
         maxBlood = 150f;
         currentBlood = 15f;
         diceSides = new int[] { 1, 2, 3, 4 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new ClawAttack() };
-        buffData = new List<IBuffData>() { new ShieldBuff() };
+        buffData = new List<IBuffData>() {};
         maxRollCount = 1; //最大擲骰次數
     }
     public override void TakeDamage(float damage)

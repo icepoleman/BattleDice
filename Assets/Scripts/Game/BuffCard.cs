@@ -25,6 +25,12 @@ public class BuffCard : MonoBehaviour
     }
     public void SetBuffInfo(IBuffData buffData)
     {
+        RectTransform rect = GetComponent<RectTransform>();
+        if (rect.anchoredPosition.x > 0)
+            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(20, -12, 1);
+        else
+            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(-20, -12, 1);
+
         txt_effect.text = LanguageManager.GetFormat("T_Buff_Effect_Describe", buffData.buffName, buffData.describe);
         if (buffData.usageCount > 0)
             txt_effect.text += "\n" + LanguageManager.GetFormat("T_Buff_Effect_UsageCount", buffData.usageCount);
