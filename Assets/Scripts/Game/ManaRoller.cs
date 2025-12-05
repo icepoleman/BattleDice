@@ -27,7 +27,7 @@ public class ManaRoller : MonoBehaviour
     [SerializeField] GameObject skillCardPrefab = null;
     [SerializeField] GameObject diceOFF;
     Transform skillCardParent;    //技能生成位置
-    TextMeshProUGUI txt_rollCount = null;//擲骰次數顯示
+    Text txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
     public void Init()
     {
@@ -38,7 +38,7 @@ public class ManaRoller : MonoBehaviour
         skillCardParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
-        txt_rollCount = GameObject.Find("rollerBtns/btn_roll/txt_rollCount").GetComponent<TextMeshProUGUI>();
+        txt_rollCount = GameObject.Find("rollerBtns/btn_roll/txt_rollCount").GetComponent<Text>();
 
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子

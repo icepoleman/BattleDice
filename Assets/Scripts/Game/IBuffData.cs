@@ -31,7 +31,8 @@ public enum BuffEffectType
     LimitBornDice,
     Stun,
     Sleep,
-    LimitDiceRollResults
+    LimitDiceRollResults,
+    SpawnBuff
 }
 public interface IBuffData
 {
@@ -44,7 +45,7 @@ public interface IBuffData
     BuffTrigger buffTrigger { get; set; }
     BuffEffectType buffEffectType { get; set; }
     void SetBuffData(int _usageCount, int _duration); // 套用 Buff 效果
-    void CheckBuffTrigger(BuffTrigger trigger, ICharacterData _character, ref float value);//value 傳入傷害或治療數值
+    void CheckBuffTrigger(BuffTrigger trigger, ICharacterData _character);
     bool CanUseBuff();    //確認使否還能使用
     void DurationDecrease(); //回合結束時減少持續時間
     void RemoveBuffEffect(ICharacterData character); // 移除 Buff 效果
@@ -84,14 +85,14 @@ public class BaseBuff : IBuffData
         }
         Debug.Log($"{buffName} 已套用，類型: {buffType}, 使用次數: {usageCount}, 持續時間: {duration} 回合");
     }
-    public void CheckBuffTrigger(BuffTrigger trigger, ICharacterData _character, ref float value)
+    public void CheckBuffTrigger(BuffTrigger trigger, ICharacterData _character)
     {
         if (trigger == buffTrigger && CanUseBuff())
         {
-            UseBuff(_character, ref value);
+            UseBuff(_character);
         }
     }
-    protected void UseBuff(ICharacterData character, ref float value)
+    protected void UseBuff(ICharacterData character)
     {
         usageCount--;
         switch (buffEffectType)
@@ -130,23 +131,23 @@ public class BaseBuff : IBuffData
             case BuffEffectType.AttackPower:
                 // 增加攻擊力（修改傷害值）
                 float attackBonus = effectValues[0];
-                value += attackBonus;
+                character.buffDamage += attackBonus;
                 Debug.Log($"{buffName} 增加了 {attackBonus} 點攻擊力！");
                 break;
 
             case BuffEffectType.Defense:
                 // 減少受到的傷害
                 float damageReduction = effectValues[0];
-                value -= damageReduction;
-                if (value < 0) value = 0;
+                character.buffDefense += damageReduction;
                 Debug.Log($"{buffName} 減少了 {damageReduction} 點傷害！");
                 break;
 
             case BuffEffectType.BornDice:
-                // 額外生成骰子（需要在骰子系統中處理）
+                // 額外生成骰子
                 int extraDice = (int)effectValues[0];
                 character.diceCount += extraDice;
                 Debug.Log($"{buffName} 額外獲得 {extraDice} 顆骰子！");
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 break;
 
             case BuffEffectType.LimitBornDice:
@@ -154,6 +155,7 @@ public class BaseBuff : IBuffData
                 int diceLimit = (int)effectValues[0];
                 character.limitDiceCount = diceLimit;
                 Debug.Log($"{buffName} 限制骰子數量為 {diceLimit}！");
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 break;
 
             case BuffEffectType.Stun:
@@ -176,7 +178,11 @@ public class BaseBuff : IBuffData
 
                 Debug.Log($"{buffName} 限制骰子點數在 {effectValues} 之間！");
                 break;
-
+            case BuffEffectType.SpawnBuff:
+                BaseBuff spBuff = BuffFactory.CreateBuff(effectValues[0], effectValues[1], effectValues[2]) as BaseBuff;
+                // 生成新的 Buff 並套用到角色
+                EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, spBuff, character.isPlayer);
+                break;
             default:
                 Debug.LogWarning($"{buffName} 未處理的 BuffEffectType: {buffEffectType}");
                 break;
@@ -204,6 +210,14 @@ public class BaseBuff : IBuffData
                     character.diceCount = 0;
                 }
                 Debug.Log($"{buffName} 移除了 {extraDice} 顆骰子！");
+                break;
+            case BuffEffectType.AttackPower:
+                character.buffDamage -= effectValues[0];
+                Debug.Log($"{buffName} 移除了攻擊力加成！");
+                break; 
+            case BuffEffectType.Defense:
+                character.buffDefense -= effectValues[0];
+                Debug.Log($"{buffName} 移除了防禦力加成！");
                 break;
             case BuffEffectType.LimitBornDice:
                 character.limitDiceCount = 0;
@@ -245,18 +259,5 @@ public class BaseBuff : IBuffData
     public void DurationDecrease()
     {
         duration--;
-    }
-}
-public class ShieldBuff : BaseBuff
-{
-    public ShieldBuff(int _usageCount, int _duration)
-    {
-        buffID = 1;
-        buffName = "護盾";
-        describe = "減少5點受到的傷害";
-        effectValues.Add(5); // 減少5點傷害
-        buffTrigger = BuffTrigger.OnDamageTaken;
-        buffEffectType = BuffEffectType.Defense;
-        SetBuffData(_usageCount, _duration);
     }
 }

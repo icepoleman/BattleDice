@@ -32,12 +32,12 @@ public class GameUiView : MonoBehaviour
     }
     public async void UpdateBuffs(bool isPlayer, IBuffData[] buffs)
     {
+        Transform buffParent = isPlayer ? trans_playerBuffParent : trans_enemyBuffParent;
+        ClearBuffs(buffParent);
         if (buffs == null)
         {
             return;
         }
-        Transform buffParent = isPlayer ? trans_playerBuffParent : trans_enemyBuffParent;
-        ClearBuffs(buffParent);
         foreach (var buff in buffs)
         {
             GameObject buffIcon = Instantiate(AddressableManager.GetLoadedAsset<GameObject>("buffCard"));

@@ -31,6 +31,8 @@ public class BuffCard : MonoBehaviour
         else
             obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(-20, -12, 1);
 
+        if (buffData.duration > 0)
+            txt_duration.text = buffData.duration.ToString();
         txt_effect.text = LanguageManager.GetFormat("T_Buff_Effect_Describe", buffData.buffName, buffData.describe);
         if (buffData.usageCount > 0)
             txt_effect.text += "\n" + LanguageManager.GetFormat("T_Buff_Effect_UsageCount", buffData.usageCount);

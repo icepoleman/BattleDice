@@ -13,7 +13,7 @@ public class GameEvent
     public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子
     public const string EVENT_PLAYER_USE_SKILL = "GameEvent_UseSkill";//使用技能
     public const string EVENT_ADD_BUFF = "GameEvent_AddBuff";//新增buff
-    public const string EVENT_REMOVE_BUFF = "GameEvent_RemoveBuff";//移除buff
+    public const string EVENT_UPDATE_BUFF = "GameEvent_UpdateBuff";//更新buff
 
     //UI
     public const string EVENT_UPDATE_MANA_DICE = "GameEvent_UpdateManaDice";//更新能量骰子顯示

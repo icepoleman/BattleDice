@@ -53,8 +53,13 @@ public class SlimeData : EnemyData
         currentBlood = 50f;
         diceSides = new int[] { 1, 2 };
         diceCount = 2;
-        skillData = new List<ISkillData>() { new Kaminari() };
-        buffData.Add (new ShieldBuff(0,0)); 
+        skillData = new List<ISkillData>() { SkillFactory.CreateSkill(4) };
+        /*buffData.Add(new ShieldBuff(0, 3));
+        buffData.Add(new Berserker(0, 0));
+        buffData.Add(new PowerBoost(0, 3));/*/
+        AddBuff(new ShieldBuff(0, 3));
+        AddBuff(new Berserker(0, 0));
+        AddBuff(new PowerBoost(0, 3));
         maxRollCount = 1; //最大擲骰次數
     }
 }
@@ -83,7 +88,7 @@ public class WolfGirlData : EnemyData
         diceSides = new int[] { 1, 2, 3, 4 };
         diceCount = 2;
         skillData = new List<ISkillData>() { new ClawAttack() };
-        buffData = new List<IBuffData>() {};
+        buffData = new List<IBuffData>() { };
         maxRollCount = 1; //最大擲骰次數
     }
     public override void TakeDamage(float damage)

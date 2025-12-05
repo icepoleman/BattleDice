@@ -23,6 +23,8 @@ public interface ICharacterData
     List<IBuffData> buffData { get; set; }
     int maxRollCount { get; set; } //最大擲骰次數
     List<int> rollDiceResult { get; set; }
+    float buffDamage { get; set; }
+    float buffDefense { get; set; }
     void TakeDamage(float damage);
     void Heal(float heal);
     void Attack(float damage);
@@ -51,6 +53,8 @@ public abstract class BaseCharacterData : ICharacterData
     public List<IBuffData> buffData { get; set; } = new List<IBuffData>();
     public int maxRollCount { get; set; }
     public List<int> rollDiceResult { get; set; } = new List<int>();
+    public float buffDamage { get; set; } = 0f;
+    public float buffDefense { get; set; } = 0f;
     public virtual List<int> RollDice()
     {
         if (state == CharacterState.Stunned || state == CharacterState.Sleep)
@@ -76,22 +80,27 @@ public abstract class BaseCharacterData : ICharacterData
         }
         return rollDiceResult;
     }
-    public virtual void UseSkill()
+
+    /// <summary>
+    /// 觸發所有 Buff 的指定事件
+    /// </summary>
+    protected void TriggerBuffs(BuffTrigger trigger)
     {
-        float tmp = 0f;
         foreach (var buff in buffData)
         {
-            buff.CheckBuffTrigger(BuffTrigger.OnSkillUse, this, ref tmp);
+            buff.CheckBuffTrigger(trigger, this);
         }
+        UpdateBuff();
+    }
+
+    public virtual void UseSkill()
+    {
+        TriggerBuffs(BuffTrigger.OnSkillUse);
     }
     public virtual void Attack(float damage)
     {
-        float tmp = damage;
-        foreach (var buff in buffData)
-        {
-            buff.CheckBuffTrigger(BuffTrigger.OnAttactk, this, ref tmp);
-        }
-        EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, tmp, !isPlayer);
+        TriggerBuffs(BuffTrigger.OnAttactk);
+        EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, damage + buffDamage, !isPlayer);
     }
     public virtual void TakeDamage(float damage)
     {
@@ -100,20 +109,17 @@ public abstract class BaseCharacterData : ICharacterData
             //解除狀態
             state = CharacterState.Idle;
         }
-        foreach (var buff in buffData)
-        {
-            buff.CheckBuffTrigger(BuffTrigger.OnDamageTaken, this, ref damage);
-        }
-        currentBlood -= damage;
+        TriggerBuffs(BuffTrigger.OnDamageTaken);
+        float takeDmg = damage - buffDefense;
+        if (takeDmg < 0) takeDmg = 0;
+        Debug.Log($"{(isPlayer ? "玩家" : "敵人")} 受到 {takeDmg} 點傷害，防禦力 {buffDefense}");
+        currentBlood -= takeDmg;
         if (currentBlood < 0) currentBlood = 0;
     }
 
     public virtual void Heal(float heal)
     {
-        foreach (var buff in buffData)
-        {
-            buff.CheckBuffTrigger(BuffTrigger.OnHealReceived, this, ref heal);
-        }
+        TriggerBuffs(BuffTrigger.OnHealReceived);
         currentBlood += heal;
         if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
@@ -124,22 +130,17 @@ public abstract class BaseCharacterData : ICharacterData
         {
             buffData.Remove(buffData.First(b => b.buffID == buff.buffID));
         }
-        float dummyValue = 0f;
-        buff.CheckBuffTrigger(BuffTrigger.OnApply, this, ref dummyValue);
+        buff.CheckBuffTrigger(BuffTrigger.OnApply, this);
         buffData.Add(buff);
+        UpdateBuff();
     }
-    public virtual void RemoveBuff(IBuffData buff)
+    public virtual void RemoveBuff(IBuffData buff)//只被動作內部呼叫
     {
-        float dummyValue = 0f;
-        buff.CheckBuffTrigger(BuffTrigger.OnRemove, this, ref dummyValue);
-        foreach (var b in buffData)
+        buff.CheckBuffTrigger(BuffTrigger.OnRemove, this);
+        buff.RemoveBuffEffect(this);
+        if (buffData.Any(b => b.buffID == buff.buffID))
         {
-            if (b.buffID == buff.buffID)
-            {
-                b.RemoveBuffEffect(this);
-                buffData.Remove(b);
-                break;
-            }
+            buffData.Remove(buffData.First(b => b.buffID == buff.buffID));
         }
     }
     public virtual bool IsDead()
@@ -148,19 +149,28 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void TurnStartBuffEffect()
     {
-        foreach (var buff in buffData)
-        {
-            float dummyValue = 0f;
-            buff.CheckBuffTrigger(BuffTrigger.OnTurnStart, this, ref dummyValue);
-        }
+        TriggerBuffs(BuffTrigger.OnTurnStart);
     }
     public virtual void TurnEndBuffDecrease()
     {
+        TriggerBuffs(BuffTrigger.OnTurnEnd);
         foreach (var buff in buffData)
         {
             buff.DurationDecrease();
         }
-        buffData.RemoveAll(buff => !buff.CanUseBuff());
+        UpdateBuff();
+    }
+    public void UpdateBuff()
+    {
+        foreach (var buff in buffData)
+        {
+            if (!buff.CanUseBuff())
+            {
+                RemoveBuff(buff);
+                break;
+            }
+        }
+        EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BUFF);
     }
 }
 
