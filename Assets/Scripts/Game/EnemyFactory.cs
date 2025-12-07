@@ -53,11 +53,10 @@ public class SlimeData : EnemyData
         currentBlood = 50f;
         diceSides = new int[] { 1, 2 };
         diceCount = 2;
-        skillData = new List<ISkillData>() { SkillFactory.CreateSkill(4) };
+        skillData = new List<ISkillData>() { SkillFactory.CreateSkill(5) };
         /*buffData.Add(new ShieldBuff(0, 3));
         buffData.Add(new Berserker(0, 0));
         buffData.Add(new PowerBoost(0, 3));/*/
-        AddBuff(new ShieldBuff(0, 3));
         AddBuff(new Berserker(0, 0));
         AddBuff(new PowerBoost(0, 3));
         maxRollCount = 1; //最大擲骰次數

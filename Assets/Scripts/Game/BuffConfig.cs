@@ -26,6 +26,16 @@ public class BuffFactory
                 return new StunBuff(usageCount, duration);
             case 10:
                 return new SleepBuff(usageCount, duration);
+            case 11:
+                return new MagicBoostBuff(usageCount, duration);
+            case 12:
+                return new MagicWeakenBuff(usageCount, duration);
+            case 13:
+                return new FatBuff(usageCount, duration);
+            case 14:
+                return new StinkyBuff(usageCount, duration);
+            case 15:
+                return new ThornArmorBuff(usageCount, duration);
             default:
                 Debug.LogWarning($"未知的 Buff ID: {buffID}");
                 return null;
@@ -168,6 +178,76 @@ public class SleepBuff : BaseBuff
         effectValues.Add(0);
         buffTrigger = BuffTrigger.OnApply;
         buffEffectType = BuffEffectType.Sleep;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//魔力增幅
+public class MagicBoostBuff : BaseBuff
+{
+    public MagicBoostBuff(int _usageCount, int _duration)
+    {
+        buffID = 11;
+        buffName = "魔力增幅";
+        describe = "生成魔力骰+1";
+        effectValues.Add(1);
+        buffTrigger = BuffTrigger.OnApply;
+        buffEffectType = BuffEffectType.BornDice;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//魔力衰弱
+public class MagicWeakenBuff : BaseBuff
+{
+    public MagicWeakenBuff(int _usageCount, int _duration)
+    {
+        buffID = 12;
+        buffName = "魔力衰弱";
+        describe = "生成魔力骰-1";
+        effectValues.Add(-1);
+        buffTrigger = BuffTrigger.OnApply;
+        buffEffectType = BuffEffectType.BornDice;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//肥胖
+public class FatBuff : BaseBuff
+{
+    public FatBuff(int _usageCount, int _duration)
+    {
+        buffID = 13;
+        buffName = "肥胖";
+        describe = "最大生命+20";
+        effectValues.Add(20);
+        buffTrigger = BuffTrigger.OnApply;
+        buffEffectType = BuffEffectType.MaxHP;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//惡臭
+public class StinkyBuff : BaseBuff
+{
+    public StinkyBuff(int _usageCount, int _duration)
+    {
+        buffID = 14;
+        buffName = "惡臭";
+        describe = "回合結束,雙方生命-10";
+        effectValues.Add(10);
+        buffTrigger = BuffTrigger.OnTurnEnd;
+        buffEffectType = BuffEffectType.BothHP;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//尖刺護甲
+public class ThornArmorBuff : BaseBuff
+{
+    public ThornArmorBuff(int _usageCount, int _duration)
+    {
+        buffID = 15;
+        buffName = "尖刺護甲";
+        describe = "受到攻擊時，反彈10點傷害給攻擊者";
+        effectValues.Add(10);
+        buffTrigger = BuffTrigger.OnDamageTaken;
+        buffEffectType = BuffEffectType.EnemyHP;
         SetBuffData(_usageCount, _duration);
     }
 }

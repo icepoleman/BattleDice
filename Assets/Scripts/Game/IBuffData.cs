@@ -215,6 +215,7 @@ public class BaseBuff : IBuffData
                 {
                     character.diceCount = 0;
                 }
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 Debug.Log($"{buffName} 移除了 {extraDice} 顆骰子！");
                 break;
             case BuffEffectType.AttackPower:

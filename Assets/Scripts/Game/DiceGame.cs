@@ -48,8 +48,8 @@ public class DiceGame : MonoBehaviour
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
         playerData.AddBuff(BuffFactory.CreateBuff(6, 0, 1));
-                playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 1));
-        playerData.AddBuff(BuffFactory.CreateBuff(10, 0, 0));
+        playerData.AddBuff(BuffFactory.CreateBuff(13, 0, 2));
+        playerData.AddBuff(BuffFactory.CreateBuff(15, 3, 0));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
@@ -126,7 +126,7 @@ public class DiceGame : MonoBehaviour
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
     }
-    void ChangeState(TurnState newState)
+    async void ChangeState(TurnState newState)
     {
         if (currentState == newState) return;
         playerData.RemoveInvalidBuffs();
@@ -207,7 +207,11 @@ public class DiceGame : MonoBehaviour
                     });
                 }
                 else
+                {
+                    await System.Threading.Tasks.Task.Delay(1000);
                     ChangeState(TurnState.roundStart);
+                }
+
                 break;
             default:
                 break;
