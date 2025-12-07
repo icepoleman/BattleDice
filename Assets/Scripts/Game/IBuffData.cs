@@ -49,6 +49,7 @@ public interface IBuffData
     bool CanUseBuff();    //確認使否還能使用
     void DurationDecrease(); //回合結束時減少持續時間
     void RemoveBuffEffect(ICharacterData character); // 移除 Buff 效果
+    bool canRemove { get; set; }
 }
 public class BaseBuff : IBuffData
 {
@@ -63,6 +64,7 @@ public class BaseBuff : IBuffData
     private BuffType buffType;
     //紀錄玩家骰子數量
     public int recordedDiceCount { get; set; } = 0;
+    public bool canRemove { get; set; } = false;
     public void SetBuffData(int _usageCount = 0, int _duration = 0)
     {
         usageCount = _usageCount;
@@ -98,10 +100,14 @@ public class BaseBuff : IBuffData
         switch (buffEffectType)
         {
             case BuffEffectType.HP:
-                // 對自己治療
+                // 對自己治療 或扣血
                 float healAmount = effectValues[0];
-                character.Heal(healAmount);
+                if (healAmount > 0)
+                    character.Heal(healAmount);
+                else
+                    character.TakeDamage(-healAmount);
                 Debug.Log($"{buffName} 治療了 {healAmount} 點生命！");
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BLOOD_UI);
                 break;
 
             case BuffEffectType.EnemyHP:
@@ -162,7 +168,6 @@ public class BaseBuff : IBuffData
                 // 暈眩效果（跳過行動）
                 character.state = CharacterState.Stunned;
                 Debug.Log($"{buffName} 使目標暈眩，無法行動！");
-                // 可以設置一個標記，讓角色跳過回合
                 break;
 
             case BuffEffectType.Sleep:
@@ -190,6 +195,7 @@ public class BaseBuff : IBuffData
     }
     public void RemoveBuffEffect(ICharacterData character)
     {
+        canRemove = true;
         // 根據 buffEffectType 反向移除效果
         switch (buffEffectType)
         {
@@ -214,7 +220,7 @@ public class BaseBuff : IBuffData
             case BuffEffectType.AttackPower:
                 character.buffDamage -= effectValues[0];
                 Debug.Log($"{buffName} 移除了攻擊力加成！");
-                break; 
+                break;
             case BuffEffectType.Defense:
                 character.buffDefense -= effectValues[0];
                 Debug.Log($"{buffName} 移除了防禦力加成！");
@@ -228,6 +234,13 @@ public class BaseBuff : IBuffData
                 {
                     character.state = CharacterState.Idle;
                     Debug.Log($"{buffName} 移除了暈眩效果！");
+                }
+                break;
+            case BuffEffectType.Sleep:
+                if (character.state == CharacterState.Sleep)
+                {
+                    character.state = CharacterState.Idle;
+                    Debug.Log($"{buffName} 移除了睡眠效果！");
                 }
                 break;
             case BuffEffectType.LimitDiceRollResults:

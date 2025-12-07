@@ -20,6 +20,12 @@ public class BuffFactory
                 return new PowerBoost(usageCount, duration);
             case 7:
                 return new PoisonBuff(usageCount, duration);
+            case 8:
+                return new BleedBuff(usageCount, duration);
+            case 9:
+                return new StunBuff(usageCount, duration);
+            case 10:
+                return new SleepBuff(usageCount, duration);
             default:
                 Debug.LogWarning($"未知的 Buff ID: {buffID}");
                 return null;
@@ -120,6 +126,48 @@ public class PoisonBuff : BaseBuff
         effectValues.Add(-10);
         buffTrigger = BuffTrigger.OnTurnEnd;
         buffEffectType = BuffEffectType.HP;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//Bleed
+public class BleedBuff : BaseBuff
+{
+    public BleedBuff(int _usageCount, int _duration)
+    {
+        buffID = 8;
+        buffName = "流血";
+        describe = "使用技能時受到10點傷害";
+        effectValues.Add(-10);
+        buffTrigger = BuffTrigger.OnSkillUse;
+        buffEffectType = BuffEffectType.HP;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//暈眩
+public class StunBuff : BaseBuff
+{
+    public StunBuff(int _usageCount, int _duration)
+    {
+        buffID = 9;
+        buffName = "暈眩";
+        describe = "無法行動";
+        effectValues.Add(0);
+        buffTrigger = BuffTrigger.OnApply;
+        buffEffectType = BuffEffectType.Stun;
+        SetBuffData(_usageCount, _duration);
+    }
+}
+//睡眠
+public class SleepBuff : BaseBuff
+{
+    public SleepBuff(int _usageCount, int _duration)
+    {
+        buffID = 10;
+        buffName = "睡眠";
+        describe = "無法行動，直到受到傷害解除";
+        effectValues.Add(0);
+        buffTrigger = BuffTrigger.OnApply;
+        buffEffectType = BuffEffectType.Sleep;
         SetBuffData(_usageCount, _duration);
     }
 }

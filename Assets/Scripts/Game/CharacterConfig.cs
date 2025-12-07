@@ -57,12 +57,6 @@ public abstract class BaseCharacterData : ICharacterData
     public float buffDefense { get; set; } = 0f;
     public virtual List<int> RollDice()
     {
-        if (state == CharacterState.Stunned || state == CharacterState.Sleep)
-        {
-            Debug.Log($"{(isPlayer ? "玩家" : "敵人")} 因為狀態無法擲骰子");
-            rollDiceResult.Clear();
-            return rollDiceResult;
-        }
         int useDice = diceCount;
         if (limitDiceCount > 0)//有設定限制數量時使用
         {
@@ -90,7 +84,7 @@ public abstract class BaseCharacterData : ICharacterData
         {
             buff.CheckBuffTrigger(trigger, this);
         }
-        UpdateBuff();
+        RemoveInvalidBuffs();
     }
 
     public virtual void UseSkill()
@@ -106,8 +100,13 @@ public abstract class BaseCharacterData : ICharacterData
     {
         if (state == CharacterState.Sleep)
         {
-            //解除狀態
-            state = CharacterState.Idle;
+            foreach (var buff in buffData)
+            {
+                if (buff is SleepBuff)
+                {
+                    RemoveBuff(buff);//先執行效果
+                }
+            }
         }
         TriggerBuffs(BuffTrigger.OnDamageTaken);
         float takeDmg = damage - buffDefense;
@@ -132,16 +131,11 @@ public abstract class BaseCharacterData : ICharacterData
         }
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this);
         buffData.Add(buff);
-        UpdateBuff();
     }
     public virtual void RemoveBuff(IBuffData buff)//只被動作內部呼叫
     {
         buff.CheckBuffTrigger(BuffTrigger.OnRemove, this);
         buff.RemoveBuffEffect(this);
-        if (buffData.Any(b => b.buffID == buff.buffID))
-        {
-            buffData.Remove(buffData.First(b => b.buffID == buff.buffID));
-        }
     }
     public virtual bool IsDead()
     {
@@ -158,18 +152,25 @@ public abstract class BaseCharacterData : ICharacterData
         {
             buff.DurationDecrease();
         }
-        UpdateBuff();
+        RemoveInvalidBuffs();
     }
-    public void UpdateBuff()
+    // 移除無效 Buff
+    public void RemoveInvalidBuffs()
     {
         foreach (var buff in buffData)
         {
             if (!buff.CanUseBuff())
             {
-                RemoveBuff(buff);
-                break;
+                RemoveBuff(buff);//先執行效果
             }
         }
+        UpdateBuffUI();
+    }
+    public void UpdateBuffUI()
+    {
+        // 移除 canRemove == true 的 Buff，保留 canRemove == false 的
+        buffData = buffData.Where(b => !b.canRemove).ToList();
+
         EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BUFF);
     }
 }

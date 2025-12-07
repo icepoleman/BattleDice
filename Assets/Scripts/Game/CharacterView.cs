@@ -87,6 +87,10 @@ public class CharacterView : MonoBehaviour
         anim.Play(animName);
         Debug.Log("播放" + animName + "動畫");
     }
+    public void SetAnimBool(string paramName, bool value)
+    {
+        anim.SetBool(paramName, value);
+    }
     public void UpdateDiceCount(int count)
     {
         text_diceCount.text = count.ToString();

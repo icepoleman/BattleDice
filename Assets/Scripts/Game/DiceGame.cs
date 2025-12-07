@@ -48,7 +48,8 @@ public class DiceGame : MonoBehaviour
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
         playerData.AddBuff(BuffFactory.CreateBuff(6, 0, 1));
-        playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
+                playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 1));
+        playerData.AddBuff(BuffFactory.CreateBuff(10, 0, 0));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
@@ -68,7 +69,7 @@ public class DiceGame : MonoBehaviour
         enemyView.SetEnemySprite(enemySprite);
         await AddressableManager.PreloadAssetAsync<GameObject>("buffCard");
         //生成初始buff
-        UpdateBuffEvent(null);
+        UpdateBuffUIEvent(null);
         gameUiView.UpdateDiceCount(playerData.diceCount, enemyData.diceCount);
         ChangeState(TurnState.roundStart);
     }
@@ -102,8 +103,9 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
         EventCenter.AddListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);
-        EventCenter.AddListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffEvent);
+        EventCenter.AddListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
+        EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
     }
     void OnDestroy()
     {
@@ -118,16 +120,17 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
         EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
         EventCenter.RemoveListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);
-        EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
     }
     void ChangeState(TurnState newState)
     {
         if (currentState == newState) return;
-        playerData.UpdateBuff();
-        enemyData.UpdateBuff();
+        playerData.RemoveInvalidBuffs();
+        enemyData.RemoveInvalidBuffs();
         switch (newState)
         {
             case TurnState.roundStart:
@@ -136,22 +139,29 @@ public class DiceGame : MonoBehaviour
                 //round廣播事件
                 //EventCenter.Dispatch(GameEvent.EVENT_ROUND_START, round);
                 Debug.Log("Round " + round + " Start");
-                List<int> playerRoll = playerData.RollDice();
-                if (playerRoll.Count == 0)
+                if (playerData.state == CharacterState.Stunned)
                 {
-                    //跳過玩家回合
-                    Debug.Log("玩家因狀態無法行動，跳過回合");
-                    ChangeState(TurnState.enemyTurn);
-                    playerData.TurnEndBuffDecrease();
-                    return;
-                }
-                StartCoroutine(playerView.ShowRollAnimation(playerData.RollDice(), () =>
-                {
+                    playerView.SetAnimBool("stun", true);
                     ChangeState(TurnState.playerTurn);
-                }));
+                }
+                else if (playerData.state == CharacterState.Sleep)
+                {
+                    playerView.PlayAnim("sleep");
+                    ChangeState(TurnState.playerTurn);
+                }
+                else
+                {
+                    playerView.SetAnimBool("stun", false);
+                    playerView.PlayAnim("charge");
+                    StartCoroutine(playerView.ShowRollAnimation(playerData.RollDice(), () =>
+                    {
+                        playerView.PlayAnim("idle");
+                        ChangeState(TurnState.playerTurn);
+                    }));
+                }
                 break;
             case TurnState.playerTurn:
-                UpdateBlood();
+                UpdateBloodUI(null);
                 manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
                 // 在這裡處理玩家回合的邏輯
                 Debug.Log("Player's Turn");
@@ -159,7 +169,7 @@ public class DiceGame : MonoBehaviour
                 manaRoller.BtnMode(manaRollerMode.Idle);
                 break;
             case TurnState.enemyTurn:
-                UpdateBlood();
+                UpdateBloodUI(null);
                 List<int> enemyRoll = enemyData.RollDice();
                 if (enemyRoll.Count == 0)
                 {
@@ -314,7 +324,6 @@ public class DiceGame : MonoBehaviour
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())
         // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
-        Debug.Log($" 造成 {damage} 點傷害");
         //等一秒CheckLive
         Invoke("CheckLive", 1f);
     }
@@ -387,7 +396,7 @@ public class DiceGame : MonoBehaviour
             Destroy(trail, 1f); // 假設特效持續2秒
         }
     }
-    void UpdateBlood()
+    void UpdateBloodUI(object[] args)
     {
         gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         gameUiView.UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
@@ -411,9 +420,9 @@ public class DiceGame : MonoBehaviour
         else
             enemyData.AddBuff(buff);
         Debug.Log($"Added buff {buff.buffName} to {(isPlayer ? "player" : "enemy")}");
-        UpdateBuffEvent(null);
+        UpdateBuffUIEvent(null);
     }
-    void UpdateBuffEvent(object[] args)
+    void UpdateBuffUIEvent(object[] args)
     {
         gameUiView.UpdateBuffs(true, playerData.buffData.ToArray());
         gameUiView.UpdateBuffs(false, enemyData.buffData.ToArray());
