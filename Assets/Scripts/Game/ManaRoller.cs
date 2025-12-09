@@ -9,32 +9,32 @@ public enum manaRollerMode
     Off,
     Idle,
     UseDice,
-    KeepDice,
+    FreezeDice
 }
 public class ManaRoller : MonoBehaviour
 {
     manaRollerMode currentMode = manaRollerMode.Off;
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
-    [SerializeField] Button btn_keep = null;//保留骰子按鈕
+    [SerializeField] Button btn_freeze = null;//凍結骰子按鈕
+    [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
-    Transform keepDiceParent;    //保留骰子生成位置
-    List<int> rollDices = new List<int>();  //所有骰子
-    List<int> keepDices = new List<int>();    //保留骰子
-    int maxkeepCount; //最大保留數量
+    int maxFreezeCount; //最大凍結數量
     int rollCount = 0; //最大擲骰次數
+    int freezeCount = 0; //凍結數量
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] GameObject skillCardPrefab = null;
     [SerializeField] GameObject diceOFF;
     Transform skillCardParent;    //技能生成位置
     Text txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
+    List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
+    int maxDiceCount = 6;//最大存放骰子數量
     public void Init()
     {
         if (isOpen) return;
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
-        keepDiceParent = GameObject.Find("keep").transform;
         skillCardParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
@@ -43,25 +43,22 @@ public class ManaRoller : MonoBehaviour
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
-        btn_keep.onClick.AddListener(() => { BtnMode(manaRollerMode.KeepDice); });//保留骰子
-        //btn_cancelFight.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_CANCEL_SKILL); });//取消戰鬥
-
+        btn_freeze.onClick.AddListener(() => { BtnMode(manaRollerMode.FreezeDice); });//凍結骰子
 
         BtnMode(manaRollerMode.Off);
         isOpen = true;
     }
-
-    int maxRollCount = 6;//測試用 test 
     //獲取初始骰子
     public void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
         rollCount = _maxRollCount;
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
-        maxkeepCount = _keepDiceCount;
-        //rollDices.Clear();
+        maxFreezeCount = _keepDiceCount;
+        text_freezeCount.text = maxFreezeCount.ToString();
+
         foreach (var sideNum in _dices)
         {
-            if (rollDices.Count >= maxRollCount)
+            if (manaDiceList.Count >= maxDiceCount)
             {
                 break;
             }
@@ -80,25 +77,20 @@ public class ManaRoller : MonoBehaviour
             case manaRollerMode.Off:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                btn_keep.interactable = false;
                 break;
             case manaRollerMode.Idle:
-                btn_roll.interactable = rollCount > 0 && rollDices.Count > 0;
+                btn_roll.interactable = rollCount > 0 && manaDiceList.Count > 0;
                 btn_turnEnd.interactable = true;
-                btn_keep.interactable = true;
-                btn_keep.image.color = new Color32(255, 255, 255, 255);
-                keepDiceParent.localScale = new Vector3(0.3f, 0.3f, 1);
+                btn_freeze.interactable = true;
+                btn_freeze.image.color = new Color32(255, 255, 255, 255);
                 break;
             case manaRollerMode.UseDice:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                btn_keep.interactable = false;
-                btn_keep.image.color = new Color32(255, 255, 255, 255);
-                keepDiceParent.localScale = new Vector3(0.3f, 0.3f, 1);
+                btn_freeze.interactable = false;
                 break;
-            case manaRollerMode.KeepDice:
-                btn_keep.image.color = new Color32(255, 255, 0, 255);
-                keepDiceParent.localScale = new Vector3(1f, 1f, 1);
+            case manaRollerMode.FreezeDice:
+                btn_freeze.image.color = new Color32(255, 255, 0, 255);
                 EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
                 break;
         }
@@ -136,14 +128,13 @@ public class ManaRoller : MonoBehaviour
     }
     public void RollDices()
     {
-        rollCount--;
+        // rollCount--;
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
-        int totalDice = rollDices.Count;
-        ClearAllRollDices();
-        for (int i = 0; i < totalDice; i++)
+        for (int i = 0; i < manaDiceList.Count; i++)
         {
             int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
-            burnRollDice(side);
+                                                       // burnRollDice(side);
+            manaDiceList[i].RollDice(side);
         }
         if (rollCount <= 0)
         {
@@ -152,37 +143,18 @@ public class ManaRoller : MonoBehaviour
     }
     public void ClearAllRollDices()
     {
-        rollDices.Clear();
+        manaDiceList.Clear();
         foreach (Transform child in rollDiceParent)
         {
             Destroy(child.gameObject);
         }
     }
-    bool CanKeepDice()
+    bool CanFreezeDice()
     {
-        return keepDices.Count < maxkeepCount;
+        return freezeCount < maxFreezeCount;
     }
-    void burnKeepDice(int _sideNum)
-    {
-        keepDices.Add(_sideNum);
-        GameObject dice = Instantiate(dicePrefab, keepDiceParent);
-        ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
-        diceScript.SetDice(_sideNum, (sideNum) =>
-        {
-            switch (currentMode)
-            {
-                case manaRollerMode.KeepDice://保留骰子模式下點擊保留骰子，將其丟回擲骰區
-                    Destroy(dice);
-                    keepDices.Remove(sideNum);
-                    burnRollDice(sideNum);
-                    break;
-            }
-        });
-    }
-
     void burnRollDice(int _sideNum)
     {
-        rollDices.Add(_sideNum);
         GameObject dice = Instantiate(dicePrefab, rollDiceParent);
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
         diceScript.SetDice(_sideNum, (sideNum) =>
@@ -191,23 +163,39 @@ public class ManaRoller : MonoBehaviour
             {
                 case manaRollerMode.UseDice:
                 case manaRollerMode.Idle:
+                    if (diceScript.IsFrozen())
+                    {
+                        freezeCount--;
+                        text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
+                    }
                     Destroy(dice);
-                    rollDices.Remove(sideNum);
+                    manaDiceList.Remove(diceScript);
                     EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);
                     break;
-                case manaRollerMode.KeepDice:
-                    if (CanKeepDice())
+                case manaRollerMode.FreezeDice:
+                    //freezeDices.Add(sideNum);
+                    if (diceScript.IsFrozen())
                     {
-                        Destroy(dice);
-                        rollDices.Remove(sideNum);
-                        burnKeepDice(sideNum);
+                        diceScript.SetFrozen(false);
+                        freezeCount--;
                     }
                     else
                     {
-                        UnityEngine.Debug.Log("已達到最大保留骰子數量");
+                        if (CanFreezeDice())
+                        {
+                            freezeCount++;
+                            diceScript.SetFrozen(true);
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.Log("已達到最大凍結骰子數量");
+                        }
                     }
+                    text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
+                    UnityEngine.Debug.Log(maxFreezeCount + " " + freezeCount);
                     break;
             }
         });
+        manaDiceList.Add(diceScript);
     }
 }

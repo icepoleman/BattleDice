@@ -50,6 +50,7 @@ public class DiceGame : MonoBehaviour
         playerData.AddBuff(BuffFactory.CreateBuff(6, 0, 1));
         playerData.AddBuff(BuffFactory.CreateBuff(13, 0, 2));
         playerData.AddBuff(BuffFactory.CreateBuff(15, 3, 0));
+        //playerData.AddBuff(BuffFactory.CreateBuff(14, 3, 0));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
@@ -408,17 +409,13 @@ public class DiceGame : MonoBehaviour
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
         Invoke("CheckLive", 0.5f);
     }
-    void AddBuffEvent(object[] args)
+    async void AddBuffEvent(object[] args)
     {
         Debug.Log("DiceGame AddBuffEvent");
         IBuffData buff = (IBuffData)args[0];
         bool isPlayer = (bool)args[1];
         //加入延遲避免計算中增加buff
-        StartCoroutine(AddBuffDelay(buff, isPlayer));
-    }
-    IEnumerator AddBuffDelay(IBuffData buff, bool isPlayer)
-    {
-        yield return new WaitForSeconds(0.2f);
+        await Task.Delay(200);
         if (isPlayer)
             playerData.AddBuff(buff);
         else
@@ -431,7 +428,7 @@ public class DiceGame : MonoBehaviour
         gameUiView.UpdateBuffs(true, playerData.buffData.ToArray());
         gameUiView.UpdateBuffs(false, enemyData.buffData.ToArray());
     }
-    void RemoveBuffEvent(object[] args)
+    void RemoveBuffEvent(object[] args)//buff本身會自動移除
     {
         string debuffName = (string)args[0];
         //移除玩家debuff

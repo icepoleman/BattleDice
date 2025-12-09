@@ -202,7 +202,7 @@ public class Punch : BaseSkill
     public Punch()
     {
         skillID = 4;
-        skillName = "拳頭";
+        skillName = "魔力拳";
         conditionText = "任何骰子";
         effectText = "造成骰子點數總和的傷害";
         damage = 0f;
