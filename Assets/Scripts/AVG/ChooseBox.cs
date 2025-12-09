@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChooseBox : MonoBehaviour
 {
@@ -27,9 +28,9 @@ public class ChooseBox : MonoBehaviour
         {
             int index = i; // 捕獲當前的索引值
             GameObject btn = Instantiate(btnPrefab, transform);
-            btn.GetComponentInChildren<TMPro.TMP_Text>().text = btnText[i];
+            btn.GetComponentInChildren<Text>().text = btnText[i];
             //設定按鈕點擊事件
-            btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+            btn.GetComponent<Button>().onClick.AddListener(() =>
             {
                 EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index]);
                 ClearChooseBtn();

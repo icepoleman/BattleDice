@@ -6,12 +6,13 @@ public class GameEvent
     public const string EVENT_SELECT_SKILL = "GameEvent_SelectSkill";//選取技能
     public const string EVENT_CLEAR_CHOOSE_SKILL = "GameEvent_ClearChooseSkill";//停止選取技能
 
+    //怪物 玩家通用
+    //技能通知
+    public const string EVENT_USE_SKILL = "GameEvent_UseSkill";//使用技能通知
     //角色用
-    public const string EVENT_SKILL_ATTACK = "GameEvent_SkillAttack";//使用攻擊技能
-    public const string EVENT_SKILL_HEAL = "GameEvent_SkillHeal";//對角色回復血量
     public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//對角色造成傷害
     public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子
-    public const string EVENT_PLAYER_USE_SKILL = "GameEvent_UseSkill";//使用技能
+    public const string EVENT_PLAYER_USE_SKILL = "GameEvent_PlayerUseSkill";//玩家發動技能
     public const string EVENT_ADD_BUFF = "GameEvent_AddBuff";//新增buff
     public const string EVENT_UPDATE_BUFF = "GameEvent_UpdateBuff";//更新buff
 

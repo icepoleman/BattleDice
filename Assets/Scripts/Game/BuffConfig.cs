@@ -1,5 +1,18 @@
 using UnityEngine;
 
+public struct BuffSeed
+{
+    public int buffID;
+    public int usageCount;
+    public int duration;
+
+    public BuffSeed(int _buffID, int _usageCount, int _duration)
+    {
+        buffID = _buffID;
+        usageCount = _usageCount;
+        duration = _duration;
+    }
+}
 public class BuffFactory
 {
     public static IBuffData CreateBuff(int buffID, int usageCount, int duration)

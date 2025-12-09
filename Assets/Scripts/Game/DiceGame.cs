@@ -29,6 +29,12 @@ public class DiceGame : MonoBehaviour
     Transform playerPos = null;//玩家位置
     [SerializeField] Transform powerDiceBurnPos = null;//骰子燃燒位置
     [SerializeField] GameObject diceTrailPrefab = null;//骰子特效預置物
+    [SerializeField] GameObject littleSkillCardPrefab = null;//怪物技能卡預置物
+
+    // 技能排隊系統
+    private Queue<SkillOrderData> skillOrderQueue = new Queue<SkillOrderData>();
+    private bool isProcessingSkill = false; // 是否正在處理
+    private float skillInterval = 0.5f; // 技能攻擊間隔時間
 
     void Start()
     {
@@ -47,9 +53,6 @@ public class DiceGame : MonoBehaviour
         //test
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
-        playerData.AddBuff(BuffFactory.CreateBuff(6, 0, 1));
-        playerData.AddBuff(BuffFactory.CreateBuff(13, 0, 2));
-        playerData.AddBuff(BuffFactory.CreateBuff(15, 3, 0));
         //playerData.AddBuff(BuffFactory.CreateBuff(14, 3, 0));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
@@ -58,6 +61,8 @@ public class DiceGame : MonoBehaviour
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
         gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         gameUiView.UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
+
+        enemyView.BornSkillCards(littleSkillCardPrefab, enemyData.skillData);
 
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
@@ -98,15 +103,15 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
-        EventCenter.AddListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
-        EventCenter.AddListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
-        EventCenter.AddListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
-        EventCenter.AddListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
-        EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
-        EventCenter.AddListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);
+        EventCenter.AddListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);//攻擊角色
+        EventCenter.AddListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);//玩家發動技能指令
+        EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);//選取技能
+        EventCenter.AddListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);//新增buff
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
+
+        EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
     }
     void OnDestroy()
     {
@@ -116,14 +121,13 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
-        EventCenter.RemoveListener(GameEvent.EVENT_SKILL_ATTACK, OnSkillAttack);
-        EventCenter.RemoveListener(GameEvent.EVENT_SKILL_HEAL, OnSkillHeal);
         EventCenter.RemoveListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
         EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
         EventCenter.RemoveListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
+        EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
     }
@@ -199,6 +203,7 @@ public class DiceGame : MonoBehaviour
                 //任一方死亡 結束遊戲
                 if (playerData.IsDead() || enemyData.IsDead())
                 {
+                    await Task.Delay(500);
                     Debug.Log("Game Over");
                     GameObject winlosePanel = Instantiate(Resources.Load<GameObject>("UI/winLosePanel"), transform);
                     winlosePanel.GetComponent<WinLoseView>().PlayWinAnimation(enemyData.IsDead(), () =>
@@ -209,7 +214,7 @@ public class DiceGame : MonoBehaviour
                 }
                 else
                 {
-                    await System.Threading.Tasks.Task.Delay(1000);
+                    await Task.Delay(1000);
                     ChangeState(TurnState.roundStart);
                 }
 
@@ -262,7 +267,6 @@ public class DiceGame : MonoBehaviour
         manaRoller.BtnMode(manaRollerMode.Off);
         yield return new WaitForSeconds(0.2f);
         playerView.CreateFlyText(playerData.wantUseSkill.skillName, Color.white, 0.5f, Ease.OutBack);
-        // 等待動畫播放完成後切換回合
         yield return new WaitForSeconds(1f);
         playerData.UseSkill();
         playerView.PlayAnim("fight");
@@ -312,41 +316,64 @@ public class DiceGame : MonoBehaviour
     {
         playerData.wantUseSkill = null;
     }
-    void OnSkillAttack(object[] args)//todo 改成玩家或怪物受傷
+    //敵我雙方使用技能都經過這裡
+    void OnSkillUse(object[] args)
     {
-        float damage = (float)args[0];
-        bool isPlayer = (bool)args[1];
+        string skillname = (string)args[0];
+        SkillType skillType = (SkillType)args[1];
+        List<int> values = (List<int>)args[2];
+        bool isPlayer = (bool)args[3];
 
-        //先做攻擊buff計算
-        if (isPlayer)
+        // 加入排隊
+        skillOrderQueue.Enqueue(new SkillOrderData(skillname, skillType, values, isPlayer));
+        // 如果沒有正在處理，開始處理排隊
+        if (!isProcessingSkill)
         {
-            playerData.Attack(damage);
+            ProcessSkillQueue();
         }
-        else
-        {
-            enemyData.Attack(damage);
-        }
-        //todo 結算回合
-        //if (playerData.IsDead() || enemyData.IsDead())
-        // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
-        //等一秒CheckLive
-        Invoke("CheckLive", 1f);
     }
-    void OnSkillHeal(object[] args)
+
+    // 處理技能排隊
+    async void ProcessSkillQueue()
     {
-        float healAmount = (float)args[0];
-        bool isPlayer = (bool)args[1];//治療對象
-        if (isPlayer)
+        isProcessingSkill = true;
+
+        while (skillOrderQueue.Count > 0)
         {
-            playerData.Heal(healAmount);
+            SkillOrderData skillOrder = skillOrderQueue.Dequeue();
+            BaseCharacterData attacker = skillOrder.isPlayerUse ? playerData : enemyData;
+            CharacterView attackerView = skillOrder.isPlayerUse ? playerView : enemyView;
+            //角色喊技能
+            attackerView.CreateFlyText(skillOrder.skillName, Color.white, 0.5f, Ease.OutBack);
+            switch (skillOrder.skillType)
+            {
+                case SkillType.Attack:
+                    //先做攻擊buff計算 實際用OnAttackCharacter給予傷害
+                    attacker.Attack(skillOrder.values[0]);
+                    Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用攻擊技能 {skillOrder.skillName}，造成 {skillOrder.values[0]} 點傷害");
+                    break;
+                case SkillType.Heal:
+                    attacker.Heal(skillOrder.values[0]);
+                    UpdateBloodUI(null);
+                    Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用治療技能 {skillOrder.skillName}，恢復 {skillOrder.values[0]} 點血量");
+                    break;
+                case SkillType.Buff:
+                    attacker.AddBuff(BuffFactory.CreateBuff(skillOrder.values[0], skillOrder.values[1], skillOrder.values[2]));
+                    UpdateBuffUIEvent(null);
+                    Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用增益技能 {skillOrder.skillName}");
+                    break;
+                default:
+                    Debug.LogWarning("未知的技能類型");
+                    break;
+            }
+
+            // 等待間隔時間
+            await Task.Delay((int)(skillInterval * 300));
         }
-        else
-        {
-            enemyData.Heal(healAmount);
-        }
-        Debug.Log($" 恢復 {healAmount} 點血量");
-        Invoke("CheckLive", 1f);
+
+        isProcessingSkill = false;
     }
+
     void OnAttackCharacter(object[] args)
     {
         float damage = (float)args[0];
@@ -357,16 +384,13 @@ public class DiceGame : MonoBehaviour
         {
             playerData.TakeDamage(damage);
             enemyView.PlayAnim("atk");
-            playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
-            gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         }
         else
         {
             enemyData.TakeDamage(damage);
             playerView.PlayAnim("atk");
-            enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
-            gameUiView.UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
         }
+        UpdateBloodUI(null);
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())
         // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
@@ -430,9 +454,6 @@ public class DiceGame : MonoBehaviour
     }
     void RemoveBuffEvent(object[] args)//buff本身會自動移除
     {
-        string debuffName = (string)args[0];
-        //移除玩家debuff
-        //技能卡
     }
     void UpdateManaDiceEvent(object[] args)
     {

@@ -31,7 +31,7 @@ public static class LanguageManager
     /// </summary>
     /// <param name="key">文字鍵值</param>
     /// <returns>對應的文字，如果找不到則返回鍵值</returns>
-    public static string Get(string key)
+    public static string GetText(string key)
     {
         if (!isLoaded)
         {
@@ -55,7 +55,7 @@ public static class LanguageManager
     /// <returns>格式化後的文字</returns>
     public static string GetFormat(string key, params object[] args)
     {
-        string text = Get(key);
+        string text = GetText(key);
         
         try
         {
