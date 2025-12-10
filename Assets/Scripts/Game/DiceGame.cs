@@ -60,8 +60,8 @@ public class DiceGame : MonoBehaviour
         //test
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
-        playerData.AddBuff(BuffFactory.CreateBuff(1, 0, 3));
-        playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
+       // playerData.AddBuff(BuffFactory.CreateBuff(1, 0, 3));
+     //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 

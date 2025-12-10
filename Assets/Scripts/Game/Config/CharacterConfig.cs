@@ -185,23 +185,26 @@ public class CharacterSaveData
     public int diceCount;
     public int keepDiceCount;
     public int maxRollCount;
+    public int manaRollerMaxDiceCount;
     public List<int> skillIDs = new List<int>(); // 存技能ID
 }
 
 public class PlayerData : BaseCharacterData
 {
     public ISkillData wantUseSkill;
+    public int ManaRollerMaxDiceCount;
     public PlayerData()
     {
         isPlayer = true;
         maxBlood = 100f;
-        currentBlood = 100f;
+        currentBlood = 20f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        diceCount = 3;
+        diceCount = 8;
         keepDiceCount = 2;
+        ManaRollerMaxDiceCount = 8;
         skillData = new List<ISkillData>() 
-        {new BaseSkill(4), new BaseSkill(1), new BaseSkill(2), new BaseSkill(3) };
-        maxRollCount = 1; //最大擲骰次數
+        {new BaseSkill(6), new BaseSkill(7), new BaseSkill(2), new BaseSkill(3) };
+        maxRollCount = 10; //最大擲骰次數
     }
     public void AddPowerDice(int dice)
     {
@@ -228,6 +231,7 @@ public class PlayerData : BaseCharacterData
             diceCount = diceCount,
             keepDiceCount = keepDiceCount,
             maxRollCount = maxRollCount,
+            manaRollerMaxDiceCount = ManaRollerMaxDiceCount,
             skillIDs = skillData.Select(skill => skill.skillID).ToList()
         };
     }
@@ -241,7 +245,7 @@ public class PlayerData : BaseCharacterData
         diceCount = saveData.diceCount;
         keepDiceCount = saveData.keepDiceCount;
         maxRollCount = saveData.maxRollCount;
-
+        ManaRollerMaxDiceCount = saveData.manaRollerMaxDiceCount;
         // 從技能ID重建技能列表
         skillData = new List<ISkillData>();
         foreach (var skillID in saveData.skillIDs)

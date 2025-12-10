@@ -57,7 +57,8 @@ public enum SkillRequirementType
     SpecificDices,    // 特定的骰子組合 (如 1,2,3)
     SameDices,        // 相同的骰子 (如 兩個相同)
     DiceSum,          // 骰子總和
-    AnyDice           // 任意骰子
+    AnyDice,          // 任意骰子
+    SpecificDicesWithRepeat // 指定骰子 但能重複(ex 單數骰*3之類的)
 }
 public interface ISkillData
 {
@@ -85,8 +86,8 @@ public class BaseSkill : ISkillData
 
     public int skillID { get; set; } = 0;
     public bool acceptMoreDice { get; set; } = false;
-    public string skillName { get; set; } = "BaseSkill";
-    public SkillType skillType { get; } = SkillType.Attack;
+    public string skillName { get; set; } = "";
+    public SkillType skillType { get; set; } = SkillType.Attack;
     public string conditionText { get; set; } = "";
     public string effectText { get; set; } = "";
     public int skillValue { get; set; } = 0;
@@ -127,6 +128,7 @@ public class BaseSkill : ISkillData
         skillValue = configData.skillValue;
         needDicesData = configData.needDicesData ?? new int[] { };
         acceptMoreDice = configData.acceptMoreDice;
+        skillType = configData.skillType;
 
         requirementType = configData.requirementType;
         requiredSum = configData.requiredSum;
@@ -148,6 +150,7 @@ public class BaseSkill : ISkillData
             SkillRequirementType.SameDices => diceBox.GroupBy(x => x).Any(g => g.Count() >= requiredSameCount),
             SkillRequirementType.DiceSum => diceBox.Sum() >= requiredSum,
             SkillRequirementType.AnyDice => diceBox.Count >= requiredDiceCount,
+            SkillRequirementType.SpecificDicesWithRepeat => diceBox.Count(d => needDicesData.Contains(d)) >= requiredDiceCount,
             _ => false
         };
     }
@@ -177,6 +180,7 @@ public class BaseSkill : ISkillData
             SkillRequirementType.SameDices => GetSameDicesRequired(),
             SkillRequirementType.DiceSum => GetSumDicesRequired(),
             SkillRequirementType.AnyDice => new List<int> { 1, 2, 3, 4, 5, 6 },
+            SkillRequirementType.SpecificDicesWithRepeat => GetSpecificDicesWithRepeatRequired(),
             _ => new List<int>()
         };
     }
@@ -200,6 +204,12 @@ public class BaseSkill : ISkillData
     protected virtual List<int> GetSumDicesRequired()
     {
         return new List<int> { 1, 2, 3, 4, 5, 6 };
+    }
+    // 獲取特定骰子可重複需求
+    protected virtual List<int> GetSpecificDicesWithRepeatRequired()
+    {
+        List<int> needDices = new List<int>(needDicesData);
+        return needDices;
     }
     // 使用技能
     public virtual void Use(bool _isPlayer)

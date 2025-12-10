@@ -60,7 +60,7 @@ public static class SkillDatabase
                 skillID = 4,
                 skillName = "魔力拳",
                 skillType = SkillType.Attack,
-                conditionText = "任意骰子*2",
+                conditionText = "任意骰子2個以上",
                 effectText = "造成骰子點數總和的傷害",
                 skillValue = 0,
                 needDicesData = new int[] { },
@@ -85,7 +85,7 @@ public static class SkillDatabase
                 skillID = 5,
                 skillName = "爪擊",
                 skillType = SkillType.Attack,
-                conditionText = "任意骰子*3",
+                conditionText = "任意骰子3個以上",
                 effectText = "造成骰子點數總和的兩倍傷害",
                 skillValue = 0,
                 needDicesData = new int[] { },
@@ -97,7 +97,39 @@ public static class SkillDatabase
                 selfBuffs = new BuffSeed[] { },
                 targetBuffs = new BuffSeed[] { }
             }
-        }
+        },
+        {
+            6, new SkillConfigData
+            {
+                skillID = 6,
+                skillName = "毒霧咒",
+                skillType = SkillType.Attack,
+                conditionText = "",
+                effectText = "造成10點傷害並給予對方中毒狀態3回合",
+                skillValue = 10,
+                needDicesData = new int[] {1,1},
+                requirementType = SkillRequirementType.SpecificDicesWithRepeat,
+                requiredDiceCount = 2,
+                targetBuffs = new BuffSeed[]
+                {
+                    new BuffSeed { buffID = 7, usageCount = 0, duration = 3 }
+                }
+            }
+        },
+        {
+            7, new SkillConfigData
+            {
+                skillID = 7,
+                skillName = "回復術",
+                skillType = SkillType.Heal,
+                conditionText = "單數骰*3",
+                effectText = "生命+50",
+                skillValue = 50,
+                needDicesData = new int[] {1,3,5},
+                requirementType = SkillRequirementType.SpecificDicesWithRepeat,
+                requiredDiceCount = 3,
+            }
+        },
     };
 
     public static SkillConfigData GetSkillConfig(int skillID)

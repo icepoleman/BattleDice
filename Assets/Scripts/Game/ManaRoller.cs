@@ -29,7 +29,7 @@ public class ManaRoller : MonoBehaviour
     Text txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
-    int maxDiceCount = 6;//最大存放骰子數量
+    int maxDiceCount = 8;//最大存放骰子數量
     public void Init()
     {
         if (isOpen) return;
@@ -55,6 +55,7 @@ public class ManaRoller : MonoBehaviour
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
         maxFreezeCount = _keepDiceCount;
         text_freezeCount.text = maxFreezeCount.ToString();
+        maxDiceCount = GameDataManager.PlayerData.ManaRollerMaxDiceCount;
 
         foreach (var sideNum in _dices)
         {
