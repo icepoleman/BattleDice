@@ -36,6 +36,11 @@ public class DiceGame : MonoBehaviour
     private bool isProcessingSkill = false; // 是否正在處理
     private float skillInterval = 0.5f; // 技能攻擊間隔時間
 
+    //buff提示泡泡
+    [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
+    Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
+    Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
+
     void Start()
     {
         if (isOpen) return;
@@ -44,6 +49,8 @@ public class DiceGame : MonoBehaviour
         manaRoller.Init();
         enemyPos = GameObject.Find("enemyPos").transform;
         playerPos = GameObject.Find("playerPos").transform;
+        playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
+        enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         // 生成角色實例
         CreateCharacter("character/jailerGirl", playerPos, true);
         CreateCharacter("character/enemy", enemyPos, false);
@@ -53,7 +60,8 @@ public class DiceGame : MonoBehaviour
         //test
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
-        //playerData.AddBuff(BuffFactory.CreateBuff(14, 3, 0));
+        playerData.AddBuff(BuffFactory.CreateBuff(1, 0, 3));
+        playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
@@ -112,6 +120,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
+        EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
     }
     void OnDestroy()
     {
@@ -128,6 +137,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
+        EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
     }
@@ -188,12 +198,14 @@ public class DiceGame : MonoBehaviour
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
                 enemyData.TurnStartBuffEffect();
-                StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, () =>
+                StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, async () =>
                 {
                     //敵人使用技能;
                     enemyData.UseSkill();
-                    ChangeState(TurnState.roundEnd);
+                    await Task.Delay(500);
                     enemyData.TurnEndBuffDecrease();
+                    await Task.Delay(500);
+                    ChangeState(TurnState.roundEnd);
                 }));
                 //enemy特寫擲骰 顯示使用技能
                 break;
@@ -315,6 +327,21 @@ public class DiceGame : MonoBehaviour
     void ClearChooseSkill(object[] args)
     {
         playerData.wantUseSkill = null;
+    }
+    void OnBuffUse(object[] args)
+    {
+        string buffname = (string)args[0];
+        bool isPlayer = (bool)args[1];
+
+        //顯示提示泡泡
+        Transform bubblePos = isPlayer ? playerBuffBubblePos : enemyBuffBubblePos;
+        GameObject bubble = Instantiate(buffBubblePrefab, bubblePos);
+        bubble.transform.GetComponentInChildren<Text>().text = buffname;
+        string str_buffAnim = isPlayer ? "BornBuff_L" : "BornBuff_R";
+        bubble.GetComponent<Animator>().Play(str_buffAnim);
+
+        Debug.Log($"{(isPlayer ? "Player" : "Enemy")} 使用buff {buffname}");
+        Destroy(bubble, 2f); // 假設提示泡泡持續2秒
     }
     //敵我雙方使用技能都經過這裡
     void OnSkillUse(object[] args)

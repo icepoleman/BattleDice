@@ -9,6 +9,7 @@ public class GameEvent
     //怪物 玩家通用
     //技能通知
     public const string EVENT_USE_SKILL = "GameEvent_UseSkill";//使用技能通知
+    public const string EVENT_USE_BUFF = "GameEvent_UseBuff";//使用buff通知
     //角色用
     public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//對角色造成傷害
     public const string EVENT_ADD_POWER_DICE = "GameEvent_AddPowerDice";//增加能量骰子

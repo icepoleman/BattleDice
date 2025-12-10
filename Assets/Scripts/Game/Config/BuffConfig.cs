@@ -19,35 +19,35 @@ public class BuffFactory
     {
         switch (buffID)
         {
-            case 1:
+            case 1:  // 魔力護盾
                 return new ShieldBuff(usageCount, duration);
-            case 2:
+            case 2:  // 狂戰士
                 return new Berserker(usageCount, duration);
-            case 3:
+            case 3:  // 狂暴
                 return new RageBuff(usageCount, duration);
-            case 4:
+            case 4:  // 大魔力護盾
                 return new ShieldBigBuff(usageCount, duration);
-            case 5:
+            case 5:  // 魔力重盾
                 return new MagicShieldBuff(usageCount, duration);
-            case 6:
+            case 6:  // 力量增幅
                 return new PowerBoost(usageCount, duration);
-            case 7:
+            case 7:  // 中毒
                 return new PoisonBuff(usageCount, duration);
-            case 8:
+            case 8:  // 流血
                 return new BleedBuff(usageCount, duration);
-            case 9:
+            case 9:  // 暈眩
                 return new StunBuff(usageCount, duration);
-            case 10:
+            case 10: // 睡眠
                 return new SleepBuff(usageCount, duration);
-            case 11:
+            case 11: // 魔力增幅
                 return new MagicBoostBuff(usageCount, duration);
-            case 12:
+            case 12: // 魔力衰弱
                 return new MagicWeakenBuff(usageCount, duration);
-            case 13:
+            case 13: // 肥胖
                 return new FatBuff(usageCount, duration);
-            case 14:
+            case 14: // 惡臭
                 return new StinkyBuff(usageCount, duration);
-            case 15:
+            case 15: // 尖刺護甲
                 return new ThornArmorBuff(usageCount, duration);
             default:
                 Debug.LogWarning($"未知的 Buff ID: {buffID}");

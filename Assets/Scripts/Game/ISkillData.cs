@@ -2,31 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-// 技能工廠
-public static class SkillFactory
-{
-    public static ISkillData CreateSkill(int skillId)
-    {
-        switch (skillId)
-        {
-            case 1:
-                return new FireBall();
-            case 2:
-                return new Kaminari();
-            case 3:
-                return new WindBlade();
-            // case (int)SkillID.DeBuffPoison:
-            //     return new DeBuffPoison();
-            case 4:
-                return new Punch();
-            case 5:
-                return new ClawAttack();
-            default:
-                UnityEngine.Debug.LogError("SkillFactory: 未知的技能 ID " + skillId);
-                return null;
-        }
-    }
-}
 public struct SkillOrderData
 {
     public string skillName;
@@ -41,6 +16,35 @@ public struct SkillOrderData
         isPlayerUse = isPlayer;
     }
 }
+
+// 技能配置結構體
+public struct SkillConfigData
+{
+    // 基本資訊
+    public int skillID;              // 技能唯一識別碼
+    public string skillName;         // 技能名稱
+    public SkillType skillType;      // 技能類型 (攻擊/治療/Buff)
+    public string conditionText;     // 技能條件描述文字
+    public string effectText;        // 技能效果描述文字
+    public int skillValue;           // 技能基礎數值 (傷害/治療量)
+    public int[] needDicesData;      // 需要的特定骰子點數組合
+    public bool acceptMoreDice;      // 是否可以持續放入更多骰子
+
+    // 技能需求配置
+    public SkillRequirementType requirementType;  // 技能需求類型
+    public int requiredSum;          // DiceSum 類型需要的骰子總和
+    public int requiredSameCount;    // SameDices 類型需要的相同骰子數量
+    public int requiredDiceCount;    // AnyDice 類型需要的骰子數量
+
+    // 傷害計算配置
+    public bool useDiceSumAsDamage;  // 是否使用骰子總和作為傷害值
+    public float damageMultiplier;   // 傷害倍率
+
+    // Buff 配置
+    public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
+    public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
+}
+
 public enum SkillType
 {
     Attack,
@@ -58,8 +62,8 @@ public enum SkillRequirementType
 public interface ISkillData
 {
     int skillID { get; set; }
-    bool isDebuff { get; set; }
     bool acceptMoreDice { get; set; } // 新增：是否可以持續放入骰子
+    SkillType skillType { get; } // 新增：技能類型
     string skillName { get; set; }
     string conditionText { get; set; }// 技能條件描述
     string effectText { get; set; } // 技能效果描述
@@ -76,10 +80,13 @@ public interface ISkillData
 }
 public class BaseSkill : ISkillData
 {
+    // 配置數據
+    protected SkillConfigData config;
+
     public int skillID { get; set; } = 0;
-    public bool isDebuff { get; set; } = false;
     public bool acceptMoreDice { get; set; } = false;
     public string skillName { get; set; } = "BaseSkill";
+    public SkillType skillType { get; } = SkillType.Attack;
     public string conditionText { get; set; } = "";
     public string effectText { get; set; } = "";
     public int skillValue { get; set; } = 0;
@@ -91,11 +98,58 @@ public class BaseSkill : ISkillData
     // 技能需求配置
     protected SkillRequirementType requirementType = SkillRequirementType.SpecificDices;
     protected int requiredSum = 0;        // 需要的總和
-    protected int requiredSameCount = 2;  // 需要的相同數量
+    protected int requiredSameCount = 0;  // 需要的相同數量
+    protected int requiredDiceCount = 0;  // 需要的骰子數量
+
+    // 傷害計算配置
+    protected bool useDiceSumAsDamage = false;  // 是否使用骰子總和作為傷害
+    protected float damageMultiplier = 1f;      // 傷害倍率
+
+    // 預設建構子
+    public BaseSkill() { }
+
+    // 使用配置數據建構
+    public BaseSkill(int skillID)
+    {
+        // 從資料庫載入配置
+        var configData = SkillDatabase.GetSkillConfig(skillID);
+        ApplyConfig(configData);
+    }
+
+    // 套用配置
+    protected void ApplyConfig(SkillConfigData configData)
+    {
+        config = configData;
+        skillID = configData.skillID;
+        skillName = configData.skillName;
+        conditionText = configData.conditionText;
+        effectText = configData.effectText;
+        skillValue = configData.skillValue;
+        needDicesData = configData.needDicesData ?? new int[] { };
+        acceptMoreDice = configData.acceptMoreDice;
+
+        requirementType = configData.requirementType;
+        requiredSum = configData.requiredSum;
+        requiredSameCount = configData.requiredSameCount;
+        requiredDiceCount = configData.requiredDiceCount;
+
+        useDiceSumAsDamage = configData.useDiceSumAsDamage;
+        damageMultiplier = configData.damageMultiplier;
+
+        selfBuffs = configData.selfBuffs != null ? new List<BuffSeed>(configData.selfBuffs) : new List<BuffSeed>();
+        targetBuffs = configData.targetBuffs != null ? new List<BuffSeed>(configData.targetBuffs) : new List<BuffSeed>();
+    }
 
     public virtual bool canUseSkill()
     {
-        return false;
+        return requirementType switch
+        {
+            SkillRequirementType.SpecificDices => needDicesData.All(n => diceBox.Contains(n)),
+            SkillRequirementType.SameDices => diceBox.GroupBy(x => x).Any(g => g.Count() >= requiredSameCount),
+            SkillRequirementType.DiceSum => diceBox.Sum() >= requiredSum,
+            SkillRequirementType.AnyDice => diceBox.Count >= requiredDiceCount,
+            _ => false
+        };
     }
 
     public void AddDiceData(int _dice)
@@ -152,16 +206,21 @@ public class BaseSkill : ISkillData
     {
         if (canUseSkill())
         {
-            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillName, SkillType.Attack, new List<int> { skillValue }, _isPlayer);
-            UnityEngine.Debug.Log($"{skillName} used, dealing {skillValue} skillValue!");
-            if(selfBuffs.Count > 0)
+            // 計算傷害值
+            int finalValue = useDiceSumAsDamage
+                ? (int)(diceBox.Sum() * damageMultiplier)
+                : skillValue;
+
+            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillName, skillType, new List<int> { finalValue }, _isPlayer);
+            UnityEngine.Debug.Log($"{skillName} used, dealing {finalValue} skillValue!");
+            if (selfBuffs.Count > 0)
             {
                 foreach (var buff in selfBuffs)
                 {
                     EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, _isPlayer);
                 }
             }
-            if(targetBuffs.Count > 0)
+            if (targetBuffs.Count > 0)
             {
                 foreach (var buff in targetBuffs)
                 {
@@ -175,120 +234,5 @@ public class BaseSkill : ISkillData
         }
         //使用技能後清空骰子
         diceBox.Clear();
-    }
-}
-
-public class FireBall : BaseSkill
-{
-    public FireBall()
-    {
-        skillID = 1;
-        skillName = "火球";
-        effectText = "造成80點傷害";
-        skillValue = 80;
-        needDicesData = new int[] { 1, 2, 3 };
-        requirementType = SkillRequirementType.SpecificDices;  // 設定需求類型
-    }
-    public override bool canUseSkill()
-    {
-        // 檢查是否同時有 1,2,3
-        return needDicesData.All(n => diceBox.Contains(n));
-    }
-}
-
-public class Kaminari : BaseSkill
-{
-    public Kaminari()
-    {
-        skillID = 2;
-        skillName = "雷電";
-        conditionText = "相同點數骰子x2";
-        effectText = "造成30點傷害";
-        skillValue = 30;
-        requirementType = SkillRequirementType.SameDices;
-        requiredSameCount = 2;
-    }
-
-    public override bool canUseSkill()
-    {
-        return diceBox.GroupBy(x => x).Any(g => g.Count() >= requiredSameCount);
-    }
-}
-public class WindBlade : BaseSkill
-{
-    public WindBlade()
-    {
-        skillID = 3;
-        skillName = "風刃";
-        conditionText = "點數總和5以上";
-        effectText = "造成10點傷害";
-        skillValue = 10;
-        requirementType = SkillRequirementType.DiceSum;
-        requiredSum = 5;
-    }
-
-    public override bool canUseSkill()
-    {
-        return diceBox.Sum() >= requiredSum;
-    }
-}
-public class Punch : BaseSkill
-{
-    public Punch()
-    {
-        skillID = 4;
-        skillName = "魔力拳";
-        conditionText = "任何骰子";
-        effectText = "造成骰子點數總和的傷害";
-        skillValue = 0;
-        acceptMoreDice = true;
-        requirementType = SkillRequirementType.AnyDice;
-        targetBuffs.Add(new BuffSeed
-        {
-            buffID = 1, // 中毒 Buff ID
-            usageCount = 0, // 無限次數
-            duration = 3  // 持續 3 回合
-        });
-        selfBuffs.Add(new BuffSeed
-        {
-            buffID = 6, // 力量增幅 Buff ID
-            usageCount = 0, // 無限次數
-            duration = 2  // 持續 2 回合
-        });
-    }
-
-    public override bool canUseSkill()
-    {
-        return diceBox.Count >= 1;
-    }
-
-    public override void Use(bool _isPlayer)
-    {
-        skillValue = diceBox.Sum();
-        base.Use(_isPlayer);
-    }
-}
-public class ClawAttack : BaseSkill
-{
-    public ClawAttack()
-    {
-        skillID = 5;
-        skillName = "爪擊";
-        conditionText = "任何骰子";
-        effectText = "造成骰子點數總和的兩倍傷害";
-        skillValue = 0;
-        acceptMoreDice = true;
-        requirementType = SkillRequirementType.AnyDice;
-    }
-
-    public override bool canUseSkill()
-    {
-        return diceBox.Count >= 1;
-    }
-
-    public override void Use(bool _isPlayer)
-    {
-        skillValue = diceBox.Sum() * 2;
-        base.Use(_isPlayer);
     }
 }

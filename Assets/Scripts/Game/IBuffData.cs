@@ -96,6 +96,7 @@ public class BaseBuff : IBuffData
     }
     protected void UseBuff(ICharacterData character)
     {
+        EventCenter.Dispatch(GameEvent.EVENT_USE_BUFF, buffName, character.isPlayer);//通知使用buff
         usageCount--;
         switch (buffEffectType)
         {

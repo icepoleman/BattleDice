@@ -199,7 +199,8 @@ public class PlayerData : BaseCharacterData
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         diceCount = 3;
         keepDiceCount = 2;
-        skillData = new List<ISkillData>() { new Punch(), new WindBlade(), new Kaminari(), new FireBall() };
+        skillData = new List<ISkillData>() 
+        {new BaseSkill(4), new BaseSkill(1), new BaseSkill(2), new BaseSkill(3) };
         maxRollCount = 1; //最大擲骰次數
     }
     public void AddPowerDice(int dice)
@@ -242,10 +243,11 @@ public class PlayerData : BaseCharacterData
         maxRollCount = saveData.maxRollCount;
 
         // 從技能ID重建技能列表
-        skillData = saveData.skillIDs
-            .Select(id => SkillFactory.CreateSkill(id))
-            .Where(skill => skill != null)
-            .ToList();
+        skillData = new List<ISkillData>();
+        foreach (var skillID in saveData.skillIDs)
+        {
+            skillData.Add(new BaseSkill(skillID));
+        }
     }
 }
 
