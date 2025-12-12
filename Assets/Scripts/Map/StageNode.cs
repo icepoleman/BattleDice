@@ -22,8 +22,7 @@ public enum StageType
 public class StageNode : MonoBehaviour
 {
     //"關卡設定"
-    [Header("關卡編號")]
-    [SerializeField] string stageID;              // 關卡唯一ID 1-1
+    string stageID;              // 關卡唯一ID 
     [Header("關卡類型")]
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
@@ -35,6 +34,7 @@ public class StageNode : MonoBehaviour
     [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
     void Awake()
     {
+        stageID = gameObject.name;
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);

@@ -65,6 +65,29 @@ public class BaseBuff : IBuffData
     //紀錄玩家骰子數量
     public int recordedDiceCount { get; set; } = 0;
     public bool canRemove { get; set; } = false;
+    
+    // 預設建構子
+    public BaseBuff() { }
+    
+    // 使用配置數據建構
+    public BaseBuff(int buffID, int usageCount, int duration)
+    {
+        var config = BuffDatabase.GetBuffConfig(buffID);
+        ApplyConfig(config);
+        SetBuffData(usageCount, duration);
+    }
+    
+    // 套用配置
+    protected void ApplyConfig(BuffConfigData config)
+    {
+        buffID = config.buffID;
+        buffName = config.buffName;
+        describe = config.describe;
+        buffTrigger = config.buffTrigger;
+        buffEffectType = config.buffEffectType;
+        effectValues = config.effectValues != null ? new List<int>(config.effectValues) : new List<int>();
+    }
+    
     public void SetBuffData(int _usageCount = 0, int _duration = 0)
     {
         usageCount = _usageCount;
@@ -185,7 +208,7 @@ public class BaseBuff : IBuffData
                 Debug.Log($"{buffName} 限制骰子點數在 {effectValues} 之間！");
                 break;
             case BuffEffectType.SpawnBuff:
-                BaseBuff spBuff = BuffFactory.CreateBuff(effectValues[0], effectValues[1], effectValues[2]) as BaseBuff;
+                BaseBuff spBuff = new BaseBuff(effectValues[0], effectValues[1], effectValues[2]);
                 // 生成新的 Buff 並套用到角色
                 EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, spBuff, character.isPlayer);
                 break;

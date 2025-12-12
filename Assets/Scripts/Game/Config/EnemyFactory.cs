@@ -33,13 +33,13 @@ public static class EnemyDatabase
             {
                 enemyId = 1,
                 enemyName = "史萊姆",
-                goldReward = 10,
+                goldReward = 1000,
                 maxBlood = 50f,
                 currentBlood = 50f,
                 diceSides = new int[] { 1, 2, 3 },
-                diceCount = 10,
+                diceCount = 2,
                 maxRollCount = 1,
-                skillIDs = new int[] { 1, 2, 3 },
+                skillIDs = new int[] { 2 },
                 initialBuffs = new BuffSeed[] { }
             }
         },
@@ -51,7 +51,7 @@ public static class EnemyDatabase
                 goldReward = 20,
                 maxBlood = 100f,
                 currentBlood = 100f,
-                diceSides = new int[] { 1, 2, 3, 4, 5 },
+                diceSides = new int[] { 1, 2, 3, 4, 5, 6 },
                 diceCount = 4,
                 maxRollCount = 1,
                 skillIDs = new int[] { 4 },
@@ -61,12 +61,12 @@ public static class EnemyDatabase
         {
             100, new EnemyConfigData
             {
-                enemyId = 103,
+                enemyId = 100,
                 enemyName = "狼女",
                 goldReward = 50,
                 maxBlood = 150f,
-                currentBlood = 15f,
-                diceSides = new int[] { 1, 2, 3, 4 },
+                currentBlood = 150f,
+                diceSides = new int[] { 1, 2, 3, 4,5,6 },
                 diceCount = 2,
                 maxRollCount = 1,
                 skillIDs = new int[] { 5 },
@@ -149,7 +149,7 @@ public class EnemyData : BaseCharacterData
         {
             foreach (var buffSeed in config.initialBuffs)
             {
-                var buff = BuffFactory.CreateBuff(buffSeed.buffID, buffSeed.usageCount, buffSeed.duration);
+                var buff = new BaseBuff(buffSeed.buffID, buffSeed.usageCount, buffSeed.duration);
                 if (buff != null)
                 {
                     buffData.Add(buff);

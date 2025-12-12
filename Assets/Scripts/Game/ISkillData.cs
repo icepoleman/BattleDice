@@ -220,7 +220,6 @@ public class BaseSkill : ISkillData
             int finalValue = useDiceSumAsDamage
                 ? (int)(diceBox.Sum() * damageMultiplier)
                 : skillValue;
-
             EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillName, skillType, new List<int> { finalValue }, _isPlayer);
             UnityEngine.Debug.Log($"{skillName} used, dealing {finalValue} skillValue!");
             if (selfBuffs.Count > 0)

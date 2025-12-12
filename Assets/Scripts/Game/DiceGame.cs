@@ -58,10 +58,10 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-        enemyData = EnemyFactory.CreateEnemy(1);
-        playerData = new PlayerData();
-       // playerData.AddBuff(BuffFactory.CreateBuff(1, 0, 3));
-     //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
+        //enemyData = EnemyFactory.CreateEnemy(1);
+       // playerData = new PlayerData();
+       // playerData.AddBuff(new BaseBuff(16, 0, 3));
+        //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
@@ -140,6 +140,8 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
+
+        RemoveBuffEvent();
     }
     async void ChangeState(TurnState newState)
     {
@@ -215,6 +217,7 @@ public class DiceGame : MonoBehaviour
                 //任一方死亡 結束遊戲
                 if (playerData.IsDead() || enemyData.IsDead())
                 {
+                    playerData.RemoveAllBuff();
                     await Task.Delay(500);
                     Debug.Log("Game Over");
                     GameObject winlosePanel = Instantiate(Resources.Load<GameObject>("UI/winLosePanel"), transform);
@@ -384,10 +387,13 @@ public class DiceGame : MonoBehaviour
                     UpdateBloodUI(null);
                     Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用治療技能 {skillOrder.skillName}，恢復 {skillOrder.values[0]} 點血量");
                     break;
-                case SkillType.Buff:
-                    attacker.AddBuff(BuffFactory.CreateBuff(skillOrder.values[0], skillOrder.values[1], skillOrder.values[2]));
-                    UpdateBuffUIEvent(null);
-                    Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用增益技能 {skillOrder.skillName}");
+                case SkillType.Buff://buff沒有名字代表是生成buff 有名稱只做喊招式
+                    if (skillOrder.skillName == "")
+                    {
+                        attacker.AddBuff(new BaseBuff(skillOrder.values[0], skillOrder.values[1], skillOrder.values[2]));
+                        UpdateBuffUIEvent(null);
+                        Debug.Log($"{(skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用增益技能 {skillOrder.skillName}");
+                    }
                     break;
                 default:
                     Debug.LogWarning("未知的技能類型");
@@ -479,8 +485,9 @@ public class DiceGame : MonoBehaviour
         gameUiView.UpdateBuffs(true, playerData.buffData.ToArray());
         gameUiView.UpdateBuffs(false, enemyData.buffData.ToArray());
     }
-    void RemoveBuffEvent(object[] args)//buff本身會自動移除
+    void RemoveBuffEvent()//buff本身會自動移除
     {
+       
     }
     void UpdateManaDiceEvent(object[] args)
     {

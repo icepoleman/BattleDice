@@ -1,5 +1,4 @@
-using UnityEngine;
-
+using System.Collections.Generic;
 public struct BuffSeed
 {
     public int buffID;
@@ -13,254 +12,210 @@ public struct BuffSeed
         duration = _duration;
     }
 }
-public class BuffFactory
+
+// Buff 配置結構體
+public struct BuffConfigData
 {
-    public static IBuffData CreateBuff(int buffID, int usageCount, int duration)
-    {
-        switch (buffID)
-        {
-            case 1:  // 魔力護盾
-                return new ShieldBuff(usageCount, duration);
-            case 2:  // 狂戰士
-                return new Berserker(usageCount, duration);
-            case 3:  // 狂暴
-                return new RageBuff(usageCount, duration);
-            case 4:  // 大魔力護盾
-                return new ShieldBigBuff(usageCount, duration);
-            case 5:  // 魔力重盾
-                return new MagicShieldBuff(usageCount, duration);
-            case 6:  // 力量增幅
-                return new PowerBoost(usageCount, duration);
-            case 7:  // 中毒
-                return new PoisonBuff(usageCount, duration);
-            case 8:  // 流血
-                return new BleedBuff(usageCount, duration);
-            case 9:  // 暈眩
-                return new StunBuff(usageCount, duration);
-            case 10: // 睡眠
-                return new SleepBuff(usageCount, duration);
-            case 11: // 魔力增幅
-                return new MagicBoostBuff(usageCount, duration);
-            case 12: // 魔力衰弱
-                return new MagicWeakenBuff(usageCount, duration);
-            case 13: // 肥胖
-                return new FatBuff(usageCount, duration);
-            case 14: // 惡臭
-                return new StinkyBuff(usageCount, duration);
-            case 15: // 尖刺護甲
-                return new ThornArmorBuff(usageCount, duration);
-            default:
-                Debug.LogWarning($"未知的 Buff ID: {buffID}");
-                return null;
-        }
-    }
+    // 基本資訊
+    public int buffID;                   // Buff 唯一識別碼
+    public string buffName;              // Buff 名稱
+    public string describe;              // Buff 效果描述
+
+    // 觸發與效果配置
+    public BuffTrigger buffTrigger;      // 觸發時機
+    public BuffEffectType buffEffectType;// 效果類型
+    public int[] effectValues;           // 效果數值列表
 }
 
-public class ShieldBuff : BaseBuff
+// Buff 配置資料庫
+public static class BuffDatabase
 {
-    public ShieldBuff(int _usageCount, int _duration)
+    public static readonly Dictionary<int, BuffConfigData> Buffs = new Dictionary<int, BuffConfigData>
     {
-        buffID = 1;
-        buffName = "魔力護盾";
-        describe = "減少5點受到的傷害";
-        effectValues.Add(5); // 減少5點傷害
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.Defense;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-public class Berserker : BaseBuff
-{
-    public Berserker(int _usageCount, int _duration)
+        {
+            1, new BuffConfigData
+            {
+                buffID = 1,
+                buffName = "魔力護盾",
+                describe = "減少5點受到的傷害",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.Defense,
+                effectValues = new int[] { 5 }
+            }
+        },
+        {
+            2, new BuffConfigData
+            {
+                buffID = 2,
+                buffName = "狂戰士",
+                describe = "受傷時，給予狂暴狀態",
+                buffTrigger = BuffTrigger.OnDamageTaken,
+                buffEffectType = BuffEffectType.SpawnBuff,
+                effectValues = new int[] { 3, 0, 1 }  // Buff ID, 使用次數, 持續回合
+            }
+        },
+        {
+            3, new BuffConfigData
+            {
+                buffID = 3,
+                buffName = "狂暴",
+                describe = "生成骰變為6",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.LimitBornDice,
+                effectValues = new int[] { 6 }
+            }
+        },
+        {
+            4, new BuffConfigData
+            {
+                buffID = 4,
+                buffName = "大魔力護盾",
+                describe = "減少15點受到的傷害",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.Defense,
+                effectValues = new int[] { 15 }
+            }
+        },
+        {
+            5, new BuffConfigData
+            {
+                buffID = 5,
+                buffName = "魔力重盾",
+                describe = "減少30點受到的傷害",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.Defense,
+                effectValues = new int[] { 30 }
+            }
+        },
+        {
+            6, new BuffConfigData
+            {
+                buffID = 6,
+                buffName = "力量增幅",
+                describe = "增加20點攻擊力",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.AttackPower,
+                effectValues = new int[] { 20 }
+            }
+        },
+        {
+            7, new BuffConfigData
+            {
+                buffID = 7,
+                buffName = "中毒",
+                describe = "每回合結束時受到10點傷害",
+                buffTrigger = BuffTrigger.OnTurnEnd,
+                buffEffectType = BuffEffectType.HP,
+                effectValues = new int[] { -10 }
+            }
+        },
+        {
+            8, new BuffConfigData
+            {
+                buffID = 8,
+                buffName = "流血",
+                describe = "使用技能時受到10點傷害",
+                buffTrigger = BuffTrigger.OnSkillUse,
+                buffEffectType = BuffEffectType.HP,
+                effectValues = new int[] { -10 }
+            }
+        },
+        {
+            9, new BuffConfigData
+            {
+                buffID = 9,
+                buffName = "暈眩",
+                describe = "無法行動",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.Stun,
+                effectValues = new int[] { 0 }
+            }
+        },
+        {
+            10, new BuffConfigData
+            {
+                buffID = 10,
+                buffName = "睡眠",
+                describe = "無法行動，直到受到傷害解除",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.Sleep,
+                effectValues = new int[] { 0 }
+            }
+        },
+        {
+            11, new BuffConfigData
+            {
+                buffID = 11,
+                buffName = "魔力增幅",
+                describe = "生成魔力骰+1",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.BornDice,
+                effectValues = new int[] { 1 }
+            }
+        },
+        {
+            12, new BuffConfigData
+            {
+                buffID = 12,
+                buffName = "魔力衰弱",
+                describe = "生成魔力骰-1",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.BornDice,
+                effectValues = new int[] { -1 }
+            }
+        },
+        {
+            13, new BuffConfigData
+            {
+                buffID = 13,
+                buffName = "肥胖",
+                describe = "最大生命+20",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.MaxHP,
+                effectValues = new int[] { 20 }
+            }
+        },
+        {
+            14, new BuffConfigData
+            {
+                buffID = 14,
+                buffName = "惡臭",
+                describe = "回合結束,雙方生命-10",
+                buffTrigger = BuffTrigger.OnTurnEnd,
+                buffEffectType = BuffEffectType.BothHP,
+                effectValues = new int[] { 10 }
+            }
+        },
+        {
+            15, new BuffConfigData
+            {
+                buffID = 15,
+                buffName = "尖刺護甲",
+                describe = "受到攻擊時，反彈10點傷害給攻擊者",
+                buffTrigger = BuffTrigger.OnDamageTaken,
+                buffEffectType = BuffEffectType.EnemyHP,
+                effectValues = new int[] { 10 }
+            }
+        },
+        {
+            16, new BuffConfigData
+            {
+                buffID = 16,
+                buffName = "治癒",
+                describe = "回合開始時，生命+20",
+                buffTrigger = BuffTrigger.OnTurnStart,
+                buffEffectType = BuffEffectType.HP,
+                effectValues = new int[] { 20 }
+            }
+        }
+    };
+
+    public static BuffConfigData GetBuffConfig(int buffID)
     {
-        buffID = 2;
-        buffName = "狂戰士";
-        describe = "受傷時，給予狂暴狀態";
-        effectValues.Add(3);  // 要生成的 Buff ID（狂暴 = 3）
-        effectValues.Add(0);  // 生成 Buff 的使用次數
-        effectValues.Add(1);  // 生成 Buff 的持續回合數
-        buffTrigger = BuffTrigger.OnDamageTaken;
-        buffEffectType = BuffEffectType.SpawnBuff;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-public class RageBuff : BaseBuff
-{
-    public RageBuff(int _usageCount, int _duration)
-    {
-        buffID = 3;
-        buffName = "狂暴";
-        describe = "生成骰變為6";
-        effectValues.Add(6);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.LimitBornDice;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-public class ShieldBigBuff : BaseBuff
-{
-    public ShieldBigBuff(int _usageCount, int _duration)
-    {
-        buffID = 4;
-        buffName = "大魔力護盾";
-        describe = "減少15點受到的傷害";
-        effectValues.Add(15);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.Defense;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//魔力重盾
-public class MagicShieldBuff : BaseBuff
-{
-    public MagicShieldBuff(int _usageCount, int _duration)
-    {
-        buffID = 5;
-        buffName = "魔力重盾";
-        describe = "減少30點受到的傷害";
-        effectValues.Add(30);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.Defense;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//力量增幅
-public class PowerBoost : BaseBuff
-{
-    public PowerBoost(int _usageCount, int _duration)
-    {
-        buffID = 6;
-        buffName = "力量增幅";
-        describe = "增加10點攻擊力";
-        effectValues.Add(10);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.AttackPower;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//中毒
-public class PoisonBuff : BaseBuff
-{
-    public PoisonBuff(int _usageCount, int _duration)
-    {
-        buffID = 7;
-        buffName = "中毒";
-        describe = "每回合結束時受到10點傷害";
-        effectValues.Add(-10);
-        buffTrigger = BuffTrigger.OnTurnEnd;
-        buffEffectType = BuffEffectType.HP;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//Bleed
-public class BleedBuff : BaseBuff
-{
-    public BleedBuff(int _usageCount, int _duration)
-    {
-        buffID = 8;
-        buffName = "流血";
-        describe = "使用技能時受到10點傷害";
-        effectValues.Add(-10);
-        buffTrigger = BuffTrigger.OnSkillUse;
-        buffEffectType = BuffEffectType.HP;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//暈眩
-public class StunBuff : BaseBuff
-{
-    public StunBuff(int _usageCount, int _duration)
-    {
-        buffID = 9;
-        buffName = "暈眩";
-        describe = "無法行動";
-        effectValues.Add(0);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.Stun;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//睡眠
-public class SleepBuff : BaseBuff
-{
-    public SleepBuff(int _usageCount, int _duration)
-    {
-        buffID = 10;
-        buffName = "睡眠";
-        describe = "無法行動，直到受到傷害解除";
-        effectValues.Add(0);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.Sleep;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//魔力增幅
-public class MagicBoostBuff : BaseBuff
-{
-    public MagicBoostBuff(int _usageCount, int _duration)
-    {
-        buffID = 11;
-        buffName = "魔力增幅";
-        describe = "生成魔力骰+1";
-        effectValues.Add(1);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.BornDice;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//魔力衰弱
-public class MagicWeakenBuff : BaseBuff
-{
-    public MagicWeakenBuff(int _usageCount, int _duration)
-    {
-        buffID = 12;
-        buffName = "魔力衰弱";
-        describe = "生成魔力骰-1";
-        effectValues.Add(-1);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.BornDice;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//肥胖
-public class FatBuff : BaseBuff
-{
-    public FatBuff(int _usageCount, int _duration)
-    {
-        buffID = 13;
-        buffName = "肥胖";
-        describe = "最大生命+20";
-        effectValues.Add(20);
-        buffTrigger = BuffTrigger.OnApply;
-        buffEffectType = BuffEffectType.MaxHP;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//惡臭
-public class StinkyBuff : BaseBuff
-{
-    public StinkyBuff(int _usageCount, int _duration)
-    {
-        buffID = 14;
-        buffName = "惡臭";
-        describe = "回合結束,雙方生命-10";
-        effectValues.Add(10);
-        buffTrigger = BuffTrigger.OnTurnEnd;
-        buffEffectType = BuffEffectType.BothHP;
-        SetBuffData(_usageCount, _duration);
-    }
-}
-//尖刺護甲
-public class ThornArmorBuff : BaseBuff
-{
-    public ThornArmorBuff(int _usageCount, int _duration)
-    {
-        buffID = 15;
-        buffName = "尖刺護甲";
-        describe = "受到攻擊時，反彈10點傷害給攻擊者";
-        effectValues.Add(10);
-        buffTrigger = BuffTrigger.OnDamageTaken;
-        buffEffectType = BuffEffectType.EnemyHP;
-        SetBuffData(_usageCount, _duration);
+        if (Buffs.TryGetValue(buffID, out var config))
+        {
+            return config;
+        }
+        return default;
     }
 }

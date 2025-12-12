@@ -1,10 +1,27 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System;
 
-public class littleSkillCard : MonoBehaviour
+public class ChooseSkillCard : MonoBehaviour
 {
+    private bool _isChosen;
+    public bool isChosen 
+    {
+        get => _isChosen;
+        set
+        {
+            _isChosen = value;
+            img_choose.enabled = value;
+        }
+    }
+    
+    public int SkillID => skillData.skillID;
+    
+    // 點擊回調事件
+    public Action<ChooseSkillCard> OnCardClicked;
+    
+    [SerializeField] Button btn_card;
+    [SerializeField] Image img_choose;
     [SerializeField] Text text_skillTitle;
     [SerializeField] Text text_skillCondition_title;
     [SerializeField] Text text_skillCondition;
@@ -12,8 +29,20 @@ public class littleSkillCard : MonoBehaviour
     [SerializeField] Text text_skillEffect_title;
     [SerializeField] Transform trans_skillDiceParent;
     [SerializeField] GameObject obj_dice;
-    ISkillData skillData;
-    public void SetData(ISkillData _skillData)
+    SkillConfigData skillData;
+    
+    void Awake()
+    {
+        if (btn_card != null)
+            btn_card.onClick.AddListener(OnClick);
+    }
+    
+    void OnClick()
+    {
+        OnCardClicked?.Invoke(this);
+    }
+    
+    public void SetData(SkillConfigData _skillData)
     {
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
         text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");

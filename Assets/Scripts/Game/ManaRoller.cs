@@ -55,7 +55,7 @@ public class ManaRoller : MonoBehaviour
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
         maxFreezeCount = _keepDiceCount;
         text_freezeCount.text = maxFreezeCount.ToString();
-        maxDiceCount = GameDataManager.PlayerData.ManaRollerMaxDiceCount;
+        maxDiceCount = GameDataManager.PlayerData.manaRollerMaxDiceCount;
 
         foreach (var sideNum in _dices)
         {
@@ -129,7 +129,7 @@ public class ManaRoller : MonoBehaviour
     }
     public void RollDices()
     {
-        // rollCount--;
+        rollCount--;
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
         for (int i = 0; i < manaDiceList.Count; i++)
         {

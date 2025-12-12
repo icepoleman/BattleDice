@@ -19,6 +19,7 @@ public interface ICharacterData
     int diceCount { get; set; }
     int limitDiceCount { get; set; }//限制生成骰子數量
     int keepDiceCount { get; set; }
+    List<int> skillIDs { get; set; } 
     List<ISkillData> skillData { get; set; }
     List<IBuffData> buffData { get; set; }
     int maxRollCount { get; set; } //最大擲骰次數
@@ -49,6 +50,21 @@ public abstract class BaseCharacterData : ICharacterData
     public int diceCount { get; set; }
     public int limitDiceCount { get; set; }//限制生成骰子數量
     public int keepDiceCount { get; set; }
+    private List<int> _skillIDs = new List<int>();
+    public List<int> skillIDs
+    {
+        get => _skillIDs;
+        set
+        {
+            _skillIDs = value;
+            // 依照 skillIDs 初始化 skillData
+            skillData.Clear();
+            foreach (var id in _skillIDs)
+            {
+                skillData.Add(new BaseSkill(id));
+            }
+        }
+    }
     public List<ISkillData> skillData { get; set; } = new List<ISkillData>();
     public List<IBuffData> buffData { get; set; } = new List<IBuffData>();
     public int maxRollCount { get; set; }
@@ -98,14 +114,13 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void TakeDamage(float damage)
     {
+        // 受到傷害時解除睡眠狀態
         if (state == CharacterState.Sleep)
         {
-            foreach (var buff in buffData)
+            var sleepBuff = buffData.FirstOrDefault(b => b.buffEffectType == BuffEffectType.Sleep);
+            if (sleepBuff != null)
             {
-                if (buff is SleepBuff)
-                {
-                    RemoveBuff(buff);//先執行效果
-                }
+                RemoveBuff(sleepBuff);
             }
         }
         TriggerBuffs(BuffTrigger.OnDamageTaken);
@@ -166,6 +181,16 @@ public abstract class BaseCharacterData : ICharacterData
         }
         UpdateBuffUI();
     }
+    //移除所有buff
+    public void RemoveAllBuff() 
+    {
+        foreach (var buff in buffData.ToList()) // 使用 ToList() 以避免修改集合時出錯
+        {
+            RemoveBuff(buff);
+        }
+        buffData.Clear();
+        UpdateBuffUI();
+    }
     public void UpdateBuffUI()
     {
         // 移除 canRemove == true 的 Buff，保留 canRemove == false 的
@@ -176,7 +201,7 @@ public abstract class BaseCharacterData : ICharacterData
 }
 
 // 存檔資料類別
-[System.Serializable]
+[Serializable]
 public class CharacterSaveData
 {
     public float maxBlood;
@@ -192,7 +217,7 @@ public class CharacterSaveData
 public class PlayerData : BaseCharacterData
 {
     public ISkillData wantUseSkill;
-    public int ManaRollerMaxDiceCount;
+    public int manaRollerMaxDiceCount;
     public PlayerData()
     {
         isPlayer = true;
@@ -201,9 +226,8 @@ public class PlayerData : BaseCharacterData
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         diceCount = 8;
         keepDiceCount = 2;
-        ManaRollerMaxDiceCount = 8;
-        skillData = new List<ISkillData>() 
-        {new BaseSkill(6), new BaseSkill(7), new BaseSkill(2), new BaseSkill(3) };
+        manaRollerMaxDiceCount = 8;
+        skillIDs = new List<int>() { 6, 12, 13, 11 };
         maxRollCount = 10; //最大擲骰次數
     }
     public void AddPowerDice(int dice)
@@ -231,7 +255,7 @@ public class PlayerData : BaseCharacterData
             diceCount = diceCount,
             keepDiceCount = keepDiceCount,
             maxRollCount = maxRollCount,
-            manaRollerMaxDiceCount = ManaRollerMaxDiceCount,
+            manaRollerMaxDiceCount = manaRollerMaxDiceCount,
             skillIDs = skillData.Select(skill => skill.skillID).ToList()
         };
     }
@@ -245,13 +269,9 @@ public class PlayerData : BaseCharacterData
         diceCount = saveData.diceCount;
         keepDiceCount = saveData.keepDiceCount;
         maxRollCount = saveData.maxRollCount;
-        ManaRollerMaxDiceCount = saveData.manaRollerMaxDiceCount;
-        // 從技能ID重建技能列表
-        skillData = new List<ISkillData>();
-        foreach (var skillID in saveData.skillIDs)
-        {
-            skillData.Add(new BaseSkill(skillID));
-        }
+        manaRollerMaxDiceCount = saveData.manaRollerMaxDiceCount;
+        // 從技能ID重建技能列表（透過 setter 自動初始化）
+        skillIDs = saveData.skillIDs;
     }
 }
 

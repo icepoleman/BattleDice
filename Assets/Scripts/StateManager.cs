@@ -125,7 +125,7 @@ public class StateManager : MonoBehaviour
         GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
  
         //TODO: 設定玩家資料
-        GameDataManager.PlayerData = new PlayerData();
+       // GameDataManager.PlayerData = new PlayerData();
         
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("DiceGame", () => ChangeState(GameState.DiceGame));
