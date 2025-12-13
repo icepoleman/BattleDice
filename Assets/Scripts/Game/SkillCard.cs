@@ -5,6 +5,7 @@ using System;
 
 public class SkillCard : MonoBehaviour
 {
+    bool isChosen = false;
     [SerializeField] Text text_skillTitle;
     [SerializeField] Text text_skillCondition_title;
     [SerializeField] Text text_skillCondition;
@@ -26,7 +27,11 @@ public class SkillCard : MonoBehaviour
         text_skillEffect.text = skillData.effectText;
         if (skillData.conditionText == "")
             BurnConditionDices();
-        btn_choose.onClick.AddListener(() => { onClickCallback?.Invoke(); });
+        btn_choose.onClick.AddListener(() => { 
+           // isChosen = true;
+           // skillInfoPanel.SetActive(true);
+            onClickCallback?.Invoke();
+        });
         EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, StopUseSkill);
     }
     void BurnConditionDices()//如果沒有條件骰子就不顯示
@@ -58,12 +63,13 @@ public class SkillCard : MonoBehaviour
     // 滑鼠進入按鈕時觸發
     public void OnMouseEnter()
     {
-        skillInfoPanel.SetActive(true);
+       // skillInfoPanel.SetActive(true);
     }
 
     // 滑鼠離開按鈕時觸發
     public void OnMouseExit()
     {
-        skillInfoPanel.SetActive(false);
+       // if (!isChosen)
+       // skillInfoPanel.SetActive(false);
     }
 }

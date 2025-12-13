@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 3815377600611875734}
   - component: {fileID: 7850867230308859461}
   - component: {fileID: 4882087499912741085}
-  - component: {fileID: 4265544225662106692}
+  - component: {fileID: 7337530249680038474}
   m_Layer: 5
   m_Name: skillBtn
   m_TagString: Untagged
@@ -761,7 +761,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4265544225662106692
+--- !u!114 &7337530249680038474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

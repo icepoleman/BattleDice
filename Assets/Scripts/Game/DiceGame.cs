@@ -59,8 +59,8 @@ public class DiceGame : MonoBehaviour
 
         //test
         //enemyData = EnemyFactory.CreateEnemy(1);
-       // playerData = new PlayerData();
-       // playerData.AddBuff(new BaseBuff(16, 0, 3));
+        // playerData = new PlayerData();
+        // playerData.AddBuff(new BaseBuff(16, 0, 3));
         //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
@@ -200,15 +200,33 @@ public class DiceGame : MonoBehaviour
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
                 enemyData.TurnStartBuffEffect();
-                StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, async () =>
+                if (enemyData.state == CharacterState.Stunned)
                 {
-                    //敵人使用技能;
-                    enemyData.UseSkill();
-                    await Task.Delay(500);
                     enemyData.TurnEndBuffDecrease();
                     await Task.Delay(500);
+                    // playerView.SetAnimBool("stun", true);
                     ChangeState(TurnState.roundEnd);
-                }));
+                }
+                else if (enemyData.state == CharacterState.Sleep)
+                {
+                    enemyData.TurnEndBuffDecrease();
+                    await Task.Delay(500);
+                    // playerView.PlayAnim("sleep");
+                    ChangeState(TurnState.roundEnd);
+                }
+                else
+                {
+                    StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, async () =>
+                    {
+                        //敵人使用技能;
+                        enemyData.UseSkill();
+                        await Task.Delay(500);
+                        enemyData.TurnEndBuffDecrease();
+                        await Task.Delay(500);
+                        ChangeState(TurnState.roundEnd);
+                    }));
+                }
+
                 //enemy特寫擲骰 顯示使用技能
                 break;
             case TurnState.roundEnd:
@@ -487,7 +505,7 @@ public class DiceGame : MonoBehaviour
     }
     void RemoveBuffEvent()//buff本身會自動移除
     {
-       
+
     }
     void UpdateManaDiceEvent(object[] args)
     {

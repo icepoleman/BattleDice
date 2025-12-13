@@ -16,6 +16,7 @@ public class DialogueData
     public string Anim;
     public string Flag;
     public string Background;
+    public string CameraAnim;
 }
 [System.Serializable]
 public class MapData
@@ -74,10 +75,11 @@ public class CSVReader
             data.Choices = values.Length > 5 && !string.IsNullOrEmpty(values[5]) ? values[5].Split('|') : new string[0];
             data.JumpTo = values.Length > 6 && !string.IsNullOrEmpty(values[6]) ? values[6].Split('|') : new string[0];
 
-            data.Tag = values.Length > 7 ? values[7] : "";
+            data.CameraAnim = values.Length > 7 ? values[7] : "";
             data.Anim = values.Length > 8 ? values[8] : "";
             data.Flag = values.Length > 9 ? values[9] : "";
             data.Background = values.Length > 10 ? values[10] : "";
+            data.Tag = values.Length > 11 ? values[11] : "";
             lines.Add(data);
         }
 

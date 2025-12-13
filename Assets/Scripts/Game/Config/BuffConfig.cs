@@ -59,10 +59,10 @@ public static class BuffDatabase
             {
                 buffID = 3,
                 buffName = "狂暴",
-                describe = "生成骰變為6",
+                describe = "生成骰變為8",
                 buffTrigger = BuffTrigger.OnApply,
                 buffEffectType = BuffEffectType.LimitBornDice,
-                effectValues = new int[] { 6 }
+                effectValues = new int[] { 8 }
             }
         },
         {
@@ -113,7 +113,7 @@ public static class BuffDatabase
             8, new BuffConfigData
             {
                 buffID = 8,
-                buffName = "流血",
+                buffName = "撕裂",
                 describe = "使用技能時受到10點傷害",
                 buffTrigger = BuffTrigger.OnSkillUse,
                 buffEffectType = BuffEffectType.HP,
@@ -207,7 +207,18 @@ public static class BuffDatabase
                 buffEffectType = BuffEffectType.HP,
                 effectValues = new int[] { 20 }
             }
-        }
+        },
+        {
+            17, new BuffConfigData
+            {
+                buffID = 17,
+                buffName = "虛脫",
+                describe = "生成骰變為1",
+                buffTrigger = BuffTrigger.OnApply,
+                buffEffectType = BuffEffectType.LimitBornDice,
+                effectValues = new int[] { 1 }
+            }
+        },
     };
 
     public static BuffConfigData GetBuffConfig(int buffID)

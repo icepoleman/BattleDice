@@ -160,9 +160,9 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("紀錄flag:" + lines[_page].Flag);
         }
-        if (lines[_page].Character == "Camera")
+        if (lines[_page].CameraAnim != "")
         {
-            if (lines[_page].Anim == "shake")
+            if (lines[_page].CameraAnim == "shake")
                 EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_CAMERA);
         }
         //顯示對話

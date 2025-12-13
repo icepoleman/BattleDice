@@ -147,14 +147,14 @@ public static class SkillDatabase
                 skillName = "力量!啟動!",
                 skillType = SkillType.Buff,
                 conditionText = "",
-                effectText = "力量增幅3回合",
+                effectText = "力量增幅5回合",
                 skillValue = 0,
                 needDicesData = new int[] {3,3},
                 requirementType = SkillRequirementType.SpecificDicesWithRepeat,
                 requiredDiceCount = 2,
                 selfBuffs = new BuffSeed[]
                 {
-                    new BuffSeed { buffID = 6, usageCount = 0, duration = 3 }
+                    new BuffSeed { buffID = 6, usageCount = 0, duration = 5 }
                 }
             }
         },
@@ -172,7 +172,7 @@ public static class SkillDatabase
                 requiredDiceCount = 2,
                 selfBuffs = new BuffSeed[]
                 {
-                    new BuffSeed { buffID = 6, usageCount = 0, duration = 3 }
+                    //new BuffSeed { buffID = 6, usageCount = 0, duration = 3 }
                 }
             }
         },
@@ -201,7 +201,7 @@ public static class SkillDatabase
                 skillName = "奮力一擊",
                 skillType = SkillType.Attack,
                 conditionText = "",
-                effectText = "造成60點傷害",
+                effectText = "造成60點傷害,並使敵人暈眩1回合",
                 skillValue = 60,
                 needDicesData = new int[] {6,6},
                 requirementType = SkillRequirementType.SpecificDicesWithRepeat,
@@ -229,6 +229,59 @@ public static class SkillDatabase
                 }
             }
         },
+        {        //催眠術
+            14, new SkillConfigData
+            {
+                skillID = 14,
+                skillName = "催眠術",
+                skillType = SkillType.Buff,
+                conditionText = "",
+                effectText = "使敵人睡眠",
+                skillValue = 0,
+                needDicesData = new int[] {2,3,4},
+                requirementType = SkillRequirementType.SpecificDices,
+                targetBuffs = new BuffSeed[]
+                {
+                    new BuffSeed { buffID = 10, usageCount = 0, duration = 0 }
+                }
+            }
+        },
+        {
+            15, new SkillConfigData
+            {
+                skillID = 15,
+                skillName = "3萬伏特",
+                skillType = SkillType.Attack,
+                conditionText = "3個重複骰子",
+                effectText = "造成60點傷害，給予對方撕裂3回合",
+                skillValue = 60,
+                needDicesData = new int[] {1,2,3,4,5,6},
+                requirementType = SkillRequirementType.SameDices,
+                requiredSameCount = 3,
+                targetBuffs = new BuffSeed[]
+                {
+                    new BuffSeed { buffID = 8, usageCount = 0, duration = 3 }
+                }
+            }
+        },
+        {
+            16, new SkillConfigData
+            {
+                skillID = 16,
+                skillName = "特大槌",
+                skillType = SkillType.Attack,
+                conditionText = "單數骰 ×4",
+                effectText = "造成100點傷害，給予自身虛脫3回合",
+                skillValue = 100,
+                needDicesData = new int[] {1,3,5},
+                requirementType = SkillRequirementType.SpecificDicesWithRepeat,
+                requiredDiceCount = 4,
+                selfBuffs = new BuffSeed[]
+                {
+                    new BuffSeed { buffID = 17, usageCount = 0, duration = 3 }
+                }
+            }
+        }
     };
 
     public static SkillConfigData GetSkillConfig(int skillID)

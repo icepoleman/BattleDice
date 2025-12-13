@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,8 @@ public class ChangeSkillView : MonoBehaviour
 
     void Start()
     {
-        hasSkillsID = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+        // 依照資料庫自動生成可選技能清單（避免硬編號）
+        hasSkillsID = SkillDatabase.Skills.Keys.OrderBy(id => id).ToList();
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);
         btn_save.onClick.AddListener(SaveChosenSkills);
         

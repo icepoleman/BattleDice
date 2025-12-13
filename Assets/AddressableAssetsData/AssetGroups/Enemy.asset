@@ -15,13 +15,28 @@ MonoBehaviour:
   m_GroupName: Enemy
   m_GUID: ae85fc4576fece745bd7af22acdb45d6
   m_SerializeEntries:
+  - m_GUID: 1a8e3da2a56a4eb40b273963734790ac
+    m_Address: enemy_6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d0830d18ba62a841a410d9d9d1dd47d
     m_Address: enemy_3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4854145e3f80c514e9b5485758909b10
+    m_Address: enemy_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e6874d43c10a784dac5ae5057c47d0a
     m_Address: enemy_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f623fc48c117d6489efcf6a37917a97
+    m_Address: enemy_5
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
