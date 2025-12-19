@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Hcg
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Hcg
+  m_GUID: fa2fa91dfb6182d40a4acfb2866d6bb7
+  m_SerializeEntries:
+  - m_GUID: 075ea52a33529704680ec0b7109f6175
+    m_Address: WitchHcg1_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ca73abfbcbc0d941b7b722b90ea268a
+    m_Address: WitchHcg1_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d21ff1c5406fa4b4e8a7927e0ebcaef8
+    m_Address: WitchHcg1_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8820f023243f484f90c5db2cfbaf57f
+    m_Address: WitchHcg1_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8643711b3c97f2148a5d9d901d2d0eab, type: 2}
+    - {fileID: 11400000, guid: 34b276dc51e5bfb428b770fd8ec62c7d, type: 2}

@@ -69,6 +69,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89d48c3376e3f104294383b5af602d4b
+    m_Address: Witch/scare
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Witch
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8e88909ab62b8024fbe6d6cb7a4f7f0f
     m_Address: Witch/shy
     m_ReadOnly: 0
@@ -101,6 +107,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f373882c7bf4f4c469f9c5e981247283
     m_Address: JailerGirl/happy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7836fbaa08437649a78ef5342817de6
+    m_Address: JailerGirl/scare
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl

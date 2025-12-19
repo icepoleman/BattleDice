@@ -1,15 +1,27 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField]
-    private string nowChapter = "";
-    [SerializeField]
-    private List<DialogueData> lines = new List<DialogueData>();
+
+    [SerializeField] private string nowChapter = "";
+    [SerializeField] private List<DialogueData> lines = new List<DialogueData>();
+    [SerializeField] Image img_cg1;
+    [SerializeField] Image img_cg2;
+    private bool useCg1 = true; // 追蹤當前使用的是哪個 Image
+    private string currentBgAddress = ""; // 追蹤當前背景地址（用於卸載）
+    [SerializeField] float cgFadeDuration = 0.5f; // CG 淡入淡出時間
+    
+    // 快轉模式設定
+    [Header("快轉設定")]
+    [SerializeField] private float fastForwardInterval = 0.05f; // 快轉時每行間隔時間
+    private bool isFastForwarding = false;
+    private float fastForwardTimer = 0f;
+    
     private int pageIndex = 0;
-    private ChatWindow chatWindow;
+    [SerializeField] private ChatWindow chatWindow;
     private ChooseBox chooseBox;
     private PlayerInputActions inputActions;
 
@@ -20,15 +32,47 @@ public class DialogueManager : MonoBehaviour
     // 文本替換的特殊暗號
     private readonly string PLAYER_NAME_TOKEN = "{PlayerName}";
 
+    Animator animator;
     bool isOpen = false;
+    
+    void Update()
+    {
+        // 檢測 CTRL 鍵快轉
+        bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
+        
+        if (ctrlPressed && !onChoose && nowChapter != "END" && nowChapter != "Battle")
+        {
+            if (!isFastForwarding)
+            {
+                isFastForwarding = true;
+                chatWindow.SetFastForwardMode(true);
+                Debug.Log("⏩ 開始快轉");
+            }
+            
+            fastForwardTimer += Time.deltaTime;
+            if (fastForwardTimer >= fastForwardInterval)
+            {
+                fastForwardTimer = 0f;
+                // 模擬點擊下一步
+                OnNextClick(new InputAction.CallbackContext());
+            }
+        }
+        else if (isFastForwarding)
+        {
+            isFastForwarding = false;
+            chatWindow.SetFastForwardMode(false);
+            Debug.Log("⏸️ 停止快轉");
+        }
+    }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (isOpen) return;
         isOpen = true;
+        animator = GetComponent<Animator>();
         inputActions = new PlayerInputActions();
         inputActions.Player.Enable();
-        chatWindow = gameObject.GetComponentInChildren<ChatWindow>();
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
         // ShowDialogue("Prologue1_1");//讀取劇情
@@ -76,6 +120,21 @@ public class DialogueManager : MonoBehaviour
     bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)
     {
+        if (nowChapter == "END")
+        {
+            Debug.Log("劇情結束");
+            if (GameDataManager.TestMode)
+                EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
+            else
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+            return;//劇情結束不處理
+        }
+        if (nowChapter == "Battle")
+        {
+            chatWindow.HideWindow();
+            Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
+        }
         //處理跳轉邏輯
         if (jumpTo.Count > 0)
         {
@@ -111,22 +170,6 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("沒文本了!");
             chatWindow.HideWindow();
         }
-
-        if (nowChapter == "END")
-        {
-            Debug.Log("劇情結束");
-            if (GameDataManager.TestMode)
-                UnityEngine.SceneManagement.SceneManager.LoadScene("TestAdvMenu");
-            else
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
-            return;//劇情結束不處理
-        }
-        if (nowChapter == "Battle")
-        {
-            chatWindow.HideWindow();
-            Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
-        }
     }
     private async void CheckDialogueCmd(int _page)
     {
@@ -144,9 +187,10 @@ public class DialogueManager : MonoBehaviour
         if (lines[_page].Background != "")
         {
             Debug.Log("更換背景:" + lines[_page].Background);
+            await CrossFadeBackground(lines[_page].Background);
         }
         //更換立繪
-        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Camera" && lines[_page].Character != "Choose")
+        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Choose")
         {
             // 先載入角色立繪（如果尚未載入）
             await PortraitManager.LoadRoleIfNeeded(lines[_page].Character);
@@ -162,8 +206,8 @@ public class DialogueManager : MonoBehaviour
         }
         if (lines[_page].CameraAnim != "")
         {
-            if (lines[_page].CameraAnim == "shake")
-                EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_CAMERA);
+            Debug.Log("相機flag:" + lines[_page].CameraAnim);
+            animator.Play(lines[_page].CameraAnim);
         }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
@@ -209,6 +253,57 @@ public class DialogueManager : MonoBehaviour
 
         // 預設名字
         return "主角";
+    }
+
+    // 交叉淡入淡出換背景
+    private async System.Threading.Tasks.Task CrossFadeBackground(string backgroundAddress)
+    {
+        // 載入新背景圖片
+        Sprite newSprite = await AddressableManager.LoadAssetAsync<Sprite>(backgroundAddress);
+        if (newSprite == null)
+        {
+            Debug.LogError($"❌ 無法載入背景: {backgroundAddress}");
+            return;
+        }
+        
+        // 記錄舊背景地址（用於卸載）
+        string oldBgAddress = currentBgAddress;
+        currentBgAddress = backgroundAddress;
+        
+        // 決定使用哪個 Image
+        Image fadeInImage = useCg1 ? img_cg1 : img_cg2;
+        Image fadeOutImage = useCg1 ? img_cg2 : img_cg1;
+        
+        // 設置新背景到要淡入的 Image
+        fadeInImage.sprite = newSprite;
+        fadeInImage.color = new Color(1, 1, 1, 0); // 初始透明
+        fadeInImage.gameObject.SetActive(true);
+        
+        // 確保淡入的 Image 在上層
+        fadeInImage.transform.SetAsLastSibling();
+        
+        // 同時執行淡入淡出動畫
+        fadeInImage.DOKill();
+        fadeOutImage.DOKill();
+        
+        fadeInImage.DOFade(1f, cgFadeDuration);
+        fadeOutImage.DOFade(0f, cgFadeDuration).OnComplete(() =>
+        {
+            fadeOutImage.gameObject.SetActive(false);
+            fadeOutImage.sprite = null;
+            
+            // 卸載舊背景
+            if (!string.IsNullOrEmpty(oldBgAddress))
+            {
+                AddressableManager.ReleaseAsset(oldBgAddress);
+                Debug.Log($"已卸載舊背景: {oldBgAddress}");
+            }
+        });
+        
+        // 切換標記
+        useCg1 = !useCg1;
+        
+        Debug.Log($"背景切換完成: {backgroundAddress}");
     }
 
     void JumpToTag(string _tag)

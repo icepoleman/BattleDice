@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
     {
         MainMenu,
         AVG,
+        TestAVGMenu,
         DiceGame,
         Map,
         PreparationRoom,
@@ -35,6 +36,13 @@ public class StateManager : MonoBehaviour
             // 設定 SceneLoader 的協程執行者
             SceneLoader.SetCoroutineRunner(this);
             
+            // 初始化 fadeImage（解決 CrossFadeAlpha 第一次不淡入的問題）
+            if (fadeImage != null)
+            {
+                fadeImage.canvasRenderer.SetAlpha(0f);
+                fadeImage.gameObject.SetActive(false);
+            }
+            
             AddEventListeners();
         }
         else
@@ -53,6 +61,7 @@ public class StateManager : MonoBehaviour
     {
         EventCenter.AddListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
+        EventCenter.AddListener(StateEvent.EVENT_TEST_AVGMENU, OnTestAVGMenu);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
@@ -64,6 +73,7 @@ public class StateManager : MonoBehaviour
     {
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
+        EventCenter.RemoveListener(StateEvent.EVENT_TEST_AVGMENU, OnTestAVGMenu);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_MAP, OnEnterMap);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
@@ -138,6 +148,13 @@ public class StateManager : MonoBehaviour
         
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("AVGScene", () => ChangeState(GameState.AVG));
+    }
+    void OnTestAVGMenu(object[] args)
+    {
+        Debug.Log("StateManager: 進入 測試劇情選單 模式");
+        
+        // 使用帶延遲的場景載入
+        SceneLoader.LoadSceneWithDelay("TestAdvMenu", () => ChangeState(GameState.TestAVGMenu));
     }
     void OnEnterMap(object[] args)
     {

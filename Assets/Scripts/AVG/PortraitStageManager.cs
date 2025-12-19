@@ -55,7 +55,31 @@ public class PortraitStageManager : MonoBehaviour
             HideCharacter(characterName);
         }
         else
+        {
             UpdateStagePos(portraitPos);
+            
+            // 講話的角色移到最上層並高亮，其他角色變暗
+            SetSpeakingCharacter(characterName);
+        }
+    }
+    
+    // 設置講話中的角色（高亮並置頂）
+    void SetSpeakingCharacter(string characterName)
+    {
+        foreach (var kv in roleViews)
+        {
+            if (kv.Key == characterName)
+            {
+                // 講話的角色：移到最上層 + 高亮
+                kv.Value.transform.SetAsLastSibling();
+                kv.Value.SetHighlight(true);
+            }
+            else
+            {
+                // 其他角色：變暗
+                kv.Value.SetHighlight(false);
+            }
+        }
     }
     // 隱藏角色
     public void HideCharacter(string characterName)
@@ -124,17 +148,17 @@ public class PortraitStageManager : MonoBehaviour
                 return 0f;
         }
     }
-    // 獲取基準位置的 Y 座標
+    // 獲取基準位置的 Y 座標(角色身高不同需要調整)
     float GetBasePositionY(string characterName)
     {
         switch (characterName)
         {
             case "WolfGirl":
-                return 0;
+                return -500;
             case "Witch":
-                return -90;
+                return -600;
             case "JailerGirl":
-                return 50;
+                return -432;
             default:
                 return 0;
         }

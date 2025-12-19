@@ -11,6 +11,8 @@ public class ChatWindow : MonoBehaviour
 
     private Animator animator;
     [SerializeField] private float typingSpeed = 0.05f; // 逐字顯示速度
+    [SerializeField] private float fastTypingSpeed = 0.005f; // 快轉時的打字速度
+    private bool isFastForwardMode = false;
 
     private string str_dialogue = "你好，這是一個簡易的文字冒險範例。";
 
@@ -81,9 +83,16 @@ public class ChatWindow : MonoBehaviour
         foreach (char c in str_dialogue.ToCharArray())
         {
             dialogueText.text += c;
-            yield return new WaitForSeconds(typingSpeed);
+            float currentSpeed = isFastForwardMode ? fastTypingSpeed : typingSpeed;
+            yield return new WaitForSeconds(currentSpeed);
         }
         doneImg.SetActive(true);
         isTyping = false;
+    }
+    
+    // 設定快轉模式
+    public void SetFastForwardMode(bool fastForward)
+    {
+        isFastForwardMode = fastForward;
     }
 }

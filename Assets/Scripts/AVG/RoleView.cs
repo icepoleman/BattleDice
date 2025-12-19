@@ -76,4 +76,12 @@ public class RoleView : MonoBehaviour
     {
         return portraitPos;
     }
+    
+    // 設置角色高亮狀態（講話時高亮，其他角色變暗）
+    public void SetHighlight(bool isHighlighted)
+    {
+        roleImage.DOKill();
+        Color targetColor = isHighlighted ? Color.white : new Color(0.5f, 0.5f, 0.5f, 1f);
+        roleImage.DOColor(targetColor, 0.3f);
+    }
 }

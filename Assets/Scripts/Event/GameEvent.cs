@@ -25,6 +25,7 @@ public class StateEvent
 {
     public const string EVENT_ENTER_DICEGAME = "StateEvent_EnterDiceGame";//進入骰子遊戲
     public const string EVENT_ENTER_AVG = "StateEvent_EnterAVG";//進入劇情
+    public const string EVENT_TEST_AVGMENU = "StateEvent_TestAVGMenu";//測試劇情menu
     public const string EVENT_ENTER_MAP = "StateEvent_EnterMap";//進入地圖
     public const string EVENT_ENTER_PREPARATION_ROOM = "StateEvent_EnterPreparationRoom";//進入整備室
     public const string EVENT_ENTER_SHOP = "StateEvent_EnterShop";//進入商店
@@ -41,5 +42,4 @@ public class MapEvent
 public class AdvEvent
 {
     public const string EVENT_CLICK_CHOICE = "AdvEvent_ClickChoice";//點擊選項
-    public const string EVENT_SHAKE_CAMERA = "AdvEvent_ShakeCamera"; //震動camera
 }
