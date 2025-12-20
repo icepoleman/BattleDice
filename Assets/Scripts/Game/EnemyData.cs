@@ -62,13 +62,53 @@ public class EnemyData : BaseCharacterData
     {
         base.UseSkill();
 
-        for (int i = 0; i < skillData.Count; i++)
+        // 取得可發動的技能列表（骰子消耗不重複）
+        var usableSkills = GetUsableSkills(rollDiceResult);
+        
+        foreach (var skillInfo in usableSkills)
         {
-            skillData[i].diceBox = rollDiceResult;
-            if (skillData[i].canUseSkill())
+            skillInfo.skill.diceBox = new List<int>(skillInfo.usedDices);
+            skillInfo.skill.Use(false);
+        }
+    }
+    
+    // 給定骰子結果，計算哪些技能可以發動（骰子不重複消耗）
+    public List<SkillUseInfo> GetUsableSkills(List<int> diceResult)
+    {
+        List<SkillUseInfo> usableSkills = new List<SkillUseInfo>();
+        List<int> remainingDice = new List<int>(diceResult);
+        
+        // 依序檢查每個技能
+        foreach (var skill in skillData)
+        {
+            if (skill.CanUseWithDice(remainingDice))
             {
-                skillData[i].Use(false);
+                // 取得這個技能會消耗的骰子
+                List<int> usedDices = skill.GetUsedDices(remainingDice);
+                
+                // 從剩餘骰子中移除已使用的
+                foreach (int dice in usedDices)
+                {
+                    remainingDice.Remove(dice);
+                }
+                
+                usableSkills.Add(new SkillUseInfo(skill, usedDices));
             }
         }
+        
+        return usableSkills;
+    }
+}
+
+// 技能使用資訊
+public class SkillUseInfo
+{
+    public ISkillData skill;
+    public List<int> usedDices;// 使用的骰子列表
+    
+    public SkillUseInfo(ISkillData skill, List<int> usedDices)
+    {
+        this.skill = skill;
+        this.usedDices = usedDices;
     }
 }

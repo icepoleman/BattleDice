@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Threading.Tasks;
 public class CharacterView : MonoBehaviour
 {
     private Animator anim;
@@ -24,24 +25,25 @@ public class CharacterView : MonoBehaviour
     }
 
     // 只負責顯示骰子動畫，不處理數值邏輯
-    public IEnumerator ShowRollAnimation(List<int> rollResults, System.Action onComplete = null)
+    public async Task ShowRollAnimation(List<int> rollResults)
     {
+        if(rollResults == null || rollResults.Count == 0)
+        {
+            Debug.LogWarning("骰子結果為空，無法顯示動畫");
+            return;
+        }
         Debug.Log("顯示擲骰子動畫");
         ClearDiceBox();
 
-        yield return new WaitForSeconds(0.5f);
+        await Task.Delay(500);// 等待0.5秒後開始顯示動畫
 
         //生成骰子物件在diceBox下
         for (int i = 0; i < rollResults.Count; i++)
         {
             BurnDice(rollResults[i]);
-            yield return new WaitForSeconds(0.1f);
+            await Task.Delay(100);
         }
-        yield return new WaitForSeconds(0.5f);
-        ClearDiceBox();
-
-        // 執行回調，讓調用者決定後續行為
-        onComplete?.Invoke();
+        await Task.Delay(500);
     }
     public void ClearDiceBox()
     {

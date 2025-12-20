@@ -78,6 +78,11 @@ public interface ISkillData
     public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
     public void Use(bool _isPlayer);
+    
+    // 用於怪物多技能判斷：給定可用骰子，判斷能否發動
+    public bool CanUseWithDice(List<int> availableDice);
+    // 取得此技能會消耗的骰子（從給定的可用骰子中）
+    public List<int> GetUsedDices(List<int> availableDice);
 }
 public class BaseSkill : ISkillData
 {
@@ -211,6 +216,94 @@ public class BaseSkill : ISkillData
         List<int> needDices = new List<int>(needDicesData);
         return needDices;
     }
+    
+    // 用於怪物多技能判斷：給定可用骰子，判斷能否發動
+    public virtual bool CanUseWithDice(List<int> availableDice)
+    {
+        return requirementType switch
+        {
+            SkillRequirementType.SpecificDices => CheckSpecificDices(availableDice),
+            SkillRequirementType.SameDices => availableDice.GroupBy(x => x).Any(g => g.Count() >= requiredSameCount),
+            SkillRequirementType.DiceSum => availableDice.Sum() >= requiredSum,
+            SkillRequirementType.AnyDice => availableDice.Count >= requiredDiceCount,
+            SkillRequirementType.SpecificDicesWithRepeat => availableDice.Count(d => needDicesData.Contains(d)) >= requiredDiceCount,
+            _ => false
+        };
+    }
+    
+    // 檢查是否有指定骰子（考慮重複）
+    private bool CheckSpecificDices(List<int> availableDice)
+    {
+        List<int> tempDice = new List<int>(availableDice);
+        foreach (int need in needDicesData)
+        {
+            if (tempDice.Contains(need))
+                tempDice.Remove(need);
+            else
+                return false;
+        }
+        return true;
+    }
+    
+    // 取得此技能會消耗的骰子（從給定的可用骰子中）
+    public virtual List<int> GetUsedDices(List<int> availableDice)
+    {
+        List<int> usedDices = new List<int>();
+        List<int> tempDice = new List<int>(availableDice);
+        
+        switch (requirementType)
+        {
+            case SkillRequirementType.SpecificDices:
+                // 消耗指定的骰子
+                foreach (int need in needDicesData)
+                {
+                    if (tempDice.Contains(need))
+                    {
+                        usedDices.Add(need);
+                        tempDice.Remove(need);
+                    }
+                }
+                break;
+                
+            case SkillRequirementType.SameDices:
+                // 找到數量最多的相同骰子組，取 requiredSameCount 個
+                var group = tempDice.GroupBy(x => x)
+                    .Where(g => g.Count() >= requiredSameCount)
+                    .OrderByDescending(g => g.Count())
+                    .FirstOrDefault();
+                if (group != null)
+                {
+                    usedDices.AddRange(group.Take(requiredSameCount));
+                }
+                break;
+                
+            case SkillRequirementType.DiceSum:
+                // 總和類型：消耗所有骰子
+                usedDices.AddRange(tempDice);
+                break;
+                
+            case SkillRequirementType.AnyDice:
+                // 任意骰子：使用全部剩餘骰子
+                usedDices.AddRange(tempDice);
+                break;
+                
+            case SkillRequirementType.SpecificDicesWithRepeat:
+                // 可重複指定骰子：取符合條件的 requiredDiceCount 個
+                int count = 0;
+                foreach (int dice in tempDice)
+                {
+                    if (needDicesData.Contains(dice) && count < requiredDiceCount)
+                    {
+                        usedDices.Add(dice);
+                        count++;
+                    }
+                }
+                break;
+        }
+        
+        return usedDices;
+    }
+    
     // 使用技能
     public virtual void Use(bool _isPlayer)
     {

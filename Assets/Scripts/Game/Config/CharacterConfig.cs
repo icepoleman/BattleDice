@@ -221,8 +221,8 @@ public class PlayerData : BaseCharacterData
     public PlayerData()
     {
         isPlayer = true;
-        maxBlood = 100f;
-        currentBlood = 20f;
+        maxBlood = 200f;
+        currentBlood = 200f;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         diceCount = 8;
         keepDiceCount = 2;

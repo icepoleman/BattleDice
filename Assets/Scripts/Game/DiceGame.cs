@@ -58,8 +58,10 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-        //enemyData = EnemyFactory.CreateEnemy(1);
-        // playerData = new PlayerData();
+        enemyData = EnemyFactory.CreateEnemy(1);
+        playerData = new PlayerData();
+
+        //enemyData.AddBuff(new BaseBuff(9, 0, 3));
         // playerData.AddBuff(new BaseBuff(16, 0, 3));
         //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
@@ -153,31 +155,47 @@ public class DiceGame : MonoBehaviour
             case TurnState.roundStart:
                 // 在這裡處理回合開始的邏輯
                 round++;
-                //round廣播事件
-                //EventCenter.Dispatch(GameEvent.EVENT_ROUND_START, round);
                 Debug.Log("Round " + round + " Start");
+                //雙方同時骰
+                List<int> enemyDiceResult = new List<int>();
+                List<int> playerDiceResult = new List<int>();
+                if (playerData.state == CharacterState.Idle)
+                {
+                    playerDiceResult = playerData.RollDice();
+                    playerView.SetAnimBool("stun", false);
+                    playerView.PlayAnim("charge");
+                }
+                if (enemyData.state == CharacterState.Idle)
+                {
+                    enemyDiceResult = enemyData.RollDice();
+                }
+                // 同時執行兩個動畫
+                await Task.WhenAll(
+                    playerView.ShowRollAnimation(playerDiceResult),
+                    enemyView.ShowRollAnimation(enemyDiceResult)
+                );
+                // 兩個都完成後才繼續
+                // 取得可發動的技能列表
+                List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
+                enemyView.UpdateSkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
+
+                ChangeState(TurnState.playerTurn);
+
+                break;
+            case TurnState.playerTurn:
                 if (playerData.state == CharacterState.Stunned)
                 {
                     playerView.SetAnimBool("stun", true);
-                    ChangeState(TurnState.playerTurn);
                 }
                 else if (playerData.state == CharacterState.Sleep)
                 {
                     playerView.PlayAnim("sleep");
-                    ChangeState(TurnState.playerTurn);
                 }
                 else
                 {
-                    playerView.SetAnimBool("stun", false);
-                    playerView.PlayAnim("charge");
-                    StartCoroutine(playerView.ShowRollAnimation(playerData.RollDice(), () =>
-                    {
-                        playerView.PlayAnim("idle");
-                        ChangeState(TurnState.playerTurn);
-                    }));
+                    playerView.ClearDiceBox();
+                    playerView.PlayAnim("idle");
                 }
-                break;
-            case TurnState.playerTurn:
                 UpdateBloodUI(null);
                 manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
                 // 在這裡處理玩家回合的邏輯
@@ -187,15 +205,6 @@ public class DiceGame : MonoBehaviour
                 break;
             case TurnState.enemyTurn:
                 UpdateBloodUI(null);
-                List<int> enemyRoll = enemyData.RollDice();
-                if (enemyRoll.Count == 0)
-                {
-                    //跳過玩家回合
-                    Debug.Log("敵人因狀態無法行動，跳過回合");
-                    ChangeState(TurnState.roundEnd);
-                    enemyData.TurnEndBuffDecrease();
-                    return;
-                }
                 manaRoller.BtnMode(manaRollerMode.Off);
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
@@ -216,15 +225,13 @@ public class DiceGame : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(enemyView.ShowRollAnimation(enemyRoll, async () =>
-                    {
-                        //敵人使用技能;
-                        enemyData.UseSkill();
-                        await Task.Delay(500);
-                        enemyData.TurnEndBuffDecrease();
-                        await Task.Delay(500);
-                        ChangeState(TurnState.roundEnd);
-                    }));
+                    enemyView.ClearDiceBox();
+                    //敵人使用技能;
+                    enemyData.UseSkill();
+                    await Task.Delay(500);
+                    enemyData.TurnEndBuffDecrease();
+                    await Task.Delay(500);
+                    ChangeState(TurnState.roundEnd);
                 }
 
                 //enemy特寫擲骰 顯示使用技能
