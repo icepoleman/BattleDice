@@ -39,11 +39,11 @@ public static class EnemyDatabase
                 diceSides = new int[] { 1, 2,3 },
                 diceCount = 5,
                 maxRollCount = 1,
-                skillIDs = new int[] { 1,4 },
+                skillIDs = new int[] { 1,2,4 },
                 initialBuffs = new BuffSeed[] 
                 {
            
-                 }
+                }
             }
         },
         {
@@ -118,7 +118,7 @@ public static class EnemyDatabase
                 maxBlood = 220,
                 currentBlood = 220,
                 diceSides = new int[] {1,2,3 ,4,5,6},
-                diceCount = 6,
+                diceCount = 8,
                 maxRollCount = 1,
                 skillIDs = new int[] { 1,13,2 },
                 initialBuffs = new BuffSeed[]

@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class EnemyData : BaseCharacterData
 {
     public int enemyId = 0;
     public string enemyName = "敵人";
     public int goldReward = 0;
+    
+    // 技能施放間隔（毫秒）
+    public int skillCastInterval = 800;
 
     // 預設建構子
     public EnemyData() { }
@@ -20,7 +24,20 @@ public class EnemyData : BaseCharacterData
     {
         ApplyConfig(config);
     }
+    public void DistroyTargetDice(List<int> targetIndices)
+    {
+        // 移除指定索引的骰子
+        targetIndices.Sort();
+        targetIndices.Reverse(); // 反向排序以避免索引錯亂
 
+        foreach (int index in targetIndices)
+        {
+            if (index >= 0 && index < rollDiceResult.Count)
+            {
+                rollDiceResult.RemoveAt(index);
+            }
+        }
+    }
     // 套用配置
     protected void ApplyConfig(EnemyConfigData config)
     {
@@ -58,17 +75,24 @@ public class EnemyData : BaseCharacterData
         }
     }
 
-    public override void UseSkill()
+    public override async void UseSkill()
     {
         base.UseSkill();
 
         // 取得可發動的技能列表（骰子消耗不重複）
         var usableSkills = GetUsableSkills(rollDiceResult);
         
-        foreach (var skillInfo in usableSkills)
+        for (int i = 0; i < usableSkills.Count; i++)
         {
+            var skillInfo = usableSkills[i];
             skillInfo.skill.diceBox = new List<int>(skillInfo.usedDices);
-            skillInfo.skill.Use(false);
+            skillInfo.skill.UseSkill(false);
+            
+            // 如果不是最後一個技能，等待間隔
+            if (i < usableSkills.Count - 1)
+            {
+                await Task.Delay(skillCastInterval);
+            }
         }
     }
     

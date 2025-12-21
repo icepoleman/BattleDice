@@ -16,6 +16,7 @@ public class GameEvent
     public const string EVENT_PLAYER_USE_SKILL = "GameEvent_PlayerUseSkill";//玩家發動技能
     public const string EVENT_ADD_BUFF = "GameEvent_AddBuff";//新增buff
     public const string EVENT_UPDATE_BUFF = "GameEvent_UpdateBuff";//更新buff
+    public const string EVENT_DESTROY_ENEMY_DICE = "GameEvent_DestroyEnemyDice";//破壞敵人骰子
 
     //UI
     public const string EVENT_UPDATE_MANA_DICE = "GameEvent_UpdateManaDice";//更新能量骰子顯示

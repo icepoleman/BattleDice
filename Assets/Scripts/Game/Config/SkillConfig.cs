@@ -69,6 +69,7 @@ public static class SkillDatabase
                 requiredDiceCount = 1,
                 useDiceSumAsDamage = true,
                 damageMultiplier = 1f,
+                breakDiceCount = 1,
             }
         },
         {

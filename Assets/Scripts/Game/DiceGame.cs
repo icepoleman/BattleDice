@@ -58,7 +58,7 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-        enemyData = EnemyFactory.CreateEnemy(1);
+        enemyData = EnemyFactory.CreateEnemy(6);
         playerData = new PlayerData();
 
         //enemyData.AddBuff(new BaseBuff(9, 0, 3));
@@ -120,6 +120,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
+        EventCenter.AddListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
         EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
@@ -138,6 +139,8 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
+        EventCenter.RemoveListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
+
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
@@ -209,6 +212,7 @@ public class DiceGame : MonoBehaviour
                 // 在這裡處理敵人回合的邏輯
                 Debug.Log("Enemy's Turn");
                 enemyData.TurnStartBuffEffect();
+                enemyView.ClearDiceBox();
                 if (enemyData.state == CharacterState.Stunned)
                 {
                     enemyData.TurnEndBuffDecrease();
@@ -225,7 +229,6 @@ public class DiceGame : MonoBehaviour
                 }
                 else
                 {
-                    enemyView.ClearDiceBox();
                     //敵人使用技能;
                     enemyData.UseSkill();
                     await Task.Delay(500);
@@ -263,6 +266,24 @@ public class DiceGame : MonoBehaviour
                 break;
         }
         currentState = newState;
+    }
+    void OnDestroyEnemyDice(object[] args)
+    {
+        Debug.Log("Destroy Enemy Dice Event Triggered");
+        //依照breakNum刪除隨機骰子數量
+        int breakNum = (int)args[0];
+        List<int> diceToRemove = new List<int>();
+        for (int i = 0; i < breakNum; i++)
+        {
+            if (enemyData.rollDiceResult.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, enemyData.rollDiceResult.Count);
+                diceToRemove.Add(randomIndex);
+            }
+        }
+        enemyView.DestroyTargetDice(diceToRemove);
+        enemyData.DistroyTargetDice(diceToRemove);
+        enemyView.UpdateSkillCards(enemyData.GetUsableSkills(enemyData.rollDiceResult).ConvertAll(skillInfo => skillInfo.skill));
     }
     bool onPlayerPowerCharge = false;
     float playerPowerChargeTime = 1.5f;

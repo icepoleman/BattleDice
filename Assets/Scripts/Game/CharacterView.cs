@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public class CharacterView : MonoBehaviour
 {
     private Animator anim;
-    private GameObject diceBox = null;
+    protected GameObject diceBox = null;
     //todo
     private TextMeshProUGUI txt_blood = null;
     private Slider slider_blood = null;
@@ -52,7 +52,7 @@ public class CharacterView : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    public void BurnDice(int sideNum)
+    public virtual void BurnDice(int sideNum)
     {
         GameObject dice = new GameObject("dice");
         dice.transform.SetParent(diceBox.transform);

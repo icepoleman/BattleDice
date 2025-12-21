@@ -29,6 +29,7 @@ public struct SkillConfigData
     public int skillValue;           // 技能基礎數值 (傷害/治療量)
     public int[] needDicesData;      // 需要的特定骰子點數組合
     public bool acceptMoreDice;      // 是否可以持續放入更多骰子
+    public int breakDiceCount;       // 破壞骰子數量
 
     // 技能需求配置
     public SkillRequirementType requirementType;  // 技能需求類型
@@ -69,6 +70,7 @@ public interface ISkillData
     string conditionText { get; set; }// 技能條件描述
     string effectText { get; set; } // 技能效果描述
     int[] needDicesData { get; set; } // 需求骰子資料
+    int breakDiceCount { get; set; } // 破壞骰子數量
     int skillValue { get; set; }
     List<BuffSeed> selfBuffs { get; set; }
     List<BuffSeed> targetBuffs { get; set; }
@@ -77,7 +79,7 @@ public interface ISkillData
     public void AddDiceData(int _dice);
     public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
-    public void Use(bool _isPlayer);
+    public void UseSkill(bool _isPlayer);
     
     // 用於怪物多技能判斷：給定可用骰子，判斷能否發動
     public bool CanUseWithDice(List<int> availableDice);
@@ -96,6 +98,7 @@ public class BaseSkill : ISkillData
     public string conditionText { get; set; } = "";
     public string effectText { get; set; } = "";
     public int skillValue { get; set; } = 0;
+    public int breakDiceCount { get; set; } = 0;
     public List<BuffSeed> selfBuffs { get; set; } = new List<BuffSeed>();
     public List<BuffSeed> targetBuffs { get; set; } = new List<BuffSeed>();
     public List<int> diceBox { get; set; } = new List<int>();
@@ -133,6 +136,7 @@ public class BaseSkill : ISkillData
         skillValue = configData.skillValue;
         needDicesData = configData.needDicesData ?? new int[] { };
         acceptMoreDice = configData.acceptMoreDice;
+        breakDiceCount = configData.breakDiceCount;
         skillType = configData.skillType;
 
         requirementType = configData.requirementType;
@@ -305,7 +309,7 @@ public class BaseSkill : ISkillData
     }
     
     // 使用技能
-    public virtual void Use(bool _isPlayer)
+    public virtual void UseSkill(bool _isPlayer)
     {
         if (canUseSkill())
         {
@@ -328,6 +332,11 @@ public class BaseSkill : ISkillData
                 {
                     EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, !_isPlayer);
                 }
+            }
+            if (breakDiceCount > 0)
+            {
+                UnityEngine.Debug.Log($"{skillName} will destroy {breakDiceCount} enemy dice!");
+                EventCenter.Dispatch(GameEvent.EVENT_DESTROY_ENEMY_DICE, breakDiceCount);
             }
         }
         else

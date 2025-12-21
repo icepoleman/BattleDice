@@ -227,7 +227,7 @@ public class PlayerData : BaseCharacterData
         diceCount = 8;
         keepDiceCount = 2;
         manaRollerMaxDiceCount = 8;
-        skillIDs = new List<int>() { 6, 12, 13, 11 };
+        skillIDs = new List<int>() { 4,6, 12, 13, 11 };
         maxRollCount = 10; //最大擲骰次數
     }
     public void AddPowerDice(int dice)
@@ -242,7 +242,7 @@ public class PlayerData : BaseCharacterData
     public override void UseSkill()
     {
         base.UseSkill();
-        wantUseSkill.Use(isPlayer);
+        wantUseSkill.UseSkill(isPlayer);
     }
     // 轉換為可存檔的資料
     public CharacterSaveData ToSaveData()
