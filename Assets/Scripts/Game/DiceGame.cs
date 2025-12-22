@@ -30,6 +30,7 @@ public class DiceGame : MonoBehaviour
     [SerializeField] Transform powerDiceBurnPos = null;//骰子燃燒位置
     [SerializeField] GameObject diceTrailPrefab = null;//骰子特效預置物
     [SerializeField] GameObject littleSkillCardPrefab = null;//怪物技能卡預置物
+    [SerializeField] Animator turnAnim = null;
 
     // 技能排隊系統
     private Queue<SkillOrderData> skillOrderQueue = new Queue<SkillOrderData>();
@@ -58,8 +59,8 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-        enemyData = EnemyFactory.CreateEnemy(6);
-        playerData = new PlayerData();
+      //  enemyData = EnemyFactory.CreateEnemy(6);
+       // playerData = new PlayerData();
 
         //enemyData.AddBuff(new BaseBuff(9, 0, 3));
         // playerData.AddBuff(new BaseBuff(16, 0, 3));
@@ -157,6 +158,8 @@ public class DiceGame : MonoBehaviour
         {
             case TurnState.roundStart:
                 // 在這裡處理回合開始的邏輯
+                turnAnim.Play("turnStart");
+                await Task.Delay(1000);
                 round++;
                 Debug.Log("Round " + round + " Start");
                 //雙方同時骰
@@ -186,6 +189,8 @@ public class DiceGame : MonoBehaviour
 
                 break;
             case TurnState.playerTurn:
+                turnAnim.Play("playerTurn");
+                await Task.Delay(1000);
                 if (playerData.state == CharacterState.Stunned)
                 {
                     playerView.SetAnimBool("stun", true);
@@ -207,6 +212,8 @@ public class DiceGame : MonoBehaviour
                 manaRoller.BtnMode(manaRollerMode.Idle);
                 break;
             case TurnState.enemyTurn:
+                turnAnim.Play("enemyTurn");
+                await Task.Delay(1000);
                 UpdateBloodUI(null);
                 manaRoller.BtnMode(manaRollerMode.Off);
                 // 在這裡處理敵人回合的邏輯
@@ -371,6 +378,7 @@ public class DiceGame : MonoBehaviour
         ISkillData _skill = (ISkillData)args[0];
         if (currentState != TurnState.playerTurn) return;
         playerData.wantUseSkill = _skill;
+       // manaRoller.BtnMode(manaRollerMode.Idle);
         Debug.Log("Skill Card clicked" + _skill.skillName);
     }
     void ClearChooseSkill(object[] args)

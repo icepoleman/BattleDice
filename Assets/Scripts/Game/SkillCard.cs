@@ -5,19 +5,21 @@ using System;
 
 public class SkillCard : MonoBehaviour
 {
-    bool isChosen = false;
     [SerializeField] Text text_skillTitle;
     [SerializeField] Text text_skillCondition_title;
     [SerializeField] Text text_skillCondition;
     [SerializeField] Text text_skillEffect;
     [SerializeField] Text text_skillEffect_title;
     [SerializeField] Transform trans_skillDiceParent;
-    [SerializeField] GameObject obj_choose;
     [SerializeField] GameObject obj_dice;
-    [SerializeField] Button btn_choose;
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
+    Toggle tog_choose;
     ISkillData skillData;
-    public void SetData(ISkillData _skillData, Action onClickCallback = null)
+    public void Awake()
+    {
+        tog_choose = GetComponent<Toggle>();
+    }
+    public void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
     {
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
         text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");
@@ -27,12 +29,17 @@ public class SkillCard : MonoBehaviour
         text_skillEffect.text = skillData.effectText;
         if (skillData.conditionText == "")
             BurnConditionDices();
-        btn_choose.onClick.AddListener(() => { 
-           // isChosen = true;
-           // skillInfoPanel.SetActive(true);
-            onClickCallback?.Invoke();
+        tog_choose.group = _toggleGroup;
+        tog_choose.onValueChanged.AddListener((isOn) =>
+        {
+            if (!isOn)
+            {
+                skillInfoPanel.SetActive(false);
+                return;
+            }
+            skillInfoPanel.SetActive(true);
+            EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, _skillData);
         });
-        EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, StopUseSkill);
     }
     void BurnConditionDices()//如果沒有條件骰子就不顯示
     {
@@ -45,31 +52,24 @@ public class SkillCard : MonoBehaviour
             Image img = diceObj.GetComponent<Image>();
             img.sprite = ResourcesLoader.GetDiceSprite(sideNum);
         }
-
     }
-    void OnDestroy()
+    //開關卡片使用interactable
+    public void SetInteractable(bool _isInteractable)
     {
-        EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, StopUseSkill);
+        tog_choose.interactable = _isInteractable;
     }
-    public void SkillChoosenEvent()
-    {
-        obj_choose.SetActive(true);
-    }
-    void StopUseSkill(object[] args)
-    {
-        obj_choose.SetActive(false);
-    }
-
     // 滑鼠進入按鈕時觸發
     public void OnMouseEnter()
     {
-       // skillInfoPanel.SetActive(true);
+        skillInfoPanel.SetActive(true);
     }
 
     // 滑鼠離開按鈕時觸發
     public void OnMouseExit()
     {
-       // if (!isChosen)
-       // skillInfoPanel.SetActive(false);
+        if (!tog_choose.isOn)
+        {
+            skillInfoPanel.SetActive(false);
+        }
     }
 }

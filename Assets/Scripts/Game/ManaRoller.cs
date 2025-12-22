@@ -16,7 +16,7 @@ public class ManaRoller : MonoBehaviour
     manaRollerMode currentMode = manaRollerMode.Off;
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
-    [SerializeField] Button btn_freeze = null;//凍結骰子按鈕
+    [SerializeField] Toggle tog_freeze = null;//凍結骰子按鈕
     [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
     int maxFreezeCount; //最大凍結數量
@@ -30,6 +30,8 @@ public class ManaRoller : MonoBehaviour
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
+    [SerializeField] ToggleGroup skillToggleGroup;
+    List<SkillCard> skillCardList = new List<SkillCard>();
     public void Init()
     {
         if (isOpen) return;
@@ -43,7 +45,7 @@ public class ManaRoller : MonoBehaviour
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
-        btn_freeze.onClick.AddListener(() => { BtnMode(manaRollerMode.FreezeDice); });//凍結骰子
+        tog_freeze.onValueChanged.AddListener((isOn) => { BtnMode(isOn ? manaRollerMode.FreezeDice : manaRollerMode.Idle); });//凍結骰子
 
         BtnMode(manaRollerMode.Off);
         isOpen = true;
@@ -78,24 +80,33 @@ public class ManaRoller : MonoBehaviour
             case manaRollerMode.Off:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
+                tog_freeze.interactable = false;
+                SetSkillCardInteractable(false);
                 break;
             case manaRollerMode.Idle:
                 btn_roll.interactable = rollCount > 0 && manaDiceList.Count > 0;
                 btn_turnEnd.interactable = true;
-                btn_freeze.interactable = true;
-                btn_freeze.image.color = new Color32(255, 255, 255, 255);
+                tog_freeze.interactable = true;
+                SetSkillCardInteractable(true);
                 break;
             case manaRollerMode.UseDice:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                btn_freeze.interactable = false;
+                tog_freeze.interactable = false;
+                SetSkillCardInteractable(false);
                 break;
             case manaRollerMode.FreezeDice:
-                btn_freeze.image.color = new Color32(255, 255, 0, 255);
-                EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
+                //EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
                 break;
         }
         currentMode = mode;
+    }
+    public void SetSkillCardInteractable(bool _isInteractable)
+    {
+        foreach (var skillCard in skillCardList)
+        {
+            skillCard.SetInteractable(_isInteractable);
+        }
     }
     bool firstSetSkill = false;
     //生成技能卡
@@ -106,19 +117,11 @@ public class ManaRoller : MonoBehaviour
             //生成技能物件
             GameObject skillObj = Instantiate(skillCardPrefab, skillCardParent);
             SkillCard skillCard = skillObj.GetComponent<SkillCard>();
-            skillCard.SetData(isk, () =>
-            {
-                if (currentMode == manaRollerMode.UseDice || currentMode == manaRollerMode.Off)
-                    return;
-                EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
-                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
-                BtnMode(manaRollerMode.Idle);
-                skillCard.SkillChoosenEvent();
-            });
+            skillCard.SetData(isk, skillToggleGroup);
+            skillCardList.Add(skillCard);
             if (!firstSetSkill)
             {
                 EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
-                skillCard.SkillChoosenEvent();
                 firstSetSkill = true;
             }
         }
