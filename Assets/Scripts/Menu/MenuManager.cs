@@ -16,6 +16,8 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         btn_startGame.onClick.AddListener(OnStartGameClicked);
+        //TEST
+        BuffDatabase.LoadFromCSV();
     }
 
     // Update is called once per frame

@@ -118,12 +118,12 @@ TextureImporter:
       name: dice_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 66
-        width: 28
-        height: 28
+        x: 27
+        y: 96
+        width: 26
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -140,12 +140,12 @@ TextureImporter:
       name: dice_1
       rect:
         serializedVersion: 2
-        x: 34
-        y: 66
-        width: 28
-        height: 28
+        x: 13
+        y: 68
+        width: 26
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -162,12 +162,12 @@ TextureImporter:
       name: dice_2
       rect:
         serializedVersion: 2
-        x: 2
-        y: 34
-        width: 28
-        height: 28
+        x: 45
+        y: 68
+        width: 26
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: dice_3
       rect:
         serializedVersion: 2
-        x: 34
-        y: 34
-        width: 28
-        height: 28
+        x: 13
+        y: 36
+        width: 26
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -206,12 +206,12 @@ TextureImporter:
       name: dice_4
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
-        width: 28
-        height: 28
+        x: 45
+        y: 36
+        width: 26
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -228,12 +228,12 @@ TextureImporter:
       name: dice_5
       rect:
         serializedVersion: 2
-        x: 34
-        y: 2
-        width: 28
-        height: 28
+        x: 13
+        y: 4
+        width: 26
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -246,11 +246,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: dice_6
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 4
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4bf909cec0684543b7b9007e9aae6d6
+      internalID: -1681781876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 09ab5292e2a71ad44a7760d86aaf6026
     internalID: 0
     vertices: []
     indices: 
@@ -258,7 +280,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       dice_0: 39516445742236537
       dice_1: 2376305099863235458
@@ -266,6 +290,7 @@ TextureImporter:
       dice_3: -7464760887336577109
       dice_4: -8866378825118310145
       dice_5: -3287765887320952711
+      dice_6: -1681781876
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

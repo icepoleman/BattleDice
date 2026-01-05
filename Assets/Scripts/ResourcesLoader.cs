@@ -32,9 +32,9 @@ public static class ResourcesLoader
     }
     
     /// <summary>
-    /// 獲取指定點數的骰子圖片（點數 1-6）
+    /// 獲取指定點數的骰子圖片（點數 0-6）
     /// </summary>
-    /// <param name="diceValue">骰子點數 (1-6)</param>
+    /// <param name="diceValue">骰子點數 (0-6)</param>
     /// <returns>骰子圖片</returns>
     public static Sprite GetDiceSprite(int diceValue)
     {
@@ -44,13 +44,6 @@ public static class ResourcesLoader
             LoadDiceResources();
         }
         
-        // 檢查參數範圍
-        if (diceValue < 1 || diceValue > 6)
-        {
-            Debug.LogWarning($"無效的骰子點數: {diceValue}，應為 1-6");
-            return null;
-        }
-        
         // 檢查資源是否正確載入
         if (diceSprites == null || diceSprites.Length == 0)
         {
@@ -58,16 +51,13 @@ public static class ResourcesLoader
             return null;
         }
         
-        // 骰子點數轉換為陣列索引 (1->0, 2->1, ..., 6->5)
-        int index = diceValue - 1;
-        
-        if (index >= diceSprites.Length)
+        if (diceValue >= diceSprites.Length)
         {
-            Debug.LogWarning($"骰子圖片索引 {index} 超出範圍，總數: {diceSprites.Length}");
+            Debug.LogWarning($"骰子圖片索引 {diceValue} 超出範圍，總數: {diceSprites.Length}");
             return null;
         }
         
-        return diceSprites[index];
+        return diceSprites[diceValue];
     }
     
     /// <summary>

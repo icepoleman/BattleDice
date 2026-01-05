@@ -157,7 +157,7 @@ public class ManaRoller : MonoBehaviour
     {
         return freezeCount < maxFreezeCount;
     }
-    void burnRollDice(int _sideNum)
+    public void burnRollDice(int _sideNum)
     {
         GameObject dice = Instantiate(dicePrefab, rollDiceParent);
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();

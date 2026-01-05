@@ -36,10 +36,10 @@ public static class EnemyDatabase
                 goldReward = 1000,
                 maxBlood = 50f,
                 currentBlood = 50f,
-                diceSides = new int[] { 1, 2,3 },
+                diceSides = new int[] { 1, 2,3,6 },
                 diceCount = 5,
                 maxRollCount = 1,
-                skillIDs = new int[] { 1,2,4 },
+                skillIDs = new int[] { 3,6 },
                 initialBuffs = new BuffSeed[] 
                 {
            

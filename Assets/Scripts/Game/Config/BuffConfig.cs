@@ -18,22 +18,60 @@ public struct BuffConfigData
 {
     // 基本資訊
     public int buffID;                   // Buff 唯一識別碼
-    public string buffName;              // Buff 名稱
+    public string buffName;// Buff 名稱
+    public BuffTrigger buffTrigger;
+    public BuffEffectType buffEffectType;// 效果類型   
+    public int[] effectValues;           // 效果數值列表      
     public string describe;              // Buff 效果描述
-
-    // 觸發與效果配置
-    public BuffTrigger buffTrigger;      // 觸發時機
-    public BuffEffectType buffEffectType;// 效果類型
-    public int[] effectValues;           // 效果數值列表
 }
 
 // Buff 配置資料庫
 public static class BuffDatabase
 {
-    public static readonly Dictionary<int, BuffConfigData> Buffs = new Dictionary<int, BuffConfigData>
+    private static Dictionary<int, BuffConfigData> _buffs;
+    private static bool _isLoaded = false;
+
+    public static Dictionary<int, BuffConfigData> Buffs
     {
+        get
         {
-            1, new BuffConfigData
+            if (!_isLoaded)
+            {
+                LoadFromCSV();
+            }
+            return _buffs;
+        }
+    }
+
+    // 從 CSV 載入
+    public static void LoadFromCSV()
+    {
+        _buffs = CSVReader.Instance.LoadBuffCSV();
+        if (_buffs == null)
+        {
+            _buffs = new Dictionary<int, BuffConfigData>();
+            UnityEngine.Debug.LogWarning("⚠️ Buff CSV 載入失敗，使用空資料");
+        }
+        _isLoaded = true;
+    }
+
+    // 重新載入（熱更新用）
+    public static void Reload()
+    {
+        _isLoaded = false;
+        LoadFromCSV();
+    }
+
+    public static BuffConfigData GetBuffConfig(int buffID)
+    {
+        if (Buffs.TryGetValue(buffID, out var config))
+        {
+            return config;
+        }
+        return default;
+    }
+}/*     1, new BuffConfigData
+            if (!_isLoaded)
             {
                 buffID = 1,
                 buffName = "魔力護盾",
@@ -41,6 +79,7 @@ public static class BuffDatabase
                 buffTrigger = BuffTrigger.OnApply,
                 buffEffectType = BuffEffectType.Defense,
                 effectValues = new int[] { 5 }
+                LoadFromCSV();
             }
         },
         {
@@ -207,26 +246,4 @@ public static class BuffDatabase
                 buffEffectType = BuffEffectType.HP,
                 effectValues = new int[] { 20 }
             }
-        },
-        {
-            17, new BuffConfigData
-            {
-                buffID = 17,
-                buffName = "虛脫",
-                describe = "生成骰變為1",
-                buffTrigger = BuffTrigger.OnApply,
-                buffEffectType = BuffEffectType.LimitBornDice,
-                effectValues = new int[] { 1 }
-            }
-        },
-    };
-
-    public static BuffConfigData GetBuffConfig(int buffID)
-    {
-        if (Buffs.TryGetValue(buffID, out var config))
-        {
-            return config;
-        }
-        return default;
-    }
-}
+        },*/

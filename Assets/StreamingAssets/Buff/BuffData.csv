@@ -1,0 +1,17 @@
+ID,Buff名稱,觸發時機,效果,數值,效果文(多語系要分出去)
+1,中毒,OnTurnEnd,HP,-10,回合結束，生命-10
+2,撕裂,OnSkillUse,HP,-10,使用技能時，生命-10
+3,暈眩,OnApply,Stun,,"無法攻擊,生成骰子"
+4,睡眠,OnApply,Sleep,,"睡著,回合開始50%醒或遭受攻擊解除"
+5,魔力增幅,OnApply,BornDice,1,骰子數+1
+6,魔力衰弱,OnApply,BornDice,-1,骰子數-1
+7,攻擊強化,OnApply,AttackPower,10,傷害+10
+8,攻擊弱化,OnApply,AttackPower,-10,傷害-10
+9,魔力護盾,OnApply,Defense,20,受到傷害-20
+10,魔力重盾,OnApply,Defense,50,受到傷害-50
+11,治癒,OnTurnEnd,HP,20,回合結束時，生命+20
+12,手作防具,OnApply,MaxHP,50,最大生命+50
+13,狂戰士,OnDamageTaken,SpawnBuff,14|0|2,受傷時，生成狂暴狀態
+14,狂暴,OnApply,LimitBornDice,6,生成骰變為6
+15,虛脫,OnApply,LimitBornDice,1,生成骰變為1
+16,尖刺,OnDamageTaken,EnemyHP,-20,受傷時，敵方生命-20

@@ -59,11 +59,11 @@ public class DiceGame : MonoBehaviour
         enemyData = GameDataManager.TmpEnemyData;
 
         //test
-      //  enemyData = EnemyFactory.CreateEnemy(6);
-       // playerData = new PlayerData();
+        // enemyData = EnemyFactory.CreateEnemy(6);
+        // playerData = new PlayerData();
 
-        //enemyData.AddBuff(new BaseBuff(9, 0, 3));
-        // playerData.AddBuff(new BaseBuff(16, 0, 3));
+        //  enemyData.AddBuff(new BaseBuff(10, 0, 0));
+        //playerData.AddBuff(new BaseBuff(10, 0, 0));
         //   playerData.AddBuff(BuffFactory.CreateBuff(7, 0, 3));
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
@@ -122,6 +122,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
         EventCenter.AddListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
+        EventCenter.AddListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);//生成能量骰子給裝置
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
         EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
@@ -141,6 +142,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
         EventCenter.RemoveListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
+        EventCenter.RemoveListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);
 
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
@@ -191,25 +193,41 @@ public class DiceGame : MonoBehaviour
             case TurnState.playerTurn:
                 turnAnim.Play("playerTurn");
                 await Task.Delay(1000);
-                if (playerData.state == CharacterState.Stunned)
-                {
-                    playerView.SetAnimBool("stun", true);
-                }
-                else if (playerData.state == CharacterState.Sleep)
-                {
-                    playerView.PlayAnim("sleep");
-                }
-                else
-                {
-                    playerView.ClearDiceBox();
-                    playerView.PlayAnim("idle");
-                }
                 UpdateBloodUI(null);
                 manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
                 // 在這裡處理玩家回合的邏輯
                 Debug.Log("Player's Turn");
                 playerData.TurnStartBuffEffect();
                 manaRoller.BtnMode(manaRollerMode.Idle);
+                if (playerData.state == CharacterState.Stunned)
+                {
+                    playerView.SetAnimBool("stun", true);
+                    await Task.Delay(1000);
+                    TurnEndBtnClick(null);
+                }
+                else if (playerData.state == CharacterState.Sleep)
+                {
+                    playerView.PlayAnim("sleep");
+                    await Task.Delay(1000);
+                    //判定是否起床 50%機率自動醒
+                    System.Random rand = new System.Random();
+                    int chance = rand.Next(0, 100);
+                    if (chance < 50)
+                    {
+                        TurnEndBtnClick(null);
+                    }
+                    else
+                    {
+                        playerData.RemoveSleepBuff();
+                        playerData.state = CharacterState.Idle;
+                        playerView.PlayAnim("idle");
+                    }
+                }
+                else
+                {
+                    playerView.ClearDiceBox();
+                    playerView.PlayAnim("idle");
+                }
                 break;
             case TurnState.enemyTurn:
                 turnAnim.Play("enemyTurn");
@@ -229,16 +247,31 @@ public class DiceGame : MonoBehaviour
                 }
                 else if (enemyData.state == CharacterState.Sleep)
                 {
-                    enemyData.TurnEndBuffDecrease();
-                    await Task.Delay(500);
-                    // playerView.PlayAnim("sleep");
-                    ChangeState(TurnState.roundEnd);
+                    await Task.Delay(1000);
+                    //判定是否起床 50%機率自動醒
+                    System.Random rand = new System.Random();
+                    int chance = rand.Next(0, 100);
+                    if (chance < 50)
+                    {
+                        enemyData.TurnEndBuffDecrease();
+                        await Task.Delay(500);
+                        // playerView.PlayAnim("sleep");
+                        ChangeState(TurnState.roundEnd);
+                    }
+                    else
+                    {
+                        enemyData.RemoveSleepBuff();
+                        enemyData.state = CharacterState.Idle;
+                        await Task.Delay(500);
+                        ChangeState(TurnState.roundEnd);
+                        // enemyView.PlayAnim("idle");
+                    }
                 }
                 else
                 {
                     //敵人使用技能;
                     enemyData.UseSkill();
-                    await Task.Delay(500);
+                    await Task.Delay(1500);
                     enemyData.TurnEndBuffDecrease();
                     await Task.Delay(500);
                     ChangeState(TurnState.roundEnd);
@@ -292,6 +325,23 @@ public class DiceGame : MonoBehaviour
         enemyData.DistroyTargetDice(diceToRemove);
         enemyView.UpdateSkillCards(enemyData.GetUsableSkills(enemyData.rollDiceResult).ConvertAll(skillInfo => skillInfo.skill));
     }
+    void OnGenerateManaDice(object[] args)
+    {
+        //生成generateCount數量的骰子 數字從sideNumList中隨機選取
+        int[] sideNumList = (int[])args[0];
+        int generateCount = (int)args[1];
+        List<int> burnManaDices = new List<int>();
+        for (int i = 0; i < generateCount; i++)
+        {
+            int randomIndex = sideNumList[UnityEngine.Random.Range(0, sideNumList.Length)];
+            burnManaDices.Add(randomIndex);
+        }
+        for (int i = 0; i < burnManaDices.Count; i++)
+        {
+            manaRoller.burnRollDice(burnManaDices[i]);
+            Debug.Log("Generate Mana Dice: " + burnManaDices[i]);
+        }
+    }
     bool onPlayerPowerCharge = false;
     float playerPowerChargeTime = 1.5f;
     //玩家選擇使用技能需要骰子
@@ -300,7 +350,7 @@ public class DiceGame : MonoBehaviour
         BurnDiceTrail();
         int sideNum = (int)args[0];
         playerView.BurnDice(sideNum);
-        if (!playerData.wantUseSkill.acceptMoreDice || manaRoller.GetCurrentMode() != manaRollerMode.UseDice)
+        if (manaRoller.GetCurrentMode() != manaRollerMode.UseDice)
         {
             autoUseSkillDelay = playerPowerChargeTime;
         }
@@ -378,7 +428,7 @@ public class DiceGame : MonoBehaviour
         ISkillData _skill = (ISkillData)args[0];
         if (currentState != TurnState.playerTurn) return;
         playerData.wantUseSkill = _skill;
-       // manaRoller.BtnMode(manaRollerMode.Idle);
+        // manaRoller.BtnMode(manaRollerMode.Idle);
         Debug.Log("Skill Card clicked" + _skill.skillName);
     }
     void ClearChooseSkill(object[] args)

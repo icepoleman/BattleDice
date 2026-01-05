@@ -19,7 +19,7 @@ public interface ICharacterData
     int diceCount { get; set; }
     int limitDiceCount { get; set; }//限制生成骰子數量
     int keepDiceCount { get; set; }
-    List<int> skillIDs { get; set; } 
+    List<int> skillIDs { get; set; }
     List<ISkillData> skillData { get; set; }
     List<IBuffData> buffData { get; set; }
     int maxRollCount { get; set; } //最大擲骰次數
@@ -88,6 +88,7 @@ public abstract class BaseCharacterData : ICharacterData
             }
             rollDiceResult.Add(side);
         }
+        rollDiceResult.Sort();
         return rollDiceResult;
     }
 
@@ -117,11 +118,7 @@ public abstract class BaseCharacterData : ICharacterData
         // 受到傷害時解除睡眠狀態
         if (state == CharacterState.Sleep)
         {
-            var sleepBuff = buffData.FirstOrDefault(b => b.buffEffectType == BuffEffectType.Sleep);
-            if (sleepBuff != null)
-            {
-                RemoveBuff(sleepBuff);
-            }
+            RemoveSleepBuff();
         }
         TriggerBuffs(BuffTrigger.OnDamageTaken);
         float takeDmg = damage - buffDefense;
@@ -130,7 +127,14 @@ public abstract class BaseCharacterData : ICharacterData
         currentBlood -= takeDmg;
         if (currentBlood < 0) currentBlood = 0;
     }
-
+    public void RemoveSleepBuff()
+    {
+        var sleepBuff = buffData.FirstOrDefault(b => b.buffEffectType == BuffEffectType.Sleep);
+        if (sleepBuff != null)
+        {
+            RemoveBuff(sleepBuff);
+        }
+    }
     public virtual void Heal(float heal)
     {
         TriggerBuffs(BuffTrigger.OnHealReceived);
@@ -182,7 +186,7 @@ public abstract class BaseCharacterData : ICharacterData
         UpdateBuffUI();
     }
     //移除所有buff
-    public void RemoveAllBuff() 
+    public void RemoveAllBuff()
     {
         foreach (var buff in buffData.ToList()) // 使用 ToList() 以避免修改集合時出錯
         {
@@ -223,18 +227,18 @@ public class PlayerData : BaseCharacterData
         isPlayer = true;
         maxBlood = 200f;
         currentBlood = 200f;
-        diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
+        diceSides = new int[] { 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
         diceCount = 8;
         keepDiceCount = 2;
         manaRollerMaxDiceCount = 8;
-        skillIDs = new List<int>() { 4,6, 12, 13, 11 };
+        skillIDs = new List<int>() { 1, 2, 3 }; //預設技能
         maxRollCount = 10; //最大擲骰次數
     }
     public void AddPowerDice(int dice)
     {
         wantUseSkill.diceBox.Add(dice);
         //達成條件直接使用技能
-        if (wantUseSkill.canUseSkill() && wantUseSkill.acceptMoreDice == false)
+        if (wantUseSkill.canUseSkill())
         {
             EventCenter.Dispatch(GameEvent.EVENT_PLAYER_USE_SKILL);
         }
