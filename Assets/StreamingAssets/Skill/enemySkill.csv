@@ -1,7 +1,8 @@
-技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs
-101,嘎,Attack,DiceSum,5,10,5⬆,造成10點傷害,,
-102,咕咕嘎嘎,Attack,DiceSum,10,20,10⬆,造成20點傷害,,
-103,撕咬,Attack,DiceSum,8,15,8⬆,造成15點傷害,,
-104,毒爪,Attack,DiceSum,15,20,15⬆,20點傷害，給予中毒3回合,,1:0:3
-105,水彈,Attack,DiceSum,15,10,10⬆,20點傷害，給予魔力衰弱1回合,,
-106,GG螺旋鑽,Attack,DiceSum,20,30,20⬆,造成30點傷害，給予撕裂3回合,,6:0:1
+技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,Combo
+101,嘎,Attack,DiceSum,5,10,5⬆,造成10點傷害,,,
+102,咕咕嘎嘎,Attack,DiceSum,10,20,10⬆,造成20點傷害,,,
+103,撕咬,Attack,DiceSum,8,15,8⬆,造成15點傷害,,,
+104,毒爪,Attack,DiceSum,15,20,15⬆,20點傷害，給予中毒3回合,,1:0:3,
+105,水彈,Attack,DiceSum,15,10,10⬆,20點傷害，給予魔力衰弱1回合,,,
+106,GG螺旋鑽,Attack,DiceSum,20,30,20⬆,造成30點傷害，給予撕裂3回合,,6:0:1,
+107,瘋狂亂啄,Attack,DiceSum,4,10,4⬆,造成10點傷害，再骰一次,,,1
