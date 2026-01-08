@@ -37,11 +37,15 @@ public class DiceGame : MonoBehaviour
     private bool isProcessingSkill = false; // 是否正在處理
     private float skillInterval = 0.5f; // 技能攻擊間隔時間
 
+    // 敵人重骰計數器（等待所有重骰完成）
+    private int enemyRerollPending = 0;
+
     //buff提示泡泡
     [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
 
+    float playerPowerChargeTime = 3f;//玩家能量骰子充能時間
     void Start()
     {
         if (isOpen) return;
@@ -72,6 +76,8 @@ public class DiceGame : MonoBehaviour
         enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
         gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         gameUiView.UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
+
+        gameUiView.UpdateNames(LanguageManager.GetText("T_GirlName"), enemyData.enemyName);
 
         enemyView.BornSkillCards(littleSkillCardPrefab, enemyData.skillData);
 
@@ -123,6 +129,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
         EventCenter.AddListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
         EventCenter.AddListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);//生成能量骰子給裝置
+        EventCenter.AddListener(GameEvent.EVENT_ENEMY_REROLL, OnEnemyReroll);//敵人重新擲骰並再次攻擊
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
         EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
@@ -143,6 +150,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BLOOD_UI, UpdateBloodUI);
         EventCenter.RemoveListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
         EventCenter.RemoveListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);
+        EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_REROLL, OnEnemyReroll);
 
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
@@ -270,8 +278,18 @@ public class DiceGame : MonoBehaviour
                 else
                 {
                     //敵人使用技能;
+                    enemyRerollPending = 0; // 重置重骰計數
                     enemyData.UseSkill();
-                    await Task.Delay(1500);
+                    //TEST重骰
+                    EventCenter.Dispatch(GameEvent.EVENT_ENEMY_REROLL);
+                    await Task.Delay(1000);
+                    
+                    // 等待所有重骰完成
+                    while (enemyRerollPending > 0)
+                    {
+                        await Task.Delay(100);
+                    }
+                    
                     enemyData.TurnEndBuffDecrease();
                     await Task.Delay(500);
                     ChangeState(TurnState.roundEnd);
@@ -342,8 +360,36 @@ public class DiceGame : MonoBehaviour
             Debug.Log("Generate Mana Dice: " + burnManaDices[i]);
         }
     }
+
+    // 敵人重新擲骰並再次攻擊
+    async void OnEnemyReroll(object[] args)
+    {
+        Debug.Log("Enemy Reroll Event Triggered");
+        enemyRerollPending++; // 開始重骰，增加計數
+        
+        try
+        {
+            // 重新擲骰
+            List<int> newDiceResult = enemyData.RollDice();
+            
+            // 播放擲骰動畫
+            await enemyView.ShowRollAnimation(newDiceResult);
+            
+            // 更新技能卡顯示
+            List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(newDiceResult);
+            enemyView.UpdateSkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
+            
+            // 再次使用技能
+            await Task.Delay(500);
+            enemyData.UseSkill();
+            await Task.Delay(1000); // 等待技能執行完畢
+        }
+        finally
+        {
+            enemyRerollPending--; // 完成重骰，減少計數
+        }
+    }
     bool onPlayerPowerCharge = false;
-    float playerPowerChargeTime = 1.5f;
     //玩家選擇使用技能需要骰子
     void AddPowerDiceEvent(object[] args)
     {

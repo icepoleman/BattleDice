@@ -231,7 +231,7 @@ public class PlayerData : BaseCharacterData
         diceCount = 8;
         keepDiceCount = 2;
         manaRollerMaxDiceCount = 8;
-        skillIDs = new List<int>() { 1, 2, 3 }; //預設技能
+        skillIDs = new List<int>() { 1, 2 }; //預設技能
         maxRollCount = 10; //最大擲骰次數
     }
     public void AddPowerDice(int dice)

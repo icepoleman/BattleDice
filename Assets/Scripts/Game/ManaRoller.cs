@@ -8,15 +8,13 @@ public enum manaRollerMode
 {
     Off,
     Idle,
-    UseDice,
-    FreezeDice
+    UseDice
 }
 public class ManaRoller : MonoBehaviour
 {
     manaRollerMode currentMode = manaRollerMode.Off;
     Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
-    [SerializeField] Toggle tog_freeze = null;//凍結骰子按鈕
     [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
     int maxFreezeCount; //最大凍結數量
@@ -45,7 +43,6 @@ public class ManaRoller : MonoBehaviour
         //按鈕事件
         btn_roll.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_ROLL); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
-        tog_freeze.onValueChanged.AddListener((isOn) => { BtnMode(isOn ? manaRollerMode.FreezeDice : manaRollerMode.Idle); });//凍結骰子
 
         BtnMode(manaRollerMode.Off);
         isOpen = true;
@@ -80,23 +77,17 @@ public class ManaRoller : MonoBehaviour
             case manaRollerMode.Off:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                tog_freeze.interactable = false;
                 SetSkillCardInteractable(false);
                 break;
             case manaRollerMode.Idle:
                 btn_roll.interactable = rollCount > 0 && manaDiceList.Count > 0;
                 btn_turnEnd.interactable = true;
-                tog_freeze.interactable = true;
                 SetSkillCardInteractable(true);
                 break;
             case manaRollerMode.UseDice:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                tog_freeze.interactable = false;
                 SetSkillCardInteractable(false);
-                break;
-            case manaRollerMode.FreezeDice:
-                //EventCenter.Dispatch(GameEvent.EVENT_CLEAR_CHOOSE_SKILL);
                 break;
         }
         currentMode = mode;
@@ -161,45 +152,44 @@ public class ManaRoller : MonoBehaviour
     {
         GameObject dice = Instantiate(dicePrefab, rollDiceParent);
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
-        diceScript.SetDice(_sideNum, (sideNum) =>
-        {
-            switch (currentMode)
+        diceScript.SetDice(_sideNum, 
+            // 左鍵點擊 - 使用骰子
+            (sideNum) =>
             {
-                case manaRollerMode.UseDice:
-                case manaRollerMode.Idle:
-                    if (diceScript.IsFrozen())
+                if (currentMode == manaRollerMode.Off) return;
+                if (diceScript.IsFrozen())
+                {
+                    freezeCount--;
+                    text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
+                }
+                Destroy(dice);
+                manaDiceList.Remove(diceScript);
+                EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);
+            },
+            // 右鍵點擊 - 凍結/解凍骰子
+            (diceObj) =>
+            {
+                if (currentMode == manaRollerMode.Off) return;
+                if (diceObj.IsFrozen())
+                {
+                    diceObj.SetFrozen(false);
+                    freezeCount--;
+                }
+                else
+                {
+                    if (CanFreezeDice())
                     {
-                        freezeCount--;
-                        text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
-                    }
-                    Destroy(dice);
-                    manaDiceList.Remove(diceScript);
-                    EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);
-                    break;
-                case manaRollerMode.FreezeDice:
-                    //freezeDices.Add(sideNum);
-                    if (diceScript.IsFrozen())
-                    {
-                        diceScript.SetFrozen(false);
-                        freezeCount--;
+                        freezeCount++;
+                        diceObj.SetFrozen(true);
                     }
                     else
                     {
-                        if (CanFreezeDice())
-                        {
-                            freezeCount++;
-                            diceScript.SetFrozen(true);
-                        }
-                        else
-                        {
-                            UnityEngine.Debug.Log("已達到最大凍結骰子數量");
-                        }
+                        UnityEngine.Debug.Log("已達到最大凍結骰子數量");
                     }
-                    text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
-                    UnityEngine.Debug.Log(maxFreezeCount + " " + freezeCount);
-                    break;
+                }
+                text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
             }
-        });
+        );
         manaDiceList.Add(diceScript);
     }
 }

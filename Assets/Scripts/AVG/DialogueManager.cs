@@ -13,13 +13,13 @@ public class DialogueManager : MonoBehaviour
     private bool useCg1 = true; // 追蹤當前使用的是哪個 Image
     private string currentBgAddress = ""; // 追蹤當前背景地址（用於卸載）
     [SerializeField] float cgFadeDuration = 0.5f; // CG 淡入淡出時間
-    
+
     // 快轉模式設定
     [Header("快轉設定")]
     [SerializeField] private float fastForwardInterval = 0.05f; // 快轉時每行間隔時間
     private bool isFastForwarding = false;
     private float fastForwardTimer = 0f;
-    
+
     private int pageIndex = 0;
     [SerializeField] private ChatWindow chatWindow;
     private ChooseBox chooseBox;
@@ -34,12 +34,12 @@ public class DialogueManager : MonoBehaviour
 
     Animator animator;
     bool isOpen = false;
-    
+
     void Update()
     {
         // 檢測 CTRL 鍵快轉
         bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
-        
+
         if (ctrlPressed && !onChoose && nowChapter != "END" && nowChapter != "Battle")
         {
             if (!isFastForwarding)
@@ -48,7 +48,7 @@ public class DialogueManager : MonoBehaviour
                 chatWindow.SetFastForwardMode(true);
                 Debug.Log("⏩ 開始快轉");
             }
-            
+
             fastForwardTimer += Time.deltaTime;
             if (fastForwardTimer >= fastForwardInterval)
             {
@@ -64,7 +64,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("⏸️ 停止快轉");
         }
     }
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -120,21 +120,26 @@ public class DialogueManager : MonoBehaviour
     bool onChoose;
     private void OnNextClick(InputAction.CallbackContext context)
     {
-        if (nowChapter == "END")
+        switch (nowChapter)
         {
-            Debug.Log("劇情結束");
-            if (GameDataManager.TestMode)
-                EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
-            else
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
-            return;//劇情結束不處理
+            case "END":
+                Debug.Log("劇情結束");
+                if (GameDataManager.TestMode)
+                    EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
+                else
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+                return;
+            case "Battle":
+                // 在這些章節中不處理下一步
+                chatWindow.HideWindow();
+                Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
+                return;
+            case "Die":
+                Debug.Log("角色死亡，進入結算畫面");
+                break;
         }
-        if (nowChapter == "Battle")
-        {
-            chatWindow.HideWindow();
-            Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
-        }
+
         //處理跳轉邏輯
         if (jumpTo.Count > 0)
         {
@@ -265,33 +270,33 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError($"❌ 無法載入背景: {backgroundAddress}");
             return;
         }
-        
+
         // 記錄舊背景地址（用於卸載）
         string oldBgAddress = currentBgAddress;
         currentBgAddress = backgroundAddress;
-        
+
         // 決定使用哪個 Image
         Image fadeInImage = useCg1 ? img_cg1 : img_cg2;
         Image fadeOutImage = useCg1 ? img_cg2 : img_cg1;
-        
+
         // 設置新背景到要淡入的 Image
         fadeInImage.sprite = newSprite;
         fadeInImage.color = new Color(1, 1, 1, 0); // 初始透明
         fadeInImage.gameObject.SetActive(true);
-        
+
         // 確保淡入的 Image 在上層
         fadeInImage.transform.SetAsLastSibling();
-        
+
         // 同時執行淡入淡出動畫
         fadeInImage.DOKill();
         fadeOutImage.DOKill();
-        
+
         fadeInImage.DOFade(1f, cgFadeDuration);
         fadeOutImage.DOFade(0f, cgFadeDuration).OnComplete(() =>
         {
             fadeOutImage.gameObject.SetActive(false);
             fadeOutImage.sprite = null;
-            
+
             // 卸載舊背景
             if (!string.IsNullOrEmpty(oldBgAddress))
             {
@@ -299,10 +304,10 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log($"已卸載舊背景: {oldBgAddress}");
             }
         });
-        
+
         // 切換標記
         useCg1 = !useCg1;
-        
+
         Debug.Log($"背景切換完成: {backgroundAddress}");
     }
 

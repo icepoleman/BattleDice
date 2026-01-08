@@ -50,7 +50,7 @@ public class EnemyData : BaseCharacterData
         diceCount = config.diceCount;
         maxRollCount = config.maxRollCount;
 
-        // 載入技能
+        // 載入怪物技能
         skillData = new List<ISkillData>();
         if (config.skillIDs != null)
         {

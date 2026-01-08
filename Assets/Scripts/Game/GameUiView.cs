@@ -12,6 +12,13 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Transform trans_enemyBuffParent;
     [SerializeField] Text text_playerDiceCount;
     [SerializeField] Text text_enemyDiceCount;
+    [SerializeField] Text text_playerName;
+    [SerializeField] Text text_enemyName;
+    public void UpdateNames(string playerName, string enemyName)
+    {
+        text_playerName.text = playerName;
+        text_enemyName.text = enemyName;
+    }
     public void UpdateDiceCount(int playerDiceCount, int enemyDiceCount)
     {
         text_playerDiceCount.text = playerDiceCount.ToString();

@@ -11,6 +11,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Text slider_blood_text;
     [SerializeField] Text text_gold;
     [SerializeField] Transform trans_mapParent;
+    [SerializeField] Button btn_backToMenu;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -20,6 +21,10 @@ public class MapManager : MonoBehaviour
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
+        btn_backToMenu.onClick.AddListener(() =>
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
+        });
 
         // Addressables載入地圖prefab
         LoadMapPrefab("Map" + GameDataManager.CurrentMap);

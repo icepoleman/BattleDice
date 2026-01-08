@@ -33,7 +33,7 @@ public struct SkillConfigData
     // DiceSum: [0]=需要總和
     // SpecificDicesWithRepeat: 允許骰子, 最後一個=需要數量
     // ConsecutiveDices: [0]=需要連續數量
-    public int breakDiceCount;       // 破壞骰子數量
+    public int breakDiceCount;       // 玩家破壞骰子數量/怪物是否Combo
     public int[] generateDicesData;  // 生成骰子資料 允許骰子, 最後一個=需要數量
     public string tag;               // 標記技能出處
 
@@ -58,7 +58,8 @@ public enum SkillRequirementType
     SameDices,        // 任意相同的骰子 (如 兩個相同)
     DiceSum,          // 骰子總和 (如 總和 >= 10)
     SpecificDicesWithRepeat, // 指定骰子 但能重複(ex 單數骰*3之類的)
-    ConsecutiveDices  // 連續骰子 (如 123, 234, 345 等)
+    ConsecutiveDices, // 連續骰子 (如 123, 234, 345 等)
+    AnyDices          // 任意骰子達到數量即可 (如 任意3顆)
 }
 public interface ISkillData
 {
@@ -148,6 +149,7 @@ public class BaseSkill : ISkillData
             SkillRequirementType.DiceSum => diceBox.Sum() >= GetRequiredSum(),
             SkillRequirementType.SpecificDicesWithRepeat => CheckSpecificDicesWithRepeatAndWild(diceBox, GetAllowedDices(), GetNeedCount()),
             SkillRequirementType.ConsecutiveDices => CheckConsecutiveDicesWithWild(diceBox, GetNeedCount()),
+            SkillRequirementType.AnyDices => diceBox.Count >= GetNeedCount(),
             _ => false
         };
     }
@@ -218,6 +220,7 @@ public class BaseSkill : ISkillData
             SkillRequirementType.DiceSum => GetSumDicesRequired(),
             SkillRequirementType.SpecificDicesWithRepeat => GetSpecificDicesWithRepeatRequired(),
             SkillRequirementType.ConsecutiveDices => GetConsecutiveDicesRequired(),
+            SkillRequirementType.AnyDices => GetAnyDicesRequired(),
             _ => new List<int>()
         };
     }
@@ -254,6 +257,13 @@ public class BaseSkill : ISkillData
     {
         // 返回所有可能的骰子，讓玩家自己組合
         return new List<int> { 1, 2, 3, 4, 5, 6 };
+    }
+    
+    // 獲取任意骰子需求
+    protected virtual List<int> GetAnyDicesRequired()
+    {
+        // 返回所有可能的骰子
+        return new List<int> { 0, 1, 2, 3, 4, 5, 6 };
     }
     
     // 檢查是否有連續骰子
@@ -320,6 +330,7 @@ public class BaseSkill : ISkillData
             SkillRequirementType.DiceSum => availableDice.Sum() >= GetRequiredSum(),
             SkillRequirementType.SpecificDicesWithRepeat => CheckSpecificDicesWithRepeatAndWild(availableDice, GetAllowedDices(), GetNeedCount()),
             SkillRequirementType.ConsecutiveDices => CheckConsecutiveDicesWithWild(availableDice, GetNeedCount()),
+            SkillRequirementType.AnyDices => availableDice.Count >= GetNeedCount(),
             _ => false
         };
     }
@@ -514,6 +525,16 @@ public class BaseSkill : ISkillData
                 var consecutive = GetConsecutiveSequenceWithWild(tempDice);
                 usedDices.AddRange(consecutive);
                 break;
+                
+            case SkillRequirementType.AnyDices:
+                // 任意骰子：取需要的數量
+                int anyNeedCount = GetNeedCount();
+                for (int i = 0; i < anyNeedCount && tempDice.Count > 0; i++)
+                {
+                    usedDices.Add(tempDice[0]);
+                    tempDice.RemoveAt(0);
+                }
+                break;
         }
         
         return usedDices;
@@ -587,8 +608,18 @@ public class BaseSkill : ISkillData
             }
             if (breakDiceCount > 0)
             {
-                UnityEngine.Debug.Log($"{skillName} will destroy {breakDiceCount} enemy dice!");
-                EventCenter.Dispatch(GameEvent.EVENT_DESTROY_ENEMY_DICE, breakDiceCount);
+                if (_isPlayer)
+                {
+                    // 玩家：破壞敵人骰子
+                    UnityEngine.Debug.Log($"{skillName} will destroy {breakDiceCount} enemy dice!");
+                    EventCenter.Dispatch(GameEvent.EVENT_DESTROY_ENEMY_DICE, breakDiceCount);
+                }
+                else
+                {
+                    // 怪物：觸發重骰再攻擊
+                    UnityEngine.Debug.Log($"{skillName} triggers enemy reroll!");
+                    EventCenter.Dispatch(GameEvent.EVENT_ENEMY_REROLL);
+                }
             }
             if (generateDicesData != null && generateDicesData.Length > 0)
             {

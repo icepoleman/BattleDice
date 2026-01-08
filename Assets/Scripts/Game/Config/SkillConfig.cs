@@ -75,9 +75,31 @@ public static class SkillDatabase
         }
     }
 
+    // 載入所有技能 CSV（玩家 + 怪物）
     public static void LoadFromCSV()
     {
-        _skills = CSVReader.LoadSkillCSV("skill");
+        _skills = new Dictionary<int, SkillConfigData>();
+        
+        // 載入玩家技能
+        LoadAdditionalCSV("skill");
+        
+        // 載入怪物技能
+        LoadAdditionalCSV("enemySkill");
+    }
+    
+    // 載入額外的 CSV 並合併到技能庫
+    public static void LoadAdditionalCSV(string fileName)
+    {
+        if (_skills == null) _skills = new Dictionary<int, SkillConfigData>();
+        
+        var loaded = CSVReader.LoadSkillCSV(fileName);
+        if (loaded != null)
+        {
+            foreach (var kvp in loaded)
+            {
+                _skills[kvp.Key] = kvp.Value; // 覆蓋相同 ID
+            }
+        }
     }
 
     public static void Reload()
@@ -92,5 +114,19 @@ public static class SkillDatabase
             return config;
         }
         return default;
+    }
+    
+    // 依 Tag 取得技能列表 (例如 Shop,Megami)
+    public static List<SkillConfigData> GetSkillsByTag(string tag)
+    {
+        var result = new List<SkillConfigData>();
+        foreach (var skill in Skills.Values)
+        {
+            if (skill.tag == tag)
+            {
+                result.Add(skill);
+            }
+        }
+        return result;
     }
 }

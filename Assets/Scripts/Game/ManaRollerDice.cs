@@ -1,28 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
-public class ManaRollerDice : MonoBehaviour
+public class ManaRollerDice : MonoBehaviour, IPointerClickHandler
 {
     private Image diceImage;
     private Button diceButton;
     private int sideNum;
     Action<int> clickCallback;
+    Action<ManaRollerDice> rightClickCallback;
     bool isFrozen = false;
     void Awake()
     {
         diceImage = transform.GetComponent<Image>();
         diceButton = transform.GetComponent<Button>();
     }
-    public void SetDice(int _sideNum, Action<int> _onClickCallback)
+    public void SetDice(int _sideNum, Action<int> _onClickCallback, Action<ManaRollerDice> _onRightClickCallback = null)
     {
         clickCallback = _onClickCallback;
+        rightClickCallback = _onRightClickCallback;
         sideNum = _sideNum;
         diceImage.sprite = ResourcesLoader.GetDiceSprite(_sideNum);
 
         diceButton.onClick.RemoveAllListeners();
         diceButton.onClick.AddListener(() => clickCallback?.Invoke(sideNum));
     }
+    
+    // 右鍵點擊處理
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            rightClickCallback?.Invoke(this);
+        }
+    }
+    
     public void RollDice(int _sideNum)
     {
         Debug.Log(isFrozen);

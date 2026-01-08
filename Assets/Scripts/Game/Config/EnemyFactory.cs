@@ -32,17 +32,16 @@ public static class EnemyDatabase
             1, new EnemyConfigData
             {
                 enemyId = 1,
-                enemyName = "史萊姆",
+                enemyName = "鴨鴨",
                 goldReward = 1000,
                 maxBlood = 50f,
                 currentBlood = 50f,
-                diceSides = new int[] { 1, 2,3,6 },
-                diceCount = 5,
-                maxRollCount = 1,
-                skillIDs = new int[] { 3,6 },
-                initialBuffs = new BuffSeed[] 
+                diceSides = new int[] { 1, 2,3,4,5,6 },
+                diceCount = 1,
+                skillIDs = new int[] { 107 },
+                initialBuffs = new BuffSeed[]
                 {
-           
+
                 }
             }
         },
@@ -50,14 +49,13 @@ public static class EnemyDatabase
             2, new EnemyConfigData
             {
                 enemyId = 2,
-                enemyName = "哥布林",
+                enemyName = "狼人",
                 goldReward = 20,
-                maxBlood = 100f,
-                currentBlood = 100f,
+                maxBlood = 60f,
+                currentBlood = 60f,
                 diceSides = new int[] { 1, 2, 3, 4, 5, 6 },
                 diceCount = 4,
-                maxRollCount = 1,
-                skillIDs = new int[] { 5 },
+                skillIDs = new int[] { 104,103 },
                 initialBuffs = new BuffSeed[] { }
             }
         },
@@ -65,19 +63,17 @@ public static class EnemyDatabase
             3, new EnemyConfigData
             {
                 enemyId = 3,
-                enemyName = "狼女",
+                enemyName = "邪惡鴨鴨",
                 goldReward = 50,
-                maxBlood = 150f,
-                currentBlood = 150f,
-                diceSides = new int[] { 1, 2, 3, 4,5,6 },
-                diceCount = 2,
+                maxBlood = 90f,
+                currentBlood = 90f,
+                diceSides = new int[] { 3, 4,5,6 },
+                diceCount = 4,
                 maxRollCount = 1,
-                skillIDs = new int[] { 5 },
+                skillIDs = new int[] { 106,105 },
                 initialBuffs = new BuffSeed[]
                 {
-                    new BuffSeed { buffID = 2, usageCount = 0, duration = 0 } ,
-                    new BuffSeed { buffID = 6, usageCount = 0, duration = 3 } ,
-                    new BuffSeed { buffID = 16, usageCount = 0, duration = 3 }
+
                 }
             }
         },

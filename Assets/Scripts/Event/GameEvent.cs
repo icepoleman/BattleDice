@@ -18,6 +18,7 @@ public class GameEvent
     public const string EVENT_UPDATE_BUFF = "GameEvent_UpdateBuff";//更新buff
     public const string EVENT_DESTROY_ENEMY_DICE = "GameEvent_DestroyEnemyDice";//破壞敵人骰子
     public const string EVENT_GENERATE_MANA_DICE = "GameEvent_GenerateManaDice";//生成能量骰子給裝置
+    public const string EVENT_ENEMY_REROLL = "GameEvent_EnemyReroll";//敵人重新擲骰並再次攻擊
 
     //UI
     public const string EVENT_UPDATE_MANA_DICE = "GameEvent_UpdateManaDice";//更新能量骰子顯示
@@ -25,6 +26,7 @@ public class GameEvent
 }
 public class StateEvent
 {
+    public const string EVENT_ENTER_MENU = "StateEvent_EnterMenu";//進入主選單
     public const string EVENT_ENTER_DICEGAME = "StateEvent_EnterDiceGame";//進入骰子遊戲
     public const string EVENT_ENTER_AVG = "StateEvent_EnterAVG";//進入劇情
     public const string EVENT_TEST_AVGMENU = "StateEvent_TestAVGMenu";//測試劇情menu

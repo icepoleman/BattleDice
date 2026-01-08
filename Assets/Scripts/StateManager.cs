@@ -59,6 +59,7 @@ public class StateManager : MonoBehaviour
     // 註冊事件監聽
     void AddEventListeners()
     {
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_MENU, OnEnterMenu);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.AddListener(StateEvent.EVENT_TEST_AVGMENU, OnTestAVGMenu);
@@ -71,6 +72,7 @@ public class StateManager : MonoBehaviour
     }
     void RemoveEventListeners()
     {
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_MENU, OnEnterMenu);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_DICEGAME, EnterDiceGame);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_AVG, OnEnterAVG);
         EventCenter.RemoveListener(StateEvent.EVENT_TEST_AVGMENU, OnTestAVGMenu);
@@ -121,6 +123,13 @@ public class StateManager : MonoBehaviour
        // EventCenter.Dispatch(GameEvent.EVENT_GAME_STATE_CHANGED, from, to);
     }
     
+    void OnEnterMenu(object[] args)
+    {
+        Debug.Log("StateManager: 進入 主選單 模式");
+        
+        // 使用帶延遲的場景載入
+        SceneLoader.LoadSceneWithDelay("StartMenu", () => ChangeState(GameState.MainMenu));
+    }
     // 事件響應方法 - 只處理狀態切換邏輯
     void EnterDiceGame(object[] args)
     {
