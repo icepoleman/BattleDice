@@ -15,6 +15,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Transform trans_mapParent;
     [SerializeField] Button btn_backToMenu;
     [SerializeField] Button btn_saveGame;
+    [SerializeField] Text text_stageName;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -31,7 +32,9 @@ public class MapManager : MonoBehaviour
         });
 
         // Addressables載入地圖prefab
-        LoadMapPrefab("Map" + GameDataManager.CurrentMap);
+        LoadMapPrefab();
+
+        text_stageName.text = MapConfig.GetStageName(GameDataManager.CurrentMap);
 
         AddEvent();
     }
@@ -60,11 +63,12 @@ public class MapManager : MonoBehaviour
         GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
         UnloadMapPrefab();
-        await Task.Delay(2000);
+        await Task.Delay(500);
         Destroy(_clearMap);
         GameDataManager.CurrentMap += 1;
         GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
-        LoadMapPrefab("Map" + GameDataManager.CurrentMap);
+        GameDataManager.CurrentStage = "0";
+        LoadMapPrefab();
     }
     void OnRecoverHealth(object[] param)
     {
@@ -106,8 +110,9 @@ public class MapManager : MonoBehaviour
     }
 
     // 載入地圖 Prefab
-    private async void LoadMapPrefab(string mapPrefabAddress)
+    private async void LoadMapPrefab()
     {
+        string mapPrefabAddress = MapConfig.GetMapAddress(GameDataManager.CurrentMap);
         try
         {
             Debug.Log($"開始載入地圖: {mapPrefabAddress}");

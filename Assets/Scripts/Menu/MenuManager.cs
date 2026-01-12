@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour
     {
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "0";//初始整備室
-        GameDataManager.CurrentMap = 1;
+        GameDataManager.CurrentMap = 0;
         GameDataManager.CurrentStage = testStage.text;
         GameDataManager.PlayerData.currentBlood = int.Parse(blood.text);
         GameDataManager.PlayerData.maxBlood = int.Parse(blood.text);

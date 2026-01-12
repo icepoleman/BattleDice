@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbb1894af30f16468a478f2db785b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadPanel
+  panelType: 1
   saveItemPrefab: {fileID: 5007402838366864506}
   contentTransform: {fileID: 4348349663236599192}
 --- !u!1 &633546371754797392
@@ -296,8 +297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -313.04004, y: 41}
-  m_SizeDelta: {x: 534.78, y: 63.11}
+  m_AnchoredPosition: {x: -433.24, y: 41}
+  m_SizeDelta: {x: 775.18, y: 63.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6041036281367433751
 CanvasRenderer:
@@ -334,7 +335,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 48
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

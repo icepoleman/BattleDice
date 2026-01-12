@@ -6327,10 +6327,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 378111661781468477, guid: e148e52ba54708a4abdbdfa2f769e607, type: 3}
-      propertyPath: panelType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1450334612276415765, guid: e148e52ba54708a4abdbdfa2f769e607, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
