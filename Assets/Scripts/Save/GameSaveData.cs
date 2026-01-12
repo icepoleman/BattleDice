@@ -8,8 +8,15 @@ public class GameSaveData
     public string playerName;
     public int currentMap;        // 當前地圖
     public string currentStage;          // 當前關卡
-    public System.DateTime saveTime; // 最後存檔時間
+    public string saveTimeString; // 存檔時間字串（用於 JSON 序列化）
     public CharacterSaveData playerData;   // 玩家角色資料
+    
+    // DateTime 屬性（不序列化，用於程式存取）
+    public System.DateTime SaveTime
+    {
+        get => string.IsNullOrEmpty(saveTimeString) ? System.DateTime.MinValue : System.DateTime.Parse(saveTimeString);
+        set => saveTimeString = value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
     public List<ISkillData> hasSkills = new List<ISkillData>();    // 擁有的技能資料
     public int gold;                     // 當前金幣數量
     public int gearNum;                  // 當前齒輪數量(強化素材)

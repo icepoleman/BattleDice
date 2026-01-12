@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
 
 public class MapManager : MonoBehaviour
 {
     [SerializeField] Slider slider_blood;
     [SerializeField] Text slider_blood_text;
     [SerializeField] Text text_gold;
+    [SerializeField] Text text_gear;
     [SerializeField] Transform trans_mapParent;
     [SerializeField] Button btn_backToMenu;
+    [SerializeField] Button btn_saveGame;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -21,6 +24,7 @@ public class MapManager : MonoBehaviour
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
+        text_gear.text = GameDataManager.GearNum.ToString();
         btn_backToMenu.onClick.AddListener(() =>
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
@@ -33,6 +37,7 @@ public class MapManager : MonoBehaviour
     }
     void AddEvent()
     {
+        EventCenter.AddListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.AddListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
         EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
@@ -40,6 +45,7 @@ public class MapManager : MonoBehaviour
     }
     void OnDestroy()
     {
+        EventCenter.RemoveListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.RemoveListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
@@ -47,6 +53,18 @@ public class MapManager : MonoBehaviour
 
         // 卸載 Addressables 資源
         UnloadMapPrefab();
+    }
+    async void OnCompleteMap(object[] param)
+    {
+        Debug.Log("完成當前地圖，準備載入下一張地圖");
+        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
+        GameObject _clearMap = Instantiate(clearMapPanel, transform);
+        UnloadMapPrefab();
+        await Task.Delay(2000);
+        Destroy(_clearMap);
+        GameDataManager.CurrentMap += 1;
+        GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
+        LoadMapPrefab("Map" + GameDataManager.CurrentMap);
     }
     void OnRecoverHealth(object[] param)
     {
@@ -72,6 +90,7 @@ public class MapManager : MonoBehaviour
     {
         int gearAmount = (int)param[0];
         GameDataManager.GearNum += gearAmount;
+        text_gear.text = GameDataManager.GearNum.ToString();
         Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.GearNum}");
         GoNextOpenStage();
     }

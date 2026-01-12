@@ -34,6 +34,7 @@ public class ChangeSkillView : MonoBehaviour
         // 生成擁有的技能卡片
         foreach (var skillID in hasSkillsID)
         {
+            if(skillID > 100) continue; // 跳過怪物技能ID
             var config = SkillDatabase.GetSkillConfig(skillID);
             bool isChosen = chosenSkillsID.Contains(skillID);
             Transform parent = isChosen ? chosenSkillCardParent : hasSkillCardParent;

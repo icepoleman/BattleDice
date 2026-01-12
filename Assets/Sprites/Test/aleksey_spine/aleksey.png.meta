@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: c19a48eb0ad1b20468243a8c64a145e0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2497234555937101468
+    second: aleksey_0
+  - first:
+      213: 2889646293531857810
+    second: aleksey_1
+  - first:
+      213: 6369935266720421679
+    second: aleksey_2
+  - first:
+      213: 8571356353305188854
+    second: aleksey_3
+  - first:
+      213: 1252907695909428699
+    second: aleksey_4
+  - first:
+      213: 7190225804550054579
+    second: aleksey_5
+  - first:
+      213: 1469498040166502054
+    second: aleksey_6
+  - first:
+      213: 4959270200458128646
+    second: aleksey_7
+  - first:
+      213: 2919951873451505103
+    second: aleksey_8
+  - first:
+      213: -1438728173801740332
+    second: aleksey_9
+  - first:
+      213: -838546220475742167
+    second: aleksey_10
+  - first:
+      213: -953339820518358467
+    second: aleksey_11
+  - first:
+      213: -6798406727251169172
+    second: aleksey_12
+  - first:
+      213: 292255765025704458
+    second: aleksey_13
+  - first:
+      213: 8250835520662272436
+    second: aleksey_14
+  - first:
+      213: 5218366763281790305
+    second: aleksey_15
+  - first:
+      213: -510487861007984112
+    second: aleksey_16
+  - first:
+      213: -6403422860222340660
+    second: aleksey_17
+  - first:
+      213: 5383866934712907977
+    second: aleksey_18
+  - first:
+      213: -596196461921575209
+    second: aleksey_19
+  - first:
+      213: -7701178197400579624
+    second: aleksey_20
+  - first:
+      213: 2426297059619748665
+    second: aleksey_21
+  - first:
+      213: 5305655149802255298
+    second: aleksey_22
+  - first:
+      213: 5594882077947341431
+    second: aleksey_23
+  - first:
+      213: -6885415515141282914
+    second: aleksey_24
+  - first:
+      213: -2257517595120350954
+    second: aleksey_25
+  - first:
+      213: 3742095656546126066
+    second: aleksey_26
+  - first:
+      213: 976350227033579707
+    second: aleksey_27
+  - first:
+      213: -705020278937347562
+    second: aleksey_28
+  - first:
+      213: -4939376820226020302
+    second: aleksey_29
+  - first:
+      213: -747015249707812214
+    second: aleksey_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: aleksey_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 977
+        width: 202
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469e98cf66a085dd0800000000000000
+      internalID: -2497234555937101468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_1
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 858
+        width: 216
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2939d747ef51a1820800000000000000
+      internalID: 2889646293531857810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_2
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1000
+        width: 41
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f279a1f206e866850800000000000000
+      internalID: 6369935266720421679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_3
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 1000
+        width: 33
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f91b0ab03393f670800000000000000
+      internalID: 8571356353305188854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_4
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 927
+        width: 205
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bddd80749e8336110800000000000000
+      internalID: 1252907695909428699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_5
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 858
+        width: 78
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b2ad071640d8c360800000000000000
+      internalID: 7190225804550054579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_6
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 743
+        width: 213
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aec14a8ea4b46410800000000000000
+      internalID: 1469498040166502054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_7
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 743
+        width: 242
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60dac73d8fdd2d440800000000000000
+      internalID: 4959270200458128646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_8
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 742
+        width: 42
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc5305222c0c58820800000000000000
+      internalID: 2919951873451505103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 490
+        width: 242
+        height: 251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d76330495c980ce0800000000000000
+      internalID: -1438728173801740332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 728
+        width: 81
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9280cc0c7a2ec54f0800000000000000
+      internalID: -838546220475742167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_11
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 632
+        width: 112
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d32c4c7fb7e05c2f0800000000000000
+      internalID: -953339820518358467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_12
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 631
+        width: 40
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c60719fd91537a1a0800000000000000
+      internalID: -6798406727251169172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_13
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 617
+        width: 113
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0acae1e11d4e0400800000000000000
+      internalID: 292255765025704458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_14
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 490
+        width: 111
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b9ff35f03bd08270800000000000000
+      internalID: 8250835520662272436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_15
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 490
+        width: 126
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 165bd115cec5b6840800000000000000
+      internalID: 5218366763281790305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_16
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 390
+        height: 486
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01a587ebef16ae8f0800000000000000
+      internalID: -510487861007984112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_17
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 428
+        width: 58
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc1e4ddd5d87227a0800000000000000
+      internalID: -6403422860222340660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_18
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 420
+        width: 51
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c8b881c37657ba40800000000000000
+      internalID: 5383866934712907977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_19
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 318
+        width: 41
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ded1d60a72e9b7f0800000000000000
+      internalID: -596196461921575209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_20
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 318
+        width: 37
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d194f76b3bef1590800000000000000
+      internalID: -7701178197400579624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_21
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 349
+        width: 28
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93bb5361250fba120800000000000000
+      internalID: 2426297059619748665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_22
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 256
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c37fa88f3971a940800000000000000
+      internalID: 5305655149802255298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_23
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 304
+        width: 36
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77a20406b9305ad40800000000000000
+      internalID: 5594882077947341431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_24
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 256
+        width: 54
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e936a09c1171270a0800000000000000
+      internalID: -6885415515141282914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_25
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 174
+        width: 58
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61948a445bfaba0e0800000000000000
+      internalID: -2257517595120350954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_26
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 174
+        width: 41
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8c6f35c289ee330800000000000000
+      internalID: 3742095656546126066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_27
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 87
+        width: 63
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb065bacb51bc8d00800000000000000
+      internalID: 976350227033579707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_28
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 87
+        width: 49
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61a1e7aaac34736f0800000000000000
+      internalID: -705020278937347562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_29
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 2
+        width: 76
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c21a2b3fec37bb0800000000000000
+      internalID: -4939376820226020302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aleksey_30
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 2
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8abd57969112a5f0800000000000000
+      internalID: -747015249707812214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      aleksey_0: -2497234555937101468
+      aleksey_1: 2889646293531857810
+      aleksey_10: -838546220475742167
+      aleksey_11: -953339820518358467
+      aleksey_12: -6798406727251169172
+      aleksey_13: 292255765025704458
+      aleksey_14: 8250835520662272436
+      aleksey_15: 5218366763281790305
+      aleksey_16: -510487861007984112
+      aleksey_17: -6403422860222340660
+      aleksey_18: 5383866934712907977
+      aleksey_19: -596196461921575209
+      aleksey_2: 6369935266720421679
+      aleksey_20: -7701178197400579624
+      aleksey_21: 2426297059619748665
+      aleksey_22: 5305655149802255298
+      aleksey_23: 5594882077947341431
+      aleksey_24: -6885415515141282914
+      aleksey_25: -2257517595120350954
+      aleksey_26: 3742095656546126066
+      aleksey_27: 976350227033579707
+      aleksey_28: -705020278937347562
+      aleksey_29: -4939376820226020302
+      aleksey_3: 8571356353305188854
+      aleksey_30: -747015249707812214
+      aleksey_4: 1252907695909428699
+      aleksey_5: 7190225804550054579
+      aleksey_6: 1469498040166502054
+      aleksey_7: 4959270200458128646
+      aleksey_8: 2919951873451505103
+      aleksey_9: -1438728173801740332
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

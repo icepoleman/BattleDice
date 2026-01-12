@@ -16,14 +16,15 @@ public enum TurnState
 public class DiceGame : MonoBehaviour
 {
     TurnState currentState = TurnState.gameStart;//目前狀態
-    int round = 0;
+    //紀錄玩家進入時血量
+    float playerEnterBlood;
     CharacterView playerView = null;
     EnemyView enemyView = null;
     PlayerData playerData = new PlayerData();//藉由GameDataManager取得
     EnemyData enemyData;//藉由GameDataManager取得
     ManaRoller manaRoller = null;
     bool isOpen = false;
-    [SerializeField] GameUiView gameUiView = null;
+    GameUiView gameUiView = null;
 
     Transform enemyPos = null;//敵人位置
     Transform playerPos = null;//玩家位置
@@ -40,16 +41,19 @@ public class DiceGame : MonoBehaviour
     // 敵人重骰計數器（等待所有重骰完成）
     private int enemyRerollPending = 0;
 
-    //buff提示泡泡
+    //buff提示泡泡(因該放給UI管理比較好)
     [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
 
     float playerPowerChargeTime = 3f;//玩家能量骰子充能時間
+
+
     void Start()
     {
         if (isOpen) return;
         isOpen = true;
+        gameUiView = GetComponent<GameUiView>();
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         manaRoller.Init();
         enemyPos = GameObject.Find("enemyPos").transform;
@@ -62,8 +66,10 @@ public class DiceGame : MonoBehaviour
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
 
+        playerEnterBlood = playerData.currentBlood;//記錄進入時血量
+
         //test
-        // enemyData = EnemyFactory.CreateEnemy(6);
+        // enemyData = EnemyFactory.CreateEnemy(1);
         // playerData = new PlayerData();
 
         //  enemyData.AddBuff(new BaseBuff(10, 0, 0));
@@ -79,7 +85,7 @@ public class DiceGame : MonoBehaviour
 
         gameUiView.UpdateNames(LanguageManager.GetText("T_GirlName"), enemyData.enemyName);
 
-        enemyView.BornSkillCards(littleSkillCardPrefab, enemyData.skillData);
+        enemyView.BornSkillCards(enemyData.skillData);
 
         manaRoller.SetAllSkill(playerData.skillData);
         AddEvent();
@@ -115,6 +121,8 @@ public class DiceGame : MonoBehaviour
     }
     void AddEvent()
     {
+        EventCenter.AddListener(GameEvent.EVENT_RESTART_GAME, RestartGame);
+        EventCenter.AddListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
@@ -136,6 +144,8 @@ public class DiceGame : MonoBehaviour
     }
     void OnDestroy()
     {
+        EventCenter.RemoveListener(GameEvent.EVENT_RESTART_GAME, RestartGame);
+        EventCenter.RemoveListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
@@ -156,9 +166,8 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
         AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
-
-        RemoveBuffEvent();
     }
+    bool gameOver=false;
     async void ChangeState(TurnState newState)
     {
         if (currentState == newState) return;
@@ -170,8 +179,6 @@ public class DiceGame : MonoBehaviour
                 // 在這裡處理回合開始的邏輯
                 turnAnim.Play("turnStart");
                 await Task.Delay(1000);
-                round++;
-                Debug.Log("Round " + round + " Start");
                 //雙方同時骰
                 List<int> enemyDiceResult = new List<int>();
                 List<int> playerDiceResult = new List<int>();
@@ -280,16 +287,14 @@ public class DiceGame : MonoBehaviour
                     //敵人使用技能;
                     enemyRerollPending = 0; // 重置重骰計數
                     enemyData.UseSkill();
-                    //TEST重骰
-                    EventCenter.Dispatch(GameEvent.EVENT_ENEMY_REROLL);
                     await Task.Delay(1000);
-                    
+
                     // 等待所有重骰完成
                     while (enemyRerollPending > 0)
                     {
                         await Task.Delay(100);
                     }
-                    
+
                     enemyData.TurnEndBuffDecrease();
                     await Task.Delay(500);
                     ChangeState(TurnState.roundEnd);
@@ -298,20 +303,18 @@ public class DiceGame : MonoBehaviour
                 //enemy特寫擲骰 顯示使用技能
                 break;
             case TurnState.roundEnd:
-                // 在這裡處理回合結束的邏輯
-                Debug.Log("Round " + round + " End");
+                if (gameOver) return;
                 //任一方死亡 結束遊戲
                 if (playerData.IsDead() || enemyData.IsDead())
                 {
+                    gameOver = true;
                     playerData.RemoveAllBuff();
                     await Task.Delay(500);
                     Debug.Log("Game Over");
-                    GameObject winlosePanel = Instantiate(Resources.Load<GameObject>("UI/winLosePanel"), transform);
-                    winlosePanel.GetComponent<WinLoseView>().PlayWinAnimation(enemyData.IsDead(), () =>
-                    {
-                        // 在這裡處理遊戲結束的邏輯
-                        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
-                    });
+                    GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("winLosePanel");
+                    GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
+                    GameDataManager.Gold += enemyData.IsDead() ? enemyData.goldReward : 0;
+                    winlosePanel.GetComponent<WinLoseView>().SetData(enemyData.IsDead(), enemyData.goldReward.ToString());
                 }
                 else
                 {
@@ -364,25 +367,26 @@ public class DiceGame : MonoBehaviour
     // 敵人重新擲骰並再次攻擊
     async void OnEnemyReroll(object[] args)
     {
+        if(gameOver) return;
         Debug.Log("Enemy Reroll Event Triggered");
         enemyRerollPending++; // 開始重骰，增加計數
-        
+
         try
         {
             // 重新擲骰
             List<int> newDiceResult = enemyData.RollDice();
-            
+
             // 播放擲骰動畫
             await enemyView.ShowRollAnimation(newDiceResult);
-            
+
             // 更新技能卡顯示
             List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(newDiceResult);
             enemyView.UpdateSkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
-            
+
             // 再次使用技能
             await Task.Delay(500);
             enemyData.UseSkill();
-            await Task.Delay(1000); // 等待技能執行完畢
+            await Task.Delay(300); // 等待技能執行完畢
         }
         finally
         {
@@ -635,9 +639,21 @@ public class DiceGame : MonoBehaviour
         gameUiView.UpdateBuffs(true, playerData.buffData.ToArray());
         gameUiView.UpdateBuffs(false, enemyData.buffData.ToArray());
     }
-    void RemoveBuffEvent()//buff本身會自動移除
+    async void RestartGame(object[] args)
     {
-
+        playerData.RemoveAllBuff();
+        playerData.currentBlood = playerEnterBlood;
+        await Task.Delay(500);
+        //重置遊戲
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+    void EscapeBattle(object[] args)
+    {
+        //逃離戰鬥
+        Debug.Log("Escape Battle Triggered");
+        GameDataManager.PlayerData.RemoveAllBuff();
+        GameDataManager.CurrentStage = GameDataManager.PreparationRoomStage;//傳回整備室
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
     }
     void UpdateManaDiceEvent(object[] args)
     {

@@ -1,5 +1,7 @@
 public class GameEvent
 {
+    public const string EVENT_RESTART_GAME = "GameEvent_RestartGame";//重新開始遊戲
+    public const string EVENT_ESCAPE_BATTLE = "GameEvent_EscapeBattle";//逃離戰鬥通知
     //按鈕 裝置事件
     public const string EVENT_CLICK_ROLL = "GameEvent_ClickRoll";//刷新骰子
     public const string EVENT_CLICK_TURN_END = "GameEvent_ClickTurnEnd";//結束回合
@@ -37,6 +39,7 @@ public class StateEvent
 }
 public class MapEvent
 {
+    public const string EVENT_COMPLETE_MAP = "MapEvent_CompleteMap"; //完成當前地圖事件
     public const string EVENT_OPEN_NEXT_STAGE_NODE = "MapEvent_OpenNextStageNode"; //開啟關卡節點事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知

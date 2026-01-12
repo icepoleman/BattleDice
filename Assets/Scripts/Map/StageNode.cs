@@ -48,6 +48,8 @@ public class StageNode : MonoBehaviour
     public void OnOpenNextStageNode(object[] param)
     {
         string targetStage = (string)param[0];
+        if (currentState == StageState.Completed)
+            SetState(StageState.Locked);
         if (targetStage != stageID) return;
         Debug.Log("OnOpenNextStageNode called");
         SetState(StageState.Completed);
@@ -61,6 +63,7 @@ public class StageNode : MonoBehaviour
         else
         {
             Debug.Log("已完成所有關卡!");
+            EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
         }
     }
 
@@ -74,6 +77,10 @@ public class StageNode : MonoBehaviour
     {
         // 設定按鈕互動性
         nodeButton.interactable = currentState == StageState.Unlocked;
+        if (stageType == StageType.SavePoint && currentState != StageState.Locked)
+        {
+            nodeButton.interactable = true; //準備室關卡永遠可點
+        }
 
         // 根據狀態顯示對應視覺
         switch (currentState)
@@ -92,7 +99,7 @@ public class StageNode : MonoBehaviour
 
     void OnNodeClick()
     {
-        if (currentState == StageState.Unlocked)
+        if (currentState != StageState.Locked)
         {
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
@@ -107,6 +114,8 @@ public class StageNode : MonoBehaviour
                     break;
                 case StageType.SavePoint:
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
+                    GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
+                    SaveManager.AutoSave();
                     break;
                 case StageType.Item:
                     Debug.Log($"取得道具: {stageID}{stageInfo}");
@@ -128,11 +137,6 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"技能: {stageInfo}");
                     break;
             }
-        }
-        else if (currentState == StageState.Completed)
-        {
-            // 已完成的關卡可以重複挑戰
-
         }
     }
 }

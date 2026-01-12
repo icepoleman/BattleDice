@@ -10,6 +10,7 @@ public class PreparationRoomManager : MonoBehaviour
     }
     void OnBackButtonClick()
     {
+        GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
         SaveManager.AutoSave();
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
     }

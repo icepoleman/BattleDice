@@ -59,11 +59,12 @@ public class EnemyView : CharacterView
         img_character.SetNativeSize();
         PlayAnim("idle");
     }
-    public void BornSkillCards(GameObject cardPrefab, List<ISkillData> skills)
+    public async void BornSkillCards(List<ISkillData> skills)
     {
+        GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>("enemySkillItem");
         foreach (ISkillData skill in skills)
         {
-            GameObject skillCard = Instantiate(cardPrefab, skillBoxs);
+            GameObject skillCard = Instantiate(skillCardPrefab, skillBoxs);
             littleSkillCard skillCardView = skillCard.GetComponent<littleSkillCard>();
             skillCardView.skillID = skill.skillID;
             skillCardView.SetData(skill);
