@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class WinLoseView : MonoBehaviour
     [SerializeField] Button btn_escape;
     [SerializeField] Button btn_restart;
     [SerializeField] Text txt_reward;
-    public void SetData(bool isWin,string rewardText)
+    public void SetData(bool isWin, string rewardText)
     {
         txt_reward.text = isWin ? string.Format(LanguageManager.GetText("T_Gold"), rewardText) : "";
         obj_win.SetActive(isWin);
@@ -20,7 +21,14 @@ public class WinLoseView : MonoBehaviour
 
         btn_check.onClick.AddListener(() =>
         {
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
+            if (!string.IsNullOrEmpty(GameDataManager.FightWinStory))
+            {
+                string tmpStory = GameDataManager.FightWinStory;
+                GameDataManager.FightWinStory = "";
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
+            }
+            else
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
         });
         btn_escape.onClick.AddListener(() =>
         {

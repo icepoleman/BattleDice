@@ -615,7 +615,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8433567006320662150, guid: 85714bb8a6b6fa743a3f8379f3f994df, type: 3}
+  m_Sprite: {fileID: 8795641218432964638, guid: 821145dcd0eafdf4b83eccbcd53befd7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -637,8 +637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 1
-  stageInfo: 1
+  stageType: 0
+  stageInfo: Prologue2_1
   nextStageNodes:
   - {fileID: 9045842649708123170}
 --- !u!114 &1106442588807773508

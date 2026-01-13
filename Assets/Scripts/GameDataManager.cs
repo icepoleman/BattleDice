@@ -14,4 +14,5 @@ public static class GameDataManager
     public static int GearNum { get; set; } = 0;    // 當前齒輪數量(強化素材)
     public static EnemyData TmpEnemyData { get; set; } = new EnemyData();
     public static string TmpAvgChapter { get; set; } = "Chapter1";
+    public static string FightWinStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
 }

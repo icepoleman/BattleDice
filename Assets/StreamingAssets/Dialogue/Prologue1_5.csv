@@ -1,10 +1,10 @@
 Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag
-Prologue1_5,JailerGirl,就是這裡。,normal,Center,,,,,,jail,
+Prologue1_5,JailerGirl,就是這裡。,normal,Center,,,,,,Jail_bg,
 ,,雫轉動一旁火把。,,,,,,,,,
 ,,旁邊牆壁隨著震動打了一個隱藏空間。,,,,,shake,,,,
 ,JailerGirl,跟...跟我進來。,normal,,,,,hide,,,
 ,Hero,想不到有暗門呀...,,,,,,,,,
-,,<進入密室>,,,,,,,,sleep,
+,,<進入密室>,,,,,,,,P_Room_bg,
 ,,隨著燈光亮起，眼前是一個臥室一樣配置。,,,,,,,,,
 ,,幾張床、桌子，中央還有一個營火，顯得格外溫馨。,,,,,,,,,
 ,Hero,這裡是?,,,,,,,,,

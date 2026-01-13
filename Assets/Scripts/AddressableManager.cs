@@ -9,17 +9,17 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 /// Addressables 資源管理器 - 統一管理所有 Addressable 資源載入和釋放
 /// 
 /// 使用範例：
-/// // 載入單個資源
-/// Sprite sprite = await AddressableManager.LoadAssetAsync<Sprite>("enemy_001");
+/// // 載入單個資源（會自動加上基礎路徑）
+/// Sprite sprite = await AddressableManager.LoadAssetAsync<Sprite>("Sprite/enemy_001");
 /// 
 /// // 載入 Label 群組
 /// List<Sprite> sprites = await AddressableManager.LoadLabelAsync<Sprite>("Enemies");
 /// 
 /// // 檢查資源是否已載入
-/// bool loaded = AddressableManager.IsAssetLoaded("enemy_001");
+/// bool loaded = AddressableManager.IsAssetLoaded("Sprite/enemy_001");
 /// 
 /// // 釋放單個資源
-/// AddressableManager.ReleaseAsset("enemy_001");
+/// AddressableManager.ReleaseAsset("Sprite/enemy_001");
 /// 
 /// // 釋放 Label 群組
 /// AddressableManager.ReleaseLabel("Enemies");
@@ -29,6 +29,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 /// </summary>
 public static class AddressableManager
 {
+    // 基礎資源路徑前綴
+    public const string BASE_PATH = "";//"Assets/DiceGame_ab/";
+    
     // 統一的資源快取 - Key: address, Value: (handle, asset, refCount)
     private static Dictionary<string, (AsyncOperationHandle handle, object asset, int refCount)> assetCache 
         = new Dictionary<string, (AsyncOperationHandle, object, int)>();
@@ -38,45 +41,57 @@ public static class AddressableManager
         = new Dictionary<string, (AsyncOperationHandle, List<string>)>();
     
     /// <summary>
+    /// 獲取完整資源路徑
+    /// </summary>
+    /// <param name="relativePath">相對路徑（如 "Sprite/enemy_001"）</param>
+    /// <returns>完整路徑（如 "Assets/DiceGame_ab/Sprite/enemy_001"）</returns>
+    public static string GetFullPath(string relativePath)
+    {
+        return BASE_PATH + relativePath;
+    }
+    
+    /// <summary>
     /// 載入單個資源
     /// </summary>
     /// <typeparam name="T">資源類型</typeparam>
-    /// <param name="address">資源地址</param>
+    /// <param name="address">資源地址（相對路徑）</param>
     /// <returns>載入的資源</returns>
     public static async Task<T> LoadAssetAsync<T>(string address) where T : class
     {
+        string fullAddress = GetFullPath(address);
+        
         // 檢查快取
-        if (assetCache.TryGetValue(address, out var cachedItem))
+        if (assetCache.TryGetValue(fullAddress, out var cachedItem))
         {
             // 增加引用計數
-            assetCache[address] = (cachedItem.handle, cachedItem.asset, cachedItem.refCount + 1);
-            Debug.Log($"[AddressableManager] 從快取獲取資源: {address} (引用計數: {cachedItem.refCount + 1})");
+            assetCache[fullAddress] = (cachedItem.handle, cachedItem.asset, cachedItem.refCount + 1);
+            Debug.Log($"[AddressableManager] 從快取獲取資源: {fullAddress} (引用計數: {cachedItem.refCount + 1})");
             return cachedItem.asset as T;
         }
         
-        Debug.Log($"[AddressableManager] 開始載入資源: {address}");
+        Debug.Log($"[AddressableManager] 開始載入資源: {fullAddress}");
         
         try
         {
-            var handle = Addressables.LoadAssetAsync<T>(address);
+            var handle = Addressables.LoadAssetAsync<T>(fullAddress);
             T asset = await handle.Task;
             
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 // 存入快取，初始引用計數為 1
-                assetCache[address] = (handle, asset, 1);
-                Debug.Log($"[AddressableManager] 資源載入成功: {address}");
+                assetCache[fullAddress] = (handle, asset, 1);
+                Debug.Log($"[AddressableManager] 資源載入成功: {fullAddress}");
                 return asset;
             }
             else
             {
-                Debug.LogError($"[AddressableManager] 資源載入失敗: {address} - {handle.OperationException}");
+                Debug.LogError($"[AddressableManager] 資源載入失敗: {fullAddress} - {handle.OperationException}");
                 return null;
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"[AddressableManager] 載入資源時發生異常: {address} - {e.Message}");
+            Debug.LogError($"[AddressableManager] 載入資源時發生異常: {fullAddress} - {e.Message}");
             return null;
         }
     }
@@ -196,7 +211,8 @@ public static class AddressableManager
     /// <returns>資源，如果未載入返回 null</returns>
     public static T GetLoadedAsset<T>(string address) where T : class
     {
-        if (assetCache.TryGetValue(address, out var cachedItem))
+        string fullAddress = GetFullPath(address);
+        if (assetCache.TryGetValue(fullAddress, out var cachedItem))
         {
             return cachedItem.asset as T;
         }
@@ -236,7 +252,8 @@ public static class AddressableManager
     /// <returns>是否已載入</returns>
     public static bool IsAssetLoaded(string address)
     {
-        return assetCache.ContainsKey(address);
+        string fullAddress = GetFullPath(address);
+        return assetCache.ContainsKey(fullAddress);
     }
     
     /// <summary>
@@ -255,7 +272,8 @@ public static class AddressableManager
     /// <param name="address">資源地址</param>
     public static void ReleaseAsset(string address)
     {
-        if (assetCache.TryGetValue(address, out var cachedItem))
+        string fullAddress = GetFullPath(address);
+        if (assetCache.TryGetValue(fullAddress, out var cachedItem))
         {
             var newRefCount = cachedItem.refCount - 1;
             
@@ -266,14 +284,14 @@ public static class AddressableManager
                 {
                     Addressables.Release(cachedItem.handle);
                 }
-                assetCache.Remove(address);
-                Debug.Log($"[AddressableManager] 已完全釋放資源: {address}");
+                assetCache.Remove(fullAddress);
+                Debug.Log($"[AddressableManager] 已完全釋放資源: {fullAddress}");
             }
             else
             {
                 // 還有其他引用，只減少計數
-                assetCache[address] = (cachedItem.handle, cachedItem.asset, newRefCount);
-                Debug.Log($"[AddressableManager] 減少引用計數: {address} (剩餘: {newRefCount})");
+                assetCache[fullAddress] = (cachedItem.handle, cachedItem.asset, newRefCount);
+                Debug.Log($"[AddressableManager] 減少引用計數: {fullAddress} (剩餘: {newRefCount})");
             }
         }
     }

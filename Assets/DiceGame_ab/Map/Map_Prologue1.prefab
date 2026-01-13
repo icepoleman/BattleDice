@@ -165,8 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 1
-  stageInfo: 1
+  stageType: 0
+  stageInfo: Prologue1_3
+  fightWinStory: 
   nextStageNodes:
   - {fileID: 3763750294119477090}
 --- !u!114 &7157061382932458260
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ScrollRect
   m_Content: {fileID: 7954794392171331593}
   m_Horizontal: 1
-  m_Vertical: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 0
@@ -410,8 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 2
-  stageInfo: 
+  stageType: 0
+  stageInfo: Prologue1_4
+  fightWinStory: 
   nextStageNodes:
   - {fileID: 2674644447118131793}
 --- !u!114 &9043041832009397072
@@ -547,8 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 1
-  stageInfo: 1
+  stageType: 0
+  stageInfo: Prologue1_5
+  fightWinStory: 
   nextStageNodes: []
 --- !u!114 &7842742990286571053
 MonoBehaviour:
@@ -987,6 +990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 2
   stageInfo: 
+  fightWinStory: 
   nextStageNodes:
   - {fileID: 1392224374323184879}
 --- !u!114 &3584711852344115898
@@ -1248,8 +1252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 5
-  stageInfo: 100
+  stageType: 0
+  stageInfo: Prologue1_2
+  fightWinStory: 
   nextStageNodes:
   - {fileID: 3007364967079735081}
 --- !u!114 &2148166395848396133

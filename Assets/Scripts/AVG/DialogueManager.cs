@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
-
     [SerializeField] private string nowChapter = "";
     [SerializeField] private List<DialogueData> lines = new List<DialogueData>();
     [SerializeField] Image img_cg1;
@@ -40,7 +39,7 @@ public class DialogueManager : MonoBehaviour
         // 檢測 CTRL 鍵快轉
         bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
 
-        if (ctrlPressed && !onChoose && nowChapter != "END" && nowChapter != "Battle")
+        if (ctrlPressed && !onChoose && !isOver)
         {
             if (!isFastForwarding)
             {
@@ -118,25 +117,32 @@ public class DialogueManager : MonoBehaviour
         CheckDialogueCmd(pageIndex);
     }
     bool onChoose;
+    bool isOver;
     private void OnNextClick(InputAction.CallbackContext context)
     {
+        if (isOver) return;
         switch (nowChapter)
         {
             case "END":
                 Debug.Log("劇情結束");
+                isOver = true;
                 if (GameDataManager.TestMode)
                     EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
                 else
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
                 return;
-            case "Battle":
+            case "BATTLE":
                 // 在這些章節中不處理下一步
+                isOver = true;
                 chatWindow.HideWindow();
                 Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
                 return;
-            case "Die":
+            case "DIE":
+                isOver = true;
                 Debug.Log("角色死亡，進入結算畫面");
+                GameDataManager.CurrentStage = GameDataManager.PreparationRoomStage;//傳回整備室
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 break;
         }
 

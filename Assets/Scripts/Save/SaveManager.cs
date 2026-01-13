@@ -8,6 +8,7 @@ public class SaveSlotInfo
     public bool isEmpty;            // 是否为空槽位
     public string playerName;       // 玩家名称
     public string currentStage;     // 当前关卡
+    public string preparationRoomStage; // 整备室关卡
     public int currentMap;          // 当前地图
     public System.DateTime saveTime; // 存档时间
     public int gold;                // 金币数量
@@ -102,6 +103,7 @@ public static class SaveManager
                 slotIndex = slotIndex,
                 playerName = saveData.playerName,
                 currentStage = saveData.currentStage,
+                preparationRoomStage = saveData.preparationRoomStage,
                 currentMap = saveData.currentMap,
                 saveTime = saveData.SaveTime,
                 gold = saveData.gold,
@@ -188,6 +190,7 @@ public static class SaveManager
         currentSave.playerData = GameDataManager.PlayerData.ToSaveData();
         currentSave.currentStage = GameDataManager.CurrentStage;
         currentSave.currentMap = GameDataManager.CurrentMap;
+        currentSave.preparationRoomStage = GameDataManager.PreparationRoomStage;
         currentSave.hasSkills = GameDataManager.HasSkills;
         currentSave.gold = GameDataManager.Gold;
         currentSave.gearNum = GameDataManager.GearNum;
@@ -222,6 +225,7 @@ public static class SaveManager
                 GameDataManager.HasSkills = currentSave.hasSkills;
                 GameDataManager.Gold = currentSave.gold;
                 GameDataManager.GearNum = currentSave.gearNum;
+                GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
             }

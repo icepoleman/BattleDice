@@ -27,6 +27,8 @@ public class StageNode : MonoBehaviour
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
     [SerializeField] string stageInfo;       //關卡資訊
+    [Header("打贏後劇情(可選)")]
+    [SerializeField] string fightWinStory;       //完成後劇情(可選) 用完清空
 
     Image stageImage;
     Button nodeButton;
@@ -101,6 +103,7 @@ public class StageNode : MonoBehaviour
     {
         if (currentState != StageState.Locked)
         {
+            GameDataManager.FightWinStory = fightWinStory;
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {

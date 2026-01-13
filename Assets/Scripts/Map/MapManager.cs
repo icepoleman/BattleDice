@@ -62,13 +62,14 @@ public class MapManager : MonoBehaviour
         Debug.Log("完成當前地圖，準備載入下一張地圖");
         GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
-        UnloadMapPrefab();
-        await Task.Delay(500);
-        Destroy(_clearMap);
+        UnloadMapPrefab();    
+        await Task.Delay(100);   
         GameDataManager.CurrentMap += 1;
         GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
         GameDataManager.CurrentStage = "0";
         LoadMapPrefab();
+        await Task.Delay(2000);
+        Destroy(_clearMap);
     }
     void OnRecoverHealth(object[] param)
     {

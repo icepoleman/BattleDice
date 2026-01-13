@@ -14,9 +14,4 @@ public class PreparationRoomManager : MonoBehaviour
         SaveManager.AutoSave();
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
