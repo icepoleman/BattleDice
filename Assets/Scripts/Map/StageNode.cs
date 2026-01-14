@@ -28,12 +28,15 @@ public class StageNode : MonoBehaviour
     [Header("關卡資訊")]
     [SerializeField] string stageInfo;       //關卡資訊
     [Header("打贏後劇情(可選)")]
-    [SerializeField] string fightWinStory;       //完成後劇情(可選) 用完清空
+    [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
 
     Image stageImage;
     Button nodeButton;
     StageState currentState;
     [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
+    
+    // 防連點
+    private bool isProcessing = false;
     void Awake()
     {
         stageID = gameObject.name;
@@ -101,9 +104,14 @@ public class StageNode : MonoBehaviour
 
     void OnNodeClick()
     {
+        // 防連點
+        if (isProcessing) return;
+        
         if (currentState != StageState.Locked)
         {
-            GameDataManager.FightWinStory = fightWinStory;
+            isProcessing = true;
+            
+            GameDataManager.CompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
@@ -118,7 +126,6 @@ public class StageNode : MonoBehaviour
                 case StageType.SavePoint:
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
-                    SaveManager.AutoSave();
                     break;
                 case StageType.Item:
                     Debug.Log($"取得道具: {stageID}{stageInfo}");
@@ -140,6 +147,15 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"技能: {stageInfo}");
                     break;
             }
+            
+            // 自動存檔
+            SaveManager.AutoSave();
+        }
+        if (stageType != StageType.Battle && GameDataManager.CompletedStory != "")
+        {
+            string tmpStory = GameDataManager.CompletedStory;
+            GameDataManager.CompletedStory = "";
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
         }
     }
 }

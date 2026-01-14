@@ -107,7 +107,7 @@ public static class SaveManager
                 currentMap = saveData.currentMap,
                 saveTime = saveData.SaveTime,
                 gold = saveData.gold,
-                gear = saveData.gearNum,
+                gear = saveData.gear,
                 isEmpty = false
             };
         }
@@ -193,7 +193,14 @@ public static class SaveManager
         currentSave.preparationRoomStage = GameDataManager.PreparationRoomStage;
         currentSave.hasSkills = GameDataManager.HasSkills;
         currentSave.gold = GameDataManager.Gold;
-        currentSave.gearNum = GameDataManager.GearNum;
+        currentSave.gear = GameDataManager.Gear;
+        
+        // 存儲升級等級
+        currentSave.powerUpLevel_MaxBlood = GameDataManager.GetPowerUpLevel(PowerUpType.MaxBlood);
+        currentSave.powerUpLevel_DiceCount = GameDataManager.GetPowerUpLevel(PowerUpType.DiceCount);
+        currentSave.powerUpLevel_KeepDiceCount = GameDataManager.GetPowerUpLevel(PowerUpType.KeepDiceCount);
+        currentSave.powerUpLevel_MaxRollCount = GameDataManager.GetPowerUpLevel(PowerUpType.MaxRollCount);
+        
         try
         {
             currentSave.SaveTime = System.DateTime.Now;
@@ -224,8 +231,15 @@ public static class SaveManager
                 GameDataManager.CurrentMap = currentSave.currentMap;
                 GameDataManager.HasSkills = currentSave.hasSkills;
                 GameDataManager.Gold = currentSave.gold;
-                GameDataManager.GearNum = currentSave.gearNum;
+                GameDataManager.Gear = currentSave.gear;
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
+                
+                // 讀取升級等級
+                GameDataManager.SetPowerUpLevel(PowerUpType.MaxBlood, currentSave.powerUpLevel_MaxBlood);
+                GameDataManager.SetPowerUpLevel(PowerUpType.DiceCount, currentSave.powerUpLevel_DiceCount);
+                GameDataManager.SetPowerUpLevel(PowerUpType.KeepDiceCount, currentSave.powerUpLevel_KeepDiceCount);
+                GameDataManager.SetPowerUpLevel(PowerUpType.MaxRollCount, currentSave.powerUpLevel_MaxRollCount);
+                
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
             }

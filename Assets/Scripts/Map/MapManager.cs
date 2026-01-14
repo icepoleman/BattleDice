@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
-        text_gear.text = GameDataManager.GearNum.ToString();
+        text_gear.text = GameDataManager.Gear.ToString();
         btn_backToMenu.onClick.AddListener(() =>
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
@@ -33,8 +33,6 @@ public class MapManager : MonoBehaviour
 
         // Addressables載入地圖prefab
         LoadMapPrefab();
-
-        text_stageName.text = MapConfig.GetStageName(GameDataManager.CurrentMap);
 
         AddEvent();
     }
@@ -94,9 +92,9 @@ public class MapManager : MonoBehaviour
     void OnGetGear(object[] param)
     {
         int gearAmount = (int)param[0];
-        GameDataManager.GearNum += gearAmount;
-        text_gear.text = GameDataManager.GearNum.ToString();
-        Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.GearNum}");
+        GameDataManager.Gear += gearAmount;
+        text_gear.text = GameDataManager.Gear.ToString();
+        Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
         GoNextOpenStage();
     }
     //特殊道具用
@@ -113,6 +111,7 @@ public class MapManager : MonoBehaviour
     // 載入地圖 Prefab
     private async void LoadMapPrefab()
     {
+        text_stageName.text = MapConfig.GetStageName(GameDataManager.CurrentMap);
         string mapPrefabAddress = MapConfig.GetMapAddress(GameDataManager.CurrentMap);
         try
         {

@@ -19,6 +19,9 @@ public class DialogueManager : MonoBehaviour
     private bool isFastForwarding = false;
     private float fastForwardTimer = 0f;
 
+    // 跳過確認彈窗
+    private bool isSkipPanelOpen = false;
+
     private int pageIndex = 0;
     [SerializeField] private ChatWindow chatWindow;
     private ChooseBox chooseBox;
@@ -36,6 +39,15 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        // 檢測 ESC 鍵跳過劇情
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (!isOver && !isSkipPanelOpen)
+            {
+                ShowSkipConfirmPanel();
+            }
+        }
+        
         // 檢測 CTRL 鍵快轉
         bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
 
@@ -330,5 +342,61 @@ public class DialogueManager : MonoBehaviour
             }
         }
         Debug.Log("找不到標籤:" + _tag);
+    }
+    
+    /// <summary>
+    /// 顯示跳過劇情確認彈窗
+    /// </summary>
+    private async void ShowSkipConfirmPanel()
+    {
+        isSkipPanelOpen = true;
+        
+        GameObject panelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ConfirmPanel");
+        if (panelPrefab != null)
+        {
+            GameObject panelObj = Instantiate(panelPrefab, transform);
+            ConfirmPanel confirmPanel = panelObj.GetComponent<ConfirmPanel>();
+            
+            if (confirmPanel != null)
+            {
+                confirmPanel.SetUp(
+                    LanguageManager.GetText("T_Skip_Dialogue_Hint"),
+                    () =>
+                    {
+                        // 確認跳過
+                        Debug.Log("跳過劇情");
+                        isSkipPanelOpen = false;
+                        SkipDialogue();
+                    },
+                    () =>
+                    {
+                        // 取消
+                        isSkipPanelOpen = false;
+                    }
+                );
+            }
+        }
+        else
+        {
+            isSkipPanelOpen = false;
+        }
+    }
+    
+    /// <summary>
+    /// 跳過劇情
+    /// </summary>
+    private void SkipDialogue()
+    {
+        isOver = true;
+        chatWindow.HideWindow();
+        
+        if (GameDataManager.TestMode)
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
+        }
+        else
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+        }
     }
 }

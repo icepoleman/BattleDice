@@ -20,7 +20,13 @@ public class GameSaveData
     }
     public List<ISkillData> hasSkills = new List<ISkillData>();    // 擁有的技能資料
     public int gold;                     // 當前金幣數量
-    public int gearNum;                  // 當前齒輪數量(強化素材)
+    public int gear;                  // 當前齒輪數量(強化素材)
+    
+    // 升級等級存儲
+    public int powerUpLevel_MaxBlood;
+    public int powerUpLevel_DiceCount;
+    public int powerUpLevel_KeepDiceCount;
+    public int powerUpLevel_MaxRollCount;
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度
 }

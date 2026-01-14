@@ -225,14 +225,8 @@ public class PlayerData : BaseCharacterData
     public PlayerData()
     {
         isPlayer = true;
-        maxBlood = 200f;
-        currentBlood = 200f;
         diceSides = new int[] { 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
-        diceCount = 8;
-        keepDiceCount = 2;
-        manaRollerMaxDiceCount = 8;
-        skillIDs = new List<int>() { 1, 2 }; //預設技能
-        maxRollCount = 10; //最大擲骰次數
+        manaRollerMaxDiceCount = 6;
     }
     public void AddPowerDice(int dice)
     {

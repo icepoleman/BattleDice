@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,13 +44,16 @@ public class MenuManager : MonoBehaviour
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "0";//初始整備室
         GameDataManager.CurrentMap = 0;
-        GameDataManager.CurrentStage = testStage.text;
-        GameDataManager.PlayerData.currentBlood = int.Parse(blood.text);
-        GameDataManager.PlayerData.maxBlood = int.Parse(blood.text);
-        GameDataManager.PlayerData.keepDiceCount = int.Parse(freeze.text);
-        GameDataManager.PlayerData.manaRollerMaxDiceCount = int.Parse(maxDiceCount.text);
-        GameDataManager.PlayerData.diceCount = int.Parse(burndiceCount.text);
-        GameDataManager.PlayerData.maxRollCount = int.Parse(rollDiceCount.text);
+        GameDataManager.CurrentStage = "0";
+        GameDataManager.PlayerData.currentBlood = 100;
+        GameDataManager.PlayerData.maxBlood = 100;
+        GameDataManager.Gold = 0;
+        GameDataManager.Gear = 0;
+        GameDataManager.PlayerData.keepDiceCount = 1;
+        GameDataManager.PlayerData.manaRollerMaxDiceCount = 1;
+        GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
+        GameDataManager.PlayerData.diceCount = 3;
+        GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");
         Debug.Log("Start Game Clicked");
     }
