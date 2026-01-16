@@ -40,7 +40,9 @@ public static class SkillFactory
         BuffSeed[] targetBuffs = null,
         int breakDiceCount = 0,
         int[] generateDices = null,
-        string tag = "")
+        string tag = "",
+        int price = 0   
+        )
     {
         return new SkillConfigData
         {
@@ -56,7 +58,8 @@ public static class SkillFactory
             targetBuffs = targetBuffs,
             breakDiceCount = breakDiceCount,
             generateDicesData = generateDices ?? new int[] { },
-            tag = tag
+            tag = tag,
+            price = price
         };
     }
 }

@@ -36,13 +36,12 @@ public struct SkillConfigData
     public int breakDiceCount;       // 玩家破壞骰子數量/怪物是否Combo
     public int[] generateDicesData;  // 生成骰子資料 允許骰子, 最後一個=需要數量
     public string tag;               // 標記技能出處
-
     // 技能需求配置
     public SkillRequirementType requirementType;  // 技能需求類型
-
     // Buff 配置
     public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
     public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
+    public int price;                  // 技能價格（購買或升級用）
 }
 
 public enum SkillType

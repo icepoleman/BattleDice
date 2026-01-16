@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Button btn_backToMenu;
     [SerializeField] Button btn_saveGame;
     [SerializeField] Text text_stageName;
+    [SerializeField] Button btn_changeSkill;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -35,6 +36,11 @@ public class MapManager : MonoBehaviour
         LoadMapPrefab();
 
         AddEvent();
+        btn_changeSkill.onClick.AddListener(async () =>
+        {
+            GameObject changeSkillViewPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ChangeSkillView");
+            Instantiate(changeSkillViewPrefab, transform);
+        });
     }
     void AddEvent()
     {

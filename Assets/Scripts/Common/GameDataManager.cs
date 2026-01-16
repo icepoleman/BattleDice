@@ -6,7 +6,7 @@ public static class GameDataManager
     public static bool TestMode = false; // 測試模式開關
     public static string PlayerName = "阿祥";
     public static PlayerData PlayerData { get; set; } = new PlayerData();    // 玩家資料
-    public static List<ISkillData> HasSkills { get; set; } = new List<ISkillData>();    // 擁有的技能資料
+    public static List<int> HasSkillIDs { get; set; } = new List<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static string CurrentStage { get; set; }    // 當前關卡資料
     public static string PreparationRoomStage { get; set; } = "PreparationRoom"; //打輸回到的準備室關卡

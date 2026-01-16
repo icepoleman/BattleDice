@@ -50,8 +50,8 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gold = 0;
         GameDataManager.Gear = 0;
         GameDataManager.PlayerData.keepDiceCount = 1;
-        GameDataManager.PlayerData.manaRollerMaxDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
+        GameDataManager.HasSkillIDs = new List<int>() { 1, 2, 3,4,5,6,7,8,9,10,11,12}; //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");

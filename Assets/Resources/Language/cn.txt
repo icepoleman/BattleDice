@@ -20,3 +20,8 @@ T_PowerUp_MaxRollCount|重骰次數
 T_PowerUp_MaxRollCount_Desc|增加每回合的重骰次數
 T_PowerUp_MaxLevel|已滿級
 T_Skip_Dialogue_Hint|是否跳過劇情?
+T_ChangeSkill_SkillMax|技能已滿（最多 {0} 個）
+T_ChangeSkill_Limit|請至少選擇一個技能
+T_Shop_AlreadyOwned|已擁有此技能
+T_Shop_NotEnoughGold|金幣不足
+T_Shop_ConfirmBuy|確定購買 {0}？\n價格：{1} 金幣

@@ -47,7 +47,7 @@ public class DialogueManager : MonoBehaviour
                 ShowSkipConfirmPanel();
             }
         }
-        
+
         // 檢測 CTRL 鍵快轉
         bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
 
@@ -343,24 +343,14 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("找不到標籤:" + _tag);
     }
-    
+
     /// <summary>
     /// 顯示跳過劇情確認彈窗
     /// </summary>
     private async void ShowSkipConfirmPanel()
     {
         isSkipPanelOpen = true;
-        
-        GameObject panelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ConfirmPanel");
-        if (panelPrefab != null)
-        {
-            GameObject panelObj = Instantiate(panelPrefab, transform);
-            ConfirmPanel confirmPanel = panelObj.GetComponent<ConfirmPanel>();
-            
-            if (confirmPanel != null)
-            {
-                confirmPanel.SetUp(
-                    LanguageManager.GetText("T_Skip_Dialogue_Hint"),
+        await CommonUIManager.ShowConfirmPanel(LanguageManager.GetText("T_Skip_Dialogue_Hint"),
                     () =>
                     {
                         // 確認跳過
@@ -372,16 +362,9 @@ public class DialogueManager : MonoBehaviour
                     {
                         // 取消
                         isSkipPanelOpen = false;
-                    }
-                );
-            }
-        }
-        else
-        {
-            isSkipPanelOpen = false;
-        }
+                    });
     }
-    
+
     /// <summary>
     /// 跳過劇情
     /// </summary>
@@ -389,7 +372,7 @@ public class DialogueManager : MonoBehaviour
     {
         isOver = true;
         chatWindow.HideWindow();
-        
+
         if (GameDataManager.TestMode)
         {
             EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);

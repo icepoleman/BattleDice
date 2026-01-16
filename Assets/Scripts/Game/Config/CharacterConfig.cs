@@ -226,7 +226,7 @@ public class PlayerData : BaseCharacterData
     {
         isPlayer = true;
         diceSides = new int[] { 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
-        manaRollerMaxDiceCount = 6;
+        manaRollerMaxDiceCount = 8;
     }
     public void AddPowerDice(int dice)
     {

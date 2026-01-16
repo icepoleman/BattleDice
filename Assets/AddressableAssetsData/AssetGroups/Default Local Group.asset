@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 53f01c95f6a51d747804bf4a0bebf2e3
   m_SerializeEntries:
+  - m_GUID: 0fe8cfcfe44e2124d8349dd0e807c23f
+    m_Address: ChangeSkillView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 249ea6b73a56ecb4b87c83362755d82d
     m_Address: Jail_bg
     m_ReadOnly: 0
@@ -40,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b78be9c427e895f4cbe956c7ba77ef48
+    m_Address: HintBubble
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb56b9466ce83cb4ab4a61d0c5b6ed37
     m_Address: ClearMapPanel
     m_ReadOnly: 0
@@ -47,6 +57,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf4d29fbfb794c645a899b1169e26538
     m_Address: enemySkillItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d921fa49c0823044faaefcf4a8fa5b1c
+    m_Address: ShopPanel
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

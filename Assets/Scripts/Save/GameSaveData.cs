@@ -18,7 +18,7 @@ public class GameSaveData
         get => string.IsNullOrEmpty(saveTimeString) ? System.DateTime.MinValue : System.DateTime.Parse(saveTimeString);
         set => saveTimeString = value.ToString("yyyy/MM/dd HH:mm:ss");
     }
-    public List<ISkillData> hasSkills = new List<ISkillData>();    // 擁有的技能資料
+    public List<int> hasSkillIDs = new List<int>();    // 擁有的技能ID
     public int gold;                     // 當前金幣數量
     public int gear;                  // 當前齒輪數量(強化素材)
     

@@ -191,7 +191,7 @@ public class CSVReader
     }
 
     // 載入技能資料
-    // CSV 欄位: skillID, skillName, skillType, requirementType, needDices, skillValue, conditionText, effectText, selfBuffs, targetBuffs, breakDiceCount, generateDices, tag
+    // CSV 欄位: skillID, skillName, skillType, requirementType, needDices, skillValue, conditionText, effectText, selfBuffs, targetBuffs, breakDiceCount, generateDices, tag,price
     // needDices 格式 (用 | 分隔):
     //   SpecificDices: 特定骰子 (1|2|3)
     //   SameDices: 需要數量 (2)
@@ -234,7 +234,8 @@ public class CSVReader
                 targetBuffs: v.Length > 9 ? ParseBuffSeeds(v[9]) : null,
                 breakDiceCount: v.Length > 10 && !string.IsNullOrWhiteSpace(v[10]) ? int.Parse(v[10]) : 0,
                 generateDices: v.Length > 11 ? ParseIntArrayStatic(v[11]) : null,
-                tag: v.Length > 12 ? v[12] : ""
+                tag: v.Length > 12 ? v[12] : "",
+                price: v.Length > 13 && !string.IsNullOrWhiteSpace(v[13]) ? int.Parse(v[13]) : 0
             );
 
             skills[data.skillID] = data;

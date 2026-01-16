@@ -9,6 +9,7 @@ public class PowerUpPanel : MonoBehaviour
     [SerializeField] PowerUpItemView item_DiceCount;
     [SerializeField] PowerUpItemView item_KeepDiceCount;
     [SerializeField] PowerUpItemView item_MaxRollCount;
+    [SerializeField] Button btn_close;
     
     [Header("玩家資源顯示")]
     [SerializeField] Text txt_gearCount;
@@ -19,6 +20,10 @@ public class PowerUpPanel : MonoBehaviour
     {
         InitializeItems();
         UpdateGearDisplay();
+        btn_close.onClick.AddListener(() => 
+        {
+            Destroy(gameObject);
+        });
     }
     
     /// <summary>

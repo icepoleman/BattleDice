@@ -2,11 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PreparationRoomManager : MonoBehaviour
-{    
+{
     [SerializeField] Button btn_back;
+    [SerializeField] Button btn_powerUp;
+    [SerializeField] GameObject powerUpPanelPrefab;
+    [SerializeField] Button btn_shop;
     void Start()
     {
         btn_back.onClick.AddListener(OnBackButtonClick);
+        btn_powerUp.onClick.AddListener(() =>
+        {
+            Instantiate(powerUpPanelPrefab, transform);
+        });
+        btn_shop.onClick.AddListener(async () =>
+        {
+            GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ShopPanel");
+            GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
+            ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
+            shopPanel.SetUp("MajoShop");
+        });
     }
     void OnBackButtonClick()
     {

@@ -89,7 +89,7 @@ public static class PowerUpDatabase
                     {
                         new PowerUpLevelData(5, 1),    // Lv1: 花費5齒輪，+1骰子
                         new PowerUpLevelData(10, 1),   // Lv2: 花費10齒輪，+1骰子
-                        new PowerUpLevelData(20, 1),   // Lv3: 花費20齒輪，+1骰子
+                        new PowerUpLevelData(15, 1),   // Lv3: 花費15齒輪，+1骰子
                     }
                 }
             },
@@ -101,12 +101,13 @@ public static class PowerUpDatabase
                     type = PowerUpType.KeepDiceCount,
                     displayName = "T_PowerUp_KeepDiceCount",
                     description = "T_PowerUp_KeepDiceCount_Desc",
-                    maxLevel = 3,
+                    maxLevel = 4,
                     levels = new PowerUpLevelData[]
                     {
-                        new PowerUpLevelData(3, 1),    // Lv1: 花費3齒輪，+1保留
-                        new PowerUpLevelData(6, 1),    // Lv2: 花費6齒輪，+1保留
-                        new PowerUpLevelData(10, 1),   // Lv3: 花費10齒輪，+1保留
+                        new PowerUpLevelData(2, 1),    // Lv1: 花費2齒輪，+1保留
+                        new PowerUpLevelData(4, 1),    // Lv2: 花費4齒輪，+1保留
+                        new PowerUpLevelData(6, 1),   // Lv3: 花費6齒輪，+1保留
+                        new PowerUpLevelData(8, 1),   // Lv4: 花費8齒輪，+1保留
                     }
                 }
             },
@@ -118,12 +119,13 @@ public static class PowerUpDatabase
                     type = PowerUpType.MaxRollCount,
                     displayName = "T_PowerUp_MaxRollCount",
                     description = "T_PowerUp_MaxRollCount_Desc",
-                    maxLevel = 3,
+                    maxLevel = 4,
                     levels = new PowerUpLevelData[]
                     {
                         new PowerUpLevelData(4, 1),    // Lv1: 花費4齒輪，+1次重骰
                         new PowerUpLevelData(8, 1),    // Lv2: 花費8齒輪，+1次重骰
-                        new PowerUpLevelData(15, 1),   // Lv3: 花費15齒輪，+1次重骰
+                        new PowerUpLevelData(12, 1),   // Lv3: 花費12齒輪，+1次重骰
+                        new PowerUpLevelData(16, 1),   // Lv4: 花費16齒輪，+1次重骰
                     }
                 }
             }
