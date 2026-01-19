@@ -33,6 +33,7 @@ public struct SkillConfigData
     // DiceSum: [0]=需要總和
     // SpecificDicesWithRepeat: 允許骰子, 最後一個=需要數量
     // ConsecutiveDices: [0]=需要連續數量
+    public int needDiceNum;          // 需要的骰子數量 (方便判斷)
     public int breakDiceCount;       // 玩家破壞骰子數量/怪物是否Combo
     public int[] generateDicesData;  // 生成骰子資料 允許骰子, 最後一個=需要數量
     public string tag;               // 標記技能出處
@@ -42,6 +43,26 @@ public struct SkillConfigData
     public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
     public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
     public int price;                  // 技能價格（購買或升級用）
+    
+    /// <summary>
+    /// 計算需要的骰子數量 (根據 requirementType 和 needDicesData)
+    /// </summary>
+    public int GetNeedDiceNum()
+    {
+        if (needDiceNum > 0) return needDiceNum; // 如果已設定則直接返回
+        if (needDicesData == null || needDicesData.Length == 0) return 0;
+        
+        return requirementType switch
+        {
+            SkillRequirementType.SpecificDices => needDicesData.Length,
+            SkillRequirementType.SameDices => needDicesData[0],
+            SkillRequirementType.SpecificDicesWithRepeat => needDicesData[needDicesData.Length - 1],
+            SkillRequirementType.ConsecutiveDices => needDicesData[0],
+            SkillRequirementType.AnyDices => needDicesData[0],
+            SkillRequirementType.DiceSum => 0, // DiceSum 無法確定數量
+            _ => 0
+        };
+    }
 }
 
 public enum SkillType
@@ -68,6 +89,7 @@ public interface ISkillData
     string conditionText { get; set; }// 技能條件描述
     string effectText { get; set; } // 技能效果描述
     int[] needDicesData { get; set; } // 需求骰子資料
+    int needDiceNum { get; } // 需要的骰子數量
     int breakDiceCount { get; set; } // 破壞骰子數量
     int skillValue { get; set; }
     List<BuffSeed> selfBuffs { get; set; }
@@ -104,9 +126,29 @@ public class BaseSkill : ISkillData
     public List<BuffSeed> targetBuffs { get; set; } = new List<BuffSeed>();
     public List<int> diceBox { get; set; } = new List<int>();
     public int[] needDicesData { get; set; } = new int[] { };
+    
+    // 需要的骰子數量
+    public int needDiceNum => GetNeedDiceNumInternal();
 
     // 技能需求配置
     protected SkillRequirementType requirementType = SkillRequirementType.SpecificDices;
+    
+    // 計算需要的骰子數量
+    private int GetNeedDiceNumInternal()
+    {
+        if (needDicesData == null || needDicesData.Length == 0) return 0;
+        
+        return requirementType switch
+        {
+            SkillRequirementType.SpecificDices => needDicesData.Length,
+            SkillRequirementType.SameDices => needDicesData[0],
+            SkillRequirementType.SpecificDicesWithRepeat => needDicesData[needDicesData.Length - 1],
+            SkillRequirementType.ConsecutiveDices => needDicesData[0],
+            SkillRequirementType.AnyDices => needDicesData[0],
+            SkillRequirementType.DiceSum => 0,
+            _ => 0
+        };
+    }
 
     // 預設建構子
     public BaseSkill() { }

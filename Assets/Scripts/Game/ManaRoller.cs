@@ -47,6 +47,7 @@ public class ManaRoller : MonoBehaviour
         BtnMode(manaRollerMode.Off);
         isOpen = true;
     }
+    
     //獲取初始骰子
     public void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
@@ -148,23 +149,89 @@ public class ManaRoller : MonoBehaviour
     {
         return freezeCount < maxFreezeCount;
     }
+    
+    /// <summary>
+    /// 取得所有已選取的骰子
+    /// </summary>
+    public List<ManaRollerDice> GetSelectedDices()
+    {
+        List<ManaRollerDice> selected = new List<ManaRollerDice>();
+        foreach (var dice in manaDiceList)
+        {
+            if (dice.IsSelected)
+            {
+                selected.Add(dice);
+            }
+        }
+        return selected;
+    }
+    
+    /// <summary>
+    /// 取得已選取骰子的點數列表
+    /// </summary>
+    public List<int> GetSelectedDiceValues()
+    {
+        List<int> values = new List<int>();
+        foreach (var dice in manaDiceList)
+        {
+            if (dice.IsSelected)
+            {
+                values.Add(dice.SideNum);
+            }
+        }
+        return values;
+    }
+    
+    /// <summary>
+    /// 消耗已選取的骰子
+    /// </summary>
+    public void ConsumeSelectedDices()
+    {
+        List<ManaRollerDice> toRemove = new List<ManaRollerDice>();
+        foreach (var dice in manaDiceList)
+        {
+            if (dice.IsSelected)
+            {
+                if (dice.IsFrozen())
+                {
+                    freezeCount--;
+                }
+                toRemove.Add(dice);
+            }
+        }
+        
+        foreach (var dice in toRemove)
+        {
+            manaDiceList.Remove(dice);
+            Destroy(dice.gameObject);
+        }
+        
+        text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
+    }
+    
+    /// <summary>
+    /// 清除所有骰子的選取狀態
+    /// </summary>
+    public void ClearAllSelections()
+    {
+        foreach (var dice in manaDiceList)
+        {
+            dice.SetSelected(false);
+        }
+    }
+    
     public void burnRollDice(int _sideNum)
     {
         GameObject dice = Instantiate(dicePrefab, rollDiceParent);
         ManaRollerDice diceScript = dice.GetComponent<ManaRollerDice>();
         diceScript.SetDice(_sideNum, 
-            // 左鍵點擊 - 使用骰子
-            (sideNum) =>
+            // 左鍵點擊 - 切換選取狀態
+            (clickedDice) =>
             {
                 if (currentMode == manaRollerMode.Off) return;
-                if (diceScript.IsFrozen())
-                {
-                    freezeCount--;
-                    text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
-                }
-                Destroy(dice);
-                manaDiceList.Remove(diceScript);
-                EventCenter.Dispatch(GameEvent.EVENT_ADD_POWER_DICE, sideNum);
+                clickedDice.ToggleSelect();
+                // 通知選取狀態變更
+                EventCenter.Dispatch(GameEvent.EVENT_DICE_SELECTION_CHANGED, GetSelectedDiceValues());
             },
             // 右鍵點擊 - 凍結/解凍骰子
             (diceObj) =>

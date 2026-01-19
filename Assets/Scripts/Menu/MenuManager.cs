@@ -9,14 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_newGame;
     [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
-    //測試用UI元件
-    [SerializeField] TMP_InputField testMap;
-    [SerializeField] TMP_InputField testStage;
-    [SerializeField] TMP_InputField blood;
-    [SerializeField] TMP_InputField freeze;
-    [SerializeField] TMP_InputField maxDiceCount;
-    [SerializeField] TMP_InputField burndiceCount;
-    [SerializeField] TMP_InputField rollDiceCount;
+
     void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
@@ -51,7 +44,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gear = 0;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
-        GameDataManager.HasSkillIDs = new List<int>() { 1, 2, 3,4,5,6,7,8,9,10,11,12}; //預設擁有技能ID
+        GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");

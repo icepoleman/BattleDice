@@ -45,10 +45,6 @@ public class DiceGame : MonoBehaviour
     [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
-
-    float playerPowerChargeTime = 3f;//玩家能量骰子充能時間
-
-
     void Start()
     {
         if (isOpen) return;
@@ -125,11 +121,10 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
-        EventCenter.AddListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
+        EventCenter.AddListener(GameEvent.EVENT_DICE_SELECTION_CHANGED, OnDiceSelectionChanged);
         EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
         EventCenter.AddListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);//攻擊角色
-        EventCenter.AddListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);//玩家發動技能指令
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);//選取技能
         EventCenter.AddListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);//新增buff
         EventCenter.AddListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
@@ -148,12 +143,11 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
-        EventCenter.RemoveListener(GameEvent.EVENT_ADD_POWER_DICE, AddPowerDiceEvent);
+        EventCenter.RemoveListener(GameEvent.EVENT_DICE_SELECTION_CHANGED, OnDiceSelectionChanged);
         EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
 
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, SkillCardClick);
         EventCenter.RemoveListener(GameEvent.EVENT_ATTACK_CHARACTER, OnAttackCharacter);
-        EventCenter.RemoveListener(GameEvent.EVENT_PLAYER_USE_SKILL, OnPlayerUseSkill);
         EventCenter.RemoveListener(GameEvent.EVENT_ADD_BUFF, AddBuffEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_BUFF, UpdateBuffUIEvent);
         EventCenter.RemoveListener(GameEvent.EVENT_UPDATE_MANA_DICE, UpdateManaDiceEvent);
@@ -393,43 +387,66 @@ public class DiceGame : MonoBehaviour
             enemyRerollPending--; // 完成重骰，減少計數
         }
     }
-    bool onPlayerPowerCharge = false;
-    //玩家選擇使用技能需要骰子
-    void AddPowerDiceEvent(object[] args)
+    
+    /// <summary>
+    /// 骰子選取狀態變更 - 當選取數量達到技能需求時自動嘗試使用技能
+    /// </summary>
+    void OnDiceSelectionChanged(object[] args)
     {
-        BurnDiceTrail();
-        int sideNum = (int)args[0];
-        playerView.BurnDice(sideNum);
-        if (manaRoller.GetCurrentMode() != manaRollerMode.UseDice)
+        if (currentState != TurnState.playerTurn) return;
+        if (playerData.wantUseSkill == null) return;
+        
+        List<int> selectedDices = args[0] as List<int>;
+        if (selectedDices == null) return;
+        
+        int needDiceNum = playerData.wantUseSkill.needDiceNum;
+        if (needDiceNum <= 0) return; // 無法確定需求數量的技能不自動觸發
+        
+        // 當選取數量達到需求時，嘗試使用技能
+        if (selectedDices.Count >= needDiceNum)
         {
-            autoUseSkillDelay = playerPowerChargeTime;
+            TryUseSkillWithSelectedDices(selectedDices);
         }
-        onPlayerPowerCharge = true;
-        playerView.PlayAnim("charge");
-        manaRoller.BtnMode(manaRollerMode.UseDice);
-
-        playerData.AddPowerDice(sideNum);//一定要放最後面
     }
-    float autoUseSkillDelay = 0f;
-    void OnPlayerUseSkill(object[] args)
+    
+    /// <summary>
+    /// 嘗試使用技能 - 驗證條件並執行
+    /// </summary>
+    void TryUseSkillWithSelectedDices(List<int> selectedDices)
     {
-        onPlayerPowerCharge = false;
-        autoUseSkillDelay = 100f;
-        playerView.UpdateCD(0f);
-        Debug.Log(playerData.wantUseSkill.diceBox);
+        // 清空技能的 diceBox 並加入選取的骰子
+        playerData.wantUseSkill.diceBox.Clear();
+        foreach (int sideNum in selectedDices)
+        {
+            playerData.wantUseSkill.AddDiceData(sideNum);
+        }
+        
+        // 檢查技能條件是否滿足
         if (playerData.wantUseSkill.canUseSkill())
         {
+            // 條件滿足 - 消耗骰子並使用技能
+            foreach (int sideNum in selectedDices)
+            {
+                playerView.BurnDice(sideNum);
+            }
+            manaRoller.ConsumeSelectedDices();
+            
+            BurnDiceTrail();
+            manaRoller.BtnMode(manaRollerMode.UseDice);
+            playerView.PlayAnim("charge");
+            
+            // 發動技能
             StartCoroutine(PlayerFight());
         }
         else
         {
+            // 條件不滿足 - 清除選取狀態
             playerData.wantUseSkill.diceBox.Clear();
-            playerView.PlayAnim("fail");
-            Debug.Log("Skill cannot be used yet.");
-            manaRoller.BtnMode(manaRollerMode.Idle);
-            playerView.ClearDiceBox();
+            manaRoller.ClearAllSelections();
+            Debug.Log("技能條件不符，取消選取");
         }
     }
+    
     IEnumerator PlayerFight()
     {
         manaRoller.BtnMode(manaRollerMode.Off);
@@ -440,21 +457,9 @@ public class DiceGame : MonoBehaviour
         playerView.PlayAnim("fight");
         manaRoller.BtnMode(manaRollerMode.Idle);
         playerView.ClearDiceBox();
-    }
-    private void Update()
-    {
-        if (onPlayerPowerCharge)
-        {
-            if (autoUseSkillDelay > 0f)
-            {
-                autoUseSkillDelay -= Time.deltaTime;
-                playerView.UpdateCD(autoUseSkillDelay / playerPowerChargeTime);
-                if (autoUseSkillDelay <= 0f)
-                {
-                    OnPlayerUseSkill(null);
-                }
-            }
-        }
+        
+        // 清空技能的 diceBox
+        playerData.wantUseSkill.diceBox.Clear();
     }
 
     void RollBtnClick(object[] args)

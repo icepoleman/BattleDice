@@ -227,15 +227,15 @@ public class PlayerData : BaseCharacterData
         isPlayer = true;
         diceSides = new int[] { 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
         manaRollerMaxDiceCount = 8;
-    }
-    public void AddPowerDice(int dice)
-    {
-        wantUseSkill.diceBox.Add(dice);
-        //達成條件直接使用技能
-        if (wantUseSkill.canUseSkill())
-        {
-            EventCenter.Dispatch(GameEvent.EVENT_PLAYER_USE_SKILL);
-        }
+
+        //test用
+        skillIDs = new List<int> { 1,2,4 };
+        diceCount = 8;
+        maxRollCount = 3;
+        maxBlood = 100f;
+        currentBlood = 100f;
+        keepDiceCount = 5;
+
     }
     public override void UseSkill()
     {
