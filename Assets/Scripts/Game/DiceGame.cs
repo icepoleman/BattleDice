@@ -119,7 +119,6 @@ public class DiceGame : MonoBehaviour
     {
         EventCenter.AddListener(GameEvent.EVENT_RESTART_GAME, RestartGame);
         EventCenter.AddListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
-        EventCenter.AddListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.AddListener(GameEvent.EVENT_DICE_SELECTION_CHANGED, OnDiceSelectionChanged);
         EventCenter.AddListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
@@ -141,7 +140,6 @@ public class DiceGame : MonoBehaviour
     {
         EventCenter.RemoveListener(GameEvent.EVENT_RESTART_GAME, RestartGame);
         EventCenter.RemoveListener(GameEvent.EVENT_ESCAPE_BATTLE, EscapeBattle);
-        EventCenter.RemoveListener(GameEvent.EVENT_CLICK_ROLL, RollBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_CLICK_TURN_END, TurnEndBtnClick);
         EventCenter.RemoveListener(GameEvent.EVENT_DICE_SELECTION_CHANGED, OnDiceSelectionChanged);
         EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_CHOOSE_SKILL, ClearChooseSkill);
@@ -281,7 +279,7 @@ public class DiceGame : MonoBehaviour
                     //敵人使用技能;
                     enemyRerollPending = 0; // 重置重骰計數
                     enemyData.UseSkill();
-                    await Task.Delay(1000);
+                    await Task.Delay(300);
 
                     // 等待所有重骰完成
                     while (enemyRerollPending > 0)
@@ -290,7 +288,7 @@ public class DiceGame : MonoBehaviour
                     }
 
                     enemyData.TurnEndBuffDecrease();
-                    await Task.Delay(500);
+                    await Task.Delay(200);
                     ChangeState(TurnState.roundEnd);
                 }
 
@@ -460,13 +458,6 @@ public class DiceGame : MonoBehaviour
         
         // 清空技能的 diceBox
         playerData.wantUseSkill.diceBox.Clear();
-    }
-
-    void RollBtnClick(object[] args)
-    {
-        if (currentState != TurnState.playerTurn) return;
-        Debug.Log("Roll button clicked");
-        manaRoller.RollDices();
     }
     void TurnEndBtnClick(object[] args)
     {

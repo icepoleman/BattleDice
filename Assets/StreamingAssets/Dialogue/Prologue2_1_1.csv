@@ -1,0 +1,10 @@
+Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag
+Prologue2_1,Hero,取得回血技能,,,,,,,,Jail_bg,
+,Hero,嘿！嘿！喔！,,,,,,,,,
+,JailerGirl,(嚇),scare,Center,,,,,,,
+,,雫一臉惶恐的看著我。,,,,,,,,,
+,Hero,一起來嘛！儀式感也是很重要的。,,,,,,,,,
+,Hero,再來一次！嘿！嘿！喔！,,,,,,,,,
+,,雫貌似下定了決心。,,,,,,,,,
+,JailerGirl,嘿...嘿...喔...,shy,,,,,,,,
+END,,,,,,,,,,,

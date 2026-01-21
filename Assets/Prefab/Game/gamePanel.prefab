@@ -2874,7 +2874,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!1 &4270273500095354848
 GameObject:
   m_ObjectHideFlags: 0
@@ -3905,7 +3905,7 @@ GameObject:
   - component: {fileID: 1909547437404231141}
   - component: {fileID: 1530402220731705073}
   m_Layer: 5
-  m_Name: img_freeze
+  m_Name: btn_freeze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4220,6 +4220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8421599294296939826}
   - component: {fileID: 3104400152734402750}
+  - component: {fileID: 8809421103225785924}
   m_Layer: 5
   m_Name: gamePanel
   m_TagString: Untagged
@@ -4265,12 +4266,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6cdb6dcf690d04c9ea765a77a99329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
-  gameUiView: {fileID: 1543579391281654730}
   powerDiceBurnPos: {fileID: 5395434927294716512}
   diceTrailPrefab: {fileID: 380725468175892928, guid: 43fef7b2e3e477b4599375ba3a69f9b2, type: 3}
   littleSkillCardPrefab: {fileID: 6743629953021380574, guid: bf4d29fbfb794c645a899b1169e26538, type: 3}
   turnAnim: {fileID: 7797454299572149862}
   buffBubblePrefab: {fileID: 8497562396575408626, guid: 88a66d8d62969c24ea3edcd73a2b5cd5, type: 3}
+--- !u!114 &8809421103225785924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6428730135399880518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8734cbc455c28cf41990d6da104c2246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameUiView
+  slider_playerBlood: {fileID: 7242090942771825023}
+  text_playerBlood: {fileID: 1619983199468386499}
+  slider_enemyBlood: {fileID: 6089895837387643446}
+  text_enemyBlood: {fileID: 6016124735337233914}
+  trans_playerBuffParent: {fileID: 7169222386088436362}
+  trans_enemyBuffParent: {fileID: 6407399610903878069}
+  text_playerDiceCount: {fileID: 5996805577400588248}
+  text_enemyDiceCount: {fileID: 6834783326987722360}
+  text_playerName: {fileID: 8643029598836826615}
+  text_enemyName: {fileID: 2933343943428521750}
 --- !u!1 &6459597461238539124
 GameObject:
   m_ObjectHideFlags: 0
@@ -5526,7 +5548,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2143563306270078178}
-  - component: {fileID: 1543579391281654730}
   m_Layer: 5
   m_Name: allCharacterData
   m_TagString: Untagged
@@ -5555,28 +5576,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1543579391281654730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693174332283751685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8734cbc455c28cf41990d6da104c2246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameUiView
-  slider_playerBlood: {fileID: 7242090942771825023}
-  text_playerBlood: {fileID: 1619983199468386499}
-  slider_enemyBlood: {fileID: 6089895837387643446}
-  text_enemyBlood: {fileID: 6016124735337233914}
-  trans_playerBuffParent: {fileID: 7169222386088436362}
-  trans_enemyBuffParent: {fileID: 6407399610903878069}
-  text_playerDiceCount: {fileID: 5996805577400588248}
-  text_enemyDiceCount: {fileID: 6834783326987722360}
-  text_playerName: {fileID: 8643029598836826615}
-  text_enemyName: {fileID: 2933343943428521750}
 --- !u!1 &8995521699564663063
 GameObject:
   m_ObjectHideFlags: 0

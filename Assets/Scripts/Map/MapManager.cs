@@ -49,6 +49,7 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
         EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
+        EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
     }
     void OnDestroy()
     {
@@ -57,6 +58,7 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
+        EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
 
         // 卸載 Addressables 資源
         UnloadMapPrefab();
@@ -71,6 +73,7 @@ public class MapManager : MonoBehaviour
         GameDataManager.CurrentMap += 1;
         GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
         GameDataManager.CurrentStage = "0";
+        GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;//回滿血
         LoadMapPrefab();
         await Task.Delay(2000);
         Destroy(_clearMap);
@@ -102,6 +105,16 @@ public class MapManager : MonoBehaviour
         text_gear.text = GameDataManager.Gear.ToString();
         Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
         GoNextOpenStage();
+    }
+    async void OnGetSkill(object[] param)
+    {
+        int skillID = (int)param[0];
+        if (!GameDataManager.HasSkillIDs.Contains(skillID))
+        {
+            GameDataManager.HasSkillIDs.Add(skillID);
+            await CommonUIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
+            Debug.Log($"獲得技能ID: {skillID}");
+        }
     }
     //特殊道具用
     void OnGetItem(object[] param)

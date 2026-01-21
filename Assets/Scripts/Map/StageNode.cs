@@ -27,14 +27,16 @@ public class StageNode : MonoBehaviour
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
     [SerializeField] string stageInfo;       //關卡資訊
-    [Header("打贏後劇情(可選)")]
+    [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
+    [Header("完成後送技能(可選)")]
+    [SerializeField] int completedSkill;  //要彈窗
 
     Image stageImage;
     Button nodeButton;
     StageState currentState;
     [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
-    
+
     // 防連點
     private bool isProcessing = false;
     void Awake()
@@ -97,6 +99,13 @@ public class StageNode : MonoBehaviour
                 stageImage.color = Color.white;
                 break;
             case StageState.Completed:
+                if (completedSkill != 0 && GameDataManager.CompletedStory == "")
+                {
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, completedSkill); //取得技能
+                    completedSkill = 0; //只給一次
+                }
+                // 自動存檔
+                SaveManager.AutoSave();
                 stageImage.color = Color.green;
                 break;
         }
@@ -106,11 +115,11 @@ public class StageNode : MonoBehaviour
     {
         // 防連點
         if (isProcessing) return;
-        
+
         if (currentState != StageState.Locked)
         {
             isProcessing = true;
-            
+
             GameDataManager.CompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
@@ -147,9 +156,6 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"技能: {stageInfo}");
                     break;
             }
-            
-            // 自動存檔
-            SaveManager.AutoSave();
         }
         if (stageType != StageType.Battle && GameDataManager.CompletedStory != "")
         {

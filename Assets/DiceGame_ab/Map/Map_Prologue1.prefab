@@ -168,6 +168,7 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_3
   completedStory: 
+  completedSkill: 0
   nextStageNodes:
   - {fileID: 3763750294119477090}
 --- !u!114 &7157061382932458260
@@ -336,7 +337,7 @@ GameObject:
   - component: {fileID: 3763750294119477090}
   - component: {fileID: 9043041832009397072}
   m_Layer: 5
-  m_Name: 4
+  m_Name: gear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,8 +413,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 7
-  stageInfo: 100
+  stageInfo: 2
   completedStory: Prologue1_4
+  completedSkill: 0
   nextStageNodes:
   - {fileID: 2674644447118131793}
 --- !u!114 &9043041832009397072
@@ -552,6 +554,7 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_5
   completedStory: 
+  completedSkill: 0
   nextStageNodes: []
 --- !u!114 &7842742990286571053
 MonoBehaviour:
@@ -991,6 +994,7 @@ MonoBehaviour:
   stageType: 2
   stageInfo: 
   completedStory: 
+  completedSkill: 0
   nextStageNodes:
   - {fileID: 1392224374323184879}
 --- !u!114 &3584711852344115898
@@ -1255,6 +1259,7 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_2
   completedStory: 
+  completedSkill: 0
   nextStageNodes:
   - {fileID: 3007364967079735081}
 --- !u!114 &2148166395848396133

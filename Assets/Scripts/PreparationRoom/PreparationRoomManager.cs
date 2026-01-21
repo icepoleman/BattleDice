@@ -9,7 +9,6 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Button btn_shop;
     void Start()
     {
-        GameDataManager.Gold += 1000;//測試用
         btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {

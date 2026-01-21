@@ -32,7 +32,8 @@ public enum BuffEffectType
     Stun,
     Sleep,
     LimitDiceRollResults,
-    SpawnBuff
+    SpawnBuff,
+    EnemyReroll  // 敵人重新擲骰並再次攻擊
 }
 public interface IBuffData
 {
@@ -211,6 +212,14 @@ public class BaseBuff : IBuffData
                 BaseBuff spBuff = new BaseBuff(effectValues[0], effectValues[1], effectValues[2]);
                 // 生成新的 Buff 並套用到角色
                 EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, spBuff, character.isPlayer);
+                break;
+            case BuffEffectType.EnemyReroll:
+                // 敵人重新擲骰並再次攻擊（僅對敵人有效）
+                if (!character.isPlayer)
+                {
+                    EventCenter.Dispatch(GameEvent.EVENT_ENEMY_REROLL);
+                    Debug.Log($"{buffName} 觸發敵人重新擲骰！");
+                }
                 break;
             default:
                 Debug.LogWarning($"{buffName} 未處理的 BuffEffectType: {buffEffectType}");

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c670339193a200b4587707e000728f1a
+guid: 8c20ac476f1cf7e45a9e740bb4d55c00
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -702148290715628484
-    second: medical_car_kyukyusya_naname_0
+      213: 1653011708829793150
+    second: u1f60d_u2665-ufe0f_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: medical_car_kyukyusya_naname_0
+      name: u1f60d_u2665-ufe0f_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 62
-        width: 417
-        height: 269
+        x: 15
+        y: 32
+        width: 504
+        height: 468
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3c4f3889d77146f0800000000000000
-      internalID: -702148290715628484
+      spriteID: e7b7c52246da0f610800000000000000
+      internalID: 1653011708829793150
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      medical_car_kyukyusya_naname_0: -702148290715628484
+      u1f60d_u2665-ufe0f_0: 1653011708829793150
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

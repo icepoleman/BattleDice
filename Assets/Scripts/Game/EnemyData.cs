@@ -45,10 +45,9 @@ public class EnemyData : BaseCharacterData
         enemyName = config.enemyName;
         goldReward = config.goldReward;
         maxBlood = config.maxBlood;
-        currentBlood = config.currentBlood;
-        diceSides = config.diceSides ?? new int[] { };
+        currentBlood = config.maxBlood; // currentBlood 預設等於 maxBlood
+        diceSides = EnemyConfigData.DefaultDiceSides; // 使用預設骰子面
         diceCount = config.diceCount;
-        maxRollCount = config.maxRollCount;
 
         // 載入怪物技能
         skillData = new List<ISkillData>();

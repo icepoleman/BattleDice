@@ -3,7 +3,6 @@ public class GameEvent
     public const string EVENT_RESTART_GAME = "GameEvent_RestartGame";//重新開始遊戲
     public const string EVENT_ESCAPE_BATTLE = "GameEvent_EscapeBattle";//逃離戰鬥通知
     //按鈕 裝置事件
-    public const string EVENT_CLICK_ROLL = "GameEvent_ClickRoll";//刷新骰子
     public const string EVENT_CLICK_TURN_END = "GameEvent_ClickTurnEnd";//結束回合
     public const string EVENT_SELECT_SKILL = "GameEvent_SelectSkill";//選取技能
     public const string EVENT_CLEAR_CHOOSE_SKILL = "GameEvent_ClearChooseSkill";//停止選取技能
@@ -44,6 +43,7 @@ public class MapEvent
     public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知
     public const string EVENT_GET_GEAR = "MapEvent_GetGear"; //取得齒輪通知
     public const string EVENT_GET_ITEM = "MapEvent_GetItem";//取得道具通知(特殊道具)
+    public const string EVENT_GET_SKILL = "MapEvent_GetSkill";//取得技能通知
 }
 public class AdvEvent
 {

@@ -11,6 +11,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler
     Action<ManaRollerDice> clickCallback;  // 改為傳遞自己
     Action<ManaRollerDice> rightClickCallback;
     [SerializeField] GameObject obj_onChoose;
+    [SerializeField] GameObject obj_lock;
     bool isFrozen = false;
     bool isSelected = false;  // 選取狀態
     
@@ -79,7 +80,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler
     {
         isFrozen = frozen;
         // 可以在這裡改變骰子的外觀以表示凍結狀態
-        diceImage.color = isFrozen ? Color.blue : Color.white;
+        obj_lock.SetActive(isFrozen);
     }
     
     public bool IsFrozen()

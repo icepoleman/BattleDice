@@ -1,15 +1,15 @@
-技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,破壞骰子數,生成骰子,出處Tag,Price
-1,魔力彈,Attack,SpecificDicesWithRepeat ,1|3|5|3,30,奇數*3,30點傷害,,,,,,100
-2,雷擊,Attack,SameDices,2,20,相同數字*2,20點傷害,,,,,,100
-3,毒爆術,Attack,ConsecutiveDices,3,20,連續數字*3,20點傷害，敵方中毒3回合,,1:0:3,,,MajoShop,100
-4,火球術,Attack,ConsecutiveDices,4,60,連續數字*4,60點傷害,,,,,MajoShop,100
-5,魔力脈衝,Attack,ConsecutiveDices,4,40,連續數字*4,40點傷害，生成萬用骰,,,,0|1,MajoShop,100
-6,催眠術,Attack,ConsecutiveDices,4,,連續數字*4,敵方睡眠,,4:0:0,,,MajoShop,100
-7,連續雷擊,Attack,SameDices,2,20,相同數字*2,20點傷害，生成隨機骰子,,,,1|2|3|1,MajoShop,100
-8,伏特攻擊,Attack,SameDices,3,50,相同數字*3,50點傷害，破壞敵方魔力骰,,,1,,MajoShop,100
-9,轟雷,Attack,SameDices,4,80,相同數字*4,80點傷害，破壞敵方魔力骰*2,,,2,,MajoShop,100
-10,防禦魔法,Buff,SpecificDicesWithRepeat ,1|3|5|2,,奇數*2,魔力護盾1回合,9:0:1,,,,MajoShop,100
-11,魔力湧動,Buff,SpecificDicesWithRepeat ,1|3|5|3,,奇數*3,魔力增幅5回合,5:0:5,,,,MajoShop,100
-12,恢復術,Buff,SpecificDicesWithRepeat ,2|4|6|2,,偶數*2,治癒3回合,11:0:3,,,,Megami,100
-13,即刻治癒,Heal,SpecificDicesWithRepeat ,2|4|6|3,30,偶數*3,生命+30,,,,,Megami,100
-14,魔力操控,Buff,AnyDices,2,,骰子*2,生成萬用骰,,,,,MajoShop,100
+技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,破壞骰子數,生成骰子,出處Tag,Price,第 1 欄,第 2 欄,第 3 欄
+1,魔力彈,Attack,SpecificDicesWithRepeat ,1|3|5|3,30,奇數*3,30點傷害,,,,,,100,,,
+2,雷擊,Attack,SameDices,2,20,相同數字*2,20點傷害,,,,,,100,,,
+3,幸運一擊,Attack,ConsecutiveDices,3,30,連續數字*3,30點傷害，生成隨機骰子,,,,1|2|3|4|5|6|1,MajoShop,100,,,
+4,魔力爪,Attack,ConsecutiveDices,3,20,連續數字*3,20點傷害，敵方撕裂1回合,,3:0:1,,,MajoShop,100,,,
+5,炎射術,Attack,ConsecutiveDices,4,80,連續數字*4,80點傷害，魔力衰弱1回合,8:0:2,,,,MajoShop,300,,,
+6,詛咒,Buff,ConsecutiveDices,4,,連續數字*4,破壞敵方魔力骰*2，敵方魔力衰弱3回合,,8:0:3,2,,MajoShop,300,,,
+7,連續雷擊,Attack,SameDices,2,20,相同數字*2,20點傷害，隨機生成3以下骰子,,,,1|2|3|1,MajoShop,100,,,
+8,魔力操控,Buff,SameDices,2,,相同數字*2,生成萬用骰,,,,0|1,,100,,,
+9,伏特攻擊,Attack,SameDices,3,40,相同數字*3,40點傷害，破壞敵方魔力骰,,,1,,MajoShop,100,,,
+10,轟雷,Attack,SameDices,4,60,相同數字*4,60點傷害，破壞敵方魔力骰*2,,,2,,MajoShop,300,,,
+11,防禦魔法,Buff,SpecificDicesWithRepeat ,1|3|5|2,,奇數*2,魔力護盾1回合,14:0:2,,,,MajoShop,100,,,
+12,魔力湧動,Buff,SpecificDicesWithRepeat ,1|3|5|3,,奇數*3,生成隨機骰，魔力增幅5回合, ,,,1|2|3|4|5|6|1,MajoShop,100,,,
+13,恢復術,Buff,SpecificDicesWithRepeat ,2|4|6|2,,偶數*2,治癒3回合,16:0:3,,,,Megami,100,,,
+14,立即治療,Heal,SpecificDicesWithRepeat ,2|4|6|3,30,偶數*3,生命+30,,,,,Megami,100,,,

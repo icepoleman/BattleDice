@@ -19,8 +19,6 @@ public class MenuManager : MonoBehaviour
         btn_continue.interactable = SaveManager.HasAutoSave();
         //TEST
         BuffDatabase.LoadFromCSV();
-
-        
     }
 
     //載入快速存檔

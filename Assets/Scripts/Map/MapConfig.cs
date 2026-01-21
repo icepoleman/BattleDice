@@ -13,7 +13,7 @@ public static class MapConfig
     {
         "第一關",
         "第二關",
-        "第三關",
+        "東側監獄",
         "第四關",
         "第五關",
     };

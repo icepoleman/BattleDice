@@ -298,6 +298,53 @@ public class CSVReader
         return seeds.Count > 0 ? seeds.ToArray() : null;
     }
 
+    // 載入敵人資料
+    // CSV 欄位: enemyId, enemyName, goldReward, maxBlood, diceCount, skillIDs, initialBuffs
+    // skillIDs 格式: 101|102|103
+    // initialBuffs 格式: buffID:usageCount:duration | buffID:usageCount:duration
+    public static Dictionary<int, EnemyConfigData> LoadEnemyCSV(string fileName)
+    {
+        Dictionary<int, EnemyConfigData> enemies = new Dictionary<int, EnemyConfigData>();
+
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Enemy/", fileName + ".csv");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("❌ 找不到敵人 CSV 檔案: " + filePath);
+            return enemies;
+        }
+
+        string[] allLines = File.ReadAllLines(filePath);
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; }
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] v = line.Split(',');
+
+            var data = new EnemyConfigData
+            {
+                enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) ? int.Parse(v[0]) : 0,
+                enemyName = v.Length > 1 ? v[1] : "",
+                goldReward = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) ? int.Parse(v[2]) : 0,
+                maxBlood = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) ? float.Parse(v[3]) : 100f,
+                diceCount = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? int.Parse(v[4]) : 2,
+                skillIDs = v.Length > 5 ? ParseIntArrayStatic(v[5]) : new int[] { },
+                initialBuffs = v.Length > 6 ? ParseBuffSeeds(v[6]) : null
+            };
+
+            if (data.enemyId > 0)
+            {
+                enemies[data.enemyId] = data;
+            }
+        }
+
+        Debug.Log($"✅ 從 StreamingAssets 載入敵人資料完成，共 {enemies.Count} 筆: {filePath}");
+        return enemies;
+    }
+
     // 通用 CSV 載入方法（可指定子資料夾）
     public List<T> LoadGenericCSV<T>(string fileName, string subFolder, System.Func<string[], T> parseFunction) where T : class
     {
