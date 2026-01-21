@@ -1,0 +1,1365 @@
+fileFormatVersion: 2
+guid: 1f9fedea780312247b3e3a9500fadb58
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7395775579370768596
+    second: witch_hcg_1_2_0
+  - first:
+      213: -5651274459778270361
+    second: witch_hcg_1_2_1
+  - first:
+      213: -2666942159094053106
+    second: witch_hcg_1_2_2
+  - first:
+      213: -1923012411532312716
+    second: witch_hcg_1_2_3
+  - first:
+      213: 7226251571910000436
+    second: witch_hcg_1_2_4
+  - first:
+      213: -3897680099327665865
+    second: witch_hcg_1_2_5
+  - first:
+      213: 5941235074576596768
+    second: witch_hcg_1_2_6
+  - first:
+      213: 8933385100060145708
+    second: witch_hcg_1_2_7
+  - first:
+      213: -5914365477706728393
+    second: witch_hcg_1_2_8
+  - first:
+      213: 2464218010278824214
+    second: witch_hcg_1_2_9
+  - first:
+      213: -9078012036164255688
+    second: witch_hcg_1_2_10
+  - first:
+      213: 6313178642994683440
+    second: witch_hcg_1_2_11
+  - first:
+      213: 5327186535310313346
+    second: witch_hcg_1_2_12
+  - first:
+      213: -2355989215199865504
+    second: witch_hcg_1_2_13
+  - first:
+      213: -1004183708002023021
+    second: witch_hcg_1_2_14
+  - first:
+      213: -4513682799056667768
+    second: witch_hcg_1_2_15
+  - first:
+      213: -6431632327991893942
+    second: witch_hcg_1_2_16
+  - first:
+      213: -2967960124492796449
+    second: witch_hcg_1_2_17
+  - first:
+      213: 4207924256591295657
+    second: witch_hcg_1_2_18
+  - first:
+      213: 3244111153017710205
+    second: witch_hcg_1_2_19
+  - first:
+      213: -161019595914894193
+    second: witch_hcg_1_2_20
+  - first:
+      213: 3987997639464295948
+    second: witch_hcg_1_2_21
+  - first:
+      213: -6557118080210705590
+    second: witch_hcg_1_2_22
+  - first:
+      213: -3099790988173204235
+    second: witch_hcg_1_2_23
+  - first:
+      213: 1456012770350049611
+    second: witch_hcg_1_2_24
+  - first:
+      213: -6427745115071905147
+    second: witch_hcg_1_2_25
+  - first:
+      213: 5791766060802287927
+    second: witch_hcg_1_2_26
+  - first:
+      213: -6709307542320789046
+    second: witch_hcg_1_2_27
+  - first:
+      213: -6709798617867484521
+    second: witch_hcg_1_2_28
+  - first:
+      213: -616663273003989235
+    second: witch_hcg_1_2_29
+  - first:
+      213: -4221527454777466685
+    second: witch_hcg_1_2_30
+  - first:
+      213: -437424988149616598
+    second: witch_hcg_1_2_31
+  - first:
+      213: -5378983077081838517
+    second: witch_hcg_1_2_32
+  - first:
+      213: 3959735554792193352
+    second: witch_hcg_1_2_33
+  - first:
+      213: 3367604323474058022
+    second: witch_hcg_1_2_34
+  - first:
+      213: -8973387779100567138
+    second: witch_hcg_1_2_35
+  - first:
+      213: 6713970118326059489
+    second: witch_hcg_1_2_36
+  - first:
+      213: 8207527875435002901
+    second: witch_hcg_1_2_37
+  - first:
+      213: 3958691388853732965
+    second: witch_hcg_1_2_38
+  - first:
+      213: -2434011266232123723
+    second: witch_hcg_1_2_39
+  - first:
+      213: -3023280629769666648
+    second: witch_hcg_1_2_40
+  - first:
+      213: 8558636862610944538
+    second: witch_hcg_1_2_41
+  - first:
+      213: 7655909950913605038
+    second: witch_hcg_1_2_42
+  - first:
+      213: -8497885298850277546
+    second: witch_hcg_1_2_43
+  - first:
+      213: -7174347665160592073
+    second: witch_hcg_1_2_44
+  - first:
+      213: 164072208638222929
+    second: witch_hcg_1_2_45
+  - first:
+      213: -8540581764202833491
+    second: witch_hcg_1_2_46
+  - first:
+      213: -9074023859443923818
+    second: witch_hcg_1_2_47
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: witch_hcg_1_2_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1582
+        width: 760
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d847e674b213a660800000000000000
+      internalID: 7395775579370768596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_1
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 1582
+        width: 336
+        height: 437
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76bbda012d3a291b0800000000000000
+      internalID: -5651274459778270361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_2
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 1918
+        width: 149
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e078fa28c3e1dfad0800000000000000
+      internalID: -2666942159094053106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_3
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 2007
+        width: 94
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47ff2f776661055e0800000000000000
+      internalID: -1923012411532312716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_4
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 1978
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43fbd41b48dc84460800000000000000
+      internalID: 7226251571910000436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_5
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 1905
+        width: 159
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7391777b998a8e9c0800000000000000
+      internalID: -3897680099327665865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_6
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 1547
+        width: 337
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02fba3382d1837250800000000000000
+      internalID: 5941235074576596768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_7
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 1905
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c283adada62c9fb70800000000000000
+      internalID: 8933385100060145708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_8
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 1905
+        width: 62
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73cf4750fe3fbeda0800000000000000
+      internalID: -5914365477706728393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 805
+        width: 991
+        height: 777
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6190acf6939a23220800000000000000
+      internalID: 2464218010278824214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_10
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 1356
+        width: 555
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83085b5862c640280800000000000000
+      internalID: -9078012036164255688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_11
+      rect:
+        serializedVersion: 2
+        x: 1434
+        y: 1547
+        width: 311
+        height: 312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ed743f68aec9750800000000000000
+      internalID: 6313178642994683440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_12
+      rect:
+        serializedVersion: 2
+        x: 1745
+        y: 1519
+        width: 265
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2874a61ede7fde940800000000000000
+      internalID: 5327186535310313346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_13
+      rect:
+        serializedVersion: 2
+        x: 2011
+        y: 1519
+        width: 203
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0655c559a48dd4fd0800000000000000
+      internalID: -2355989215199865504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_14
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 1028
+        width: 813
+        height: 328
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3990e4bec3c6012f0800000000000000
+      internalID: -1004183708002023021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_15
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 1356
+        width: 161
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88bbf65a86d2c51c0800000000000000
+      internalID: -4513682799056667768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_16
+      rect:
+        serializedVersion: 2
+        x: 1805
+        y: 1130
+        width: 480
+        height: 389
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40ef1459704eb6a0800000000000000
+      internalID: -6431632327991893942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_17
+      rect:
+        serializedVersion: 2
+        x: 2285
+        y: 1146
+        width: 474
+        height: 364
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdd2510edffafc6d0800000000000000
+      internalID: -2967960124492796449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_18
+      rect:
+        serializedVersion: 2
+        x: 2760
+        y: 1147
+        width: 328
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a4bfdb11dc856a30800000000000000
+      internalID: 4207924256591295657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_19
+      rect:
+        serializedVersion: 2
+        x: 3089
+        y: 1274
+        width: 100
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d76e087d7e5650d20800000000000000
+      internalID: 3244111153017710205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_20
+      rect:
+        serializedVersion: 2
+        x: 3232
+        y: 1267
+        width: 114
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f84ad97d781f3cdf0800000000000000
+      internalID: -161019595914894193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_21
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 721
+        width: 499
+        height: 425
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0e9d5949b6385730800000000000000
+      internalID: 3987997639464295948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_22
+      rect:
+        serializedVersion: 2
+        x: 2930
+        y: 721
+        width: 448
+        height: 423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a43efbed8df6005a0800000000000000
+      internalID: -6557118080210705590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_23
+      rect:
+        serializedVersion: 2
+        x: 3102
+        y: 1144
+        width: 72
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4aaf705845bf4d0800000000000000
+      internalID: -3099790988173204235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 1014
+        height: 772
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b49a52d76ebc43410800000000000000
+      internalID: 1456012770350049611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_25
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 706
+        width: 830
+        height: 322
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 582036d9fdf0cc6a0800000000000000
+      internalID: -6427745115071905147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_26
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 33
+        width: 802
+        height: 673
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739a844db8c706050800000000000000
+      internalID: 5791766060802287927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_27
+      rect:
+        serializedVersion: 2
+        x: 1817
+        y: 33
+        width: 802
+        height: 673
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac9ce137650c3e2a0800000000000000
+      internalID: -6709307542320789046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_28
+      rect:
+        serializedVersion: 2
+        x: 1845
+        y: 706
+        width: 586
+        height: 424
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7920a9305b102e2a0800000000000000
+      internalID: -6709798617867484521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_29
+      rect:
+        serializedVersion: 2
+        x: 3106
+        y: 622
+        width: 133
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d07419a350c2177f0800000000000000
+      internalID: -616663273003989235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_30
+      rect:
+        serializedVersion: 2
+        x: 3093
+        y: 282
+        width: 313
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c02e60852f1a65c0800000000000000
+      internalID: -4221527454777466685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_31
+      rect:
+        serializedVersion: 2
+        x: 3406
+        y: 618
+        width: 103
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2076757a44fde9f0800000000000000
+      internalID: -437424988149616598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_32
+      rect:
+        serializedVersion: 2
+        x: 3406
+        y: 33
+        width: 474
+        height: 585
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4c03b5f3630a55b0800000000000000
+      internalID: -5378983077081838517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_33
+      rect:
+        serializedVersion: 2
+        x: 2681
+        y: 429
+        width: 183
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84d7fdbe18ec3f630800000000000000
+      internalID: 3959735554792193352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_34
+      rect:
+        serializedVersion: 2
+        x: 3880
+        y: 523
+        width: 43
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62badb43a422cbe20800000000000000
+      internalID: 3367604323474058022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_35
+      rect:
+        serializedVersion: 2
+        x: 3901
+        y: 381
+        width: 13
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9911e2ab5f187380800000000000000
+      internalID: -8973387779100567138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_36
+      rect:
+        serializedVersion: 2
+        x: 3916
+        y: 316
+        width: 49
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e1896f1040dc2d50800000000000000
+      internalID: 6713970118326059489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_37
+      rect:
+        serializedVersion: 2
+        x: 3944
+        y: 495
+        width: 64
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c7b6b0e1ff6e170800000000000000
+      internalID: 8207527875435002901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_38
+      rect:
+        serializedVersion: 2
+        x: 3959
+        y: 369
+        width: 77
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 566460818d810f630800000000000000
+      internalID: 3958691388853732965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_39
+      rect:
+        serializedVersion: 2
+        x: 3962
+        y: 514
+        width: 90
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be7fe836a7a83ed0800000000000000
+      internalID: -2434011266232123723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_40
+      rect:
+        serializedVersion: 2
+        x: 3995
+        y: 453
+        width: 85
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8af724609462b06d0800000000000000
+      internalID: -3023280629769666648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_41
+      rect:
+        serializedVersion: 2
+        x: 2619
+        y: 33
+        width: 471
+        height: 465
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a123d7581e266c670800000000000000
+      internalID: 8558636862610944538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_42
+      rect:
+        serializedVersion: 2
+        x: 3880
+        y: 203
+        width: 94
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ead6590a9814f3a60800000000000000
+      internalID: 7655909950913605038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_43
+      rect:
+        serializedVersion: 2
+        x: 3941
+        y: 53
+        width: 40
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 657d30c2852711a80800000000000000
+      internalID: -8497885298850277546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_44
+      rect:
+        serializedVersion: 2
+        x: 3979
+        y: 33
+        width: 42
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73523f25fc89f6c90800000000000000
+      internalID: -7174347665160592073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_45
+      rect:
+        serializedVersion: 2
+        x: 3997
+        y: 86
+        width: 29
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1522561fdc6e64200800000000000000
+      internalID: 164072208638222929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_46
+      rect:
+        serializedVersion: 2
+        x: 4032
+        y: 184
+        width: 27
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da9d289a222c97980800000000000000
+      internalID: -8540581764202833491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch_hcg_1_2_47
+      rect:
+        serializedVersion: 2
+        x: 4049
+        y: 138
+        width: 45
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6940d664067921280800000000000000
+      internalID: -9074023859443923818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      witch_hcg_1_2_0: 7395775579370768596
+      witch_hcg_1_2_1: -5651274459778270361
+      witch_hcg_1_2_10: -9078012036164255688
+      witch_hcg_1_2_11: 6313178642994683440
+      witch_hcg_1_2_12: 5327186535310313346
+      witch_hcg_1_2_13: -2355989215199865504
+      witch_hcg_1_2_14: -1004183708002023021
+      witch_hcg_1_2_15: -4513682799056667768
+      witch_hcg_1_2_16: -6431632327991893942
+      witch_hcg_1_2_17: -2967960124492796449
+      witch_hcg_1_2_18: 4207924256591295657
+      witch_hcg_1_2_19: 3244111153017710205
+      witch_hcg_1_2_2: -2666942159094053106
+      witch_hcg_1_2_20: -161019595914894193
+      witch_hcg_1_2_21: 3987997639464295948
+      witch_hcg_1_2_22: -6557118080210705590
+      witch_hcg_1_2_23: -3099790988173204235
+      witch_hcg_1_2_24: 1456012770350049611
+      witch_hcg_1_2_25: -6427745115071905147
+      witch_hcg_1_2_26: 5791766060802287927
+      witch_hcg_1_2_27: -6709307542320789046
+      witch_hcg_1_2_28: -6709798617867484521
+      witch_hcg_1_2_29: -616663273003989235
+      witch_hcg_1_2_3: -1923012411532312716
+      witch_hcg_1_2_30: -4221527454777466685
+      witch_hcg_1_2_31: -437424988149616598
+      witch_hcg_1_2_32: -5378983077081838517
+      witch_hcg_1_2_33: 3959735554792193352
+      witch_hcg_1_2_34: 3367604323474058022
+      witch_hcg_1_2_35: -8973387779100567138
+      witch_hcg_1_2_36: 6713970118326059489
+      witch_hcg_1_2_37: 8207527875435002901
+      witch_hcg_1_2_38: 3958691388853732965
+      witch_hcg_1_2_39: -2434011266232123723
+      witch_hcg_1_2_4: 7226251571910000436
+      witch_hcg_1_2_40: -3023280629769666648
+      witch_hcg_1_2_41: 8558636862610944538
+      witch_hcg_1_2_42: 7655909950913605038
+      witch_hcg_1_2_43: -8497885298850277546
+      witch_hcg_1_2_44: -7174347665160592073
+      witch_hcg_1_2_45: 164072208638222929
+      witch_hcg_1_2_46: -8540581764202833491
+      witch_hcg_1_2_47: -9074023859443923818
+      witch_hcg_1_2_5: -3897680099327665865
+      witch_hcg_1_2_6: 5941235074576596768
+      witch_hcg_1_2_7: 8933385100060145708
+      witch_hcg_1_2_8: -5914365477706728393
+      witch_hcg_1_2_9: 2464218010278824214
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
