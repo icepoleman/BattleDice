@@ -1,10 +1,17 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
+    enum DialogueState
+    {
+        Story,
+        SpineShow,//之後可能會換聊天框
+    }
+    DialogueState currentState = DialogueState.Story;
     [SerializeField] private string nowChapter = "";
     [SerializeField] private List<DialogueData> lines = new List<DialogueData>();
     [SerializeField] Image img_cg1;
@@ -36,6 +43,8 @@ public class DialogueManager : MonoBehaviour
 
     Animator animator;
     bool isOpen = false;
+
+    SkeletonAnimation spineCharacter;
 
     void Update()
     {
@@ -223,9 +232,34 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("更換立繪:" + lines[_page].Portrait);
         }
         //紀錄flag
-        if (lines[_page].Flag != "")
+        string flag = lines[_page].Flag;
+        if (!string.IsNullOrEmpty(flag))
         {
-            Debug.Log("紀錄flag:" + lines[_page].Flag);
+            Debug.Log("紀錄flag:" + flag);
+            
+            if (flag.StartsWith("Spine_"))
+            {
+                await HandleSpineModel(flag);
+            }
+            else if (flag.StartsWith("SpineAnim_") && spineCharacter != null)
+            {
+                string animName = flag.Substring(10); // "SpineAnim_".Length = 10
+                spineCharacter.AnimationState.SetAnimation(0, animName, true);
+                Debug.Log("Spine模型播放動畫:" + animName);
+            }
+            else if (flag.StartsWith("SpineSpeed_") && spineCharacter != null)
+            {
+                string speedStr = flag.Substring(11); // "SpineSpeed_".Length = 11
+                if (float.TryParse(speedStr, out float speed))
+                {
+                    DOTween.To(() => spineCharacter.timeScale, x => spineCharacter.timeScale = x, speed, 0.5f);
+                    Debug.Log("Spine模型設置速度:" + speed);
+                }
+                else
+                {
+                    Debug.LogError("❌ 無法解析Spine速度:" + speedStr);
+                }
+            }
         }
         if (lines[_page].CameraAnim != "")
         {
@@ -345,6 +379,47 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 處理 Spine 模型的生成與刪除（toggle 模式）
+    /// </summary>
+    private async System.Threading.Tasks.Task HandleSpineModel(string spineAddress)
+    {
+        // 已存在則淡出刪除（toggle off）
+        if (spineCharacter != null)
+        {
+            var fadeOutTarget = spineCharacter;
+            DOTween.To(() => fadeOutTarget.skeleton.A, x => fadeOutTarget.skeleton.A = x, 0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    Destroy(fadeOutTarget.gameObject);
+                });
+            spineCharacter = null;
+            currentState = DialogueState.Story;
+            Debug.Log("淡出刪除Spine模型");
+            return;
+        }
+
+        // 不存在則生成並淡入（toggle on）
+        currentState = DialogueState.SpineShow;
+        GameObject spinePrefab = await AddressableManager.LoadAssetAsync<GameObject>(spineAddress);
+        if (spinePrefab != null)
+        {
+            GameObject spineObj = Instantiate(spinePrefab);
+            spineCharacter = spineObj.GetComponent<SkeletonAnimation>();
+            spineCharacter.skeleton.A = 0f; // 初始透明
+            spineCharacter.AnimationState.SetAnimation(0, "A", true);
+            
+            // 淡入效果
+            DOTween.To(() => spineCharacter.skeleton.A, x => spineCharacter.skeleton.A = x, 1f, 0.5f);
+            Debug.Log("淡入生成Spine模型:" + spineAddress);
+        }
+        else
+        {
+            Debug.LogError("❌ 無法載入Spine模型:" + spineAddress);
+            currentState = DialogueState.Story;
+        }
+    }
+
+    /// <summary>
     /// 顯示跳過劇情確認彈窗
     /// </summary>
     private async void ShowSkipConfirmPanel()
@@ -381,5 +456,10 @@ public class DialogueManager : MonoBehaviour
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
         }
+    }
+    public void AnimShootEnd()
+    {
+        //閃白光換模型
+        spineCharacter.AnimationState.SetAnimation(0, "D", true);
     }
 }

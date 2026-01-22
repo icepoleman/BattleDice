@@ -4,6 +4,7 @@ public static class MapConfig
     // 地图顺序配置，想插入只需修改这个列表
     public static readonly string[] MapOrder = new string[]
     {
+        "TestMap",             // 测试地图
         "Map_Prologue1",      // 第1张
         "Map_Prologue2",        // 第2张
         "Map_Prologue3",      // 
@@ -11,6 +12,7 @@ public static class MapConfig
     //关卡名称
     public static readonly string[] StageNames = new string[]
     {
+        "測試關卡",
         "第一關",
         "第二關",
         "東側監獄",

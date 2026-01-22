@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
 
+    [SerializeField] Button btn_test;
+
     void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
@@ -19,8 +21,25 @@ public class MenuManager : MonoBehaviour
         btn_continue.interactable = SaveManager.HasAutoSave();
         //TEST
         BuffDatabase.LoadFromCSV();
+        btn_test.onClick.AddListener(OnTestClicked);
     }
-
+    void OnTestClicked()
+    {
+        //測試用
+        GameDataManager.PreparationRoomStage = "0";//初始整備室
+        GameDataManager.CurrentMap = 0;//測試地圖
+        GameDataManager.CurrentStage = "0";
+        GameDataManager.PlayerData.currentBlood = 100;
+        GameDataManager.PlayerData.maxBlood = 100;
+        GameDataManager.Gold = 0;
+        GameDataManager.Gear = 0;
+        GameDataManager.PlayerData.keepDiceCount = 1;
+        GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
+        GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
+        GameDataManager.PlayerData.diceCount = 3;
+        GameDataManager.PlayerData.maxRollCount = 1;
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
+    }
     //載入快速存檔
     void OnContinueClicked()
     {
@@ -34,7 +53,7 @@ public class MenuManager : MonoBehaviour
     {
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "0";//初始整備室
-        GameDataManager.CurrentMap = 0;
+        GameDataManager.CurrentMap = 1;
         GameDataManager.CurrentStage = "0";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;

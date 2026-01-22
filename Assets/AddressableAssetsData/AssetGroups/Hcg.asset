@@ -14,27 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Hcg
   m_GUID: fa2fa91dfb6182d40a4acfb2866d6bb7
-  m_SerializeEntries:
-  - m_GUID: 075ea52a33529704680ec0b7109f6175
-    m_Address: WitchHcg1_1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ca73abfbcbc0d941b7b722b90ea268a
-    m_Address: WitchHcg1_3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d21ff1c5406fa4b4e8a7927e0ebcaef8
-    m_Address: WitchHcg1_4
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d8820f023243f484f90c5db2cfbaf57f
-    m_Address: WitchHcg1_2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}
   m_SchemaSet:

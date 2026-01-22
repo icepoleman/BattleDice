@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: witch_hcg_1_SkeletonData
   m_EditorClassIdentifier: spine-unity::Spine.Unity.SkeletonDataAsset
   atlasAssets:
-  - {fileID: 11400000, guid: 5d731826bfa102640808663e393a0a46, type: 2}
+  - {fileID: 11400000, guid: 213e00183452a494abada2011d3300ee, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: f2612e78fcaef8345af24100a22d7196, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 888397fb6d54d1d459a9bbacd786256b, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
     additiveMaterials: []
     multiplyMaterials:
     - pageName: witch_hcg_1.png
-      material: {fileID: 2100000, guid: 3e9c6041b43f98949bf01c2911366ae4, type: 2}
+      material: {fileID: 2100000, guid: 3e74dd2a2e092404783b2475412eb744, type: 2}
     screenMaterials: []
   skeletonDataModifiers: []
   fromAnimation: []
