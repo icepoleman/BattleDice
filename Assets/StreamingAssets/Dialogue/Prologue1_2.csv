@@ -62,10 +62,8 @@ Prologue1_2,,<監獄走廊>,,,,,,,,Jail_bg,
 ,JailerGirl,跟我來！,normal,,,,,jump,,,
 ,,雫貌似有了主意，先跟上吧。,,,,,,,,,
 END,,,,,,,,,,,
-,Hero,閉嘴女人把衣服脫了！,,,,,,,,,Bad
-,Choose,,,,老子早就想上你了！|我是說哭是解決不了問題的。,Dieroad|Good,,,,,
-,Hero,老子早就想上你了！,,,,,,,,,Dieroad
-,JailerGirl,不...不要過來！我會用魔法的！,angry,Center,,,,jump,,,
+,Choose,,,,老子早就想上你了！|我是說哭是解決不了問題的。,Dieroad|Good,,,,,Bad
+,JailerGirl,不...不要過來！我會用魔法的！,angry,Center,,,,jump,,,Dieroad
 ,Hero,會又如何?我就不信你敢攻擊我！,,,,,,,,,
 ,JailerGirl,呀！！！,scare,,,,,jump,,,
 ,,隨著一聲爆炸，你似乎忘記當人極度害怕時什麼都做得出來。,,,,,,,,,

@@ -22,12 +22,13 @@ public class ChooseBox : MonoBehaviour
         for (int i = 0; i < btnText.Length; i++)
         {
             int index = i; // 捕獲當前的索引值
+            string choiceText = btnText[i];
             GameObject btn = Instantiate(chooseBtnPrefab, transform);
-            btn.GetComponentInChildren<Text>().text = btnText[i];
+            btn.GetComponentInChildren<Text>().text = choiceText;
             //設定按鈕點擊事件
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index]);
+                EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index], choiceText);
                 ClearChooseBtn();
             });
             btn.gameObject.SetActive(true);

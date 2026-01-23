@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     private PlayerInputActions inputActions;
 
     private List<string> jumpTo = new List<string>();
+    private string pendingJumpTag = null; // 等待跳轉的標籤（選項文字顯示後跳轉）
 
     public PortraitStageManager stageManager;
 
@@ -54,6 +56,15 @@ public class DialogueManager : MonoBehaviour
             if (!isOver && !isSkipPanelOpen)
             {
                 ShowSkipConfirmPanel();
+            }
+        }
+
+        // 檢測 Backspace 鍵快速跳到下一個選項
+        if (Keyboard.current != null && Keyboard.current.backspaceKey.wasPressedThisFrame)
+        {
+            if (!isOver && !isSkipPanelOpen && !onChoose)
+            {
+                JumpToNextChoose();
             }
         }
 
@@ -96,7 +107,7 @@ public class DialogueManager : MonoBehaviour
         chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
         AddEvent();
         // ShowDialogue("Prologue1_1");//讀取劇情
-        ShowDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
+        LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
     }
     void AddEvent()
     {
@@ -114,9 +125,12 @@ public class DialogueManager : MonoBehaviour
     }
     void OnClickChoice(object[] args)
     {
-        if (args.Length > 0 && args[0] is string targetTag)
+        if (args.Length >= 2 && args[0] is string targetTag && args[1] is string choiceText)
         {
-            JumpToTag(targetTag);
+            // 先顯示選項文字
+            chatWindow.ShowDialogue(GetPlayerName(), choiceText);
+            // 記錄待跳轉標籤，等下一次點擊時跳轉
+            pendingJumpTag = targetTag;
             jumpTo.Clear();
             onChoose = false;
         }
@@ -125,7 +139,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("❌ OnClickChoice: 無效的參數");
         }
     }
-    public void ShowDialogue(string _chapter_csv)
+    public void LoadDialogue(string _chapter_csv)
     {
         lines = CSVReader.Instance.LoadDialogueCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
@@ -142,6 +156,21 @@ public class DialogueManager : MonoBehaviour
     private void OnNextClick(InputAction.CallbackContext context)
     {
         if (isOver) return;
+
+        // 處理選項文字顯示後的跳轉
+        if (pendingJumpTag != null)
+        {
+            if (chatWindow.isTyping)
+            {
+                chatWindow.CompleteDialogue();
+                return;
+            }
+            string tag = pendingJumpTag;
+            pendingJumpTag = null;
+            JumpToTag(tag);
+            return;
+        }
+
         switch (nowChapter)
         {
             case "END":
@@ -236,7 +265,7 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(flag))
         {
             Debug.Log("紀錄flag:" + flag);
-            
+
             if (flag.StartsWith("Spine_"))
             {
                 await HandleSpineModel(flag);
@@ -270,10 +299,13 @@ public class DialogueManager : MonoBehaviour
         if (lines[pageIndex].Dialogue != "")
         {
             // 替換文本中的玩家名字
-            string processedDialogue = ReplacePlayerName(lines[pageIndex].Dialogue);
-            string processedCharacter = ReplacePlayerName(lines[pageIndex].Character);
+            string processedDialogue = ReplaceDialoguePlayerName(lines[pageIndex].Dialogue);
+            if (lines[pageIndex].Character == "Hero")
+                lines[pageIndex].Character = GetPlayerName();
+            else if (lines[pageIndex].Character != "Choose" && lines[pageIndex].Character != "")
+                lines[pageIndex].Character = LanguageManager.GetText("T_" + lines[pageIndex].Character);
 
-            chatWindow.ShowDialogue(processedCharacter, processedDialogue);
+            chatWindow.ShowDialogue(lines[pageIndex].Character, processedDialogue);
         }
         else
         {
@@ -281,9 +313,9 @@ public class DialogueManager : MonoBehaviour
             OnNextClick(new InputAction.CallbackContext());
         }
     }
-
-    // 替換玩家名字的方法
-    private string ReplacePlayerName(string originalText)
+    //    
+    // 替換劇情玩家名字的方法
+    private string ReplaceDialoguePlayerName(string originalText)
     {
         if (string.IsNullOrEmpty(originalText))
             return originalText;
@@ -387,6 +419,7 @@ public class DialogueManager : MonoBehaviour
         if (spineCharacter != null)
         {
             var fadeOutTarget = spineCharacter;
+            fadeOutTarget.AnimationState.Event -= OnSpineEvent; // 解除事件訂閱
             DOTween.To(() => fadeOutTarget.skeleton.A, x => fadeOutTarget.skeleton.A = x, 0f, 0.5f)
                 .OnComplete(() =>
                 {
@@ -407,7 +440,8 @@ public class DialogueManager : MonoBehaviour
             spineCharacter = spineObj.GetComponent<SkeletonAnimation>();
             spineCharacter.skeleton.A = 0f; // 初始透明
             spineCharacter.AnimationState.SetAnimation(0, "A", true);
-            
+            spineCharacter.AnimationState.Event += OnSpineEvent;
+
             // 淡入效果
             DOTween.To(() => spineCharacter.skeleton.A, x => spineCharacter.skeleton.A = x, 1f, 0.5f);
             Debug.Log("淡入生成Spine模型:" + spineAddress);
@@ -418,7 +452,23 @@ public class DialogueManager : MonoBehaviour
             currentState = DialogueState.Story;
         }
     }
-
+    //spine事件回調
+    void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        string eventName = e.Data.Name;
+        if (eventName.Contains("Sound_"))
+        {
+            /* string soundName = eventName.Substring(6); // "Sound_".Length = 6
+             EventCenter.Dispatch(AudioEvent.EVENT_PLAY_SFX, soundName);
+             Debug.Log("Spine事件播放音效:" + soundName);*/
+        }
+        else if (eventName == "SpineAnim_")
+        {
+            string animName = eventName.Substring(10); // "SpineAnim_".Length = 10
+            spineCharacter.AnimationState.SetAnimation(0, animName, true);
+            Debug.Log("Spine模型播放動畫:" + animName);
+        }
+    }
     /// <summary>
     /// 顯示跳過劇情確認彈窗
     /// </summary>
@@ -457,6 +507,29 @@ public class DialogueManager : MonoBehaviour
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
         }
     }
+
+    /// <summary>
+    /// 跳到下一個選項（Choose），如果沒有就跳過劇情
+    /// </summary>
+    private void JumpToNextChoose()
+    {
+        // 從當前位置往後搜尋
+        for (int i = pageIndex + 1; i < lines.Count; i++)
+        {
+            if (lines[i].Character == "Choose")
+            {
+                Debug.Log($"跳到選項: index {i}");
+                pageIndex = i;
+                CheckDialogueCmd(pageIndex);
+                return;
+            }
+        }
+
+        // 找不到選項，直接跳過劇情
+        Debug.Log("沒有更多選項，跳過劇情");
+        SkipDialogue();
+    }
+
     public void AnimShootEnd()
     {
         //閃白光換模型

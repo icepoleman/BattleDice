@@ -8,6 +8,7 @@ public struct EnemyConfigData
     public int enemyId;              // 敵人唯一識別碼
     public string enemyName;         // 敵人名稱
     public int goldReward;           // 擊敗獎勵金幣
+    public int gearReward;           // 擊敗獎勵齒輪
 
     // 血量配置
     public float maxBlood;           // 最大血量

@@ -7,6 +7,7 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Button btn_powerUp;
     [SerializeField] GameObject powerUpPanelPrefab;
     [SerializeField] Button btn_shop;
+    [SerializeField] Button btn_changeSkill;
     void Start()
     {
         btn_back.onClick.AddListener(OnBackButtonClick);
@@ -20,6 +21,11 @@ public class PreparationRoomManager : MonoBehaviour
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
             shopPanel.SetUp("MajoShop");
+        });
+        btn_changeSkill.onClick.AddListener(async () =>
+        {
+            GameObject changeSkillViewPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ChangeSkillView");
+            Instantiate(changeSkillViewPrefab, transform);
         });
     }
     void OnBackButtonClick()

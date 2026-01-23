@@ -299,7 +299,7 @@ public class CSVReader
     }
 
     // 載入敵人資料
-    // CSV 欄位: enemyId, enemyName, goldReward, maxBlood, diceCount, skillIDs, initialBuffs
+    // CSV 欄位: enemyId, enemyName, goldReward, gearReward, maxBlood, diceCount, skillIDs, initialBuffs
     // skillIDs 格式: 101|102|103
     // initialBuffs 格式: buffID:usageCount:duration | buffID:usageCount:duration
     public static Dictionary<int, EnemyConfigData> LoadEnemyCSV(string fileName)
@@ -329,10 +329,11 @@ public class CSVReader
                 enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) ? int.Parse(v[0]) : 0,
                 enemyName = v.Length > 1 ? v[1] : "",
                 goldReward = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) ? int.Parse(v[2]) : 0,
-                maxBlood = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) ? float.Parse(v[3]) : 100f,
-                diceCount = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? int.Parse(v[4]) : 2,
-                skillIDs = v.Length > 5 ? ParseIntArrayStatic(v[5]) : new int[] { },
-                initialBuffs = v.Length > 6 ? ParseBuffSeeds(v[6]) : null
+                gearReward = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) ? int.Parse(v[3]) : 0,
+                maxBlood = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? float.Parse(v[4]) : 100f,
+                diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) ? int.Parse(v[5]) : 2,
+                skillIDs = v.Length > 6 ? ParseIntArrayStatic(v[6]) : new int[] { },
+                initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null
             };
 
             if (data.enemyId > 0)

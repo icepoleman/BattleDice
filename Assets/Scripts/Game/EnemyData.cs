@@ -6,6 +6,7 @@ public class EnemyData : BaseCharacterData
     public int enemyId = 0;
     public string enemyName = "敵人";
     public int goldReward = 0;
+    public int gearReward = 0;
     
     // 技能施放間隔（毫秒）
     public int skillCastInterval = 800;
@@ -44,6 +45,7 @@ public class EnemyData : BaseCharacterData
         enemyId = config.enemyId;
         enemyName = config.enemyName;
         goldReward = config.goldReward;
+        gearReward = config.gearReward;
         maxBlood = config.maxBlood;
         currentBlood = config.maxBlood; // currentBlood 預設等於 maxBlood
         diceSides = EnemyConfigData.DefaultDiceSides; // 使用預設骰子面

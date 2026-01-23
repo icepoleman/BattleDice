@@ -306,7 +306,9 @@ public class DiceGame : MonoBehaviour
                     GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("winLosePanel");
                     GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
                     GameDataManager.Gold += enemyData.IsDead() ? enemyData.goldReward : 0;
-                    winlosePanel.GetComponent<WinLoseView>().SetData(enemyData.IsDead(), enemyData.goldReward.ToString());
+                    GameDataManager.Gear += enemyData.IsDead() ? enemyData.gearReward : 0;
+                    string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
+                    winlosePanel.GetComponent<WinLoseView>().SetData(enemyData.IsDead(), winText);
                 }
                 else
                 {
@@ -638,7 +640,9 @@ public class DiceGame : MonoBehaviour
     async void RestartGame(object[] args)
     {
         playerData.RemoveAllBuff();
+        enemyData.RemoveAllBuff();
         playerData.currentBlood = playerEnterBlood;
+        enemyData.currentBlood = enemyData.maxBlood;
         await Task.Delay(500);
         //重置遊戲
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

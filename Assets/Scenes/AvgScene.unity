@@ -305,6 +305,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1247226103}
     m_Modifications:
+    - target: {fileID: 61736146068099670, guid: 7195742a8031cce4baf9d61bc8ffe112, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2380415141934549768, guid: 7195742a8031cce4baf9d61bc8ffe112, type: 3}
       propertyPath: m_Name
       value: RolePrefab
@@ -375,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3141814795548624573, guid: 7195742a8031cce4baf9d61bc8ffe112, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -848
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3141814795548624573, guid: 7195742a8031cce4baf9d61bc8ffe112, type: 3}
       propertyPath: m_AnchoredPosition.y

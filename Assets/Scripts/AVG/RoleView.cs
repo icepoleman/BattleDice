@@ -43,6 +43,20 @@ public class RoleView : MonoBehaviour
         if (_animationName != "")
             anim.Play(_animationName);
     }
+    //動畫event呼叫
+    public void HideCharacterFade()
+    {
+        //roleImage淡出
+        roleImage.DOKill();
+        roleImage.DOFade(0, 0.5f);
+    }
+    public void ShowCharacterFade()
+    {
+        //roleImage淡入
+        roleImage.DOKill();
+        roleImage.DOFade(1, 0.5f);
+    }
+    ////
     public void MovePosition(Vector2 _newPos)
     {
         // 確保 rectTrans 已初始化
@@ -76,7 +90,7 @@ public class RoleView : MonoBehaviour
     {
         return portraitPos;
     }
-    
+
     // 設置角色高亮狀態（講話時高亮，其他角色變暗）
     public void SetHighlight(bool isHighlighted)
     {
