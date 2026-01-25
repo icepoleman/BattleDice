@@ -10,9 +10,25 @@ public class ChatWindow : MonoBehaviour
     [SerializeField] private GameObject doneImg; // 對話結束圖示
 
     private Animator animator;
-    [SerializeField] private float typingSpeed = 0.05f; // 逐字顯示速度
+    private float typingSpeed = 0.05f; // 逐字顯示速度
     [SerializeField] private float fastTypingSpeed = 0.005f; // 快轉時的打字速度
     private bool isFastForwardMode = false;
+
+    private const string TYPING_SPEED_KEY = "TypingSpeed";
+    private const float DEFAULT_TYPING_SPEED = 0.05f;
+
+    /// <summary>
+    /// 取得/設定文字顯示速度（使用 PlayerPrefs 存取）
+    /// </summary>
+    public static float TypingSpeed
+    {
+        get => PlayerPrefs.GetFloat(TYPING_SPEED_KEY, DEFAULT_TYPING_SPEED);
+        set
+        {
+            PlayerPrefs.SetFloat(TYPING_SPEED_KEY, value);
+            PlayerPrefs.Save();
+        }
+    }
 
     private string str_dialogue = "你好，這是一個簡易的文字冒險範例。";
 
@@ -24,6 +40,7 @@ public class ChatWindow : MonoBehaviour
     {
         inputActions = new PlayerInputActions();
         animator = GetComponent<Animator>();
+        typingSpeed = TypingSpeed; // 從 PlayerPrefs 讀取速度
     }
     void Start()
     {

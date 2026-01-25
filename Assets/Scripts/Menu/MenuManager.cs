@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,19 +10,27 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_newGame;
     [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
+    [SerializeField] Button btn_setting;
 
     [SerializeField] Button btn_test;
 
-    void Start()
+    async void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
         btn_exitGame.onClick.AddListener(() => { Application.Quit(); });
         btn_continue.onClick.AddListener(() => { OnContinueClicked(); });
+        btn_setting.onClick.AddListener(async () =>
+        {
+            GameObject setPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("SetPanel");
+            GameObject setPanelObj = Instantiate(setPanelPrefab, transform);
+        });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
         //TEST
         BuffDatabase.LoadFromCSV();
         btn_test.onClick.AddListener(OnTestClicked);
+
+        await AudioManager.Instance.PlayBGM("Bgm_Menu");
     }
     void OnTestClicked()
     {

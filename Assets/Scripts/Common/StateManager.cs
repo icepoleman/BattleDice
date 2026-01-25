@@ -50,7 +50,6 @@ public class StateManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
     void OnDestroy()
     {
         RemoveEventListeners();

@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 53f01c95f6a51d747804bf4a0bebf2e3
   m_SerializeEntries:
+  - m_GUID: 01284f91fbaccb342ab63f4748217cbd
+    m_Address: Bgm_Battle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0fe8cfcfe44e2124d8349dd0e807c23f
     m_Address: ChangeSkillView
     m_ReadOnly: 0
@@ -30,8 +35,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
+    m_Address: Bgm_Story1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5ec3203cfaa15c049a9bbc74b908c55c
     m_Address: Map_Prologue3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b762115e3680c445bb13359bed7c99a
+    m_Address: Bgm_Menu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73f34dd155253b74385b331a5e4979ae
+    m_Address: Sfx_Click
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a2dd39149d18044dab2c2e0096e90e5
+    m_Address: SetPanel
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
