@@ -471,13 +471,13 @@ public class DialogueManager : MonoBehaviour
     void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
     {
         string eventName = e.Data.Name;
-        if (eventName.Contains("Sound_"))
+        Debug.Log("Spine事件:" + eventName);
+        if (eventName.StartsWith("Sound_"))
         {
-            /* string soundName = eventName.Substring(6); // "Sound_".Length = 6
-             EventCenter.Dispatch(AudioEvent.EVENT_PLAY_SFX, soundName);
-             Debug.Log("Spine事件播放音效:" + soundName);*/
+            AudioManager.Instance.PlaySFX(eventName);
+            Debug.Log("Spine事件播放音效:" + eventName);
         }
-        else if (eventName == "SpineAnim_")
+        else if (eventName.StartsWith("SpineAnim_"))
         {
             string animName = eventName.Substring(10); // "SpineAnim_".Length = 10
             spineCharacter.AnimationState.SetAnimation(0, animName, true);
@@ -548,6 +548,6 @@ public class DialogueManager : MonoBehaviour
     public void AnimShootEnd()
     {
         //閃白光換模型
-        spineCharacter.AnimationState.SetAnimation(0, "D", true);
+        spineCharacter.AnimationState.SetAnimation(0, "End", true);
     }
 }

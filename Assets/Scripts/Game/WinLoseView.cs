@@ -12,7 +12,7 @@ public class WinLoseView : MonoBehaviour
     [SerializeField] Text txt_reward;
     public void SetData(bool isWin, string rewardText)
     {
-        txt_reward.text = isWin ? string.Format(LanguageManager.GetText("T_Gold"), rewardText) : "";
+        txt_reward.text = isWin ? rewardText : "";
         obj_win.SetActive(isWin);
         obj_lose.SetActive(!isWin);
         btn_escape.gameObject.SetActive(!isWin);
