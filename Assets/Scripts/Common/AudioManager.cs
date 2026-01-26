@@ -154,7 +154,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="address">音樂資源地址</param>
     /// <param name="fadeIn">是否淡入</param>
     /// <param name="fadeDuration">淡入時間</param>
-    public async Task PlayBGM(string address, bool fadeIn = false, float fadeDuration = 1.0f)
+    public async void PlayBGM(string address, bool fadeIn = false, float fadeDuration = 1.0f)
     {
         if (string.IsNullOrEmpty(address))
         {

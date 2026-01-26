@@ -11,18 +11,25 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
     [SerializeField] Button btn_setting;
-
+    [SerializeField] Button btn_Load;
     [SerializeField] Button btn_test;
 
     async void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
         btn_exitGame.onClick.AddListener(() => { Application.Quit(); });
-        btn_continue.onClick.AddListener(() => { OnContinueClicked(); });
-        btn_setting.onClick.AddListener(async () =>
+        btn_continue.onClick.AddListener(() =>
         {
-            GameObject setPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("SetPanel");
-            GameObject setPanelObj = Instantiate(setPanelPrefab, transform);
+            OnContinueClicked();
+            AudioManager.Instance.PlaySFX("Sfx_Click1");
+        });
+        btn_setting.onClick.AddListener(() =>
+        {
+            AddressableManager.LoadAndInstantiateAsync("SetPanel", transform);
+        });
+        btn_Load.onClick.AddListener(() =>
+        {
+            AddressableManager.LoadAndInstantiateAsync("LoadPanel", transform);
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
@@ -30,7 +37,7 @@ public class MenuManager : MonoBehaviour
         BuffDatabase.LoadFromCSV();
         btn_test.onClick.AddListener(OnTestClicked);
 
-        await AudioManager.Instance.PlayBGM("Bgm_Menu");
+        AudioManager.Instance.PlayBGM("Bgm_Menu");
     }
     void OnTestClicked()
     {

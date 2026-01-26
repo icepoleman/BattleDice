@@ -13,24 +13,20 @@ public class MapManager : MonoBehaviour
     [SerializeField] Text text_gold;
     [SerializeField] Text text_gear;
     [SerializeField] Transform trans_mapParent;
-    [SerializeField] Button btn_backToMenu;
-    [SerializeField] Button btn_saveGame;
     [SerializeField] Text text_stageName;
     [SerializeField] Button btn_changeSkill;
+    [SerializeField] Button btn_edit;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
     //List<MapData> mapDatas = new List<MapData>();//關卡資料
     void Start()
     {
+        AudioManager.Instance.PlayBGM("Bgm_Map", true, 1.0f);
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
         text_gear.text = GameDataManager.Gear.ToString();
-        btn_backToMenu.onClick.AddListener(() =>
-        {
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
-        });
 
         // Addressables載入地圖prefab
         LoadMapPrefab();
@@ -38,8 +34,11 @@ public class MapManager : MonoBehaviour
         AddEvent();
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            GameObject changeSkillViewPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ChangeSkillView");
-            Instantiate(changeSkillViewPrefab, transform);
+            AddressableManager.LoadAndInstantiateAsync("ChangeSkillPanel", transform);
+        });
+        btn_edit.onClick.AddListener(() =>
+        {
+            AddressableManager.LoadAndInstantiateAsync("EditPanel", transform);
         });
     }
     void AddEvent()
@@ -65,7 +64,7 @@ public class MapManager : MonoBehaviour
     }
     async void OnCompleteMap(object[] param)
     {
-        Debug.Log("完成當前地圖，準備載入下一張地圖");
+        Debug.Log("完成當前地圖，準備載入下一張地圖");   
         GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
         UnloadMapPrefab();    

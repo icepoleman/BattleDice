@@ -184,6 +184,35 @@ public static class AddressableManager
     }
     
     /// <summary>
+    /// 載入 Prefab 並生成實例（Fire and Forget，不需要 await）
+    /// </summary>
+    /// <param name="address">Prefab 地址</param>
+    /// <param name="parent">父物件（可選）</param>
+    /// <param name="onComplete">生成完成後的回調（可選）</param>
+    public static async void LoadAndInstantiateAsync(string address, Transform parent = null, Action<GameObject> onComplete = null)
+    {
+        try
+        {
+            GameObject prefab = await LoadAssetAsync<GameObject>(address);
+            if (prefab != null)
+            {
+                GameObject instance = UnityEngine.Object.Instantiate(prefab, parent);
+                onComplete?.Invoke(instance);
+            }
+            else
+            {
+                Debug.LogError($"[AddressableManager] 無法生成實例，Prefab 載入失敗: {address}");
+                onComplete?.Invoke(null);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[AddressableManager] 載入並生成實例時發生異常: {address} - {e.Message}");
+            onComplete?.Invoke(null);
+        }
+    }
+
+    /// <summary>
     /// 預載入資源（載入但不返回）
     /// </summary>
     /// <typeparam name="T">資源類型</typeparam>

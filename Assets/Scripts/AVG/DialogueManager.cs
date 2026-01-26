@@ -295,6 +295,21 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("相機flag:" + lines[_page].CameraAnim);
             animator.Play(lines[_page].CameraAnim);
         }
+        if (!string.IsNullOrEmpty(lines[_page].Sound))
+        {
+            string _sound = lines[_page].Sound;
+            if(_sound.StartsWith("Sfx_"))
+            {
+                AudioManager.Instance.PlaySFX(_sound);
+                Debug.Log("播放音效:" + _sound);
+            }
+            if(_sound.StartsWith("Bgm_"))
+            {
+                AudioManager.Instance.PlayBGM(_sound, true, 1.0f);
+                Debug.Log("播放音樂:" + _sound);
+            }
+            Debug.Log("播放音效:" + lines[_page].Sound);    
+        }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
         {

@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 5015516025115047423}
   - component: {fileID: 1418342563107413824}
   m_Layer: 5
-  m_Name: ChangeSkillView
+  m_Name: ChangeSkillPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

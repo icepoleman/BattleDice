@@ -17,6 +17,7 @@ public class DialogueData
     public string Flag;
     public string Background;
     public string CameraAnim;
+    public string Sound;
 }
 [System.Serializable]
 public class MapData
@@ -80,6 +81,7 @@ public class CSVReader
             data.Flag = values.Length > 9 ? values[9] : "";
             data.Background = values.Length > 10 ? values[10] : "";
             data.Tag = values.Length > 11 ? values[11] : "";
+            data.Sound = values.Length > 12 ? values[12] : "";
             lines.Add(data);
         }
 

@@ -94,6 +94,7 @@ MonoBehaviour:
   panelType: 1
   saveItemPrefab: {fileID: 5007402838366864506}
   contentTransform: {fileID: 4348349663236599192}
+  btn_close: {fileID: 8720559831145604432}
 --- !u!1 &633546371754797392
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +392,7 @@ GameObject:
   - component: {fileID: 2621070445565858417}
   - component: {fileID: 8720559831145604432}
   m_Layer: 5
-  m_Name: btn_back
+  m_Name: btn_close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,19 +498,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2621070445565858417}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 123684479339090170}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4337274824516565075
 GameObject:
   m_ObjectHideFlags: 0

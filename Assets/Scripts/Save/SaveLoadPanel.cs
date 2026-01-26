@@ -11,9 +11,11 @@ public class SaveLoadPanel : MonoBehaviour
     [SerializeField] PanelType panelType;
     [SerializeField] GameObject saveItemPrefab;
     [SerializeField] Transform contentTransform;
+    [SerializeField] Button btn_close;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
+        btn_close.onClick.AddListener(() => { Destroy(gameObject); });
         saveItemPrefab.SetActive(false);
         //todo 生成列表 修改特定存檔槽顯示
         SaveSlotInfo[] saveInfos = SaveManager.GetAllSlotInfos();
