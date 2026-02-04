@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 7
-  stageInfo: 2
+  stageInfo: 5
   completedStory: Prologue1_4
   completedSkill: 0
   nextStageNodes:

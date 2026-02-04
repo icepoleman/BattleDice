@@ -46,6 +46,7 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.AddListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.AddListener(MapEvent.EVENT_SPEND_GOLD, OnSpendGold);
         EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
@@ -55,6 +56,7 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.RemoveListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.RemoveListener(MapEvent.EVENT_SPEND_GOLD, OnSpendGold);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
@@ -97,6 +99,19 @@ public class MapManager : MonoBehaviour
         Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
         GoNextOpenStage();
     }
+    //花費金幣
+    void OnSpendGold(object[] param)
+    {
+        int goldAmount = (int)param[0];
+        GameDataManager.Gold -= goldAmount;
+        if (GameDataManager.Gold < 0)
+        {
+            GameDataManager.Gold = 0;
+        }
+        text_gold.text = GameDataManager.Gold.ToString();
+        Debug.Log($"花費金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
+    }
+
     void OnGetGear(object[] param)
     {
         int gearAmount = (int)param[0];

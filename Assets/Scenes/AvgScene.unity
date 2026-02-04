@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &964677445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,7 +1105,6 @@ MonoBehaviour:
   dialogueText: {fileID: 1444821524}
   nameText: {fileID: 2133733014}
   doneImg: {fileID: 1415677290}
-  typingSpeed: 0.03
   fastTypingSpeed: 0.005
   isTyping: 0
 --- !u!95 &1423910722
