@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum ItemType
@@ -7,25 +8,25 @@ public enum ItemType
     Skill,
     Gear,
     HealthPotion,
-    GiftItem,//禮物道具(還沒實作)
+    ExItem,//額外劇情道具(之後實裝)
 }
 public class MapShopPanel : MonoBehaviour
 {
     [SerializeField] Transform itemParent;
     [SerializeField] GameObject mapShopItemPrefab;
-    
+
     string shopTag = "NoraShop";   // 野外商店技能的Tag
     List<SkillConfigData> shopSkills;
-    
+
     void Start()
     {
         // 取得野外商店技能列表，並移除玩家已擁有的技能
         shopSkills = SkillDatabase.GetSkillsByTag(shopTag);
         shopSkills.RemoveAll(skill => GameDataManager.HasSkillIDs.Contains(skill.skillID));
-        
+
         GenerateShopItems(3);
     }
-    
+
     void GenerateShopItems(int count)
     {
         for (int i = 0; i < count; i++)
@@ -34,81 +35,129 @@ public class MapShopPanel : MonoBehaviour
             CreateShopItem(itemType);
         }
     }
-    
+
     ItemType GetRandomItemType()
     {
-        // 建立可用的 ItemType 列表
-        List<ItemType> availableTypes = new List<ItemType>();
-        
-        // 如果還有技能可買，加入 Skill
+        // 建立加權機率列表 (ItemType, 權重)
+        List<(ItemType type, int weight)> weightedTypes = new List<(ItemType, int)>();
+
+        // 如果還有技能可買，加入 Skill (60%)
         if (shopSkills != null && shopSkills.Count > 0)
         {
-            availableTypes.Add(ItemType.Skill);
+            weightedTypes.Add((ItemType.Skill, 60));
         }
-        
+
         // 其他類型總是可用
-        availableTypes.Add(ItemType.Gear);
-        availableTypes.Add(ItemType.HealthPotion);
-        availableTypes.Add(ItemType.GiftItem); // 還沒實作
-        
-        return availableTypes[UnityEngine.Random.Range(0, availableTypes.Count)];
+        weightedTypes.Add((ItemType.Gear, 20));
+        weightedTypes.Add((ItemType.HealthPotion, 20));
+
+        // 計算總權重
+        int totalWeight = 0;
+        foreach (var item in weightedTypes)
+        {
+            totalWeight += item.weight;
+        }
+
+        // 隨機選擇
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        foreach (var item in weightedTypes)
+        {
+            currentWeight += item.weight;
+            if (randomValue < currentWeight)
+            {
+                return item.type;
+            }
+        }
+
+        return weightedTypes[0].type;
     }
-    
+
     void CreateShopItem(ItemType itemType)
     {
         GameObject itemObj = Instantiate(mapShopItemPrefab, itemParent);
         MapShopItem item = itemObj.GetComponent<MapShopItem>();
-        
+
         switch (itemType)
         {
             case ItemType.Skill:
                 SetupSkillItem(item);
                 break;
             case ItemType.Gear:
-                // TODO: 實作 Gear
+                item.SetUp(
+                    LanguageManager.GetText("T_GearPack"),
+                    LanguageManager.GetFormat("T_GearPack_Desc", 1, 6),
+                    ItemType.Gear,
+                    () => OnBuyGear()
+                );
                 break;
             case ItemType.HealthPotion:
-                // TODO: 實作 HealthPotion
+                item.SetUp(
+                    LanguageManager.GetText("T_HealthPotion"),
+                    LanguageManager.GetText("T_HealthPotion_Desc"),
+                    ItemType.HealthPotion,
+                    () => OnBuyHealthPotion()
+                );
                 break;
-            case ItemType.GiftItem:
-                // TODO: 實作 GiftItem
+            case ItemType.ExItem:
+                // TODO: 實作 ExItem
                 break;
         }
+        itemObj.SetActive(true);
     }
-    
+
     void SetupSkillItem(MapShopItem item)
     {
         if (shopSkills == null || shopSkills.Count == 0) return;
-        
+
         // 隨機取得一個技能並從列表移除（避免重複）
         int randomIndex = UnityEngine.Random.Range(0, shopSkills.Count);
         SkillConfigData skillData = shopSkills[randomIndex];
         shopSkills.RemoveAt(randomIndex);
-        
-       /* item.SetUp(
+        string conditionText = string.Format(
+            LanguageManager.GetText("T_SkillOnNoraShopCondition"),
+            skillData.conditionText,
+            skillData.effectText
+        );
+        item.SetUp(
             skillData.skillName,
-            skillData.skillDescription,
-            skillData.price,
+            conditionText,
             ItemType.Skill,
             () => OnBuySkill(skillData)
-        );*/
+        );
     }
-    
-    void OnBuySkill(SkillConfigData skillData)
+
+    async void OnBuySkill(SkillConfigData skillData)
     {
-        // 檢查金幣是否足夠
-        if (GameDataManager.Gold < skillData.price)
-        {
-            Debug.Log("金幣不足");
-            return;
-        }
-        
-        // 扣除金幣
-        GameDataManager.Gold -= skillData.price;
-        
         // 將技能加入玩家擁有的技能列表
         GameDataManager.HasSkillIDs.Add(skillData.skillID);
-        
+
         Debug.Log($"購買技能: {skillData.skillName}");
+        Destroy(gameObject);
+    }
+
+    async void OnBuyGear()
+    {
+        // 隨機獲得1~6個齒輪
+        int gearAmount = UnityEngine.Random.Range(1, 7);
+        GameDataManager.Gear += gearAmount;
+        await CommonUIManager.ShowHintBubble(
+          LanguageManager.GetFormat("T_GetGear", gearAmount)
+        );
+
+        Debug.Log($"購買齒輪包，獲得 {gearAmount} 個齒輪");
+        Destroy(gameObject);
+    }
+    void OnBuyHealthPotion()
+    {
+        // 回復100血
+        GameDataManager.PlayerData.currentBlood += 100;
+        if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
+        {
+            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+        }
+        Debug.Log($"購買生命藥水，回復100血");
+        Destroy(gameObject);
     }
 }

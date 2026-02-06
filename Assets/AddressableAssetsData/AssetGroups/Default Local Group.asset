@@ -55,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45647f5df823be642968dbcc8b4a7d0c
+    m_Address: HolyGrailPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 553b23b2d8bbc5547bbb628c6b7d69d9
     m_Address: Bgm_Map
     m_ReadOnly: 0

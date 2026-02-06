@@ -33,3 +33,9 @@ T_Shop_NotEnoughGold|金幣不足
 T_Shop_ConfirmBuy|確定購買 {0}？\n價格：{1} 金幣
 T_TypeSpeedTest|劇情文字速度
 T_NotEnoughGold|金幣不足
+T_SkillOnNoraShopCondition|需求骰子:{0}\n技能效果:{1}
+T_GearPack|齒輪包
+T_GearPack_Desc|隨機獲得{0}~{1}個齒輪
+T_GetGear|獲得 {0} 個齒輪
+T_HealthPotion|生命藥水
+T_HealthPotion_Desc|生命+100

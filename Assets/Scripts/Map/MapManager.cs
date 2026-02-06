@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Text text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
+    [SerializeField] Transform popUpParent;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -34,11 +35,11 @@ public class MapManager : MonoBehaviour
         AddEvent();
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("ChangeSkillPanel", transform);
+            AddressableManager.LoadAndInstantiateAsync("ChangeSkillPanel", popUpParent);
         });
         btn_edit.onClick.AddListener(() =>
         {
-            AddressableManager.LoadAndInstantiateAsync("EditPanel", transform);
+            AddressableManager.LoadAndInstantiateAsync("EditPanel", popUpParent);
         });
     }
     void AddEvent()
@@ -50,6 +51,7 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_HOLY_GRAIL, OnOpenHolyGrail);
     }
     void OnDestroy()
     {
@@ -60,17 +62,17 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
-
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_HOLY_GRAIL, OnOpenHolyGrail);
         // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
     async void OnCompleteMap(object[] param)
     {
-        Debug.Log("完成當前地圖，準備載入下一張地圖");   
+        Debug.Log("完成當前地圖，準備載入下一張地圖");
         GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
-        UnloadMapPrefab();    
-        await Task.Delay(100);   
+        UnloadMapPrefab();
+        await Task.Delay(100);
         GameDataManager.CurrentMap += 1;
         GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
         GameDataManager.CurrentStage = "0";
@@ -129,6 +131,11 @@ public class MapManager : MonoBehaviour
             await CommonUIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
             Debug.Log($"獲得技能ID: {skillID}");
         }
+    }
+    async void OnOpenHolyGrail(object[] param)
+    {
+        //開啟三選一事件
+        await CommonUIManager.ShowPanel("HolyGrailPanel");
     }
     //特殊道具用
     void OnGetItem(object[] param)

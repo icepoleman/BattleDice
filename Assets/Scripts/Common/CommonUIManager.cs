@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 public static class CommonUIManager
 {
     private static Transform canvasTransform;
-    
+
     /// <summary>
     /// 設定Canvas（可選，若不設定會自動找Canvas）
     /// </summary>
@@ -17,7 +17,7 @@ public static class CommonUIManager
     {
         canvasTransform = canvas;
     }
-    
+
     /// <summary>
     /// 取得Canvas
     /// </summary>
@@ -25,15 +25,25 @@ public static class CommonUIManager
     {
         if (canvasTransform == null)
         {
-            Canvas canvas = Object.FindFirstObjectByType<Canvas>();
-            if (canvas != null)
+            // 優先尋找 Canvas_Popup
+            GameObject popupCanvas = GameObject.Find("Canvas_Popup");
+            if (popupCanvas != null)
             {
-                canvasTransform = canvas.transform;
+                canvasTransform = popupCanvas.transform;
+            }
+            else
+            {
+                // 找不到 Canvas_Popup，使用預設 Canvas
+                Canvas canvas = Object.FindFirstObjectByType<Canvas>();
+                if (canvas != null)
+                {
+                    canvasTransform = canvas.transform;
+                }
             }
         }
         return canvasTransform;
     }
-    
+
     /// <summary>
     /// 顯示提示泡泡
     /// </summary>
@@ -47,14 +57,14 @@ public static class CommonUIManager
             Debug.LogError("無法載入 HintBubble prefab");
             return null;
         }
-        
+
         Transform targetParent = parent ?? GetCanvas();
         GameObject hintObj = Object.Instantiate(prefab, targetParent);
         HintBubble hint = hintObj.GetComponent<HintBubble>();
         hint.SetUp(message);
         return hint;
     }
-    
+
     /// <summary>
     /// 顯示確認彈窗
     /// </summary>
@@ -70,11 +80,22 @@ public static class CommonUIManager
             Debug.LogError("無法載入 ConfirmPanel prefab");
             return null;
         }
-        
+
         Transform targetParent = parent ?? GetCanvas();
         GameObject panelObj = Object.Instantiate(prefab, targetParent);
         ConfirmPanel panel = panelObj.GetComponent<ConfirmPanel>();
         panel.SetUp(message, onConfirm, onCancel);
         return panel;
+    }
+    public static async Task ShowPanel(string panelAB, Transform parent = null)
+    {
+        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(panelAB);
+        if (prefab == null)
+        {
+            Debug.LogError($"無法載入 {panelAB} prefab");
+        }
+
+        Transform targetParent = parent ?? GetCanvas();
+        GameObject hintObj = Object.Instantiate(prefab, targetParent);
     }
 }

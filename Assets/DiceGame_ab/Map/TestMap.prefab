@@ -195,8 +195,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 721162628513062860}
   m_HandleRect: {fileID: 6411075720811680894}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -429,8 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 0
-  stageInfo: WitchH_1
+  stageType: 8
+  stageInfo: 
   completedStory: 
   completedSkill: 0
   nextStageNodes:

@@ -17,7 +17,8 @@ public enum StageType
     Blood,
     Gold,
     Skill,
-    Gear
+    Gear,
+    HolyGrail//三選一獎勵
 }
 public class StageNode : MonoBehaviour
 {
@@ -153,7 +154,12 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"金幣: {stageInfo}");
                     break;
                 case StageType.Skill:
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, int.Parse(stageInfo)); //取得技能 
                     Debug.Log($"技能: {stageInfo}");
+                    break;
+                case StageType.HolyGrail:
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_HOLY_GRAIL); //開啟三選一事件
+                    Debug.Log($"三選一獎勵: {stageInfo}");
                     break;
             }
         }
