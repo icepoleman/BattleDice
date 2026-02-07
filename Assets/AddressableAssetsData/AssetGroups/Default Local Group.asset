@@ -15,138 +15,138 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 53f01c95f6a51d747804bf4a0bebf2e3
   m_SerializeEntries:
-  - m_GUID: 01284f91fbaccb342ab63f4748217cbd
-    m_Address: Bgm_Battle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0fe8cfcfe44e2124d8349dd0e807c23f
-    m_Address: ChangeSkillPanel
+    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/ChangeSkillPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13c1b92a3b30a8843ab8dc36c6b3943f
-    m_Address: Sound_OpaiPapa
+  - m_GUID: 1307da4cf2fee664487df8d488490b2a
+    m_Address: Assets/DiceGame_ab/StageMap/Map/Map_Prologue2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a8e3da2a56a4eb40b273963734790ac
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_6.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d0830d18ba62a841a410d9d9d1dd47d
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_3.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 249ea6b73a56ecb4b87c83362755d82d
-    m_Address: Jail_bg
+    m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_jail.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b6324a7d45e3dc48a646c33522588c2
-    m_Address: ConfirmPanel
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
-    m_Address: Bgm_Story1
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/ConfirmPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36c691d1e76cd2648a6189f5851d2128
-    m_Address: SavePanel
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/SavePanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36fa4cf0ad199854a958f4473a4cd712
-    m_Address: Sfx_Shot
+  - m_GUID: 412a05a95efdbaa469fe13a841f4357a
+    m_Address: Assets/DiceGame_ab/StageMap/Map/Map_Prologue1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45647f5df823be642968dbcc8b4a7d0c
-    m_Address: HolyGrailPanel
+    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/HolyGrailPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 553b23b2d8bbc5547bbb628c6b7d69d9
-    m_Address: Bgm_Map
+  - m_GUID: 4854145e3f80c514e9b5485758909b10
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_4.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5ec3203cfaa15c049a9bbc74b908c55c
-    m_Address: Map_Prologue3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6b762115e3680c445bb13359bed7c99a
-    m_Address: Bgm_Menu
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 73f34dd155253b74385b331a5e4979ae
-    m_Address: Sfx_Click
+    m_Address: Assets/DiceGame_ab/StageMap/Map/Map_Prologue3.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a2dd39149d18044dab2c2e0096e90e5
-    m_Address: SetPanel
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/SetPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7bc142ede69e44a458ff7dade0c10f4b
-    m_Address: winLosePanel
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/winLosePanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c722a74daad30441b29192106d9397d
-    m_Address: Spine_WitchH_01
+    m_Address: Assets/DiceGame_ab/H_Data/Prefabs/Spine_WitchH_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e6874d43c10a784dac5ae5057c47d0a
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8650e6c5167ab544eacf5ef0bf1b8596
-    m_Address: enemy_7
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_7.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f623fc48c117d6489efcf6a37917a97
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_5.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1558b42197cabe48b43d43eccc20b6c
-    m_Address: buffCard
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/buffCard.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2d46d44987d7414a9bf8bc1562cc9a3
-    m_Address: P_Room_bg
+    m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_saveHouse.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a905789a14da46540b9b7b42779d5962
-    m_Address: EditPanel
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/EditPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b06d703a06ec01143b7b502ba05886b4
-    m_Address: TestMap
+    m_Address: Assets/DiceGame_ab/StageMap/Map/TestMap.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b78be9c427e895f4cbe956c7ba77ef48
-    m_Address: HintBubble
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/HintBubble.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb56b9466ce83cb4ab4a61d0c5b6ed37
-    m_Address: ClearMapPanel
+    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/ClearMapPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf4d29fbfb794c645a899b1169e26538
-    m_Address: enemySkillItem
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/enemySkillItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d921fa49c0823044faaefcf4a8fa5b1c
-    m_Address: ShopPanel
+    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/ShopPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e148e52ba54708a4abdbdfa2f769e607
-    m_Address: LoadPanel
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/LoadPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e527242df874ba046905051217ce9658
-    m_Address: Sfx_Click1
+  - m_GUID: fd08e5941c48f2c4a8cafee327919208
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

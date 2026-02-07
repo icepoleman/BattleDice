@@ -17,14 +17,14 @@ public class PreparationRoomManager : MonoBehaviour
         });
         btn_shop.onClick.AddListener(async () =>
         {
-            GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ShopPanel");
+            GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ShopPanel" + ".prefab");
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
             shopPanel.SetUp("MajoShop");
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            GameObject changeSkillViewPrefab = await AddressableManager.LoadAssetAsync<GameObject>("ChangeSkillView");
+            GameObject changeSkillViewPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ChangeSkillView" + ".prefab");
             Instantiate(changeSkillViewPrefab, transform);
         });
     }

@@ -13,13 +13,13 @@ public class EditPanel : MonoBehaviour
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
         });
-        btn_saveGame.onClick.AddListener(() =>
+        btn_saveGame.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("SavePanel", transform);
+            await CommonUIManager.ShowPanel("SavePanel");
         });
-        btn_set.onClick.AddListener(() =>
+        btn_set.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("SetPanel", transform);
+            await CommonUIManager.ShowPanel("SetPanel");
         });
         btn_close.onClick.AddListener(() =>
         {

@@ -15,6 +15,7 @@ public class ChangeSkillView : MonoBehaviour
     List<int> hasSkillsID = new List<int>();
     List<int> chosenSkillsID = new List<int>();
     [SerializeField] Button btn_save;
+    [SerializeField] Button btn_back;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class ChangeSkillView : MonoBehaviour
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);
         btn_save.onClick.AddListener(SaveChosenSkills);
+        btn_back.onClick.AddListener(() => Destroy(gameObject));
         GenerateSkillCards();
     }
 

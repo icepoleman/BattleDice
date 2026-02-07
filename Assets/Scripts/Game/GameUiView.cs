@@ -47,7 +47,7 @@ public class GameUiView : MonoBehaviour
         }
         foreach (var buff in buffs)
         {
-            GameObject buffIcon = Instantiate(AddressableManager.GetLoadedAsset<GameObject>("buffCard"));
+            GameObject buffIcon = Instantiate(AddressableManager.GetLoadedAsset<GameObject>( ABconfig.GAME_PREFABS + "buffCard" + ".prefab"));
             buffIcon.transform.SetParent(buffParent);
             buffIcon.transform.localScale = Vector3.one;
             buffIcon.transform.localPosition = Vector3.zero;

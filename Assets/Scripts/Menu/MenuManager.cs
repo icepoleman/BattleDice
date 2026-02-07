@@ -21,15 +21,15 @@ public class MenuManager : MonoBehaviour
         btn_continue.onClick.AddListener(() =>
         {
             OnContinueClicked();
-            AudioManager.Instance.PlaySFX("Sfx_Click1");
+            AudioManager.Instance.PlaySFX("Sound_Click1");
         });
-        btn_setting.onClick.AddListener(() =>
+        btn_setting.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("SetPanel", transform);
+            await CommonUIManager.ShowPanel("SetPanel");
         });
-        btn_Load.onClick.AddListener(() =>
+        btn_Load.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("LoadPanel", transform);
+            await CommonUIManager.ShowPanel("LoadPanel");
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();

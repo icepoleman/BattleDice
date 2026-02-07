@@ -169,7 +169,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        AudioClip clip = await LoadAudioClip(address);
+        AudioClip clip = await LoadAudioClipBGM(address);
         if (clip == null)
         {
             Debug.LogError($"[AudioManager] 無法載入 BGM: {address}");
@@ -250,7 +250,7 @@ public class AudioManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(newAddress)) return;
 
-        AudioClip newClip = await LoadAudioClip(newAddress);
+        AudioClip newClip = await LoadAudioClipBGM(newAddress);
         if (newClip == null) return;
 
         // 淡出當前 BGM
@@ -283,7 +283,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        AudioClip clip = await LoadAudioClip(address);
+        AudioClip clip = await LoadAudioClipSFX(address);
         if (clip == null)
         {
             Debug.LogError($"[AudioManager] 無法載入 SFX: {address}");
@@ -447,7 +447,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public async Task PreloadAudio(string address)
     {
-        await LoadAudioClip(address);
+        await LoadAudioClipSFX(address);
     }
 
     /// <summary>
@@ -458,12 +458,12 @@ public class AudioManager : MonoBehaviour
         var tasks = new List<Task>();
         foreach (var address in addresses)
         {
-            tasks.Add(LoadAudioClip(address));
+            tasks.Add(LoadAudioClipSFX(address));
         }
         await Task.WhenAll(tasks);
     }
 
-    private async Task<AudioClip> LoadAudioClip(string address)
+    private async Task<AudioClip> LoadAudioClipSFX(string address)
     {
         // 檢查快取
         if (_audioClipCache.TryGetValue(address, out AudioClip cachedClip))
@@ -472,13 +472,20 @@ public class AudioManager : MonoBehaviour
         }
 
         // 透過 AddressableManager 載入
-        AudioClip clip = await AddressableManager.LoadAssetAsync<AudioClip>(address);
+        AudioClip clip = await AddressableManager.LoadAssetAsync<AudioClip>(ABconfig.MUSIC_SFX + address + ".mp3");
 
         if (clip != null)
         {
             _audioClipCache[address] = clip;
         }
 
+        return clip;
+    }
+
+    private async Task<AudioClip> LoadAudioClipBGM(string address)
+    {
+        // 透過 AddressableManager 載入
+        AudioClip clip = await AddressableManager.LoadAssetAsync<AudioClip>(ABconfig.MUSIC_BGM + address + ".mp3");
         return clip;
     }
 
@@ -509,7 +516,7 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region Settings Persistence
+    #region Settings Persistence (使用 PlayerPrefs 儲存設定)
     private const string PREF_MASTER_VOLUME = "AudioManager_MasterVolume";
     private const string PREF_BGM_VOLUME = "AudioManager_BGMVolume";
     private const string PREF_SFX_VOLUME = "AudioManager_SFXVolume";

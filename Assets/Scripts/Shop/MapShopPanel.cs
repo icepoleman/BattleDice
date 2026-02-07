@@ -131,9 +131,7 @@ public class MapShopPanel : MonoBehaviour
     async void OnBuySkill(SkillConfigData skillData)
     {
         // 將技能加入玩家擁有的技能列表
-        GameDataManager.HasSkillIDs.Add(skillData.skillID);
-
-        Debug.Log($"購買技能: {skillData.skillName}");
+        EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, skillData.skillID); //取得技能
         Destroy(gameObject);
     }
 
@@ -141,10 +139,7 @@ public class MapShopPanel : MonoBehaviour
     {
         // 隨機獲得1~6個齒輪
         int gearAmount = UnityEngine.Random.Range(1, 7);
-        GameDataManager.Gear += gearAmount;
-        await CommonUIManager.ShowHintBubble(
-          LanguageManager.GetFormat("T_GetGear", gearAmount)
-        );
+        EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, gearAmount); //取得齒輪
 
         Debug.Log($"購買齒輪包，獲得 {gearAmount} 個齒輪");
         Destroy(gameObject);
@@ -152,11 +147,7 @@ public class MapShopPanel : MonoBehaviour
     void OnBuyHealthPotion()
     {
         // 回復100血
-        GameDataManager.PlayerData.currentBlood += 100;
-        if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
-        {
-            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-        }
+        EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, 100); //回血
         Debug.Log($"購買生命藥水，回復100血");
         Destroy(gameObject);
     }

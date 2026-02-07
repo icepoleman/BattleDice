@@ -51,7 +51,7 @@ public static class CommonUIManager
     /// <param name="parent">父物件（可選，預設為Canvas）</param>
     public static async Task<HintBubble> ShowHintBubble(string message, Transform parent = null)
     {
-        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>("HintBubble");
+        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "HintBubble" + ".prefab");
         if (prefab == null)
         {
             Debug.LogError("無法載入 HintBubble prefab");
@@ -74,7 +74,7 @@ public static class CommonUIManager
     /// <param name="parent">父物件（可選，預設為Canvas）</param>
     public static async Task<ConfirmPanel> ShowConfirmPanel(string message, Action onConfirm, Action onCancel = null, Transform parent = null)
     {
-        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>("ConfirmPanel");
+        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ConfirmPanel" + ".prefab");
         if (prefab == null)
         {
             Debug.LogError("無法載入 ConfirmPanel prefab");
@@ -89,7 +89,7 @@ public static class CommonUIManager
     }
     public static async Task ShowPanel(string panelAB, Transform parent = null)
     {
-        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(panelAB);
+        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + panelAB + ".prefab");
         if (prefab == null)
         {
             Debug.LogError($"無法載入 {panelAB} prefab");

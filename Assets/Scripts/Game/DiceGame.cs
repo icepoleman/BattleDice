@@ -90,9 +90,9 @@ public class DiceGame : MonoBehaviour
     async void LoadData()
     {
         //載入遊戲數據
-        Sprite enemySprite = await AddressableManager.LoadAssetAsync<Sprite>("enemy_" + enemyData.enemyId);
+        Sprite enemySprite = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy_" + enemyData.enemyId + ".png");
         enemyView.SetEnemySprite(enemySprite);
-        await AddressableManager.PreloadAssetAsync<GameObject>("buffCard");
+        await AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "buffCard" + ".prefab");
         //生成初始buff
         UpdateBuffUIEvent(null);
         gameUiView.UpdateDiceCount(playerData.diceCount, enemyData.diceCount);
@@ -157,9 +157,9 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
-        AddressableManager.ReleaseAsset("enemy_" + enemyData.enemyId);
+        AddressableManager.ReleaseAll();
     }
-    bool gameOver=false;
+    bool gameOver = false;
     async void ChangeState(TurnState newState)
     {
         if (currentState == newState) return;
@@ -303,7 +303,7 @@ public class DiceGame : MonoBehaviour
                     playerData.RemoveAllBuff();
                     await Task.Delay(500);
                     Debug.Log("Game Over");
-                    GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>("winLosePanel");
+                    GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "winLosePanel" + ".prefab");
                     GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
                     GameDataManager.Gold += enemyData.IsDead() ? enemyData.goldReward : 0;
                     GameDataManager.Gear += enemyData.IsDead() ? enemyData.gearReward : 0;
@@ -361,7 +361,7 @@ public class DiceGame : MonoBehaviour
     // 敵人重新擲骰並再次攻擊
     async void OnEnemyReroll(object[] args)
     {
-        if(gameOver) return;
+        if (gameOver) return;
         Debug.Log("Enemy Reroll Event Triggered");
         enemyRerollPending++; // 開始重骰，增加計數
 
@@ -387,7 +387,7 @@ public class DiceGame : MonoBehaviour
             enemyRerollPending--; // 完成重骰，減少計數
         }
     }
-    
+
     /// <summary>
     /// 骰子選取狀態變更 - 當選取數量達到技能需求時自動嘗試使用技能
     /// </summary>
@@ -395,20 +395,20 @@ public class DiceGame : MonoBehaviour
     {
         if (currentState != TurnState.playerTurn) return;
         if (playerData.wantUseSkill == null) return;
-        
+
         List<int> selectedDices = args[0] as List<int>;
         if (selectedDices == null) return;
-        
+
         int needDiceNum = playerData.wantUseSkill.needDiceNum;
         if (needDiceNum <= 0) return; // 無法確定需求數量的技能不自動觸發
-        
+
         // 當選取數量達到需求時，嘗試使用技能
         if (selectedDices.Count >= needDiceNum)
         {
             TryUseSkillWithSelectedDices(selectedDices);
         }
     }
-    
+
     /// <summary>
     /// 嘗試使用技能 - 驗證條件並執行
     /// </summary>
@@ -420,7 +420,7 @@ public class DiceGame : MonoBehaviour
         {
             playerData.wantUseSkill.AddDiceData(sideNum);
         }
-        
+
         // 檢查技能條件是否滿足
         if (playerData.wantUseSkill.canUseSkill())
         {
@@ -430,11 +430,11 @@ public class DiceGame : MonoBehaviour
                 playerView.BurnDice(sideNum);
             }
             manaRoller.ConsumeSelectedDices();
-            
+
             BurnDiceTrail();
             manaRoller.BtnMode(manaRollerMode.UseDice);
             playerView.PlayAnim("charge");
-            
+
             // 發動技能
             StartCoroutine(PlayerFight());
         }
@@ -446,7 +446,7 @@ public class DiceGame : MonoBehaviour
             Debug.Log("技能條件不符，取消選取");
         }
     }
-    
+
     IEnumerator PlayerFight()
     {
         manaRoller.BtnMode(manaRollerMode.Off);
@@ -457,7 +457,7 @@ public class DiceGame : MonoBehaviour
         playerView.PlayAnim("fight");
         manaRoller.BtnMode(manaRollerMode.Idle);
         playerView.ClearDiceBox();
-        
+
         // 清空技能的 diceBox
         playerData.wantUseSkill.diceBox.Clear();
     }

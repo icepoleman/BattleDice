@@ -40,6 +40,12 @@ public class StageNode : MonoBehaviour
 
     // 防連點
     private bool isProcessing = false;
+
+    void GoNextStage()
+    {
+        EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, stageID);
+    }
+
     void Awake()
     {
         stageID = gameObject.name;
@@ -140,26 +146,32 @@ public class StageNode : MonoBehaviour
                 case StageType.Item:
                     Debug.Log($"取得道具: {stageID}{stageInfo}");
                     EventCenter.Dispatch(MapEvent.EVENT_GET_ITEM, stageInfo); //取得道具
+                    GoNextStage();
                     break;
                 case StageType.Gear:
                     EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
                     Debug.Log($"齒輪: {stageInfo}");
+                    GoNextStage();
                     break;
                 case StageType.Blood:
                     EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, int.Parse(stageInfo)); //回血
                     Debug.Log($"回復血量");
+                    GoNextStage();
                     break;
                 case StageType.Gold:
                     EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
                     Debug.Log($"金幣: {stageInfo}");
+                    GoNextStage();
                     break;
                 case StageType.Skill:
                     EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, int.Parse(stageInfo)); //取得技能 
                     Debug.Log($"技能: {stageInfo}");
+                    GoNextStage();
                     break;
                 case StageType.HolyGrail:
                     EventCenter.Dispatch(MapEvent.EVENT_OPEN_HOLY_GRAIL); //開啟三選一事件
                     Debug.Log($"三選一獎勵: {stageInfo}");
+                    GoNextStage();
                     break;
             }
         }

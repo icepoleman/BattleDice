@@ -16,7 +16,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] Text text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
-    [SerializeField] Transform popUpParent;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
@@ -35,11 +34,11 @@ public class MapManager : MonoBehaviour
         AddEvent();
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("ChangeSkillPanel", popUpParent);
+            await CommonUIManager.ShowPanel("ChangeSkillPanel");
         });
-        btn_edit.onClick.AddListener(() =>
+        btn_edit.onClick.AddListener(async () =>
         {
-            AddressableManager.LoadAndInstantiateAsync("EditPanel", popUpParent);
+            await CommonUIManager.ShowPanel("EditPanel");
         });
     }
     void AddEvent()
@@ -69,7 +68,7 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>("ClearMapPanel");
+        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ClearMapPanel" + ".prefab");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
         UnloadMapPrefab();
         await Task.Delay(100);
@@ -81,7 +80,7 @@ public class MapManager : MonoBehaviour
         await Task.Delay(2000);
         Destroy(_clearMap);
     }
-    void OnRecoverHealth(object[] param)
+    async void OnRecoverHealth(object[] param)
     {
         int recoverAmount = (int)param[0];
         GameDataManager.PlayerData.currentBlood += recoverAmount;
@@ -91,15 +90,18 @@ public class MapManager : MonoBehaviour
         }
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
-        GoNextOpenStage();
+        await CommonUIManager.ShowHintBubble(
+         LanguageManager.GetFormat("T_RecoverHealth", recoverAmount));
     }
-    void OnGetGold(object[] param)
+    async void OnGetGold(object[] param)
     {
         int goldAmount = (int)param[0];
         GameDataManager.Gold += goldAmount;
         text_gold.text = GameDataManager.Gold.ToString();
+        await CommonUIManager.ShowHintBubble(
+         LanguageManager.GetFormat("T_GetGold", goldAmount)
+        );
         Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
-        GoNextOpenStage();
     }
     //花費金幣
     void OnSpendGold(object[] param)
@@ -114,13 +116,15 @@ public class MapManager : MonoBehaviour
         Debug.Log($"花費金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
     }
 
-    void OnGetGear(object[] param)
+    async void OnGetGear(object[] param)
     {
         int gearAmount = (int)param[0];
         GameDataManager.Gear += gearAmount;
         text_gear.text = GameDataManager.Gear.ToString();
+        await CommonUIManager.ShowHintBubble(
+          LanguageManager.GetFormat("T_GetGear", gearAmount)
+        );
         Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
-        GoNextOpenStage();
     }
     async void OnGetSkill(object[] param)
     {
@@ -141,7 +145,7 @@ public class MapManager : MonoBehaviour
     void OnGetItem(object[] param)
     {
         string itemName = (string)param[0];
-        GoNextOpenStage();
+        // 道具處理邏輯
     }
     void GoNextOpenStage()
     {

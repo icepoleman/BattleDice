@@ -19,7 +19,7 @@ public class SaveLoadPanel : MonoBehaviour
         saveItemPrefab.SetActive(false);
         //todo 生成列表 修改特定存檔槽顯示
         SaveSlotInfo[] saveInfos = SaveManager.GetAllSlotInfos();
-        GameObject confirmPanel = await AddressableManager.LoadAssetAsync<GameObject>("ConfirmPanel");
+        GameObject confirmPanel = await AddressableManager.LoadAssetAsync<GameObject>( ABconfig.COMMON_PREFABS + "ConfirmPanel" + ".prefab");
         foreach (var info in saveInfos)
         {
             GameObject itemObj = Instantiate(saveItemPrefab, contentTransform);

@@ -135,7 +135,7 @@ public class SettingPanel : MonoBehaviour
     /// </summary>
     private void OnSFXSliderPointerUp(BaseEventData data)
     {
-        AudioManager.Instance.PlaySFX("Sfx_Click");
+        AudioManager.Instance.PlaySFX("Sound_Click");
     }
 
     /// <summary>

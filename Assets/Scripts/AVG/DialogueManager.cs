@@ -298,17 +298,17 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(lines[_page].Sound))
         {
             string _sound = lines[_page].Sound;
-            if(_sound.StartsWith("Sfx_"))
+            if (_sound.StartsWith("Sound_"))
             {
                 AudioManager.Instance.PlaySFX(_sound);
                 Debug.Log("播放音效:" + _sound);
             }
-            if(_sound.StartsWith("Bgm_"))
+            if (_sound.StartsWith("Bgm_"))
             {
                 AudioManager.Instance.PlayBGM(_sound, true, 1.0f);
                 Debug.Log("播放音樂:" + _sound);
             }
-            Debug.Log("播放音效:" + lines[_page].Sound);    
+            Debug.Log("播放音效:" + lines[_page].Sound);
         }
         //顯示對話
         if (lines[pageIndex].Dialogue != "")
@@ -362,17 +362,19 @@ public class DialogueManager : MonoBehaviour
     // 交叉淡入淡出換背景
     private async System.Threading.Tasks.Task CrossFadeBackground(string backgroundAddress)
     {
+        // 記錄舊背景地址（用於卸載）
+        string oldBgAddress = ABconfig.AVG_BG + currentBgAddress + ".png";
+        currentBgAddress = ABconfig.AVG_BG + backgroundAddress + ".png";
+
         // 載入新背景圖片
-        Sprite newSprite = await AddressableManager.LoadAssetAsync<Sprite>(backgroundAddress);
+        Sprite newSprite = await AddressableManager.LoadAssetAsync<Sprite>(currentBgAddress);
         if (newSprite == null)
         {
-            Debug.LogError($"❌ 無法載入背景: {backgroundAddress}");
+            Debug.LogError($"❌ 無法載入背景: {currentBgAddress}");
             return;
         }
 
-        // 記錄舊背景地址（用於卸載）
-        string oldBgAddress = currentBgAddress;
-        currentBgAddress = backgroundAddress;
+
 
         // 決定使用哪個 Image
         Image fadeInImage = useCg1 ? img_cg1 : img_cg2;
@@ -407,7 +409,7 @@ public class DialogueManager : MonoBehaviour
         // 切換標記
         useCg1 = !useCg1;
 
-        Debug.Log($"背景切換完成: {backgroundAddress}");
+        Debug.Log($"背景切換完成: {currentBgAddress}");
     }
 
     void JumpToTag(string _tag)
@@ -448,7 +450,7 @@ public class DialogueManager : MonoBehaviour
 
         // 不存在則生成並淡入（toggle on）
         currentState = DialogueState.SpineShow;
-        GameObject spinePrefab = await AddressableManager.LoadAssetAsync<GameObject>(spineAddress);
+        GameObject spinePrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.H_DATA_PREFABS + spineAddress);
         if (spinePrefab != null)
         {
             GameObject spineObj = Instantiate(spinePrefab);

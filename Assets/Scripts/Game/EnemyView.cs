@@ -61,7 +61,7 @@ public class EnemyView : CharacterView
     }
     public async void BornSkillCards(List<ISkillData> skills)
     {
-        GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>("enemySkillItem");
+        GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "enemySkillItem" + ".prefab");
         foreach (ISkillData skill in skills)
         {
             GameObject skillCard = Instantiate(skillCardPrefab, skillBoxs);
