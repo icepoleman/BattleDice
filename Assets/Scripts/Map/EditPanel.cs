@@ -15,11 +15,11 @@ public class EditPanel : MonoBehaviour
         });
         btn_saveGame.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("SavePanel");
+            await UIManager.ShowCommonPanel("SavePanel");
         });
         btn_set.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("SetPanel");
+            await UIManager.ShowCommonPanel("SetPanel");
         });
         btn_close.onClick.AddListener(() =>
         {

@@ -56,7 +56,7 @@ public class ShopPanel : MonoBehaviour
     {
         if (card.IsOwned)
         {
-            await CommonUIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_AlreadyOwned"));
+            await UIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_AlreadyOwned"));
             return;
         }
         
@@ -65,13 +65,13 @@ public class ShopPanel : MonoBehaviour
         // 檢查金幣是否足夠
         if (GameDataManager.Gold < price)
         {
-            await CommonUIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_NotEnoughGold"));
+            await UIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_NotEnoughGold"));
             return;
         }
         
         // 顯示購買確認
         string skillName = SkillDatabase.GetSkillConfig(card.SkillID).skillName;
-        await CommonUIManager.ShowConfirmPanel(
+        await UIManager.ShowConfirmPanel(
             LanguageManager.GetFormat("T_Shop_ConfirmBuy", skillName, price),
             () => PurchaseSkill(card)
         );

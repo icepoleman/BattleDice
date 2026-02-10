@@ -45,7 +45,7 @@ public class DiceGame : MonoBehaviour
     [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
-    void Start()
+    async void Start()
     {
         if (isOpen) return;
         isOpen = true;
@@ -57,8 +57,8 @@ public class DiceGame : MonoBehaviour
         playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
         enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         // 生成角色實例
-        CreateCharacter("character/jailerGirl", playerPos, true);
-        CreateCharacter("character/enemy", enemyPos, false);
+        await CreateCharacter(ABconfig.GAME_PREFABS + "player.prefab", playerPos, true);
+        await CreateCharacter(ABconfig.GAME_PREFABS + "enemy.prefab", enemyPos, false);
         playerData = GameDataManager.PlayerData;
         enemyData = GameDataManager.TmpEnemyData;
 
@@ -99,9 +99,9 @@ public class DiceGame : MonoBehaviour
         ChangeState(TurnState.roundStart);
     }
     // 通用角色生成方法
-    void CreateCharacter(string prefabPath, Transform positionTransform, bool isPlayer)
+    async Task CreateCharacter(string prefabPath, Transform positionTransform, bool isPlayer)
     {
-        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        GameObject prefab =  await AddressableManager.LoadAssetAsync<GameObject>(prefabPath);
         GameObject characterObj = Instantiate(prefab, positionTransform);
         characterObj.transform.localPosition = Vector3.zero;
         if (isPlayer)

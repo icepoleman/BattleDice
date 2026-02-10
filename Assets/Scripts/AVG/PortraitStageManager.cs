@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PortraitStageManager : MonoBehaviour
@@ -7,7 +8,7 @@ public class PortraitStageManager : MonoBehaviour
     //字典 名稱 對應 RoleView
     Dictionary<string, RoleView> roleViews = new Dictionary<string, RoleView>();
 
-    public void SetCharacter(string characterName, Sprite _newPortrait, string _animationName, string portraitPos)
+    public async Task SetCharacter(string characterName, Sprite _newPortrait, string _animationName, string portraitPos)
     {
         string oldPosition = null;
 
@@ -21,7 +22,7 @@ public class PortraitStageManager : MonoBehaviour
         else
         {
             //沒有這個角色 創建一個新的
-            GameObject roleViewObj = Instantiate(Resources.Load<GameObject>("ADV/RolePrefab"));
+            GameObject roleViewObj = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "RolePrefab" + ".prefab");
             roleViewObj.name = characterName;
             roleViewObj.transform.SetParent(transform);
             roleViewObj.transform.localScale = Vector3.one;
@@ -29,7 +30,7 @@ public class PortraitStageManager : MonoBehaviour
             RoleView roleView = roleViewObj.GetComponent<RoleView>();
             roleViews[characterName] = roleView;
 
-            if(portraitPos=="")
+            if (portraitPos == "")
                 portraitPos = "Center";
             // 先設置角色信息，但不執行位置動畫
             roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
@@ -57,12 +58,12 @@ public class PortraitStageManager : MonoBehaviour
         else
         {
             UpdateStagePos(portraitPos);
-            
+
             // 講話的角色移到最上層並高亮，其他角色變暗
             SetSpeakingCharacter(characterName);
         }
     }
-    
+
     // 設置講話中的角色（高亮並置頂）
     void SetSpeakingCharacter(string characterName)
     {

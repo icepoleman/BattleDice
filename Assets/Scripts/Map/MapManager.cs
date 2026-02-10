@@ -34,11 +34,11 @@ public class MapManager : MonoBehaviour
         AddEvent();
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("ChangeSkillPanel");
+            await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
         });
         btn_edit.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("EditPanel");
+            await UIManager.ShowCommonPanel("EditPanel");
         });
     }
     void AddEvent()
@@ -68,7 +68,7 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ClearMapPanel" + ".prefab");
+        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
         GameObject _clearMap = Instantiate(clearMapPanel, transform);
         UnloadMapPrefab();
         await Task.Delay(100);
@@ -90,7 +90,7 @@ public class MapManager : MonoBehaviour
         }
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
-        await CommonUIManager.ShowHintBubble(
+        await UIManager.ShowHintBubble(
          LanguageManager.GetFormat("T_RecoverHealth", recoverAmount));
     }
     async void OnGetGold(object[] param)
@@ -98,7 +98,7 @@ public class MapManager : MonoBehaviour
         int goldAmount = (int)param[0];
         GameDataManager.Gold += goldAmount;
         text_gold.text = GameDataManager.Gold.ToString();
-        await CommonUIManager.ShowHintBubble(
+        await UIManager.ShowHintBubble(
          LanguageManager.GetFormat("T_GetGold", goldAmount)
         );
         Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
@@ -121,7 +121,7 @@ public class MapManager : MonoBehaviour
         int gearAmount = (int)param[0];
         GameDataManager.Gear += gearAmount;
         text_gear.text = GameDataManager.Gear.ToString();
-        await CommonUIManager.ShowHintBubble(
+        await UIManager.ShowHintBubble(
           LanguageManager.GetFormat("T_GetGear", gearAmount)
         );
         Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
@@ -132,14 +132,15 @@ public class MapManager : MonoBehaviour
         if (!GameDataManager.HasSkillIDs.Contains(skillID))
         {
             GameDataManager.HasSkillIDs.Add(skillID);
-            await CommonUIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
+            await UIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
             Debug.Log($"獲得技能ID: {skillID}");
         }
     }
     async void OnOpenHolyGrail(object[] param)
     {
         //開啟三選一事件
-        await CommonUIManager.ShowPanel("HolyGrailPanel");
+        GameObject holyGrailPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "HolyGrailPanel" + ".prefab");
+        Instantiate(holyGrailPanel, transform);
     }
     //特殊道具用
     void OnGetItem(object[] param)
@@ -159,9 +160,9 @@ public class MapManager : MonoBehaviour
         string mapPrefabAddress = MapConfig.GetMapAddress(GameDataManager.CurrentMap);
         try
         {
-            Debug.Log($"開始載入地圖: {mapPrefabAddress}");
+            Debug.Log($"開始載入地圖: {ABconfig.MAP_PREFABS + mapPrefabAddress + ".prefab"}");
 
-            mapHandle = Addressables.LoadAssetAsync<GameObject>(mapPrefabAddress);
+            mapHandle = Addressables.LoadAssetAsync<GameObject>(ABconfig.MAP_PREFABS + mapPrefabAddress + ".prefab");
             GameObject mapPrefab = await mapHandle.Task;
 
             if (mapHandle.Status == AsyncOperationStatus.Succeeded)

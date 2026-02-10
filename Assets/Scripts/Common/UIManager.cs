@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 /// <summary>
 /// 通用UI管理器 - 提供常用UI彈窗的快捷生成方法
 /// </summary>
-public static class CommonUIManager
+public static class UIManager
 {
     private static Transform canvasTransform;
 
@@ -87,7 +87,7 @@ public static class CommonUIManager
         panel.SetUp(message, onConfirm, onCancel);
         return panel;
     }
-    public static async Task ShowPanel(string panelAB, Transform parent = null)
+    public static async Task ShowCommonPanel(string panelAB, Transform parent = null)
     {
         GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + panelAB + ".prefab");
         if (prefab == null)
@@ -96,6 +96,17 @@ public static class CommonUIManager
         }
 
         Transform targetParent = parent ?? GetCanvas();
-        GameObject hintObj = Object.Instantiate(prefab, targetParent);
+        Object.Instantiate(prefab, targetParent);
+    }
+    public static async Task ShowPanel(string panelAB, Transform parent = null)
+    {
+        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(panelAB + ".prefab");
+        if (prefab == null)
+        {
+            Debug.LogError($"無法載入 {panelAB} prefab");
+        }
+
+        Transform targetParent = parent ?? GetCanvas();
+        Object.Instantiate(prefab, targetParent);
     }
 }

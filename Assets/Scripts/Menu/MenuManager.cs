@@ -25,11 +25,11 @@ public class MenuManager : MonoBehaviour
         });
         btn_setting.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("SetPanel");
+            await UIManager.ShowCommonPanel("SetPanel");
         });
         btn_Load.onClick.AddListener(async () =>
         {
-            await CommonUIManager.ShowPanel("LoadPanel");
+            await UIManager.ShowCommonPanel("LoadPanel");
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
@@ -75,7 +75,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;
         GameDataManager.Gear = 0;
-        GameDataManager.PlayerData.keepDiceCount = 1;
+        GameDataManager.PlayerData.keepDiceCount = 8;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;

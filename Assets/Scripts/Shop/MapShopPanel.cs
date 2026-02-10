@@ -151,4 +151,8 @@ public class MapShopPanel : MonoBehaviour
         Debug.Log($"購買生命藥水，回復100血");
         Destroy(gameObject);
     }
+    void OnDestroy()
+    {
+        // 清理資源或取消訂閱事件（如果有的話）
+    }
 }

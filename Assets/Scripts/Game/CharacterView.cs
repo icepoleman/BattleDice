@@ -63,17 +63,17 @@ public class CharacterView : MonoBehaviour
         sr.sprite = ResourcesLoader.GetDiceSprite(sideNum);
     }
     float blood = 0;
-    public void UpdateBlood(float currentBlood, float maxBlood)
+    public async Task UpdateBlood(float currentBlood, float maxBlood)
     {
         if (currentBlood < blood)
         {
             //受傷動畫
             anim.Play("hurt");
-            CreateFlyText("-" + (blood - currentBlood).ToString(), Color.red, 1f, Ease.InOutBack);
+            await CreateFlyText("-" + (blood - currentBlood).ToString(), Color.red, 1f, Ease.InOutBack);
         }//回血動畫
         else if (currentBlood > blood)
         {
-            CreateFlyText("+" + (currentBlood - blood).ToString(), Color.green, 1f, Ease.InOutBack);
+            await CreateFlyText("+" + (currentBlood - blood).ToString(), Color.green, 1f, Ease.InOutBack);
         }
         blood = currentBlood;
         txt_blood.text = $"{currentBlood}/{maxBlood}";
@@ -98,22 +98,23 @@ public class CharacterView : MonoBehaviour
         text_diceCount.text = count.ToString();
     }
     //生成飛行文字
-    public void CreateFlyText(string _flyTxt, Color32 _color, float _time = 1, Ease _ease = Ease.Linear)
+    public async Task CreateFlyText(string _flyTxt, Color32 _color, float _time = 1, Ease _ease = Ease.Linear)
     {
-        GameObject damageText = Instantiate(Resources.Load<GameObject>("UI/flyText"));
-        damageText.transform.SetParent(transform);
-        damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        damageText.transform.localScale = new Vector3(1, 1, 1);
+        GameObject damageText = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "flyText.prefab");
+        GameObject _instFlyText = Instantiate(damageText);
+        _instFlyText.transform.SetParent(transform);
+        _instFlyText.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        _instFlyText.transform.localScale = new Vector3(1, 1, 1);
 
-        Text textMesh = damageText.GetComponent<Text>();
+        Text textMesh = _instFlyText.GetComponent<Text>();
         textMesh.text = _flyTxt;
         textMesh.fontSize = 28;
         textMesh.color = _color;
         // 添加飛行動畫
         //dottween動畫
-        damageText.GetComponent<RectTransform>().DOMoveY(damageText.transform.position.y + 0.5F, _time).SetEase(_ease).OnComplete(() =>
+        _instFlyText.GetComponent<RectTransform>().DOMoveY(_instFlyText.transform.position.y + 0.5F, _time).SetEase(_ease).OnComplete(() =>
         {
-            Destroy(damageText);
+            Destroy(_instFlyText);
         });
     }
 }

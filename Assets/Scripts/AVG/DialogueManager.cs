@@ -492,7 +492,7 @@ public class DialogueManager : MonoBehaviour
     private async void ShowSkipConfirmPanel()
     {
         isSkipPanelOpen = true;
-        await CommonUIManager.ShowConfirmPanel(LanguageManager.GetText("T_Skip_Dialogue_Hint"),
+        await UIManager.ShowConfirmPanel(LanguageManager.GetText("T_Skip_Dialogue_Hint"),
                     () =>
                     {
                         // 確認跳過
@@ -514,6 +514,17 @@ public class DialogueManager : MonoBehaviour
     {
         isOver = true;
         chatWindow.HideWindow();
+
+        // 檢查是否有戰鬥章節，如果有則跳轉到戰鬥
+        for (int i = pageIndex; i < lines.Count; i++)
+        {
+            if (lines[i].Chapter == "BATTLE")
+            {
+                Debug.Log("跳過劇情，進入戰鬥: " + int.Parse(lines[i].Flag));
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[i].Flag));
+                return;
+            }
+        }
 
         if (GameDataManager.TestMode)
         {

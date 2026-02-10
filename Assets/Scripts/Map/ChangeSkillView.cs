@@ -69,7 +69,7 @@ public class ChangeSkillView : MonoBehaviour
             // 選擇技能：檢查是否已滿
             if (chosenSkillsID.Count >= MAX_CHOSEN_SKILLS)
             {
-                await CommonUIManager.ShowHintBubble(LanguageManager.GetFormat("T_ChangeSkill_SkillMax", MAX_CHOSEN_SKILLS));
+                await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_ChangeSkill_SkillMax", MAX_CHOSEN_SKILLS));
                 return;
             }
 
@@ -93,7 +93,7 @@ public class ChangeSkillView : MonoBehaviour
         if (chosenSkillsID.Count == 0)
         {
             // 必須至少選擇一個技能
-            await CommonUIManager.ShowHintBubble(LanguageManager.GetText("T_ChangeSkill_Limit"));
+            await UIManager.ShowHintBubble(LanguageManager.GetText("T_ChangeSkill_Limit"));
             return;
         }
         GameDataManager.PlayerData.skillIDs = new List<int>(chosenSkillsID);
