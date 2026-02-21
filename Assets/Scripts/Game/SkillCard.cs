@@ -15,7 +15,10 @@ public class SkillCard : MonoBehaviour
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
     [SerializeField] Toggle tog_choose;
     ISkillData skillData;
-
+    void Start()
+    {
+        tog_choose.gameObject.SetActive(false);
+    }
     public void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
     {
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");

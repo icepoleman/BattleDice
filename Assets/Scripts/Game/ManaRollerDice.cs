@@ -9,7 +9,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 {
     [SerializeField] Image diceImage;
     [SerializeField] Button diceButton;
-    [SerializeField] GameObject obj_lock;
+    [SerializeField] Animator anim_lock;
     Action<ManaRollerDice> clickCallback;  // 改為傳遞自己
     Action<ManaRollerDice> rightClickCallback;
     public int sideNum;
@@ -37,7 +37,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isPointerDown) return;
+        if (isPointerDown||isFrozen) return;
         if (!isSelected)
         {
             transform.DOKill();
@@ -47,7 +47,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isPointerDown) return;
+        if (isPointerDown||isFrozen) return;
         transform.DOKill();
         transform.DOScale(1f, 0.15f).SetEase(Ease.OutQuad);
     }
@@ -170,7 +170,9 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
     {
         isFrozen = frozen;
         // 可以在這裡改變骰子的外觀以表示凍結狀態
-        obj_lock.SetActive(isFrozen);
+        anim_lock.SetBool("lock", isFrozen);
+        transform.DOKill();
+        transform.localScale = Vector3.one;
     }
 
     public bool IsFrozen()

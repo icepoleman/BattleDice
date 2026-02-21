@@ -14,7 +14,7 @@ public enum manaRollerMode
 public class ManaRoller : MonoBehaviour
 {
     manaRollerMode currentMode = manaRollerMode.Off;
-    Button btn_roll = null;//擲骰子按鈕
+    [SerializeField]Button btn_roll = null;//擲骰子按鈕
     Button btn_turnEnd = null;//結束回合按鈕
     [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
@@ -23,7 +23,7 @@ public class ManaRoller : MonoBehaviour
     int freezeCount = 0; //凍結數量
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] GameObject skillCardPrefab = null;
-    Text txt_rollCount = null;//擲骰次數顯示
+    [SerializeField] Text txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
@@ -48,9 +48,8 @@ public class ManaRoller : MonoBehaviour
         diceSprites = spriteList.ToArray(); 
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
-        btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
-        txt_rollCount = GameObject.Find("rollerBtns/btn_roll/txt_rollCount").GetComponent<Text>();
+    
 
         //按鈕事件
         btn_changeSkill.onClick.AddListener(() =>
