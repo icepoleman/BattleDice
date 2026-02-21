@@ -14,6 +14,7 @@ public class ShopPanel : MonoBehaviour
     
     public void SetUp(string _shopTag)
     {
+        GameDataManager.Gold=1000; //測試用，之後刪除
         shopTag = _shopTag;
         btn_close.onClick.AddListener(CloseShop);
         RefreshGoldDisplay();

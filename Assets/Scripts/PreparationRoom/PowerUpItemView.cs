@@ -52,7 +52,7 @@ public class PowerUpItemView : MonoBehaviour
         // 名稱
         if (txt_name != null)
         {
-            txt_name.text = LanguageManager.GetText(config.displayName);
+            //txt_name.text = LanguageManager.GetText(config.displayName);
         }
         
         // 描述
@@ -90,7 +90,7 @@ public class PowerUpItemView : MonoBehaviour
             
             if (txt_nextValue != null)
             {
-                txt_nextValue.text = $"+{nextIncrease}";
+                txt_nextValue.text = LanguageManager.GetText(config.displayName) + $"+{nextIncrease}";
             }
             
             if (txt_cost != null)

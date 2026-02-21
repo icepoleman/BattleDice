@@ -23,11 +23,11 @@ public class PortraitStageManager : MonoBehaviour
         {
             //沒有這個角色 創建一個新的
             GameObject roleViewObj = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "RolePrefab" + ".prefab");
-            roleViewObj.name = characterName;
-            roleViewObj.transform.SetParent(transform);
-            roleViewObj.transform.localScale = Vector3.one;
-            roleViewObj.transform.localPosition = Vector3.zero;
-            RoleView roleView = roleViewObj.GetComponent<RoleView>();
+            GameObject roleObj = Instantiate(roleViewObj,transform);
+            roleObj.name = characterName;
+            roleObj.transform.localScale = Vector3.one;
+            roleObj.transform.localPosition = Vector3.zero;
+            RoleView roleView = roleObj.GetComponent<RoleView>();
             roleViews[characterName] = roleView;
 
             if (portraitPos == "")

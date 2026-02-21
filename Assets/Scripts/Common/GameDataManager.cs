@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 //遊戲資料管理器
 public static class GameDataManager
@@ -14,7 +15,8 @@ public static class GameDataManager
     public static int Gear { get; set; } = 0;    // 當前齒輪數量(強化素材)
     public static EnemyData TmpEnemyData { get; set; } = new EnemyData();
     public static string TmpAvgChapter { get; set; } = "Chapter1";
-    public static string CompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
+    public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
+    public static List<string> TmpSaveRoomStory { get; set; } = new List<string>();//整備室特殊劇情 
     
     // 升級等級存儲
     private static Dictionary<PowerUpType, int> powerUpLevels = new Dictionary<PowerUpType, int>()

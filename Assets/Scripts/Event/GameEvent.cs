@@ -45,7 +45,7 @@ public class MapEvent
     public const string EVENT_GET_GEAR = "MapEvent_GetGear"; //取得齒輪通知
     public const string EVENT_GET_ITEM = "MapEvent_GetItem";//取得道具通知(特殊道具)
     public const string EVENT_GET_SKILL = "MapEvent_GetSkill";//取得技能通知
-    public const string EVENT_OPEN_HOLY_GRAIL = "MapEvent_OpenHolyGrail";//開啟三選一事件
+    public const string EVENT_OPEN_MAP_SHOP = "MapEvent_OpenMapShop";//開啟地圖商店
 }
 public class AdvEvent
 {

@@ -9,19 +9,11 @@ public class CharacterView : MonoBehaviour
 {
     private Animator anim;
     protected GameObject diceBox = null;
-    //todo
-    private TextMeshProUGUI txt_blood = null;
-    private Slider slider_blood = null;
-    private Text text_diceCount;
-    private Slider slider_cd = null;
+
     public virtual void Init()
     {
         diceBox = transform.Find("diceBox").gameObject;
-        txt_blood = transform.Find("txt_blood").GetComponent<TextMeshProUGUI>();
-        slider_blood = transform.Find("slider_blood").GetComponent<Slider>();
-        text_diceCount = transform.Find("img_dice/txt_diceCount").GetComponent<Text>();
         anim = transform.GetComponent<Animator>();
-        slider_cd = transform.Find("slider_cd").GetComponent<Slider>();
     }
 
     // 只負責顯示骰子動畫，不處理數值邏輯
@@ -76,12 +68,6 @@ public class CharacterView : MonoBehaviour
             await CreateFlyText("+" + (currentBlood - blood).ToString(), Color.green, 1f, Ease.InOutBack);
         }
         blood = currentBlood;
-        txt_blood.text = $"{currentBlood}/{maxBlood}";
-        slider_blood.value = currentBlood / maxBlood;
-    }
-    public void UpdateCD(float currentCD)
-    {
-        slider_cd.value = currentCD;
     }
     // 公開方法供 DiceGame 直接呼叫
     public virtual void PlayAnim(string animName)
@@ -92,10 +78,6 @@ public class CharacterView : MonoBehaviour
     public void SetAnimBool(string paramName, bool value)
     {
         anim.SetBool(paramName, value);
-    }
-    public void UpdateDiceCount(int count)
-    {
-        text_diceCount.text = count.ToString();
     }
     //生成飛行文字
     public async Task CreateFlyText(string _flyTxt, Color32 _color, float _time = 1, Ease _ease = Ease.Linear)

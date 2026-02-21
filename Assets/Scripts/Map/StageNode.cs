@@ -18,7 +18,7 @@ public enum StageType
     Gold,
     Skill,
     Gear,
-    HolyGrail//三選一獎勵
+    MapShop//地圖商店
 }
 public class StageNode : MonoBehaviour
 {
@@ -31,7 +31,9 @@ public class StageNode : MonoBehaviour
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
     [Header("完成後送技能(可選)")]
-    [SerializeField] int completedSkill;  //要彈窗
+    [SerializeField] int completedSkill; 
+    [Header("整備室限定劇情(可選)")]
+    [SerializeField] List<string> saveRoomStory; 
 
     Image stageImage;
     Button nodeButton;
@@ -52,6 +54,7 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
+        GameDataManager.TmpSaveRoomStory = new List<string>(saveRoomStory);
         SetState(StageState.Locked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
     }
@@ -106,7 +109,7 @@ public class StageNode : MonoBehaviour
                 stageImage.color = Color.white;
                 break;
             case StageState.Completed:
-                if (completedSkill != 0 && GameDataManager.CompletedStory == "")
+                if (completedSkill != 0 && GameDataManager.TmpCompletedStory == "")
                 {
                     EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, completedSkill); //取得技能
                     completedSkill = 0; //只給一次
@@ -127,7 +130,7 @@ public class StageNode : MonoBehaviour
         {
             isProcessing = true;
 
-            GameDataManager.CompletedStory = completedStory;
+            GameDataManager.TmpCompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
@@ -168,17 +171,17 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"技能: {stageInfo}");
                     GoNextStage();
                     break;
-                case StageType.HolyGrail:
-                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_HOLY_GRAIL); //開啟三選一事件
-                    Debug.Log($"三選一獎勵: {stageInfo}");
+                case StageType.MapShop:
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_MAP_SHOP); //開啟地圖商店
+                    Debug.Log($"地圖商店: {stageInfo}");
                     GoNextStage();
                     break;
             }
         }
-        if (stageType != StageType.Battle && GameDataManager.CompletedStory != "")
+        if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
         {
-            string tmpStory = GameDataManager.CompletedStory;
-            GameDataManager.CompletedStory = "";
+            string tmpStory = GameDataManager.TmpCompletedStory;
+            GameDataManager.TmpCompletedStory = "";
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
         }
     }

@@ -17,13 +17,13 @@ T_skill_condition_title|【條件】
 T_skill_effect_title|【效果】
 T_GirlName|女獄卒
 T_PowerUp_MaxBlood|最大血量
-T_PowerUp_MaxBlood_Desc|提升角色的最大生命值
-T_PowerUp_DiceCount|骰子數量
-T_PowerUp_DiceCount_Desc|增加每回合獲得的骰子數量
-T_PowerUp_KeepDiceCount|保留骰子
-T_PowerUp_KeepDiceCount_Desc|增加可固定的骰子數量
+T_PowerUp_MaxBlood_Desc|角色的最大生命值
+T_PowerUp_DiceCount|生成骰子數量
+T_PowerUp_DiceCount_Desc|每回合生成骰子數量
+T_PowerUp_KeepDiceCount|鎖定骰子數量
+T_PowerUp_KeepDiceCount_Desc|增加可鎖定的骰子數量，鎖定的骰子不會被重骰影響
 T_PowerUp_MaxRollCount|重骰次數
-T_PowerUp_MaxRollCount_Desc|增加每回合的重骰次數
+T_PowerUp_MaxRollCount_Desc|增加每回合的重骰次數上限
 T_PowerUp_MaxLevel|已滿級
 T_Skip_Dialogue_Hint|是否跳過劇情?
 T_ChangeSkill_SkillMax|技能已滿（最多 {0} 個）

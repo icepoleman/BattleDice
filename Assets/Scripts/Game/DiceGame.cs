@@ -28,8 +28,6 @@ public class DiceGame : MonoBehaviour
 
     Transform enemyPos = null;//敵人位置
     Transform playerPos = null;//玩家位置
-    [SerializeField] Transform powerDiceBurnPos = null;//骰子燃燒位置
-    [SerializeField] GameObject diceTrailPrefab = null;//骰子特效預置物
     [SerializeField] GameObject littleSkillCardPrefab = null;//怪物技能卡預置物
     [SerializeField] Animator turnAnim = null;
 
@@ -65,8 +63,10 @@ public class DiceGame : MonoBehaviour
         playerEnterBlood = playerData.currentBlood;//記錄進入時血量
 
         //test
-        // enemyData = EnemyFactory.CreateEnemy(1);
-        // playerData = new PlayerData();
+        enemyData = EnemyFactory.CreateEnemy(1);
+        playerData = new PlayerData();
+        playerData.maxRollCount=100;
+        playerData.diceCount=4;
 
         //  enemyData.AddBuff(new BaseBuff(10, 0, 0));
         //playerData.AddBuff(new BaseBuff(10, 0, 0));
@@ -74,8 +74,8 @@ public class DiceGame : MonoBehaviour
 
         playerData.wantUseSkill = playerData.skillData[0];//自動選擇第一個技能
 
-        playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
-        enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
+        await playerView.UpdateBlood(playerData.currentBlood, playerData.maxBlood);
+        await enemyView.UpdateBlood(enemyData.currentBlood, enemyData.maxBlood);
         gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         gameUiView.UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
 
@@ -194,6 +194,8 @@ public class DiceGame : MonoBehaviour
                 List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
                 enemyView.UpdateSkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
 
+                //玩家回合開始前 取消所有選取狀態
+                manaRoller.ClearAllSelections();
                 ChangeState(TurnState.playerTurn);
 
                 break;
@@ -431,7 +433,6 @@ public class DiceGame : MonoBehaviour
             }
             manaRoller.ConsumeSelectedDices();
 
-            BurnDiceTrail();
             manaRoller.BtnMode(manaRollerMode.UseDice);
             playerView.PlayAnim("charge");
 
@@ -598,16 +599,6 @@ public class DiceGame : MonoBehaviour
             }
             Debug.Log("Game Over");
             ChangeState(TurnState.roundEnd);
-        }
-    }
-    void BurnDiceTrail()
-    {
-        if (diceTrailPrefab != null)
-        {
-            GameObject trail = Instantiate(diceTrailPrefab, powerDiceBurnPos.position, Quaternion.identity);
-            //DOTween移動trail position _burnPos to playerPos
-            trail.transform.DOMove(playerPos.position, 0.1f).SetEase(Ease.Linear);
-            Destroy(trail, 1f); // 假設特效持續2秒
         }
     }
     void UpdateBloodUI(object[] args)

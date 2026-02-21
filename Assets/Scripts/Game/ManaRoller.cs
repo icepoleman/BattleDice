@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,48 +23,69 @@ public class ManaRoller : MonoBehaviour
     int freezeCount = 0; //凍結數量
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] GameObject skillCardPrefab = null;
-    [SerializeField] GameObject diceOFF;
-    Transform skillCardParent;    //技能生成位置
     Text txt_rollCount = null;//擲骰次數顯示
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
     [SerializeField] ToggleGroup skillToggleGroup;
-    List<SkillCard> skillCardList = new List<SkillCard>();
-    public void Init()
+    [SerializeField] List<SkillCard> skillCardList;
+    [SerializeField] SkillCard chooseSkillCard;
+    [SerializeField] Button btn_changeSkill;
+    [SerializeField] Animator anim_skillBox;
+    Sprite[] diceSprites; // 骰子圖集
+    [SerializeField] Material diceMtl;
+    public async void Init()
     {
         if (isOpen) return;
+        var spriteList = await AddressableManager.LoadLabelAsync<Sprite>("Dice");
+        // 依照名稱排序 (dice_0, dice_1, dice_2...)
+        spriteList.Sort((a, b) =>
+        {   
+            int aNum = int.Parse(a.name.Replace("dice_", ""));
+            int bNum = int.Parse(b.name.Replace("dice_", ""));
+            return aNum.CompareTo(bNum);
+        });
+        diceSprites = spriteList.ToArray(); 
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
-        skillCardParent = GameObject.Find("skillBox").transform;
         btn_roll = GameObject.Find("rollerBtns/btn_roll").GetComponent<Button>();
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
         txt_rollCount = GameObject.Find("rollerBtns/btn_roll/txt_rollCount").GetComponent<Text>();
 
         //按鈕事件
+        btn_changeSkill.onClick.AddListener(() =>
+        {
+            bool isActive = anim_skillBox.GetBool("isOpen");
+            anim_skillBox.SetBool("isOpen", !isActive);
+        });
         btn_roll.onClick.AddListener(() => { RollDices(); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
-        
+
+        chooseSkillCard.SetInteractable(false);
+
         //監聽技能選取事件
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
 
         BtnMode(manaRollerMode.Off);
         isOpen = true;
     }
-    
+
     void OnDestroy()
     {
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
     }
-    
+
     void OnSkillSelected(object[] args)
     {
+        anim_skillBox.SetBool("isOpen", false);
+        ISkillData selectedSkill = args[0] as ISkillData;
+        chooseSkillCard.SetData(selectedSkill);
         // 切換技能時清除所有骰子選取狀態
         ClearAllSelections();
     }
 
     //獲取初始骰子
-    public void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
+    public async void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
         rollCount = _maxRollCount;
         txt_rollCount.text = "重骰次數：" + rollCount.ToString();
@@ -78,6 +100,7 @@ public class ManaRoller : MonoBehaviour
                 break;
             }
             burnRollDice(sideNum);
+            await System.Threading.Tasks.Task.Delay(100);
         }
     }
     public manaRollerMode GetCurrentMode()
@@ -86,48 +109,34 @@ public class ManaRoller : MonoBehaviour
     }
     public void BtnMode(manaRollerMode mode)
     {
-        diceOFF.SetActive(mode == manaRollerMode.Off);
         switch (mode)
         {
             case manaRollerMode.Off:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                SetSkillCardInteractable(false);
                 break;
             case manaRollerMode.Idle:
                 btn_roll.interactable = rollCount > 0 && manaDiceList.Count > 0;
                 btn_turnEnd.interactable = true;
-                SetSkillCardInteractable(true);
                 break;
             case manaRollerMode.UseDice:
                 btn_roll.interactable = false;
                 btn_turnEnd.interactable = false;
-                SetSkillCardInteractable(false);
                 break;
         }
         currentMode = mode;
     }
-    public void SetSkillCardInteractable(bool _isInteractable)
-    {
-        foreach (var skillCard in skillCardList)
-        {
-            skillCard.SetInteractable(_isInteractable);
-        }
-    }
+
     bool firstSetSkill = false;
     //生成技能卡
     public void SetAllSkill(List<ISkillData> iskList)
     {
-        foreach (var isk in iskList)
+        for (int i = 0; i < iskList.Count; i++)
         {
-            //生成技能物件
-            GameObject skillObj = Instantiate(skillCardPrefab, skillCardParent);
-            SkillCard skillCard = skillObj.GetComponent<SkillCard>();
-            skillCard.SetData(isk, skillToggleGroup);
-            skillCardList.Add(skillCard);
+            skillCardList[i].SetData(iskList[i], skillToggleGroup);
             if (!firstSetSkill)
             {
-                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, isk);
+                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, iskList[i]);
                 firstSetSkill = true;
             }
         }
@@ -172,7 +181,7 @@ public class ManaRoller : MonoBehaviour
         List<ManaRollerDice> selected = new List<ManaRollerDice>();
         foreach (var dice in manaDiceList)
         {
-            if (dice.IsSelected)
+            if (dice.isSelected)
             {
                 selected.Add(dice);
             }
@@ -188,9 +197,9 @@ public class ManaRoller : MonoBehaviour
         List<int> values = new List<int>();
         foreach (var dice in manaDiceList)
         {
-            if (dice.IsSelected)
+            if (dice.isSelected)
             {
-                values.Add(dice.SideNum);
+                values.Add(dice.sideNum);
             }
         }
         return values;
@@ -204,7 +213,7 @@ public class ManaRoller : MonoBehaviour
         List<ManaRollerDice> toRemove = new List<ManaRollerDice>();
         foreach (var dice in manaDiceList)
         {
-            if (dice.IsSelected)
+            if (dice.isSelected)
             {
                 if (dice.IsFrozen())
                 {
@@ -275,6 +284,8 @@ public class ManaRoller : MonoBehaviour
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
             }
+            , diceSprites
+            , diceMtl
         );
         manaDiceList.Add(diceScript);
     }

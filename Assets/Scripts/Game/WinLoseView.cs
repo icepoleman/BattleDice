@@ -21,10 +21,10 @@ public class WinLoseView : MonoBehaviour
 
         btn_check.onClick.AddListener(() =>
         {
-            if (!string.IsNullOrEmpty(GameDataManager.CompletedStory))
+            if (!string.IsNullOrEmpty(GameDataManager.TmpCompletedStory))
             {
-                string tmpStory = GameDataManager.CompletedStory;
-                GameDataManager.CompletedStory = "";
+                string tmpStory = GameDataManager.TmpCompletedStory;
+                GameDataManager.TmpCompletedStory = "";
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
             }
             else

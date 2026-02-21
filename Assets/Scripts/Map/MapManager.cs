@@ -50,7 +50,7 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_HOLY_GRAIL, OnOpenHolyGrail);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
     }
     void OnDestroy()
     {
@@ -61,7 +61,7 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_HOLY_GRAIL, OnOpenHolyGrail);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
         // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
@@ -136,11 +136,11 @@ public class MapManager : MonoBehaviour
             Debug.Log($"獲得技能ID: {skillID}");
         }
     }
-    async void OnOpenHolyGrail(object[] param)
+    async void OnOpenMapShop(object[] param)
     {
         //開啟三選一事件
-        GameObject holyGrailPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "HolyGrailPanel" + ".prefab");
-        Instantiate(holyGrailPanel, transform);
+        GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
+        Instantiate(mapShopPanel, transform);
     }
     //特殊道具用
     void OnGetItem(object[] param)

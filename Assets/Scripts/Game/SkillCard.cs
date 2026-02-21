@@ -13,12 +13,9 @@ public class SkillCard : MonoBehaviour
     [SerializeField] Transform trans_skillDiceParent;
     [SerializeField] GameObject obj_dice;
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
-    Toggle tog_choose;
+    [SerializeField] Toggle tog_choose;
     ISkillData skillData;
-    public void Awake()
-    {
-        tog_choose = GetComponent<Toggle>();
-    }
+
     public void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
     {
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
@@ -40,6 +37,7 @@ public class SkillCard : MonoBehaviour
             skillInfoPanel.SetActive(true);
             EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, _skillData);
         });
+        tog_choose.gameObject.SetActive(true);
     }
     void BurnConditionDices()//如果沒有條件骰子就不顯示
     {
@@ -67,9 +65,6 @@ public class SkillCard : MonoBehaviour
     // 滑鼠離開按鈕時觸發
     public void OnMouseExit()
     {
-        if (!tog_choose.isOn)
-        {
-            skillInfoPanel.SetActive(false);
-        }
+        skillInfoPanel.SetActive(false);
     }
 }
