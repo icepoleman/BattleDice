@@ -109,7 +109,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
         diceImage.material.SetFloat("_OutlineEnabled", selected ? 1f : 0f);
     }
 
-    public void RollDice(int _sideNum)
+    public void RollDice(int _sideNum, float totalDuration)
     {
         Debug.Log(isFrozen);
         if (isFrozen) return;
@@ -117,12 +117,11 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
         // 重骰時取消選取
         SetSelected(false);
         // 開始滾動動畫
-        PlayRollAnimation(_sideNum);
+        PlayRollAnimation(_sideNum, totalDuration);
     }
 
-    private void PlayRollAnimation(int targetSide)
+    private void PlayRollAnimation(int targetSide, float totalDuration)
     {
-        float totalDuration = 1f;
         int switchCount = 15; // 總共切換幾次
         int currentSwitch = 0;
         int lastRandomSide = -1;

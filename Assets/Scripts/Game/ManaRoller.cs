@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 public enum manaRollerMode
 {
     Off,
@@ -14,7 +15,9 @@ public enum manaRollerMode
 public class ManaRoller : MonoBehaviour
 {
     manaRollerMode currentMode = manaRollerMode.Off;
-    [SerializeField]Button btn_roll = null;//擲骰子按鈕
+    [SerializeField] Button btn_roll = null;//擲骰子按鈕
+    [SerializeField] GameObject obj_vfx_roll = null;//擲骰子特效
+    float rollAnimationDuration = 1f; // 擲骰子動畫總時長
     Button btn_turnEnd = null;//結束回合按鈕
     [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
@@ -22,8 +25,8 @@ public class ManaRoller : MonoBehaviour
     int rollCount = 0; //最大擲骰次數
     int freezeCount = 0; //凍結數量
     [SerializeField] GameObject dicePrefab = null;
-    [SerializeField] GameObject skillCardPrefab = null;
-    [SerializeField] Text txt_rollCount = null;//擲骰次數顯示
+    [SerializeField] Image img_rollCount = null;//擲骰次數顯示
+    RectTransform rect_rollCount;
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
@@ -32,6 +35,7 @@ public class ManaRoller : MonoBehaviour
     [SerializeField] SkillCard chooseSkillCard;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Animator anim_skillBox;
+    [SerializeField] RectTransform rect_skillStar;
     Sprite[] diceSprites; // 骰子圖集
     [SerializeField] Material diceMtl;
     public async void Init()
@@ -40,16 +44,17 @@ public class ManaRoller : MonoBehaviour
         var spriteList = await AddressableManager.LoadLabelAsync<Sprite>("Dice");
         // 依照名稱排序 (dice_0, dice_1, dice_2...)
         spriteList.Sort((a, b) =>
-        {   
+        {
             int aNum = int.Parse(a.name.Replace("dice_", ""));
             int bNum = int.Parse(b.name.Replace("dice_", ""));
             return aNum.CompareTo(bNum);
         });
-        diceSprites = spriteList.ToArray(); 
+        diceSprites = spriteList.ToArray();
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
-    
+        rect_rollCount = img_rollCount.GetComponent<RectTransform>();
+        rect_rollCount.anchoredPosition = new Vector2(rect_rollCount.anchoredPosition.x, -200f);
 
         //按鈕事件
         btn_changeSkill.onClick.AddListener(() =>
@@ -71,7 +76,35 @@ public class ManaRoller : MonoBehaviour
 
     void OnDestroy()
     {
+        rect_rollCount?.DOKill();
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
+    }
+
+    /// <summary>
+    /// 開啟擲骰次數顯示（從-200移動到0，完成後漂浮）
+    /// </summary>
+    public void OpenRollCount()
+    {
+        rect_rollCount.DOKill();
+        rect_rollCount.DOAnchorPosY(-10f, 0.5f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                // 漂浮動畫
+                rect_rollCount.DOAnchorPosY(10f, 1f)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(-1, LoopType.Yoyo);
+            });
+    }
+
+    /// <summary>
+    /// 關閉擲骰次數顯示（移動到-200）
+    /// </summary>
+    public void CloseRollCount()
+    {
+        rect_rollCount.DOKill();
+        rect_rollCount.DOAnchorPosY(-200f, 0.3f)
+            .SetEase(Ease.InBack);
     }
 
     void OnSkillSelected(object[] args)
@@ -87,7 +120,8 @@ public class ManaRoller : MonoBehaviour
     public async void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
         rollCount = _maxRollCount;
-        txt_rollCount.text = "重骰次數：" + rollCount.ToString();
+        img_rollCount.sprite = diceSprites[rollCount];
+        OpenRollCount();
         maxFreezeCount = _keepDiceCount;
         text_freezeCount.text = maxFreezeCount.ToString();
         maxDiceCount = GameDataManager.PlayerData.manaRollerMaxDiceCount;
@@ -140,23 +174,31 @@ public class ManaRoller : MonoBehaviour
             }
         }
     }
-    public void AddSkill(ISkillData isk)
-    {
-        //新增技能
-    }
-    public void RollDices()
+    public async void RollDices()
     {
         rollCount--;
-        txt_rollCount.text = "重骰次數：" + rollCount.ToString();
+        img_rollCount.sprite = diceSprites[rollCount];
+        btn_roll.interactable = false; // 立即禁用按鈕
+        obj_vfx_roll.SetActive(false); // 先關閉特效以重置動畫
+        obj_vfx_roll.SetActive(true); // 重新啟用特效以播放
+
         for (int i = 0; i < manaDiceList.Count; i++)
         {
             int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
-                                                       // burnRollDice(side);
-            manaDiceList[i].RollDice(side);
+            manaDiceList[i].RollDice(side, rollAnimationDuration);
         }
-        if (rollCount <= 0)
+
+        // 等待動畫結束
+        await System.Threading.Tasks.Task.Delay((int)(rollAnimationDuration * 1000));
+
+        // 動畫結束後，如果還有次數且在 Idle 模式才重新啟用
+        if (rollCount > 0 && currentMode == manaRollerMode.Idle && manaDiceList.Count > 0)
         {
-            btn_roll.interactable = false;
+            btn_roll.interactable = true;
+        }
+        else
+        {
+            CloseRollCount();
         }
     }
     public void ClearAllRollDices()
