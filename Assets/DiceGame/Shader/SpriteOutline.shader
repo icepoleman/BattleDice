@@ -5,6 +5,7 @@ Shader "Custom/SpriteOutline2D"
         _MainTex ("Sprite Texture", 2D) = "white" {}
         _OutlineColor ("Outline Color", Color) = (1,0,0,1)
         _OutlineSize ("Outline Size (px)", Range(0,16)) = 1
+        _OutlinePulseSpeed ("Outline Pulse Speed", Range(0,10)) = 3
         [Toggle] _OutlineEnabled ("Outline Enabled", Float) = 1
     }
 
@@ -34,6 +35,7 @@ Shader "Custom/SpriteOutline2D"
             sampler2D _MainTex;
             float4 _OutlineColor;
             float _OutlineSize;
+            float _OutlinePulseSpeed;
             float _OutlineEnabled;
             float4 _MainTex_TexelSize;
 
@@ -86,7 +88,14 @@ Shader "Custom/SpriteOutline2D"
 
                 // 有鄰近像素 → 畫描邊
                 if (alpha > 0)
-                    return _OutlineColor;
+                {
+                    // 透明度在 0.5 ~ 1.0 之間來回變化（更明顯的效果）
+                    float pulse = sin(_Time.y * _OutlinePulseSpeed);
+                    float pulseAlpha = 0.75 + 0.25 * pulse; // 0.5 ~ 1.0
+                    float4 outlineCol = _OutlineColor;
+                    outlineCol.a = pulseAlpha;
+                    return outlineCol;
+                }
 
                 return col;
             }

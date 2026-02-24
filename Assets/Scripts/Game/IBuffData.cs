@@ -178,7 +178,6 @@ public class BaseBuff : IBuffData
                 int extraDice = (int)effectValues[0];
                 character.diceCount += extraDice;
                 Debug.Log($"{buffName} 額外獲得 {extraDice} 顆骰子！");
-                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 break;
 
             case BuffEffectType.LimitBornDice:
@@ -186,7 +185,6 @@ public class BaseBuff : IBuffData
                 int diceLimit = (int)effectValues[0];
                 character.limitDiceCount = diceLimit;
                 Debug.Log($"{buffName} 限制骰子數量為 {diceLimit}！");
-                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 break;
 
             case BuffEffectType.Stun:
@@ -248,7 +246,6 @@ public class BaseBuff : IBuffData
                 {
                     character.diceCount = 0;
                 }
-                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_MANA_DICE);
                 Debug.Log($"{buffName} 移除了 {extraDice} 顆骰子！");
                 break;
             case BuffEffectType.AttackPower:

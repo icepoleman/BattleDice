@@ -56,12 +56,17 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45647f5df823be642968dbcc8b4a7d0c
-    m_Address: Assets/DiceGame_ab/Game/Prefabs/HolyGrailPanel.prefab
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/MapShopPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4854145e3f80c514e9b5485758909b10
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_4.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48eec2bd5831c83459365de1ef3a082a
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/manaDice.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -123,9 +123,11 @@ public abstract class BaseCharacterData : ICharacterData
         TriggerBuffs(BuffTrigger.OnDamageTaken);
         float takeDmg = damage - buffDefense;
         if (takeDmg < 0) takeDmg = 0;
+        if (damage < 0) takeDmg = damage;//如果是治療則不受防禦力影響
         Debug.Log($"{(isPlayer ? "玩家" : "敵人")} 受到 {takeDmg} 點傷害，防禦力 {buffDefense}");
         currentBlood -= takeDmg;
         if (currentBlood < 0) currentBlood = 0;
+        if (currentBlood > maxBlood) currentBlood = maxBlood;
     }
     public void RemoveSleepBuff()
     {
@@ -229,7 +231,7 @@ public class PlayerData : BaseCharacterData
         manaRollerMaxDiceCount = 8;
 
         //test用
-        skillIDs = new List<int> { 1,2,4 };
+        skillIDs = new List<int> { 1, 2, 19 };
         diceCount = 8;
         maxRollCount = 3;
         maxBlood = 100f;

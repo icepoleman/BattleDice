@@ -21,7 +21,6 @@ public class GameEvent
     public const string EVENT_ENEMY_REROLL = "GameEvent_EnemyReroll";//敵人重新擲骰並再次攻擊
 
     //UI
-    public const string EVENT_UPDATE_MANA_DICE = "GameEvent_UpdateManaDice";//更新能量骰子顯示
     public const string EVENT_UPDATE_BLOOD_UI = "GameEvent_UpdateBloodUI";//更新血量UI
 }
 public class StateEvent

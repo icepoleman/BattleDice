@@ -168,7 +168,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public void SetFrozen(bool frozen)
     {
         isFrozen = frozen;
-        // 可以在這裡改變骰子的外觀以表示凍結狀態
+        SetSelected(false);
         anim_lock.SetBool("lock", isFrozen);
         transform.DOKill();
         transform.localScale = Vector3.one;

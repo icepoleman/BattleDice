@@ -7,8 +7,8 @@ using DG.Tweening;
 using System.Threading.Tasks;
 public class CharacterView : MonoBehaviour
 {
-    private Animator anim;
-    protected GameObject diceBox = null;
+    [SerializeField] private Animator anim;
+    [SerializeField] protected GameObject diceBox = null;
 
     public virtual void Init()
     {
