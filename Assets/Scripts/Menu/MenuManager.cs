@@ -47,8 +47,8 @@ public class MenuManager : MonoBehaviour
         GameDataManager.CurrentStage = "0";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
-        GameDataManager.Gold = 0;
-        GameDataManager.Gear = 0;
+        GameDataManager.Gold = 1000;
+        GameDataManager.Gear = 1000;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID

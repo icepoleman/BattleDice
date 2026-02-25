@@ -45,6 +45,7 @@ public class MapEvent
     public const string EVENT_GET_ITEM = "MapEvent_GetItem";//取得道具通知(特殊道具)
     public const string EVENT_GET_SKILL = "MapEvent_GetSkill";//取得技能通知
     public const string EVENT_OPEN_MAP_SHOP = "MapEvent_OpenMapShop";//開啟地圖商店
+    public const string EVENT_UNCHOOSE_SKILL = "MapEvent_UnchooseSkill";//取消選取技能
 }
 public class AdvEvent
 {
