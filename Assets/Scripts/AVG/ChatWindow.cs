@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 
 public class ChatWindow : MonoBehaviour
 {
+    public event Action OnTypingComplete;
     [SerializeField] private Text dialogueText; // 對話框文字
     [SerializeField] private Text nameText; // 角色名稱文字
     [SerializeField] private GameObject doneImg; // 對話結束圖示
@@ -105,6 +107,7 @@ public class ChatWindow : MonoBehaviour
         }
         doneImg.SetActive(true);
         isTyping = false;
+        OnTypingComplete?.Invoke();
     }
     
     // 設定快轉模式

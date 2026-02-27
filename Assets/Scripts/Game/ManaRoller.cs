@@ -357,7 +357,7 @@ public class ManaRoller : MonoBehaviour
                     }
                     else
                     {
-                        UnityEngine.Debug.Log("已達到最大凍結骰子數量");
+                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));
                     }
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();

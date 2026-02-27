@@ -17,6 +17,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private List<DialogueData> lines = new List<DialogueData>();
     [SerializeField] Image img_cg1;
     [SerializeField] Image img_cg2;
+    [SerializeField] Button btn_auto;
+    bool isAuto = false;
     private bool useCg1 = true; // 追蹤當前使用的是哪個 Image
     private string currentBgAddress = ""; // 追蹤當前背景地址（用於卸載）
     [SerializeField] float cgFadeDuration = 0.5f; // CG 淡入淡出時間
@@ -113,6 +115,8 @@ public class DialogueManager : MonoBehaviour
     {
         inputActions.Player.next.performed += OnNextClick;
         EventCenter.AddListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+        chatWindow.OnTypingComplete += OnTypingComplete;
+        btn_auto.onClick.AddListener(ToggleAuto);
     }
     private void OnDestroy()
     {
@@ -122,6 +126,34 @@ public class DialogueManager : MonoBehaviour
         PortraitManager.UnloadAll();
         AddressableManager.ReleaseAll();
         EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
+        chatWindow.OnTypingComplete -= OnTypingComplete;
+        btn_auto.onClick.RemoveListener(ToggleAuto);
+    }
+
+    [Header("自動播放設定")]
+    [SerializeField] private float autoPlayDelay = 1f; // 自動播放延遲時間
+
+    void ToggleAuto()
+    {
+        isAuto = !isAuto;
+        Debug.Log(isAuto ? "▶️ 自動播放開啟" : "⏸️ 自動播放關閉");
+    }
+
+    void OnTypingComplete()
+    {
+        if (isAuto && !onChoose && !isOver)
+        {
+            StartCoroutine(AutoNextCoroutine());
+        }
+    }
+
+    System.Collections.IEnumerator AutoNextCoroutine()
+    {
+        yield return new WaitForSeconds(autoPlayDelay);
+        if (isAuto && !onChoose && !isOver) // 再次檢查狀態
+        {
+            OnNextClick(new InputAction.CallbackContext());
+        }
     }
     void OnClickChoice(object[] args)
     {

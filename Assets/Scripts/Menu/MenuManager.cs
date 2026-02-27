@@ -11,25 +11,20 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
     [SerializeField] Button btn_setting;
-    [SerializeField] Button btn_Load;
     [SerializeField] Button btn_test;
 
     async void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
         btn_exitGame.onClick.AddListener(() => { Application.Quit(); });
-        btn_continue.onClick.AddListener(() =>
+        btn_continue.onClick.AddListener(async () =>
         {
-            OnContinueClicked();
+            await UIManager.ShowCommonPanel("LoadPanel");
             AudioManager.Instance.PlaySFX("Sound_Click1");
         });
         btn_setting.onClick.AddListener(async () =>
         {
             await UIManager.ShowCommonPanel("SetPanel");
-        });
-        btn_Load.onClick.AddListener(async () =>
-        {
-            await UIManager.ShowCommonPanel("LoadPanel");
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
@@ -56,7 +51,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
     }
-    //載入快速存檔
+    //載入快速存檔(暫時停用 功能沒移除)
     void OnContinueClicked()
     {
         SaveManager.LoadAutoSave();//載入自動存檔

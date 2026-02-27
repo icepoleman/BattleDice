@@ -25,6 +25,13 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Transform trans_enemyDiceBox;
     [SerializeField] Transform trans_playerDiceBox;
     [SerializeField] Animator fightAnim;
+    [Header("攻擊表演相關")]
+    [SerializeField] RectTransform rect_player;
+    [SerializeField] RectTransform rect_enemy;
+    [SerializeField] Image img_player;
+    [SerializeField] Image img_enemy;
+    [SerializeField] Transform trans_fightPlace;
+    [SerializeField] Transform trans_fightPlaceFront;
 
     Sprite[] diceSprites;
     GameObject prefab_manaDice;
@@ -164,10 +171,24 @@ public class GameUiView : MonoBehaviour
     }
     public void ChooseDice(int[] sideNum, bool isPlayer)
     {
-       
+
     }
     public void PlayFightAnim(string _animName)
     {
         fightAnim.Play(_animName);
+    }
+    void FightAnimShow(bool isPlayer)
+    {
+        rect_player.SetParent(trans_fightPlaceFront);
+        rect_enemy.SetParent(trans_fightPlaceFront);
+        if (isPlayer)
+            rect_player.SetAsLastSibling();
+        else 
+            rect_enemy.SetAsLastSibling();
+        //Image attackerImg = isPlayer ? img_player : img_enemy;
+        //Image defenderImg = isPlayer ? img_enemy : img_player;
+
+        //將攻擊者移動到戰鬥位置
+
     }
 }

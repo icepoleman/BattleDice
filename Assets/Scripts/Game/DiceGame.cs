@@ -56,7 +56,7 @@ public class DiceGame : MonoBehaviour
         enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
         playerData.maxRollCount=2;
-        playerData.diceCount=4;
+        playerData.diceCount=8;
 
         //  enemyData.AddBuff(new BaseBuff(10, 0, 0));
         //playerData.AddBuff(new BaseBuff(10, 0, 0));
