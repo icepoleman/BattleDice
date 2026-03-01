@@ -16,7 +16,6 @@ public static class SkillFactory
     /// <param name="effectText">效果文字</param>
     /// <param name="selfBuffs">自身Buff</param>
     /// <param name="targetBuffs">目標Buff</param>
-    /// <param name="breakDiceCount">破壞骰子數</param>
     /// <param name="generateDices">生成骰子資料 允許骰子, 最後一個=需要數量 (1|3|5|3)</param>
     /// <param name="tag">標記技能出處</param>
     /// <remarks>

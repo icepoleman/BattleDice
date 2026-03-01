@@ -180,6 +180,39 @@ public static class SaveManager
         return System.IO.File.Exists(autoSaveFilePath);
     }
 
+    /// <summary>
+    /// 獲取自動存檔資訊
+    /// </summary>
+    /// <returns>自動存檔資訊，如果沒有則返回 null</returns>
+    public static SaveSlotInfo GetAutoSaveInfo()
+    {
+        if (!HasAutoSave()) return null;
+
+        try
+        {
+            string json = System.IO.File.ReadAllText(autoSaveFilePath);
+            GameSaveData saveData = JsonUtility.FromJson<GameSaveData>(json);
+
+            return new SaveSlotInfo
+            {
+                slotIndex = -1, // -1 代表自動存檔
+                playerName = saveData.playerName,
+                currentStage = saveData.currentStage,
+                preparationRoomStage = saveData.preparationRoomStage,
+                currentMap = saveData.currentMap,
+                saveTime = saveData.SaveTime,
+                gold = saveData.gold,
+                gear = saveData.gear,
+                isEmpty = false
+            };
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"讀取自動存檔資訊失敗: " + e.Message);
+            return null;
+        }
+    }
+
     // ==================== 核心存读档逻辑 ====================
 
     // 统一存档逻辑

@@ -57,6 +57,7 @@ public class DiceGame : MonoBehaviour
         playerData = new PlayerData();
         playerData.maxRollCount=2;
         playerData.diceCount=8;
+        playerData.AddBuff(new BaseBuff(28, 0, 1));
 
         //  enemyData.AddBuff(new BaseBuff(10, 0, 0));
         //playerData.AddBuff(new BaseBuff(10, 0, 0));
@@ -132,156 +133,214 @@ public class DiceGame : MonoBehaviour
         if (currentState == newState) return;
         playerData.RemoveInvalidBuffs();
         enemyData.RemoveInvalidBuffs();
+        
         switch (newState)
         {
             case TurnState.roundStart:
-                // 在這裡處理回合開始的邏輯
-                turnAnim.Play("turnStart");
-                await Task.Delay(1000);
-                //雙方同時骰
-                List<int> enemyDiceResult = new List<int>();
-                List<int> playerDiceResult = new List<int>();
-                if (playerData.state == CharacterState.Idle)
-                {
-                    playerDiceResult = playerData.RollDice();
-                }
-                if (enemyData.state == CharacterState.Idle)
-                {
-                    enemyDiceResult = enemyData.RollDice();
-                }
-                // 同時執行兩個動畫
-                await Task.WhenAll(
-                    gameUiView.ShowDice(playerDiceResult, true),
-                    gameUiView.ShowDice(enemyDiceResult, false)
-                );
-                // 兩個都完成後才繼續
-                // 取得可發動的技能列表
-                List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
-                gameUiView.UpdateEnemySkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
-
-                //玩家回合開始前 取消所有選取狀態
-                manaRoller.ClearAllSelections();
-                ChangeState(TurnState.playerTurn);
-
+                await HandleRoundStart();
                 break;
             case TurnState.playerTurn:
-                turnAnim.Play("playerTurn");
-                await Task.Delay(1000);
-                UpdateBloodUI(null);
-                manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
-                // 在這裡處理玩家回合的邏輯
-                Debug.Log("Player's Turn");
-                playerData.TurnStartBuffEffect();
-                manaRoller.BtnMode(manaRollerMode.Idle);
-                if (playerData.state == CharacterState.Stunned)
-                {
-                    await Task.Delay(1000);
-                    TurnEndBtnClick(null);
-                }
-                else if (playerData.state == CharacterState.Sleep)
-                {
-                    await Task.Delay(1000);
-                    //判定是否起床 50%機率自動醒
-                    System.Random rand = new System.Random();
-                    int chance = rand.Next(0, 100);
-                    if (chance < 50)
-                    {
-                        TurnEndBtnClick(null);
-                    }
-                    else
-                    {
-                        playerData.RemoveSleepBuff();
-                        playerData.state = CharacterState.Idle;
-                    }
-                }
-                else
-                {
-                    gameUiView.ClearDiceBox(true);
-                }
+                await HandlePlayerTurn();
                 break;
             case TurnState.enemyTurn:
-                turnAnim.Play("enemyTurn");
-                await Task.Delay(1000);
-                UpdateBloodUI(null);
-                manaRoller.BtnMode(manaRollerMode.Off);
-                // 在這裡處理敵人回合的邏輯
-                Debug.Log("Enemy's Turn");
-                enemyData.TurnStartBuffEffect();
-                gameUiView.ClearDiceBox(false);
-                if (enemyData.state == CharacterState.Stunned)
-                {
-                    enemyData.TurnEndBuffDecrease();
-                    await Task.Delay(500);
-                    ChangeState(TurnState.roundEnd);
-                }
-                else if (enemyData.state == CharacterState.Sleep)
-                {
-                    await Task.Delay(1000);
-                    //判定是否起床 50%機率自動醒
-                    System.Random rand = new System.Random();
-                    int chance = rand.Next(0, 100);
-                    if (chance < 50)
-                    {
-                        enemyData.TurnEndBuffDecrease();
-                        await Task.Delay(500);
-                        ChangeState(TurnState.roundEnd);
-                    }
-                    else
-                    {
-                        enemyData.RemoveSleepBuff();
-                        enemyData.state = CharacterState.Idle;
-                        await Task.Delay(500);
-                        ChangeState(TurnState.roundEnd);
-                    }
-                }
-                else
-                {
-                    //敵人使用技能;
-                    enemyRerollPending = 0; // 重置重骰計數
-                    enemyData.UseSkill();
-                    await Task.Delay(300);
-
-                    // 等待所有重骰完成
-                    while (enemyRerollPending > 0)
-                    {
-                        await Task.Delay(100);
-                    }
-
-                    enemyData.TurnEndBuffDecrease();
-                    await Task.Delay(200);
-                    ChangeState(TurnState.roundEnd);
-                }
-
-                //enemy特寫擲骰 顯示使用技能
+                await HandleEnemyTurn();
                 break;
             case TurnState.roundEnd:
-                if (gameOver) return;
-                //任一方死亡 結束遊戲
-                if (playerData.IsDead() || enemyData.IsDead())
-                {
-                    gameOver = true;
-                    playerData.RemoveAllBuff();
-                    await Task.Delay(500);
-                    Debug.Log("Game Over");
-                    GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "winLosePanel" + ".prefab");
-                    GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
-                    GameDataManager.Gold += enemyData.IsDead() ? enemyData.goldReward : 0;
-                    GameDataManager.Gear += enemyData.IsDead() ? enemyData.gearReward : 0;
-                    string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
-                    winlosePanel.GetComponent<WinLoseView>().SetData(enemyData.IsDead(), winText);
-                }
-                else
-                {
-                    await Task.Delay(1000);
-                    ChangeState(TurnState.roundStart);
-                }
-
-                break;
-            default:
+                await HandleRoundEnd();
                 break;
         }
         currentState = newState;
     }
+
+    #region Turn Handlers
+    /// <summary>
+    /// 回合開始：玩家擲骰
+    /// </summary>
+    async Task HandleRoundStart()
+    {
+        turnAnim.Play("turnStart");
+        await Task.Delay(1000);
+
+        List<int> playerDiceResult = new List<int>();
+        if (playerData.state == CharacterState.Idle)
+        {
+            playerDiceResult = playerData.RollDice();
+        }
+        await gameUiView.ShowDice(playerDiceResult, true);
+
+        manaRoller.ClearAllSelections();
+        ChangeState(TurnState.playerTurn);
+    }
+
+    /// <summary>
+    /// 玩家回合
+    /// </summary>
+    async Task HandlePlayerTurn()
+    {
+        turnAnim.Play("playerTurn");
+        await Task.Delay(1000);
+        UpdateBloodUI(null);
+        manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
+        Debug.Log("Player's Turn");
+        playerData.TurnStartBuffEffect();
+        manaRoller.BtnMode(manaRollerMode.Idle);
+
+        switch (playerData.state)
+        {
+            case CharacterState.Stunned:
+                await Task.Delay(1000);
+                TurnEndBtnClick(null);
+                break;
+            case CharacterState.Sleep:
+                await HandleSleepState(playerData, isPlayer: true);
+                break;
+            default:
+                gameUiView.ClearDiceBox(true);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 敵人回合
+    /// </summary>
+    async Task HandleEnemyTurn()
+    {
+        turnAnim.Play("enemyTurn");
+        await Task.Delay(1000);
+        UpdateBloodUI(null);
+        manaRoller.BtnMode(manaRollerMode.Off);
+        Debug.Log("Enemy's Turn");
+        enemyData.TurnStartBuffEffect();
+        gameUiView.ClearDiceBox(false);
+
+        switch (enemyData.state)
+        {
+            case CharacterState.Stunned:
+                enemyData.TurnEndBuffDecrease();
+                await Task.Delay(500);
+                ChangeState(TurnState.roundEnd);
+                break;
+            case CharacterState.Sleep:
+                await HandleSleepState(enemyData, isPlayer: false);
+                break;
+            default:
+                await EnemyAction();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 回合結束：判定勝負或進入下一回合
+    /// </summary>
+    async Task HandleRoundEnd()
+    {
+        if (gameOver) return;
+
+        if (playerData.IsDead() || enemyData.IsDead())
+        {
+            await HandleGameOver();
+        }
+        else
+        {
+            await Task.Delay(1000);
+            ChangeState(TurnState.roundStart);
+        }
+    }
+
+    /// <summary>
+    /// 處理睡眠狀態：50% 機率醒來
+    /// </summary>
+    async Task HandleSleepState(BaseCharacterData character, bool isPlayer)
+    {
+        await Task.Delay(1000);
+        
+        System.Random rand = new System.Random();
+        bool wakeUp = rand.Next(0, 100) >= 50;
+
+        if (!wakeUp)
+        {
+            // 沒醒，跳過回合
+            if (isPlayer)
+            {
+                TurnEndBtnClick(null);
+            }
+            else
+            {
+                character.TurnEndBuffDecrease();
+                await Task.Delay(500);
+                ChangeState(TurnState.roundEnd);
+            }
+        }
+        else
+        {
+            // 醒了，可以行動
+            character.RemoveSleepBuff();
+            character.state = CharacterState.Idle;
+            await Task.Delay(500);
+
+            if (!isPlayer)
+            {
+                await EnemyAction();
+            }
+            // 玩家醒來後可正常操作，不需額外處理
+        }
+    }
+
+    /// <summary>
+    /// 遊戲結束處理
+    /// </summary>
+    async Task HandleGameOver()
+    {
+        gameOver = true;
+        playerData.RemoveAllBuff();
+        await Task.Delay(500);
+        Debug.Log("Game Over");
+
+        GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "winLosePanel" + ".prefab");
+        GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
+
+        bool playerWon = enemyData.IsDead();
+        GameDataManager.Gold += playerWon ? enemyData.goldReward : 0;
+        GameDataManager.Gear += playerWon ? enemyData.gearReward : 0;
+
+        string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
+        winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, winText);
+    }
+    #endregion
+
+    #region Enemy Action
+    async Task EnemyAction()
+    {
+        // 敵人擲骰
+        List<int> enemyDiceResult = new List<int>();
+        if (enemyData.state == CharacterState.Idle)
+        {
+            enemyDiceResult = enemyData.RollDice();
+        }
+        await gameUiView.ShowDice(enemyDiceResult, false);
+
+        // 取得可發動的技能列表
+        List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
+        gameUiView.UpdateEnemySkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
+        await Task.Delay(1000);
+        gameUiView.ClearDiceBox(false);
+        // 敵人使用技能
+        enemyRerollPending = 0; // 重置重骰計數
+        enemyData.UseSkill();
+        await Task.Delay(300);
+
+        // 等待所有重骰完成
+        while (enemyRerollPending > 0)
+        {
+            await Task.Delay(100);
+        }
+
+        enemyData.TurnEndBuffDecrease();
+        await Task.Delay(200);
+        ChangeState(TurnState.roundEnd);
+    }
+    #endregion
+
     void OnDestroyEnemyDice(object[] args)
     {
         Debug.Log("Destroy Enemy Dice Event Triggered");
@@ -407,8 +466,6 @@ public class DiceGame : MonoBehaviour
     IEnumerator PlayerFight()
     {
         manaRoller.BtnMode(manaRollerMode.Off);
-        yield return new WaitForSeconds(0.2f);
-        gameUiView.CreateFlyText(playerData.wantUseSkill.skillName);//之後分類
         yield return new WaitForSeconds(1f);
         playerData.UseSkill();
         gameUiView.PlayFightAnim("playerAtk");
@@ -431,7 +488,6 @@ public class DiceGame : MonoBehaviour
     void SkillCardClick(object[] args)
     {
         ISkillData _skill = (ISkillData)args[0];
-        if (currentState != TurnState.playerTurn) return;
         playerData.wantUseSkill = _skill;
         // manaRoller.BtnMode(manaRollerMode.Idle);
         Debug.Log("Skill Card clicked" + _skill.skillName);
@@ -482,7 +538,7 @@ public class DiceGame : MonoBehaviour
             SkillOrderData skillOrder = skillOrderQueue.Dequeue();
             BaseCharacterData attacker = skillOrder.isPlayerUse ? playerData : enemyData;
             //角色喊技能
-            gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
+            //gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
             switch (skillOrder.skillType)
             {
                 case SkillType.Attack:
@@ -524,11 +580,13 @@ public class DiceGame : MonoBehaviour
         {
             playerData.TakeDamage(damage);
             gameUiView.PlayFightAnim("enemyAtk");
+            gameUiView.CreateFlyBloodText((int)damage, true);
         }
         else
         {
             enemyData.TakeDamage(damage);
             gameUiView.PlayFightAnim("playerAtk");
+            gameUiView.CreateFlyBloodText((int)damage, false);
         }
         UpdateBloodUI(null);
         //todo 結算回合

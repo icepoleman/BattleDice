@@ -3,21 +3,27 @@ ID,Buff名稱,觸發時機,效果,數值,效果文(多語系要分出去)
 2,中毒 Ex,OnTurnEnd,HP,-20,回合結束，生命-20
 3,撕裂,OnSkillUse,HP,-20,使用技能時，生命-20
 4,暈眩,OnApply,Stun,,"無法攻擊,生成骰子"
-5,睡眠,OnApply,Sleep,,"睡著,回合開始50%醒或遭受攻擊解除"
+5,睡眠,OnApply,Sleep,,回合開始時有 50% 機率甦醒，受到攻擊時解除。
 6,魔力增幅,OnApply,BornDice,1,生成骰子+1
 7,魔力增幅 Ex,OnApply,BornDice,2,生成骰子+2
 8,魔力衰弱,OnApply,BornDice,-1,生成骰子-1
 9,魔力衰弱 Ex,OnApply,BornDice,-2,生成骰子-2
-10,攻擊強化,OnApply,AttackPower,10,傷害+10
-11,攻擊強化 Ex,OnApply,AttackPower,20,傷害+20
-12,攻擊弱化,OnApply,AttackPower,-10,傷害-10
-13,攻擊弱化 Ex,OnApply,AttackPower,-20,傷害-20
+10,攻擊強化,OnApply,AttackPower,20,傷害+20
+11,攻擊強化 Ex,OnApply,AttackPower,40,傷害+40
+12,攻擊弱化,OnApply,AttackPower,-20,傷害-20
+13,攻擊弱化 Ex,OnApply,AttackPower,-40,傷害-40
 14,魔力護盾,OnApply,Defense,20,受到傷害-20
 15,魔力護盾 Ex,OnApply,Defense,40,受到傷害-40
-16,治癒,OnTurnEnd,HP,10,回合結束時，生命+10
-17,治癒 Ex,OnTurnEnd,HP,20,回合結束時，生命+20
+16,治癒,OnTurnEnd,HP,10,回合結束時，生命+20
+17,治癒 Ex,OnTurnEnd,HP,20,回合結束時，生命+40
 18,巨人化,OnApply,MaxHP,50,最大生命+50
-19,狂戰士,OnDamageTaken,SpawnBuff,20|1|0,受傷時，生成狂暴狀態
+19,狼之怒,OnDamageTaken,SpawnBuff,20|1|0,受傷時，獲得狂暴
 20,狂暴,OnSkillUse,EnemyReroll,,多發動一次攻擊
 21,虛脫,OnApply,LimitBornDice,1,生成骰變為1
 22,尖刺,OnDamageTaken,EnemyHP,-20,受傷時，敵方生命-20
+23,定時炸彈,OnRemove,HP,-666,倒數結束時，生命-666
+24,燃燒,OnTurnEnd,HP,-30,回合結束，生命-30
+25,吃飽就睡,OnHealReceived,SpawnBuff,5|1|0,生命+時，進入睡眠
+26,解放,OnRemove,SpawnBuff,11|0|6,倒數結束時，獲得攻擊強化 Ex
+27,麻痺,OnApply,LimitDiceRollResults,1|2|3|4|5,骰子點數上限變為 5
+28,麻痺Ex,OnApply,LimitDiceRollResults,1|2|3|4,骰子點數上限變為 4

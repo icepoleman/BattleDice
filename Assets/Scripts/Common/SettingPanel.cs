@@ -24,6 +24,25 @@ public class SettingPanel : MonoBehaviour
     private Coroutine sampleTypingCoroutine;
     private string str_typeSpeedSample;
 
+    [Header("銀幕顯示設定")]
+    [SerializeField] private Dropdown dropdown_displayMode;
+    private const string SCREEN_MODE_KEY = "ScreenMode";
+
+    [Header("解析度設定")]
+    [SerializeField] private Dropdown dropdown_screenSize;
+    private const string RESOLUTION_KEY = "Resolution";
+
+    // 16:9 解析度列表
+    private readonly (int width, int height)[] resolutions16_9 = new[]
+    {
+        (1280, 720),
+        (1366, 768),
+        (1600, 900),
+        (1920, 1080),
+        (2560, 1440),
+        (3840, 2160)
+    };
+
     private void OnEnable()
     {
         InitializeUI();
@@ -52,6 +71,54 @@ public class SettingPanel : MonoBehaviour
         // 文字速度滑桿（0.01~0.1，預設0.05）
         textSpeedSlider.value = ChatWindow.TypingSpeed;
         PlaySampleText(ChatWindow.TypingSpeed);
+
+        // 螢幕模式下拉選單
+        InitializeScreenDropdown();
+
+        // 解析度下拉選單
+        InitializeResolutionDropdown();
+    }
+
+    /// <summary>
+    /// 初始化解析度下拉選單
+    /// </summary>
+    private void InitializeResolutionDropdown()
+    {
+        dropdown_screenSize.ClearOptions();
+
+        int currentIndex = 0;
+        int savedIndex = PlayerPrefs.GetInt(RESOLUTION_KEY, -1);
+
+        for (int i = 0; i < resolutions16_9.Length; i++)
+        {
+            var res = resolutions16_9[i];
+            dropdown_screenSize.options.Add(new Dropdown.OptionData($"{res.width} x {res.height}"));
+
+            // 如果沒有儲存的設定，檢查當前解析度
+            if (savedIndex == -1 && Screen.width == res.width && Screen.height == res.height)
+            {
+                currentIndex = i;
+            }
+        }
+
+        dropdown_screenSize.value = savedIndex >= 0 ? savedIndex : currentIndex;
+        dropdown_screenSize.RefreshShownValue();
+    }
+
+    /// <summary>
+    /// 初始化螢幕模式下拉選單
+    /// </summary>
+    private void InitializeScreenDropdown()
+    {
+        dropdown_displayMode.ClearOptions();
+        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_Fullscreen")));
+        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_BorderlessWindow")));
+        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_Windowed")));
+
+        // 讀取已儲存的螢幕模式
+        int savedMode = PlayerPrefs.GetInt(SCREEN_MODE_KEY, 0);
+        dropdown_displayMode.value = savedMode;
+        dropdown_displayMode.RefreshShownValue();
     }
 
     /// <summary>
@@ -80,6 +147,10 @@ public class SettingPanel : MonoBehaviour
         closeButton.onClick.AddListener(() => Destroy(gameObject));
 
         textSpeedSlider.onValueChanged.AddListener(OnTextSpeedChanged);
+
+        dropdown_displayMode.onValueChanged.AddListener(OnScreenModeChanged);
+
+        dropdown_screenSize.onValueChanged.AddListener(OnResolutionChanged);
     }
 
     /// <summary>
@@ -94,6 +165,8 @@ public class SettingPanel : MonoBehaviour
         bgmMuteToggle.onValueChanged.RemoveListener(OnBGMMuteChanged);
         sfxMuteToggle.onValueChanged.RemoveListener(OnSFXMuteChanged);
         textSpeedSlider.onValueChanged.RemoveListener(OnTextSpeedChanged);
+        dropdown_displayMode.onValueChanged.RemoveListener(OnScreenModeChanged);
+        dropdown_screenSize.onValueChanged.RemoveListener(OnResolutionChanged);
 
         if (sampleTypingCoroutine != null)
             StopCoroutine(sampleTypingCoroutine);
@@ -190,6 +263,46 @@ public class SettingPanel : MonoBehaviour
         // 顯示完畢後等待一下再重新播放
         yield return new WaitForSeconds(1f);
         PlaySampleText(speed);
+    }
+    #endregion
+
+    #region Screen Mode
+    /// <summary>
+    /// 螢幕模式變更
+    /// </summary>
+    private void OnScreenModeChanged(int index)
+    {
+        PlayerPrefs.SetInt(SCREEN_MODE_KEY, index);
+        PlayerPrefs.Save();
+
+        switch (index)
+        {
+            case 0: // 全螢幕
+                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+                break;
+            case 1: // 視窗全螢幕
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                break;
+            case 2: // 視窗化
+                Screen.fullScreenMode = FullScreenMode.Windowed;
+                break;
+        }
+    }
+    #endregion
+
+    #region Resolution
+    /// <summary>
+    /// 解析度變更
+    /// </summary>
+    private void OnResolutionChanged(int index)
+    {
+        if (index < 0 || index >= resolutions16_9.Length) return;
+
+        PlayerPrefs.SetInt(RESOLUTION_KEY, index);
+        PlayerPrefs.Save();
+
+        var res = resolutions16_9[index];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
     }
     #endregion
 }

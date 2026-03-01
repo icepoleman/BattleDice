@@ -26,12 +26,8 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Transform trans_playerDiceBox;
     [SerializeField] Animator fightAnim;
     [Header("攻擊表演相關")]
-    [SerializeField] RectTransform rect_player;
-    [SerializeField] RectTransform rect_enemy;
     [SerializeField] Image img_player;
     [SerializeField] Image img_enemy;
-    [SerializeField] Transform trans_fightPlace;
-    [SerializeField] Transform trans_fightPlaceFront;
 
     Sprite[] diceSprites;
     GameObject prefab_manaDice;
@@ -92,25 +88,6 @@ public class GameUiView : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    //生成飛行文字
-    public async Task CreateFlyText(string _flyTxt)
-    {
-        GameObject damageText = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "flyText.prefab");
-        GameObject _instFlyText = Instantiate(damageText);
-        _instFlyText.transform.SetParent(transform);
-        _instFlyText.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        _instFlyText.transform.localScale = new Vector3(1, 1, 1);
-
-        Text textMesh = _instFlyText.GetComponent<Text>();
-        textMesh.text = _flyTxt;
-        textMesh.fontSize = 28;
-        // 添加飛行動畫
-        //dottween動畫
-        _instFlyText.GetComponent<RectTransform>().DOMoveY(_instFlyText.transform.position.y + 0.5F, 1).SetEase(Ease.Linear).OnComplete(() =>
-        {
-            Destroy(_instFlyText);
-        });
-    }
     public async void BornEnemySkillCards(List<ISkillData> skills)
     {
         GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "enemySkillItem" + ".prefab");
@@ -169,26 +146,32 @@ public class GameUiView : MonoBehaviour
         manaDice diceView = dice.GetComponent<manaDice>();
         diceView.SetDiceFace(sideNum, diceSprites[sideNum]);
     }
-    public void ChooseDice(int[] sideNum, bool isPlayer)
+    //生成飛行文字
+    public async void CreateFlyBloodText(int damage, bool isPlayer)
     {
+        RectTransform spawnPoint = isPlayer ? img_player.GetComponent<RectTransform>() : img_enemy.GetComponent<RectTransform>();
+        GameObject damageText = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "flyText.prefab");
+        GameObject _instFlyText = Instantiate(damageText);
+        RectTransform _instRect = _instFlyText.GetComponent<RectTransform>();
+        _instFlyText.transform.SetParent(transform);
+        _instRect.position = spawnPoint.position;
+        _instRect.localPosition += new Vector3(0, 200, 0); // 往上偏移一點位置
+        _instFlyText.transform.localScale = Vector3.one;
 
+        Text textMesh = _instFlyText.GetComponent<Text>();
+        if (damage > 0)
+            textMesh.text = "-" + damage.ToString();
+        else
+            textMesh.text = "+" + (-damage).ToString();
+
+        // 往上飛行
+        _instRect.DOMoveY(_instRect.position.y + 1f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            Destroy(_instFlyText);
+        });
     }
     public void PlayFightAnim(string _animName)
     {
         fightAnim.Play(_animName);
-    }
-    void FightAnimShow(bool isPlayer)
-    {
-        rect_player.SetParent(trans_fightPlaceFront);
-        rect_enemy.SetParent(trans_fightPlaceFront);
-        if (isPlayer)
-            rect_player.SetAsLastSibling();
-        else 
-            rect_enemy.SetAsLastSibling();
-        //Image attackerImg = isPlayer ? img_player : img_enemy;
-        //Image defenderImg = isPlayer ? img_enemy : img_player;
-
-        //將攻擊者移動到戰鬥位置
-
     }
 }

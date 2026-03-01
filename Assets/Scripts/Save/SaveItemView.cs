@@ -9,9 +9,17 @@ public class SaveItemView : MonoBehaviour
     [SerializeField] Text txt_gold;
     [SerializeField] Text txt_saveTime;
     [SerializeField] Text txt_null;
-    public void SetData(SaveSlotInfo info)
+    public void SetData(SaveSlotInfo info, bool isAutoSave = false)
     {
-        txt_saveNum.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Number", (info.slotIndex + 1).ToString());
+        if (isAutoSave)
+        {
+            txt_saveNum.text = LanguageManager.GetText("T_Menu_Save_Slot_Auto");
+        }
+        else
+        {
+            txt_saveNum.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Number", (info.slotIndex + 1).ToString());
+        }
+        
         if (info.isEmpty)
         {
             // 设置为空槽位的显示

@@ -27,8 +27,6 @@ public class ChangeSkillView : MonoBehaviour
     }
     void Start()
     {
-        //test data
-        GameDataManager.HasSkillIDs = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         // 從GameDataManager取得擁有的技能ID
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);
