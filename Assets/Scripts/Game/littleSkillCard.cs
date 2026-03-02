@@ -14,6 +14,7 @@ public class littleSkillCard : MonoBehaviour
     [SerializeField] Transform trans_skillDiceParent;
     [SerializeField] GameObject obj_dice;
     [SerializeField] Image img_skillIcon;
+    [SerializeField] GameObject obj_chooseVfx;
     ISkillData skillData;
     public void SetData(ISkillData _skillData)
     {
@@ -25,14 +26,13 @@ public class littleSkillCard : MonoBehaviour
         text_skillEffect.text = skillData.effectText;
         if (skillData.conditionText == "")
             BurnConditionDices();
-
-        img_skillIcon.color = Color.gray; // 預設為灰色，表示未啟用
     }
     //技能開關   
     public void SkillSwitch(bool isOn)
     {
-        img_skillIcon.color = isOn ? Color.white : Color.gray;
+        //img_skillIcon.color = isOn ? Color.white : Color.gray;
         //可以加特效
+        obj_chooseVfx.SetActive(isOn);
     }
     void BurnConditionDices()//如果沒有條件骰子就不顯示
     {

@@ -75,6 +75,7 @@ public class SaveLoadPanel : MonoBehaviour
                     Debug.Log($"載入存檔槽 {info.slotIndex + 1}");
                     SaveManager.LoadFromSlot(info.slotIndex);
                 }
+                Destroy(gameObject);
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
             }
         });

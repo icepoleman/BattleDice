@@ -294,6 +294,7 @@ MonoBehaviour:
   stageInfo: 2
   completedStory: Prologue1_4
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 8576363104777203159}
 --- !u!114 &7380500953218599487
@@ -433,6 +434,7 @@ MonoBehaviour:
   stageInfo: 
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 3559853167661314477}
 --- !u!114 &370692905158354413
@@ -649,6 +651,7 @@ MonoBehaviour:
   stageInfo: Prologue1_3
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 3654208450377136276}
 --- !u!114 &8712532214350214287
@@ -1122,6 +1125,7 @@ MonoBehaviour:
   stageInfo: 
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 6218241374322527348}
 --- !u!114 &2384048164719639571
@@ -1261,6 +1265,7 @@ MonoBehaviour:
   stageInfo: Prologue1_5
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes: []
 --- !u!114 &6521644496419335165
 MonoBehaviour:

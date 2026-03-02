@@ -222,9 +222,11 @@ public class DialogueManager : MonoBehaviour
                 return;
             case "DIE":
                 isOver = true;
-                Debug.Log("角色死亡，進入結算畫面");
-                GameDataManager.CurrentStage = GameDataManager.PreparationRoomStage;//傳回整備室
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
+                Debug.Log("角色死亡，跳回主畫面");
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
+                GameDataManager.CurrentStage = GameDataManager.LastCurrentStage;//回到上一個關卡
+                SaveManager.AutoSave();//快速存檔
+                //EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 break;
         }
 

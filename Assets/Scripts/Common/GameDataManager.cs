@@ -9,14 +9,26 @@ public static class GameDataManager
     public static PlayerData PlayerData { get; set; } = new PlayerData();    // 玩家資料
     public static List<int> HasSkillIDs { get; set; } = new List<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
-    public static string CurrentStage { get; set; }    // 當前關卡資料
+    
+    private static string _currentStage;
+    public static string CurrentStage
+    {
+        get => _currentStage;
+        set
+        {
+            LastCurrentStage = _currentStage;
+            _currentStage = value;
+        }
+    }
+    
+    public static string LastCurrentStage { get; private set; }    // 上一次的關卡資料
     public static string PreparationRoomStage { get; set; } = "PreparationRoom"; //打輸回到的準備室關卡
     public static int Gold { get; set; } = 0;          // 當前金幣數量
     public static int Gear { get; set; } = 0;    // 當前齒輪數量(強化素材)
     public static EnemyData TmpEnemyData { get; set; } = new EnemyData();
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
-    public static List<string> TmpSaveRoomStory { get; set; } = new List<string>();//整備室特殊劇情 
+    public static string TmpSaveRoomStory { get; set; } = "";//整備室特殊劇情 
     
     // 升級等級存儲
     private static Dictionary<PowerUpType, int> powerUpLevels = new Dictionary<PowerUpType, int>()

@@ -30,10 +30,12 @@ public class StageNode : MonoBehaviour
     [SerializeField] string stageInfo;       //關卡資訊
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
-    [Header("完成後送技能(可選)")]
-    [SerializeField] int completedSkill; 
     [Header("整備室限定劇情(可選)")]
-    [SerializeField] List<string> saveRoomStory; 
+    [SerializeField] string saveRoomStory;
+
+    [Header("連線設定")]
+    [SerializeField] float lineWidth = 4f;
+    [SerializeField] Color lineColor = Color.white;
 
     Image stageImage;
     Button nodeButton;
@@ -54,10 +56,14 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-        GameDataManager.TmpSaveRoomStory = new List<string>(saveRoomStory);
+        GameDataManager.TmpSaveRoomStory = saveRoomStory;//記錄整備室劇情
         SetState(StageState.Locked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
+
+        // 繪製連線到下一個節點
+        DrawLinesToNextNodes();
     }
+
     void OnDestroy()
     {
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
@@ -109,11 +115,6 @@ public class StageNode : MonoBehaviour
                 stageImage.color = Color.white;
                 break;
             case StageState.Completed:
-                if (completedSkill != 0 && GameDataManager.TmpCompletedStory == "")
-                {
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, completedSkill); //取得技能
-                    completedSkill = 0; //只給一次
-                }
                 // 自動存檔
                 SaveManager.AutoSave();
                 stageImage.color = Color.green;
@@ -157,6 +158,8 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Blood:
+                    if (stageInfo == "")
+                        stageInfo = "1000";//如果沒有設定回血數量就默認1000
                     EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, int.Parse(stageInfo)); //回血
                     Debug.Log($"回復血量");
                     GoNextStage();
@@ -184,5 +187,57 @@ public class StageNode : MonoBehaviour
             GameDataManager.TmpCompletedStory = "";
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
         }
+    }
+    /// <summary>
+    /// 繪製連線到所有 nextStageNodes
+    /// </summary>
+    void DrawLinesToNextNodes()
+    {
+        foreach (var nextNode in nextStageNodes)
+        {
+            if (nextNode == null) continue;
+            DrawLine(transform as RectTransform, nextNode.transform as RectTransform);
+        }
+    }
+
+    /// <summary>
+    /// 在兩個 RectTransform 之間繪製一條線
+    /// </summary>
+    void DrawLine(RectTransform from, RectTransform to)
+    {
+        // 創建線條 GameObject
+        GameObject lineObj = new GameObject($"Line_{from.name}_to_{to.name}");
+        lineObj.transform.SetParent(transform.parent);
+        lineObj.transform.SetAsFirstSibling(); // 放到最底層
+
+        // 添加 Image 組件
+        Image lineImage = lineObj.AddComponent<Image>();
+        lineImage.color = lineColor;
+
+        RectTransform lineRect = lineObj.GetComponent<RectTransform>();
+
+        // 計算兩點的位置
+        Vector2 fromPos = from.anchoredPosition;
+        Vector2 toPos = to.anchoredPosition;
+
+        // 計算距離和角度
+        Vector2 direction = toPos - fromPos;
+        float distance = direction.magnitude;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // 設置線條位置（中點）
+        lineRect.anchoredPosition = (fromPos + toPos) / 2f;
+
+        // 設置線條大小
+        lineRect.sizeDelta = new Vector2(distance, lineWidth);
+
+        // 設置旋轉
+        lineRect.localRotation = Quaternion.Euler(0, 0, angle);
+
+        // 設置錨點和軸心
+        lineRect.anchorMin = from.anchorMin;
+        lineRect.anchorMax = from.anchorMax;
+        lineRect.pivot = new Vector2(0.5f, 0.5f);
+        lineRect.localScale = Vector3.one;
     }
 }

@@ -93,6 +93,7 @@ MonoBehaviour:
   stageInfo: 
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 3748773871769049957}
 --- !u!114 &4612778122537440580
@@ -232,6 +233,7 @@ MonoBehaviour:
   stageInfo: 1000
   completedStory: Prologue1_6
   completedSkill: 13
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 2438112925767942816}
   - {fileID: 7932553216396268028}
@@ -372,6 +374,7 @@ MonoBehaviour:
   stageInfo: 4
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 375494396624758944}
 --- !u!114 &2043316611030973972
@@ -511,6 +514,7 @@ MonoBehaviour:
   stageInfo: 6
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 2750521839603083682}
 --- !u!114 &1963839280853569635
@@ -650,6 +654,7 @@ MonoBehaviour:
   stageInfo: 7
   completedStory: Prologue2_3
   completedSkill: 8
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 4497615939938991004}
 --- !u!114 &2418222721354337819
@@ -825,6 +830,7 @@ MonoBehaviour:
   stageInfo: 2
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 3864720301069830332}
 --- !u!114 &2143707628174897
@@ -964,6 +970,7 @@ MonoBehaviour:
   stageInfo: 5
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 5912276167947482621}
 --- !u!114 &8698181867076421633
@@ -1103,6 +1110,7 @@ MonoBehaviour:
   stageInfo: WitchH_1
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes: []
 --- !u!114 &8983138865289474022
 MonoBehaviour:
@@ -1241,6 +1249,7 @@ MonoBehaviour:
   stageInfo: 
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 2353373026077786362}
 --- !u!114 &5637490755692200936
@@ -1470,6 +1479,7 @@ MonoBehaviour:
   stageInfo: 4
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 5088631592436650089}
 --- !u!114 &329399932511303941
@@ -1843,6 +1853,7 @@ MonoBehaviour:
   stageInfo: Prologue2_2
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 6221777725370534412}
 --- !u!114 &8921272964113032175
@@ -2104,6 +2115,7 @@ MonoBehaviour:
   stageInfo: 11
   completedStory: 
   completedSkill: 0
+  saveRoomStory: []
   nextStageNodes:
   - {fileID: 375494396624758944}
 --- !u!114 &1398774448620884429

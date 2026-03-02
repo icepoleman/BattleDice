@@ -23,8 +23,6 @@ public class DiceGame : MonoBehaviour
     ManaRoller manaRoller = null;
     bool isOpen = false;
     GameUiView gameUiView = null;
-
-    [SerializeField] GameObject littleSkillCardPrefab = null;//怪物技能卡預置物
     [SerializeField] Animator turnAnim = null;
 
     // 技能排隊系統
@@ -337,6 +335,7 @@ public class DiceGame : MonoBehaviour
 
         enemyData.TurnEndBuffDecrease();
         await Task.Delay(200);
+        gameUiView.ClearUsedEnemySkillCards();
         ChangeState(TurnState.roundEnd);
     }
     #endregion

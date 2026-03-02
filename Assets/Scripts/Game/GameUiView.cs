@@ -108,7 +108,13 @@ public class GameUiView : MonoBehaviour
             skillCardView.SkillSwitch(isInUse);
         }
     }
-
+    public void ClearUsedEnemySkillCards()
+    {
+        foreach (littleSkillCard skillCardView in enemy_skillCardViews)
+        {
+            skillCardView.SkillSwitch(false);
+        }
+    }
     public async Task ShowDice(List<int> rollResults, bool isPlayer)
     {
         if (rollResults == null || rollResults.Count == 0)
