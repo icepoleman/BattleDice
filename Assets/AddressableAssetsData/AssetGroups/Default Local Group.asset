@@ -146,6 +146,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b577cb138ed788946a2f4f90ece7e8af
+    m_Address: Assets/DiceGame_ab/AVG/Prefabs/logPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b78be9c427e895f4cbe956c7ba77ef48
     m_Address: Assets/DiceGame_ab/Common/Prefabs/HintBubble.prefab
     m_ReadOnly: 0
@@ -216,6 +221,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dice
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: feec79971fb23c2439765aeacd81ab79
+    m_Address: Assets/DiceGame_ab/AVG/Prefabs/btn_choose.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}

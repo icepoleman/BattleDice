@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
 using Spine;
 using Spine.Unity;
@@ -14,11 +15,10 @@ public class DialogueManager : MonoBehaviour
     }
     DialogueState currentState = DialogueState.Story;
     [SerializeField] private string nowChapter = "";
-    [SerializeField] private List<DialogueData> lines = new List<DialogueData>();
+    [SerializeField] private List<DialogueData> dialogueDatas = new List<DialogueData>();
+    [Header("背景 CG")]
     [SerializeField] Image img_cg1;
     [SerializeField] Image img_cg2;
-    [SerializeField] Button btn_auto;
-    bool isAuto = false;
     private bool useCg1 = true; // 追蹤當前使用的是哪個 Image
     private string currentBgAddress = ""; // 追蹤當前背景地址（用於卸載）
     [SerializeField] float cgFadeDuration = 0.5f; // CG 淡入淡出時間
@@ -34,8 +34,9 @@ public class DialogueManager : MonoBehaviour
 
     private int pageIndex = 0;
     [SerializeField] private ChatWindow chatWindow;
-    private ChooseBox chooseBox;
-    private PlayerInputActions inputActions;
+    [Header("選項按鈕")]
+    [SerializeField] Transform trans_chooseBoxParent;
+    GameObject chooseBtnPrefab;
 
     private List<string> jumpTo = new List<string>();
     private string pendingJumpTag = null; // 等待跳轉的標籤（選項文字顯示後跳轉）
@@ -49,11 +50,22 @@ public class DialogueManager : MonoBehaviour
     bool isOpen = false;
 
     SkeletonAnimation spineCharacter;
-
+    async void Start()
+    {
+        if (isOpen) return;
+        isOpen = true;
+        chatWindow.SetDatalogueManager(this);
+        chooseBtnPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
+        animator = GetComponent<Animator>();
+        AddEvent();
+        //test
+        GameDataManager.TmpAvgChapter = "Prologue1_1";//讀取劇情
+        LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
+    }
     void Update()
     {
         // 檢測 ESC 鍵跳過劇情
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (!isOver && !isSkipPanelOpen)
             {
@@ -62,7 +74,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 檢測 Backspace 鍵快速跳到下一個選項
-        if (Keyboard.current != null && Keyboard.current.backspaceKey.wasPressedThisFrame)
+        if (Keyboard.current.backspaceKey.wasPressedThisFrame)
         {
             if (!isOver && !isSkipPanelOpen && !onChoose)
             {
@@ -70,10 +82,11 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // 檢測 CTRL 鍵快轉
-        bool ctrlPressed = Keyboard.current != null && Keyboard.current.ctrlKey.isPressed;
+        // 檢測 CTRL 鍵或 Skip 按鈕快轉
+        bool ctrlPressed = Input.GetKey(KeyCode.LeftControl);
+        bool shouldFastForward = (ctrlPressed || chatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
-        if (ctrlPressed && !onChoose && !isOver)
+        if (shouldFastForward)
         {
             if (!isFastForwarding)
             {
@@ -87,7 +100,7 @@ public class DialogueManager : MonoBehaviour
             {
                 fastForwardTimer = 0f;
                 // 模擬點擊下一步
-                OnNextClick(new InputAction.CallbackContext());
+                OnNextClick();
             }
         }
         else if (isFastForwarding)
@@ -99,60 +112,26 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (isOpen) return;
-        isOpen = true;
-        animator = GetComponent<Animator>();
-        inputActions = new PlayerInputActions();
-        inputActions.Player.Enable();
-        chooseBox = gameObject.GetComponentInChildren<ChooseBox>();
-        AddEvent();
-        // ShowDialogue("Prologue1_1");//讀取劇情
-        LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
-    }
     void AddEvent()
     {
-        inputActions.Player.next.performed += OnNextClick;
         EventCenter.AddListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
-        chatWindow.OnTypingComplete += OnTypingComplete;
-        btn_auto.onClick.AddListener(ToggleAuto);
     }
     private void OnDestroy()
     {
-        // 解除綁定，避免記憶體洩漏
-        inputActions.Player.next.performed -= OnNextClick;
-        inputActions.Player.Disable();
         PortraitManager.UnloadAll();
         AddressableManager.ReleaseAll();
         EventCenter.RemoveListener(AdvEvent.EVENT_CLICK_CHOICE, OnClickChoice);
-        chatWindow.OnTypingComplete -= OnTypingComplete;
-        btn_auto.onClick.RemoveListener(ToggleAuto);
     }
 
     [Header("自動播放設定")]
     [SerializeField] private float autoPlayDelay = 1f; // 自動播放延遲時間
 
-    void ToggleAuto()
+    public async void AutoNextCoroutine()
     {
-        isAuto = !isAuto;
-        Debug.Log(isAuto ? "▶️ 自動播放開啟" : "⏸️ 自動播放關閉");
-    }
-
-    void OnTypingComplete()
-    {
-        if (isAuto && !onChoose && !isOver)
+        await Task.Delay((int)(autoPlayDelay * 1000));
+        if (!onChoose && !isOver) // 再次檢查狀態
         {
-            StartCoroutine(AutoNextCoroutine());
-        }
-    }
-
-    System.Collections.IEnumerator AutoNextCoroutine()
-    {
-        yield return new WaitForSeconds(autoPlayDelay);
-        if (isAuto && !onChoose && !isOver) // 再次檢查狀態
-        {
-            OnNextClick(new InputAction.CallbackContext());
+            OnNextClick();
         }
     }
     void OnClickChoice(object[] args)
@@ -173,9 +152,9 @@ public class DialogueManager : MonoBehaviour
     }
     public void LoadDialogue(string _chapter_csv)
     {
-        lines = CSVReader.Instance.LoadDialogueCSV(_chapter_csv);//依照章節讀取CSV
+        dialogueDatas = CSVReader.Instance.LoadDialogueCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
-        nowChapter = lines[pageIndex].Chapter;
+        nowChapter = dialogueDatas[pageIndex].Chapter;
         if (nowChapter == "")
         {
             Debug.LogError("❌ Chapter 欄位不可為空，請檢查 CSV 檔案");
@@ -185,7 +164,7 @@ public class DialogueManager : MonoBehaviour
     }
     bool onChoose;
     bool isOver;
-    private void OnNextClick(InputAction.CallbackContext context)
+    public void OnNextClick()
     {
         if (isOver) return;
 
@@ -217,8 +196,8 @@ public class DialogueManager : MonoBehaviour
                 // 在這些章節中不處理下一步
                 isOver = true;
                 chatWindow.HideWindow();
-                Debug.Log("劇情結束 進入戰鬥" + int.Parse(lines[pageIndex].Flag));
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[pageIndex].Flag));
+                Debug.Log("劇情結束 進入戰鬥" + int.Parse(dialogueDatas[pageIndex].Flag));
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(dialogueDatas[pageIndex].Flag));
                 return;
             case "DIE":
                 isOver = true;
@@ -244,12 +223,12 @@ public class DialogueManager : MonoBehaviour
                 //多選一跳轉
                 Debug.Log("生成多選一按鈕");
                 onChoose = true;
-                chooseBox.CreateChooseBtns(lines[pageIndex].Choices, lines[pageIndex].JumpTo);
+                CreateChooseBtns(dialogueDatas[pageIndex].Choices, dialogueDatas[pageIndex].JumpTo);
             }
         }
         if (onChoose) return;//如果在選擇狀態則不處理下一步
 
-        if (pageIndex < lines.Count - 1)
+        if (pageIndex < dialogueDatas.Count - 1)
         {
             if (chatWindow.isTyping)
             {
@@ -268,34 +247,34 @@ public class DialogueManager : MonoBehaviour
     }
     private async void CheckDialogueCmd(int _page)
     {
-        if (lines[_page].Chapter != "")
+        if (dialogueDatas[_page].Chapter != "")
         {
-            nowChapter = lines[_page].Chapter;
+            nowChapter = dialogueDatas[_page].Chapter;
             Debug.Log("切換章節:" + nowChapter);
         }
         //紀錄跳轉
-        if (lines[_page].JumpTo.Length > 0)
+        if (dialogueDatas[_page].JumpTo.Length > 0)
         {
-            jumpTo = new List<string>(lines[_page].JumpTo);
+            jumpTo = new List<string>(dialogueDatas[_page].JumpTo);
         }
         //更換背景
-        if (lines[_page].Background != "")
+        if (dialogueDatas[_page].Background != "")
         {
-            Debug.Log("更換背景:" + lines[_page].Background);
-            await CrossFadeBackground(lines[_page].Background);
+            Debug.Log("更換背景:" + dialogueDatas[_page].Background);
+            await CrossFadeBackground(dialogueDatas[_page].Background);
         }
         //更換立繪
-        if (lines[_page].Portrait != "" && lines[_page].Character != "Hero" && lines[_page].Character != "Choose")
+        if (dialogueDatas[_page].Portrait != "" && dialogueDatas[_page].Character != "Hero" && dialogueDatas[_page].Character != "Choose")
         {
             // 先載入角色立繪（如果尚未載入）
-            await PortraitManager.LoadRoleIfNeeded(lines[_page].Character);
+            await PortraitManager.LoadRoleIfNeeded(dialogueDatas[_page].Character);
 
-            Sprite _sprite = PortraitManager.Show(lines[_page].Character, lines[_page].Portrait);
-            stageManager.SetCharacter(lines[_page].Character, _sprite, lines[_page].Anim, lines[_page].Pos);
-            Debug.Log("更換立繪:" + lines[_page].Portrait);
+            Sprite _sprite = PortraitManager.Show(dialogueDatas[_page].Character, dialogueDatas[_page].Portrait);
+            stageManager.SetCharacter(dialogueDatas[_page].Character, _sprite, dialogueDatas[_page].Anim, dialogueDatas[_page].Pos);
+            Debug.Log("更換立繪:" + dialogueDatas[_page].Portrait);
         }
         //紀錄flag
-        string flag = lines[_page].Flag;
+        string flag = dialogueDatas[_page].Flag;
         if (!string.IsNullOrEmpty(flag))
         {
             Debug.Log("紀錄flag:" + flag);
@@ -324,14 +303,14 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
-        if (lines[_page].CameraAnim != "")
+        if (dialogueDatas[_page].CameraAnim != "")
         {
-            Debug.Log("相機flag:" + lines[_page].CameraAnim);
-            animator.Play(lines[_page].CameraAnim);
+            Debug.Log("相機flag:" + dialogueDatas[_page].CameraAnim);
+            animator.Play(dialogueDatas[_page].CameraAnim);
         }
-        if (!string.IsNullOrEmpty(lines[_page].Sound))
+        if (!string.IsNullOrEmpty(dialogueDatas[_page].Sound))
         {
-            string _sound = lines[_page].Sound;
+            string _sound = dialogueDatas[_page].Sound;
             if (_sound.StartsWith("Sound_"))
             {
                 AudioManager.Instance.PlaySFX(_sound);
@@ -342,24 +321,24 @@ public class DialogueManager : MonoBehaviour
                 AudioManager.Instance.PlayBGM(_sound, true, 1.0f);
                 Debug.Log("播放音樂:" + _sound);
             }
-            Debug.Log("播放音效:" + lines[_page].Sound);
+            Debug.Log("播放音效:" + dialogueDatas[_page].Sound);
         }
         //顯示對話
-        if (lines[pageIndex].Dialogue != "")
+        if (dialogueDatas[pageIndex].Dialogue != "")
         {
             // 替換文本中的玩家名字
-            string processedDialogue = ReplaceDialoguePlayerName(lines[pageIndex].Dialogue);
-            if (lines[pageIndex].Character == "Hero")
-                lines[pageIndex].Character = GetPlayerName();
-            else if (lines[pageIndex].Character != "Choose" && lines[pageIndex].Character != "")
-                lines[pageIndex].Character = LanguageManager.GetText("T_" + lines[pageIndex].Character);
+            string processedDialogue = ReplaceDialoguePlayerName(dialogueDatas[pageIndex].Dialogue);
+            if (dialogueDatas[pageIndex].Character == "Hero")
+                dialogueDatas[pageIndex].Character = GetPlayerName();
+            else if (dialogueDatas[pageIndex].Character != "Choose" && dialogueDatas[pageIndex].Character != "")
+                dialogueDatas[pageIndex].Character = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character);
 
-            chatWindow.ShowDialogue(lines[pageIndex].Character, processedDialogue);
+            chatWindow.ShowDialogue(dialogueDatas[pageIndex].Character, processedDialogue);
         }
         else
         {
             //跳過無對話的行
-            OnNextClick(new InputAction.CallbackContext());
+            OnNextClick();
         }
     }
     //    
@@ -448,9 +427,9 @@ public class DialogueManager : MonoBehaviour
 
     void JumpToTag(string _tag)
     {
-        for (int i = 0; i < lines.Count; i++)
+        for (int i = 0; i < dialogueDatas.Count; i++)
         {
-            if (lines[i].Tag == _tag)
+            if (dialogueDatas[i].Tag == _tag)
             {
                 Debug.Log("找到標籤:" + _tag);
                 pageIndex = i;
@@ -550,12 +529,12 @@ public class DialogueManager : MonoBehaviour
         chatWindow.HideWindow();
 
         // 檢查是否有戰鬥章節，如果有則跳轉到戰鬥
-        for (int i = pageIndex; i < lines.Count; i++)
+        for (int i = pageIndex; i < dialogueDatas.Count; i++)
         {
-            if (lines[i].Chapter == "BATTLE")
+            if (dialogueDatas[i].Chapter == "BATTLE")
             {
-                Debug.Log("跳過劇情，進入戰鬥: " + int.Parse(lines[i].Flag));
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(lines[i].Flag));
+                Debug.Log("跳過劇情，進入戰鬥: " + int.Parse(dialogueDatas[i].Flag));
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(dialogueDatas[i].Flag));
                 return;
             }
         }
@@ -576,9 +555,9 @@ public class DialogueManager : MonoBehaviour
     private void JumpToNextChoose()
     {
         // 從當前位置往後搜尋
-        for (int i = pageIndex + 1; i < lines.Count; i++)
+        for (int i = pageIndex + 1; i < dialogueDatas.Count; i++)
         {
-            if (lines[i].Character == "Choose")
+            if (dialogueDatas[i].Character == "Choose")
             {
                 Debug.Log($"跳到選項: index {i}");
                 pageIndex = i;
@@ -597,4 +576,43 @@ public class DialogueManager : MonoBehaviour
         //閃白光換模型
         spineCharacter.AnimationState.SetAnimation(0, "End", true);
     }
+
+    #region 選項按鈕
+    void CreateChooseBtns(string[] btnText, string[] targetTag)
+    {
+        if (btnText.Length != targetTag.Length)
+        {
+            Debug.LogError("❌ CreateChooseBtns: btnText 和 targetTag 長度不一致");
+            return;
+        }
+
+        if (chooseBtnPrefab == null)
+        {
+            Debug.LogError("❌ chooseBtnPrefab 尚未設定");
+            return;
+        }
+
+        for (int i = 0; i < btnText.Length; i++)
+        {
+            int index = i;
+            string choiceText = btnText[i];
+            GameObject btn = Instantiate(chooseBtnPrefab, trans_chooseBoxParent);
+            btn.GetComponentInChildren<Text>().text = choiceText;
+            btn.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index], choiceText);
+                ClearChooseBtn();
+            });
+            btn.gameObject.SetActive(true);
+        }
+    }
+
+    void ClearChooseBtn()
+    {
+        foreach (Transform child in trans_chooseBoxParent)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    #endregion
 }

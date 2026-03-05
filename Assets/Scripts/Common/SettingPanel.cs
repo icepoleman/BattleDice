@@ -144,7 +144,10 @@ public class SettingPanel : MonoBehaviour
         sfxMuteToggle.onValueChanged.AddListener(OnSFXMuteChanged);
 
 
-        closeButton.onClick.AddListener(() => Destroy(gameObject));
+        closeButton.onClick.AddListener(() => {
+            Destroy(gameObject); 
+            EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
+        });
 
         textSpeedSlider.onValueChanged.AddListener(OnTextSpeedChanged);
 

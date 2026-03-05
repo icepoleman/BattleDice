@@ -33,6 +33,7 @@ public class StateEvent
     public const string EVENT_ENTER_PREPARATION_ROOM = "StateEvent_EnterPreparationRoom";//進入整備室
     public const string EVENT_ENTER_SHOP = "StateEvent_EnterShop";//進入商店
     public const string EVENT_LOADING_SCREEN = "StateEvent_ShowLoadingScreen";//載入畫面開關
+    public const string EVENT_SETTING_CHANGED = "StateEvent_SettingChanged";//設定變更後通知
 }
 public class MapEvent
 {

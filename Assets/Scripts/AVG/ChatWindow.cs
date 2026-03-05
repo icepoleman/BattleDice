@@ -1,17 +1,26 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ChatWindow : MonoBehaviour
 {
-    public event Action OnTypingComplete;
+    DialogueManager dialogueManager;
+    private List<ChatLog> showedDialogues = new List<ChatLog>();//已顯示過的對話（用於記錄日誌）
     [SerializeField] private Text dialogueText; // 對話框文字
     [SerializeField] private Text nameText; // 角色名稱文字
     [SerializeField] private GameObject doneImg; // 對話結束圖示
 
-    private Animator animator;
+    [Header("控制按鈕")]
+    [SerializeField] private Toggle tog_auto;
+    public Toggle tog_skip;
+    [SerializeField] private Toggle tog_hide;
+    [SerializeField] private Button btn_log;
+
+    [SerializeField] private Button btn_next;
+    [SerializeField] private Button btn_set;
+
+    [SerializeField] private Animator animator;
     private float typingSpeed = 0.05f; // 逐字顯示速度
     [SerializeField] private float fastTypingSpeed = 0.005f; // 快轉時的打字速度
     private bool isFastForwardMode = false;
@@ -19,6 +28,38 @@ public class ChatWindow : MonoBehaviour
     private const string TYPING_SPEED_KEY = "TypingSpeed";
     private const float DEFAULT_TYPING_SPEED = 0.05f;
 
+    private void Start()
+    {
+        typingSpeed = TypingSpeed; // 從 PlayerPrefs 讀取速度
+        tog_hide.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn)
+            {
+                HideWindow();
+            }
+            else
+            {
+                ShowWindow();
+            }
+        });
+        btn_next.onClick.AddListener(() => { dialogueManager.OnNextClick(); });
+        btn_set.onClick.AddListener(async () => { await UIManager.ShowCommonPanel("SetPanel"); });
+        btn_log.onClick.AddListener(async () =>
+        {
+            GameObject logPanelprefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "logPanel" + ".prefab");
+            GameObject logPanelObj = Instantiate(logPanelprefab, transform);
+            logPanelObj.GetComponent<LogView>().SetData(showedDialogues);
+        });
+        EventCenter.AddListener(StateEvent.EVENT_SETTING_CHANGED, OnSettingChanged);
+    }
+    void OnDestroy()
+    {
+        EventCenter.RemoveListener(StateEvent.EVENT_SETTING_CHANGED, OnSettingChanged);
+    }
+    private void OnSettingChanged(object[] args)
+    {
+        typingSpeed = TypingSpeed; // 更新打字速度
+    }
     /// <summary>
     /// 取得/設定文字顯示速度（使用 PlayerPrefs 存取）
     /// </summary>
@@ -36,33 +77,11 @@ public class ChatWindow : MonoBehaviour
 
     public bool isTyping = false;
 
-    private PlayerInputActions inputActions;
-
-    private void Awake()
+    public void SetDatalogueManager(DialogueManager manager)
     {
-        inputActions = new PlayerInputActions();
-        animator = GetComponent<Animator>();
-        typingSpeed = TypingSpeed; // 從 PlayerPrefs 讀取速度
-    }
-    void Start()
-    {
-        //    ShowDialogue("主角", str_dialogue);
-    }
-    private void OnEnable()
-    {
-        // 啟用 Action Map
-        inputActions.Player.Enable();
-
-        // 綁定事件 callback
-        // inputActions.Player.next.performed += HideWindow;
+        dialogueManager = manager;
     }
 
-    private void OnDisable()
-    {
-        // 解除綁定，避免記憶體洩漏
-        // inputActions.Player.next.performed -= OnJump;
-        inputActions.Player.Disable();
-    }
     public void CompleteDialogue()
     {
         // 直接顯示完整文字
@@ -70,9 +89,13 @@ public class ChatWindow : MonoBehaviour
         dialogueText.text = str_dialogue;
         doneImg.SetActive(true);
         isTyping = false;
+        if (tog_auto.isOn)
+            dialogueManager.AutoNextCoroutine();
     }
     public void ShowDialogue(string speaker, string text)
     {
+        // 記錄已顯示的對話（用於日誌）
+        showedDialogues.Add(new ChatLog { name = speaker, dialogue = text });
         nameText.text = speaker;
         str_dialogue = text;
         if (isTyping)
@@ -107,12 +130,27 @@ public class ChatWindow : MonoBehaviour
         }
         doneImg.SetActive(true);
         isTyping = false;
-        OnTypingComplete?.Invoke();
+        if (tog_auto.isOn)
+            dialogueManager.AutoNextCoroutine();
     }
-    
+
     // 設定快轉模式
     public void SetFastForwardMode(bool fastForward)
     {
         isFastForwardMode = fastForward;
     }
+
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            tog_skip.isOn = false;
+            tog_hide.isOn = false;
+        }
+    }
+}
+public class ChatLog
+{
+    public string name;
+    public string dialogue;
 }
