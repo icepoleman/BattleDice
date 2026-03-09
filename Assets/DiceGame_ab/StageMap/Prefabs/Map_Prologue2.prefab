@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 5
+  stageInfo: 8
   completedStory: 
   saveRoomStory: 
   lineWidth: 4
@@ -804,7 +804,7 @@ MonoBehaviour:
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
-  - {fileID: 0}
+  - {fileID: 5350425964224081899}
 --- !u!114 &3688670842061308368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2090,7 +2090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 4
+  stageInfo: 8
   completedStory: 
   saveRoomStory: 
   lineWidth: 4
@@ -3971,7 +3971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 5
+  stageInfo: 8
   completedStory: 
   saveRoomStory: 
   lineWidth: 4

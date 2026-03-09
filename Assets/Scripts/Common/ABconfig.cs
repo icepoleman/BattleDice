@@ -11,6 +11,7 @@ public static class ABconfig
     //遊戲
     public const string GAME_PREFABS = BASE_PATH + "Game/Prefabs/";
     public const string GAME_SPRITES = BASE_PATH + "Game/Sprites/";
+    public const string GAME_VFX = BASE_PATH + "Game/VFX/";
 
     //關卡地圖
     public const string MAP_PREFABS = BASE_PATH + "StageMap/Prefabs/";

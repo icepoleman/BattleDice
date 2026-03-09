@@ -47,7 +47,19 @@ public class StageNode : MonoBehaviour
 
     void GoNextStage()
     {
-        EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, stageID);
+        SetState(StageState.Locked);
+        if (nextStageNodes.Count > 0)
+        {
+            foreach (var node in nextStageNodes)
+            {
+                node.SetState(StageState.Unlocked);
+            }
+        }
+        else
+        {
+            Debug.Log("已完成所有關卡!");
+            EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
+        }
     }
 
     void Awake()

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fd08e5941c48f2c4a8cafee327919208
+guid: 63af7bb6ef0b9b74abfc2aec34ea97fd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5306010165893201774
-    second: animal_melt3_rabbit_0
+      213: 8131539979999134943
+    second: duck king1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animal_melt3_rabbit_0
+      name: duck king1_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 39
-        width: 696
-        height: 382
+        x: 560
+        y: 9
+        width: 915
+        height: 1282
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2900357ddd34d56b0800000000000000
-      internalID: -5306010165893201774
+      spriteID: fd44cb0778809d070800000000000000
+      internalID: 8131539979999134943
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      animal_melt3_rabbit_0: -5306010165893201774
+      duck king1_0: 8131539979999134943
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

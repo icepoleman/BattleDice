@@ -148,10 +148,6 @@ public class MapManager : MonoBehaviour
         string itemName = (string)param[0];
         // 道具處理邏輯
     }
-    void GoNextOpenStage()
-    {
-        EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
-    }
 
     // 載入地圖 Prefab
     private async void LoadMapPrefab()
@@ -171,7 +167,7 @@ public class MapManager : MonoBehaviour
                 currentMapInstance = Instantiate(mapPrefab, trans_mapParent);
                 currentMapInstance.transform.localPosition = Vector3.zero;
                 currentMapInstance.transform.localScale = Vector3.one;
-                GoNextOpenStage();
+                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
                 Debug.Log("地圖載入並實例化成功");
             }
             else

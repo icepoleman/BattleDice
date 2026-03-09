@@ -38,15 +38,20 @@ public class MenuManager : MonoBehaviour
     {
         //測試用
         GameDataManager.PreparationRoomStage = "0";//初始整備室
-        GameDataManager.CurrentMap = 0;//測試地圖
+        GameDataManager.CurrentMap = 2;//測試地圖
         GameDataManager.CurrentStage = "0";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
-        GameDataManager.Gold = 1000;
+        GameDataManager.Gold = 10000;
         GameDataManager.Gear = 1000;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
+        for (int i = 3; i <= 25; i++)
+        {
+            GameDataManager.HasSkillIDs.Add(i);
+        }
+
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
@@ -70,7 +75,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;
         GameDataManager.Gear = 0;
-        GameDataManager.PlayerData.keepDiceCount = 8;
+        GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;

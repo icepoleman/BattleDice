@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 public struct SkillOrderData
 {
+    public int skillID;
     public string skillName;
     public SkillType skillType;
     public List<int> values;
     public bool isPlayerUse;
-    public SkillOrderData(string name, SkillType type, List<int> val, bool isPlayer)
+    public SkillOrderData(int id, string name, SkillType type, List<int> val, bool isPlayer)
     {
+        skillID = id;
         skillName = name;
         skillType = type;
         values = val;
@@ -43,7 +45,7 @@ public struct SkillConfigData
     public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
     public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
     public int price;                  // 技能價格（購買或升級用）
-    
+
     /// <summary>
     /// 計算需要的骰子數量 (根據 requirementType 和 needDicesData)
     /// </summary>
@@ -51,7 +53,7 @@ public struct SkillConfigData
     {
         if (needDiceNum > 0) return needDiceNum; // 如果已設定則直接返回
         if (needDicesData == null || needDicesData.Length == 0) return 0;
-        
+
         return requirementType switch
         {
             SkillRequirementType.SpecificDices => needDicesData.Length,
@@ -100,7 +102,7 @@ public interface ISkillData
     public void RemoveDiceData(int _dice);
     public List<int> GetNeedDices();
     public void UseSkill(bool _isPlayer);
-    
+
     // 用於怪物多技能判斷：給定可用骰子，判斷能否發動
     public bool CanUseWithDice(List<int> availableDice);
     // 取得此技能會消耗的骰子（從給定的可用骰子中）
@@ -110,7 +112,7 @@ public class BaseSkill : ISkillData
 {
     // 配置數據
     protected SkillConfigData config;
-    
+
     // 萬用骰（特殊骰）
     public const int WILD_DICE = 0;
 
@@ -126,18 +128,18 @@ public class BaseSkill : ISkillData
     public List<BuffSeed> targetBuffs { get; set; } = new List<BuffSeed>();
     public List<int> diceBox { get; set; } = new List<int>();
     public int[] needDicesData { get; set; } = new int[] { };
-    
+
     // 需要的骰子數量
     public int needDiceNum => GetNeedDiceNumInternal();
 
     // 技能需求配置
     protected SkillRequirementType requirementType = SkillRequirementType.SpecificDices;
-    
+
     // 計算需要的骰子數量
     private int GetNeedDiceNumInternal()
     {
         if (needDicesData == null || needDicesData.Length == 0) return 0;
-        
+
         return requirementType switch
         {
             SkillRequirementType.SpecificDices => needDicesData.Length,
@@ -199,14 +201,14 @@ public class BaseSkill : ISkillData
     protected int GetNeedCount()
     {
         if (needDicesData == null || needDicesData.Length == 0) return 0;
-        
+
         return requirementType switch
         {
             SkillRequirementType.SpecificDicesWithRepeat => needDicesData[needDicesData.Length - 1],
             _ => needDicesData[0]
         };
     }
-    
+
     // 獲取 SpecificDicesWithRepeat 允許的骰子 (除了最後一個數字)
     protected int[] GetAllowedDices()
     {
@@ -219,14 +221,14 @@ public class BaseSkill : ISkillData
     {
         return needDicesData != null && needDicesData.Length > 0 ? needDicesData[0] : 0;
     }
-    
+
     // 獲取生成骰子的數量 (generateDicesData 最後一個數字)
     protected int GetGenerateCount()
     {
         if (generateDicesData == null || generateDicesData.Length == 0) return 0;
         return generateDicesData[generateDicesData.Length - 1];
     }
-    
+
     // 獲取生成骰子允許的點數 (generateDicesData 除了最後一個數字)
     // 0 = 萬用骰
     protected int[] GetGenerateAllowedDices()
@@ -292,30 +294,30 @@ public class BaseSkill : ISkillData
         List<int> needDices = new List<int>(needDicesData);
         return needDices;
     }
-    
+
     // 獲取連續骰子需求
     protected virtual List<int> GetConsecutiveDicesRequired()
     {
         // 返回所有可能的骰子，讓玩家自己組合
         return new List<int> { 1, 2, 3, 4, 5, 6 };
     }
-    
+
     // 獲取任意骰子需求
     protected virtual List<int> GetAnyDicesRequired()
     {
         // 返回所有可能的骰子
         return new List<int> { 0, 1, 2, 3, 4, 5, 6 };
     }
-    
+
     // 檢查是否有連續骰子
     private bool CheckConsecutiveDices(List<int> dices)
     {
         int count = GetNeedCount();
         if (dices.Count < count) return false;
-        
+
         // 取得不重複且排序的骰子
         var sortedUnique = dices.Distinct().OrderBy(x => x).ToList();
-        
+
         // 嘗試找到連續 count 個的序列
         for (int i = 0; i <= sortedUnique.Count - count; i++)
         {
@@ -332,15 +334,15 @@ public class BaseSkill : ISkillData
         }
         return false;
     }
-    
+
     // 取得連續骰子組合（用於 GetUsedDices）
     private List<int> GetConsecutiveSequence(List<int> dices)
     {
         int count = GetNeedCount();
         if (dices.Count < count) return new List<int>();
-        
+
         var sortedUnique = dices.Distinct().OrderBy(x => x).ToList();
-        
+
         for (int i = 0; i <= sortedUnique.Count - count; i++)
         {
             bool isConsecutive = true;
@@ -360,7 +362,7 @@ public class BaseSkill : ISkillData
         }
         return new List<int>();
     }
-    
+
     // 用於怪物多技能判斷：給定可用骰子，判斷能否發動
     public virtual bool CanUseWithDice(List<int> availableDice)
     {
@@ -375,16 +377,16 @@ public class BaseSkill : ISkillData
             _ => false
         };
     }
-    
+
     // ===== 萬用骰處理方法 =====
-    
+
     // 檢查特定骰子（支援萬用骰）
     private bool CheckSpecificDicesWithWild(List<int> dices, int[] required)
     {
         List<int> tempDice = new List<int>(dices);
         int wildCount = tempDice.Count(d => d == WILD_DICE);
         tempDice.RemoveAll(d => d == WILD_DICE);
-        
+
         foreach (int need in required)
         {
             if (tempDice.Contains(need))
@@ -402,19 +404,19 @@ public class BaseSkill : ISkillData
         }
         return true;
     }
-    
+
     // 檢查相同骰子（支援萬用骰）
     private bool CheckSameDicesWithWild(List<int> dices, int requiredCount)
     {
         int wildCount = dices.Count(d => d == WILD_DICE);
         var normalDice = dices.Where(d => d != WILD_DICE).ToList();
-        
+
         // 如果全部都是萬用骰
         if (normalDice.Count == 0)
         {
             return wildCount >= requiredCount;
         }
-        
+
         // 找每種骰子的數量 + 萬用骰
         var groups = normalDice.GroupBy(x => x);
         foreach (var group in groups)
@@ -426,7 +428,7 @@ public class BaseSkill : ISkillData
         }
         return false;
     }
-    
+
     // 檢查指定骰子可重複（支援萬用骰）
     private bool CheckSpecificDicesWithRepeatAndWild(List<int> dices, int[] allowedDices, int requiredCount)
     {
@@ -434,26 +436,26 @@ public class BaseSkill : ISkillData
         int matchCount = dices.Count(d => allowedDices.Contains(d));
         return matchCount + wildCount >= requiredCount;
     }
-    
+
     // 檢查連續骰子（支援萬用骰）
     private bool CheckConsecutiveDicesWithWild(List<int> dices, int requiredCount)
     {
         if (dices.Count < requiredCount) return false;
-        
+
         int wildCount = dices.Count(d => d == WILD_DICE);
         var normalDice = dices.Where(d => d != WILD_DICE).Distinct().OrderBy(x => x).ToList();
-        
+
         // 如果全是萬用骰，只要數量夠就行
         if (normalDice.Count == 0)
         {
             return wildCount >= requiredCount;
         }
-        
+
         // 嘗試所有可能的起始點 (1-6)
         for (int start = 1; start <= 7 - requiredCount; start++)
         {
             int neededWilds = 0;
-            
+
             for (int i = 0; i < requiredCount; i++)
             {
                 int target = start + i;
@@ -462,7 +464,7 @@ public class BaseSkill : ISkillData
                     neededWilds++;
                 }
             }
-            
+
             if (neededWilds <= wildCount)
             {
                 return true;
@@ -470,13 +472,13 @@ public class BaseSkill : ISkillData
         }
         return false;
     }
-    
+
     // 取得此技能會消耗的骰子（從給定的可用骰子中）
     public virtual List<int> GetUsedDices(List<int> availableDice)
     {
         List<int> usedDices = new List<int>();
         List<int> tempDice = new List<int>(availableDice);
-        
+
         switch (requirementType)
         {
             case SkillRequirementType.SpecificDices:
@@ -495,22 +497,22 @@ public class BaseSkill : ISkillData
                     }
                 }
                 break;
-                
+
             case SkillRequirementType.SameDices:
                 // 找到數量最多的相同骰子組（支援萬用骰）
                 int wildCount = tempDice.Count(d => d == WILD_DICE);
                 var normalDice = tempDice.Where(d => d != WILD_DICE).ToList();
                 int needCount = GetNeedCount();
-                
+
                 if (normalDice.Count > 0)
                 {
                     var bestGroup = normalDice.GroupBy(x => x)
                         .OrderByDescending(g => g.Count())
                         .First();
-                    
+
                     int takeFromGroup = Math.Min(bestGroup.Count(), needCount);
                     usedDices.AddRange(bestGroup.Take(takeFromGroup));
-                    
+
                     // 用萬用骰補足
                     int remaining = needCount - takeFromGroup;
                     for (int i = 0; i < remaining && wildCount > 0; i++)
@@ -529,7 +531,7 @@ public class BaseSkill : ISkillData
                     }
                 }
                 break;
-                
+
             case SkillRequirementType.DiceSum:
                 // 總和類型：消耗所有骰子
                 usedDices.AddRange(tempDice);
@@ -560,13 +562,13 @@ public class BaseSkill : ISkillData
                     }
                 }
                 break;
-                
+
             case SkillRequirementType.ConsecutiveDices:
                 // 連續骰子（支援萬用骰）
                 var consecutive = GetConsecutiveSequenceWithWild(tempDice);
                 usedDices.AddRange(consecutive);
                 break;
-                
+
             case SkillRequirementType.AnyDices:
                 // 任意骰子：取需要的數量
                 int anyNeedCount = GetNeedCount();
@@ -577,26 +579,26 @@ public class BaseSkill : ISkillData
                 }
                 break;
         }
-        
+
         return usedDices;
     }
-    
+
     // 取得連續骰子組合（支援萬用骰）
     private List<int> GetConsecutiveSequenceWithWild(List<int> dices)
     {
         int count = GetNeedCount();
         if (dices.Count < count) return new List<int>();
-        
+
         int wildCount = dices.Count(d => d == WILD_DICE);
         var normalDice = dices.Where(d => d != WILD_DICE).Distinct().OrderBy(x => x).ToList();
-        
+
         // 嘗試所有可能的起始點
         for (int start = 1; start <= 7 - count; start++)
         {
             List<int> result = new List<int>();
             int wildsUsed = 0;
             bool possible = true;
-            
+
             for (int i = 0; i < count; i++)
             {
                 int target = start + i;
@@ -615,7 +617,7 @@ public class BaseSkill : ISkillData
                     break;
                 }
             }
-            
+
             if (possible)
             {
                 return result;
@@ -623,7 +625,7 @@ public class BaseSkill : ISkillData
         }
         return new List<int>();
     }
-    
+
     // 使用技能
     public virtual void UseSkill(bool _isPlayer)
     {
@@ -631,20 +633,26 @@ public class BaseSkill : ISkillData
         {
             // 計算傷害值
             int finalValue = skillValue;
-            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillName, skillType, new List<int> { finalValue }, _isPlayer);
+            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillID, skillName, skillType, new List<int> { finalValue }, _isPlayer);
             UnityEngine.Debug.Log($"{skillName} used, dealing {finalValue} skillValue!");
             if (selfBuffs.Count > 0)
             {
                 foreach (var buff in selfBuffs)
                 {
-                    EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, _isPlayer);
+                    BaseBuff spBuff = new BaseBuff(buff.buffID, buff.usageCount, buff.duration);
+                    // 生成新的 Buff 並套用到角色
+                    EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, spBuff, _isPlayer);
+                    //EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillID, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, _isPlayer);
                 }
             }
             if (targetBuffs.Count > 0)
             {
                 foreach (var buff in targetBuffs)
                 {
-                    EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, !_isPlayer);
+                    BaseBuff spBuff = new BaseBuff(buff.buffID, buff.usageCount, buff.duration);
+                    // 生成新的 Buff 並套用到角色
+                    EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, spBuff, !_isPlayer);
+                    //EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillID, "", SkillType.Buff, new List<int> { buff.buffID, buff.usageCount, buff.duration }, !_isPlayer);
                 }
             }
             if (breakDiceCount > 0)

@@ -51,6 +51,13 @@ public class ChatWindow : MonoBehaviour
             logPanelObj.GetComponent<LogView>().SetData(showedDialogues);
         });
         EventCenter.AddListener(StateEvent.EVENT_SETTING_CHANGED, OnSettingChanged);
+        tog_auto.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn)
+            {
+                CompleteDialogue();
+            }
+        });
     }
     void OnDestroy()
     {

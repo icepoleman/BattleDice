@@ -58,8 +58,6 @@ public class DialogueManager : MonoBehaviour
         chooseBtnPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
         animator = GetComponent<Animator>();
         AddEvent();
-        //test
-        GameDataManager.TmpAvgChapter = "Prologue1_1";//讀取劇情
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
     }
     void Update()

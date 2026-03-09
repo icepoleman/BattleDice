@@ -66,10 +66,10 @@ public class BaseBuff : IBuffData
     //紀錄玩家骰子數量
     public int recordedDiceCount { get; set; } = 0;
     public bool canRemove { get; set; } = false;
-    
+
     // 預設建構子
     public BaseBuff() { }
-    
+
     // 使用配置數據建構
     public BaseBuff(int buffID, int usageCount, int duration)
     {
@@ -77,7 +77,7 @@ public class BaseBuff : IBuffData
         ApplyConfig(config);
         SetBuffData(usageCount, duration);
     }
-    
+
     // 套用配置
     protected void ApplyConfig(BuffConfigData config)
     {
@@ -88,7 +88,7 @@ public class BaseBuff : IBuffData
         buffEffectType = config.buffEffectType;
         effectValues = config.effectValues != null ? new List<int>(config.effectValues) : new List<int>();
     }
-    
+
     public void SetBuffData(int _usageCount = 0, int _duration = 0)
     {
         usageCount = _usageCount;
@@ -126,28 +126,24 @@ public class BaseBuff : IBuffData
         {
             case BuffEffectType.HP:
                 // 對自己治療 或扣血
-                float healAmount = effectValues[0];
-                if (healAmount > 0)
-                    character.Heal(healAmount);
-                else
-                    character.TakeDamage(-healAmount);
-                Debug.Log($"{buffName} 治療了 {healAmount} 點生命！");
-                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BLOOD_UI);
+                float _value = -effectValues[0];
+                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, _value, character.isPlayer);
+                Debug.Log($"{buffName} 治療了 {_value} 點生命！");
                 break;
 
             case BuffEffectType.EnemyHP:
                 // 對敵人造成傷害（透過事件系統）
-                float damageToEnemy = effectValues[0];
-                EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, damageToEnemy, !character.isPlayer);
+                float damageToEnemy = -effectValues[0];
+                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, damageToEnemy, !character.isPlayer);
                 Debug.Log($"{buffName} 對敵人造成了 {damageToEnemy} 點傷害！");
                 break;
 
             case BuffEffectType.BothHP:
                 // 同時對自己和對敵人傷害
-                float _damage = effectValues[0];
+                float _damage = -effectValues[0];
 
-                EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, _damage, !character.isPlayer);
-                character.TakeDamage(_damage);
+                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, _damage, !character.isPlayer);
+                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, _damage, character.isPlayer);
                 Debug.Log($"對雙方造成 {_damage} 點傷害！");
                 break;
 

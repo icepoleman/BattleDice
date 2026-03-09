@@ -96,7 +96,8 @@ public static class UIManager
         }
 
         Transform targetParent = parent ?? GetCanvas();
-        Object.Instantiate(prefab, targetParent);
+        GameObject panelObj = Object.Instantiate(prefab, targetParent);
+        AddRightClickCloser(panelObj);
     }
     public static async Task ShowPanel(string panelAB, Transform parent = null)
     {
@@ -107,6 +108,18 @@ public static class UIManager
         }
 
         Transform targetParent = parent ?? GetCanvas();
-        Object.Instantiate(prefab, targetParent);
+        GameObject panelObj = Object.Instantiate(prefab, targetParent);
+        AddRightClickCloser(panelObj);
+    }
+
+    /// <summary>
+    /// 為彈窗添加右鍵關閉功能
+    /// </summary>
+    private static void AddRightClickCloser(GameObject obj)
+    {
+        if (obj.GetComponent<RightClickCloser>() == null)
+        {
+            obj.AddComponent<RightClickCloser>();
+        }
     }
 }

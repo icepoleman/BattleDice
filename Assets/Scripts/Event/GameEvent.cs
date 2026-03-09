@@ -13,6 +13,7 @@ public class GameEvent
     public const string EVENT_USE_BUFF = "GameEvent_UseBuff";//使用buff通知
     //角色用
     public const string EVENT_ATTACK_CHARACTER = "GameEvent_AttackCharacter";//對角色造成傷害
+    public const string EVENT_BUFF_EFFECT_BLOOD = "GameEvent_BuffEffectBlood";//Buff效果造成的血量變化
     public const string EVENT_DICE_SELECTION_CHANGED = "GameEvent_DiceSelectionChanged";//骰子選取狀態變更
     public const string EVENT_ADD_BUFF = "GameEvent_AddBuff";//新增buff
     public const string EVENT_UPDATE_BUFF = "GameEvent_UpdateBuff";//更新buff

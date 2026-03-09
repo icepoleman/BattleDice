@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8650e6c5167ab544eacf5ef0bf1b8596
+guid: c58ab68cb22cb4d4290353df76fd5dbf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1058831292878041323
-    second: halloween_chara6_majo_0
+      213: 2068788577495265905
+    second: player_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: halloween_chara6_majo_0
+      name: player_2_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 5
-        width: 297
-        height: 390
+        x: 136
+        y: 47
+        width: 1188
+        height: 1156
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: be030117379b1be00800000000000000
-      internalID: 1058831292878041323
+      spriteID: 172bdf41040d5bc10800000000000000
+      internalID: 2068788577495265905
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      halloween_chara6_majo_0: 1058831292878041323
+      player_2_0: 2068788577495265905
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

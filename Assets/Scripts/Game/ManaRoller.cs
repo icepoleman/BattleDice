@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Threading.Tasks;
 public enum manaRollerMode
 {
     Off,
@@ -31,7 +32,9 @@ public class ManaRoller : MonoBehaviour
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
     [SerializeField] ToggleGroup skillToggleGroup;
-    [SerializeField] List<SkillCard> skillCardList;
+    List<SkillCard> skillCardList= new List<SkillCard>();
+    [SerializeField] Transform skillCardParent;
+    [SerializeField] GameObject skillCardPrefab;
     [SerializeField] SkillCard chooseSkillCard;
     [SerializeField] Text text_skillHint;
     [SerializeField] Button btn_changeSkill;
@@ -49,9 +52,17 @@ public class ManaRoller : MonoBehaviour
         //監聽技能選取事件
         EventCenter.AddListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
     }
-    private async void Start()
+    public async Task Init()
     {
         if (isOpen) return;
+ 
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject cardObj = Instantiate(skillCardPrefab, skillCardParent);
+            SkillCard card = cardObj.GetComponent<SkillCard>();
+            skillCardList.Add(card);
+        }
+        skillCardList.Reverse(); // 反轉排序
         var spriteList = await AddressableManager.LoadLabelAsync<Sprite>("Dice");
         // 依照名稱排序 (dice_0, dice_1, dice_2...)
         spriteList.Sort((a, b) =>
@@ -357,8 +368,8 @@ public class ManaRoller : MonoBehaviour
                     }
                     else
                     {
-                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));
-                    }
+ 
+                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));                    }
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
             }

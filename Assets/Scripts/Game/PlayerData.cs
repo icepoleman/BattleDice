@@ -12,7 +12,7 @@ public class PlayerData : BaseCharacterData
         manaRollerMaxDiceCount = 8;
 
         //test用
-        skillIDs = new List<int> { 9,10, 7 };
+        skillIDs = new List<int> {14,17, 7 };
         diceCount = 8;
         maxRollCount = 3;
         maxBlood = 100f;

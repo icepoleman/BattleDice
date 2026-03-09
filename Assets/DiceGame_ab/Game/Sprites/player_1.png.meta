@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 9f623fc48c117d6489efcf6a37917a97
+guid: 2e6c5fe44a5292242a40c8f39f333773
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6192352115103529248
-    second: rakugo_bakemono_tsukai_0
-  - first:
-      213: -2981069154466387728
-    second: rakugo_bakemono_tsukai_1
-  - first:
-      213: -954345246277755514
-    second: rakugo_bakemono_tsukai_2
-  - first:
-      213: 6945151906507402032
-    second: rakugo_bakemono_tsukai_3
-  - first:
-      213: -3637503277349284156
-    second: rakugo_bakemono_tsukai_4
+      213: -2016941586393158055
+    second: player_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rakugo_bakemono_tsukai_0
+      name: player_1_0
       rect:
         serializedVersion: 2
-        x: 115
-        y: 281
-        width: 19
-        height: 36
+        x: 43
+        y: 47
+        width: 1281
+        height: 1246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,96 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0e68d1f4f88501aa0800000000000000
-      internalID: -6192352115103529248
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rakugo_bakemono_tsukai_1
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 271
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0f8282df56d11a6d0800000000000000
-      internalID: -2981069154466387728
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rakugo_bakemono_tsukai_2
-      rect:
-        serializedVersion: 2
-        x: 179
-        y: 52
-        width: 261
-        height: 322
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 68d188a0e0c71c2f0800000000000000
-      internalID: -954345246277755514
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rakugo_bakemono_tsukai_3
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 11
-        width: 171
-        height: 263
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 03b208aacd2226060800000000000000
-      internalID: 6945151906507402032
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rakugo_bakemono_tsukai_4
-      rect:
-        serializedVersion: 2
-        x: 159
-        y: 254
-        width: 35
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4c6d644aa0ef48dc0800000000000000
-      internalID: -3637503277349284156
+      spriteID: 95ea25a30526204e0800000000000000
+      internalID: -2016941586393158055
       vertices: []
       indices: 
       edges: []
@@ -235,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rakugo_bakemono_tsukai_0: -6192352115103529248
-      rakugo_bakemono_tsukai_1: -2981069154466387728
-      rakugo_bakemono_tsukai_2: -954345246277755514
-      rakugo_bakemono_tsukai_3: 6945151906507402032
-      rakugo_bakemono_tsukai_4: -3637503277349284156
+      player_1_0: -2016941586393158055
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

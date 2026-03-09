@@ -27,7 +27,8 @@ public class ChooseSkillCard : MonoBehaviour
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
         text_skillEffect.text = skillData.effectText;
-        img_diceNum.sprite = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "dice_" + skillData.needDiceNum.ToString() + ".png");
+        Debug.Log(skillData.GetNeedDiceNum());
+        img_diceNum.sprite = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "dice_" + skillData.GetNeedDiceNum() + ".png");
     }
     void OnEnable()
     {
