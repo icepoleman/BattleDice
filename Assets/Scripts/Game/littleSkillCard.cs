@@ -11,8 +11,6 @@ public class littleSkillCard : MonoBehaviour
     [SerializeField] Text text_skillCondition;
     [SerializeField] Text text_skillEffect;
     [SerializeField] Text text_skillEffect_title;
-    [SerializeField] Transform trans_skillDiceParent;
-    [SerializeField] GameObject obj_dice;
     [SerializeField] Image img_skillIcon;
     [SerializeField] GameObject obj_chooseVfx;
     ISkillData skillData;
@@ -23,9 +21,8 @@ public class littleSkillCard : MonoBehaviour
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
-        text_skillEffect.text = skillData.effectText;
-        if (skillData.conditionText == "")
-            BurnConditionDices();
+        string effectText = skillData.effectText.Replace(",", "\n").Replace("，", "\n");
+        text_skillEffect.text = effectText;
     }
     //技能開關   
     public void SkillSwitch(bool isOn)
@@ -33,17 +30,5 @@ public class littleSkillCard : MonoBehaviour
         //img_skillIcon.color = isOn ? Color.white : Color.gray;
         //可以加特效
         obj_chooseVfx.SetActive(isOn);
-    }
-    void BurnConditionDices()//如果沒有條件骰子就不顯示
-    {
-        text_skillCondition.gameObject.SetActive(false);
-        for (int i = 0; i < skillData.needDicesData.Length; i++)
-        {
-            int sideNum = skillData.needDicesData[i];
-            GameObject diceObj = Instantiate(obj_dice, trans_skillDiceParent);
-            diceObj.SetActive(true);
-            Image img = diceObj.GetComponent<Image>();
-            img.sprite = ResourcesLoader.GetDiceSprite(sideNum);
-        }
     }
 }

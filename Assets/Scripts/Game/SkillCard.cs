@@ -6,23 +6,27 @@ using System;
 public class SkillCard : MonoBehaviour
 {
     [SerializeField] Text text_skillTitle;
+    [SerializeField] Text text_infoTitle;
     [SerializeField] Text text_skillCondition_title;
     [SerializeField] Text text_skillCondition;
     [SerializeField] Text text_skillEffect;
     [SerializeField] Text text_skillEffect_title;
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
     [SerializeField] Toggle tog_choose;
+    [SerializeField] Image img_diceNum;
     ISkillData skillData;
     void Awake()
     {
         tog_choose.gameObject.SetActive(false);
     }
-    public void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
+    public async void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
     {
+        img_diceNum.sprite = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "dice_" + _skillData.needDiceNum + ".png");
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
         text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
+        text_infoTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
         string effectText = skillData.effectText.Replace(",", "\n").Replace("，", "\n");
         text_skillEffect.text = effectText;

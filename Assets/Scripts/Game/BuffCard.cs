@@ -25,11 +25,11 @@ public class BuffCard : MonoBehaviour
     }
     public void SetBuffInfo(IBuffData buffData)
     {
-        RectTransform rect = GetComponent<RectTransform>();
+       /* RectTransform rect = GetComponent<RectTransform>();
         if (rect.anchoredPosition.x > 0)
             obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(20, -12, 1);
         else
-            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(-20, -12, 1);
+            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(-20, -12, 1);*/
 
         if (buffData.duration > 0)
             txt_duration.text = buffData.duration.ToString();

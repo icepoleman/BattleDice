@@ -6,7 +6,7 @@ public class StateManager : MonoBehaviour
     public static StateManager Instance { get; private set; }
     public static CharacterSaveData playerData;
 
-    [SerializeField]Image fadeImage;
+    [SerializeField] Image fadeImage;
 
     public enum GameState
     {
@@ -22,27 +22,27 @@ public class StateManager : MonoBehaviour
 
     [Header("當前遊戲狀態")]
     public GameState currentState = GameState.MainMenu;
+    private GameState previousState = GameState.MainMenu;
     [SerializeField] bool testMode;
     //todo 轉場載入畫面黑幕
-    
+
     void Awake()
     {
-        GameDataManager.TestMode = testMode;
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            
+
             // 設定 SceneLoader 的協程執行者
             SceneLoader.SetCoroutineRunner(this);
-            
+
             // 初始化 fadeImage（解決 CrossFadeAlpha 第一次不淡入的問題）
             if (fadeImage != null)
             {
                 fadeImage.canvasRenderer.SetAlpha(0f);
                 fadeImage.gameObject.SetActive(false);
             }
-            
+
             AddEventListeners();
         }
         else
@@ -54,7 +54,7 @@ public class StateManager : MonoBehaviour
     {
         RemoveEventListeners();
     }
-    
+
     // 註冊事件監聽
     void AddEventListeners()
     {
@@ -66,7 +66,8 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
         EventCenter.AddListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
-        
+        EventCenter.AddListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
+
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -79,20 +80,21 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_PREPARATION_ROOM, OnEnterPreparationRoom);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
         EventCenter.RemoveListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
+        EventCenter.RemoveListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
     {
         if (currentState != newState)
         {
-            GameState previousState = currentState;
+            previousState = currentState;
             currentState = newState;
-            
+
             Debug.Log($"遊戲狀態切換: {previousState} → {currentState}");
             OnStateChanged(previousState, currentState);
         }
     }
-    
+
     void OnStateChanged(GameState from, GameState to)
     {
         // 只處理狀態切換的基本邏輯
@@ -117,15 +119,15 @@ public class StateManager : MonoBehaviour
                 Debug.Log("進入 H 事件狀態");
                 break;
         }
-        
+
         // 廣播狀態切換事件，讓其他系統響應
-       // EventCenter.Dispatch(GameEvent.EVENT_GAME_STATE_CHANGED, from, to);
+        // EventCenter.Dispatch(GameEvent.EVENT_GAME_STATE_CHANGED, from, to);
     }
-    
+
     void OnEnterMenu(object[] args)
     {
         Debug.Log("StateManager: 進入 主選單 模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("StartMenu", () => ChangeState(GameState.MainMenu));
     }
@@ -141,10 +143,10 @@ public class StateManager : MonoBehaviour
         int enemyId = (int)args[0];
         Debug.Log("StateManager: 進入 骰子遊戲 模式 Enemy" + enemyId);
         GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
- 
+
         //TODO: 設定玩家資料
-       // GameDataManager.PlayerData = new PlayerData();
-        
+        // GameDataManager.PlayerData = new PlayerData();
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("DiceGame", () => ChangeState(GameState.DiceGame));
     }
@@ -153,35 +155,35 @@ public class StateManager : MonoBehaviour
         string _chapter = (string)args[0];
         GameDataManager.TmpAvgChapter = _chapter;
         Debug.Log("StateManager: 進入 AVG 模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("AVGScene", () => ChangeState(GameState.AVG));
     }
     void OnTestAVGMenu(object[] args)
     {
         Debug.Log("StateManager: 進入 測試劇情選單 模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("TestAdvMenu", () => ChangeState(GameState.TestAVGMenu));
     }
     void OnEnterMap(object[] args)
     {
         Debug.Log("StateManager: 進入地圖模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("StageMap", () => ChangeState(GameState.Map));
     }
     void OnEnterPreparationRoom(object[] args)
     {
         Debug.Log("StateManager: 進入準備室模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("PreparationRoom", () => ChangeState(GameState.PreparationRoom));
     }
     void OnEnterShop(object[] args)
     {
         Debug.Log("StateManager: 進入商店模式");
-        
+
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("ShopScene", () => ChangeState(GameState.Shop));
     }
@@ -205,12 +207,42 @@ public class StateManager : MonoBehaviour
     {
         fadeImage.gameObject.SetActive(false);
     }
-    
+
+    void OnBackPreviousScene(object[] args)
+    {
+        Debug.Log($"StateManager: 返回上一個場景 ({previousState})");
+        if (previousState == GameState.MainMenu)
+        {
+            previousState = GameState.Map; // 返回地圖而不是主選單
+        }
+
+        string sceneName = GetSceneNameByState(previousState);
+        GameState targetState = previousState;
+
+        SceneLoader.LoadSceneWithDelay(sceneName, () => ChangeState(targetState));
+    }
+
+    string GetSceneNameByState(GameState state)
+    {
+        return state switch
+        {
+            GameState.MainMenu => "StartMenu",
+            GameState.AVG => "AVGScene",
+            GameState.TestAVGMenu => "TestAdvMenu",
+            GameState.DiceGame => "DiceGame",
+            GameState.Map => "StageMap",
+            GameState.PreparationRoom => "PreparationRoom",
+            GameState.Shop => "ShopScene",
+            GameState.H_EVENT => "H_EventScene",
+            _ => "StartMenu"
+        };
+    }
+
     // 靜態便利方法
     public static void ChangeToState(GameState newState)
     {
         Instance?.ChangeState(newState);
     }
-    
+
     public static GameState CurrentState => Instance?.currentState ?? GameState.MainMenu;
 }

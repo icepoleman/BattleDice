@@ -72,13 +72,13 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 檢測 Backspace 鍵快速跳到下一個選項
-        if (Keyboard.current.backspaceKey.wasPressedThisFrame)
+       /* if (Keyboard.current.backspaceKey.wasPressedThisFrame)
         {
             if (!isOver && !isSkipPanelOpen && !onChoose)
             {
                 JumpToNextChoose();
             }
-        }
+        }*/
 
         // 檢測 CTRL 鍵或 Skip 按鈕快轉
         bool ctrlPressed = Input.GetKey(KeyCode.LeftControl);
@@ -185,10 +185,8 @@ public class DialogueManager : MonoBehaviour
             case "END":
                 Debug.Log("劇情結束");
                 isOver = true;
-                if (GameDataManager.TestMode)
-                    EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
-                else
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
+                EventCenter.Dispatch(StateEvent.EVENT_BACK_PREVIOUS_SCENE);
+
                 return;
             case "BATTLE":
                 // 在這些章節中不處理下一步
@@ -196,6 +194,10 @@ public class DialogueManager : MonoBehaviour
                 chatWindow.HideWindow();
                 Debug.Log("劇情結束 進入戰鬥" + int.Parse(dialogueDatas[pageIndex].Flag));
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(dialogueDatas[pageIndex].Flag));
+                return;
+            case "SAVEROOM":
+                isOver = true;
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 return;
             case "DIE":
                 isOver = true;
@@ -537,14 +539,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        if (GameDataManager.TestMode)
-        {
-            EventCenter.Dispatch(StateEvent.EVENT_TEST_AVGMENU);
-        }
-        else
-        {
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
-        }
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
     }
 
     /// <summary>

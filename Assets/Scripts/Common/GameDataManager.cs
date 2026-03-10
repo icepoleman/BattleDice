@@ -4,7 +4,6 @@ using System.Collections.Generic;
 //遊戲資料管理器
 public static class GameDataManager
 {
-    public static bool TestMode = false; // 測試模式開關
     public static string PlayerName = "阿祥";
     public static PlayerData PlayerData { get; set; } = new PlayerData();    // 玩家資料
     public static List<int> HasSkillIDs { get; set; } = new List<int>();    // 擁有的技能ID
