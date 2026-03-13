@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ChatWindow : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class ChatWindow : MonoBehaviour
     private List<ChatLog> showedDialogues = new List<ChatLog>();//已顯示過的對話（用於記錄日誌）
     [SerializeField] private Text dialogueText; // 對話框文字
     [SerializeField] private Text nameText; // 角色名稱文字
-    [SerializeField] private GameObject doneImg; // 對話結束圖示
+    [SerializeField] private GameObject img_done; // 對話結束圖示
 
     [Header("控制按鈕")]
     [SerializeField] private Toggle tog_auto;
@@ -27,9 +28,11 @@ public class ChatWindow : MonoBehaviour
 
     private const string TYPING_SPEED_KEY = "TypingSpeed";
     private const float DEFAULT_TYPING_SPEED = 0.05f;
+    private ContentSizeFitter fitter;
 
     private void Start()
     {
+        fitter = dialogueText.GetComponent<ContentSizeFitter>();
         typingSpeed = TypingSpeed; // 從 PlayerPrefs 讀取速度
         tog_hide.onValueChanged.AddListener(isOn =>
         {
@@ -58,6 +61,11 @@ public class ChatWindow : MonoBehaviour
                 CompleteDialogue();
             }
         });
+
+        // img_done 上下飄動動畫
+        RectTransform doneRect = img_done.GetComponent<RectTransform>();
+        float originalY = doneRect.anchoredPosition.y;
+        doneRect.DOAnchorPosY(originalY + 5f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
     void OnDestroy()
     {
@@ -94,7 +102,9 @@ public class ChatWindow : MonoBehaviour
         // 直接顯示完整文字
         StopAllCoroutines();
         dialogueText.text = str_dialogue;
-        doneImg.SetActive(true);
+        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        if (!isFastForwardMode)
+            img_done.SetActive(true);
         isTyping = false;
         if (tog_auto.isOn)
             dialogueManager.AutoNextCoroutine();
@@ -127,7 +137,18 @@ public class ChatWindow : MonoBehaviour
     IEnumerator TypeLine()
     {
         isTyping = true;
-        doneImg.SetActive(false);
+        img_done.SetActive(false);
+
+        // 暫時顯示完整文字以獲取寬度
+        dialogueText.text = str_dialogue;
+        Canvas.ForceUpdateCanvases();
+        float targetWidth = dialogueText.rectTransform.rect.width;
+
+        // 固定寬度，禁用 horizontal fit
+        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        dialogueText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+
+        // 清空並開始逐字顯示
         dialogueText.text = "";
         foreach (char c in str_dialogue.ToCharArray())
         {
@@ -135,7 +156,12 @@ public class ChatWindow : MonoBehaviour
             float currentSpeed = isFastForwardMode ? fastTypingSpeed : typingSpeed;
             yield return new WaitForSeconds(currentSpeed);
         }
-        doneImg.SetActive(true);
+
+        // 恢復 Content Size Fitter
+        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        yield return new WaitForSeconds(0.1f);
+        img_done.SetActive(true);
         isTyping = false;
         if (tog_auto.isOn)
             dialogueManager.AutoNextCoroutine();

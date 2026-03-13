@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public static class LanguageManager
 {
     private static Dictionary<string, string> languageData = new Dictionary<string, string>();
-    private static string currentLanguage = "cn";
+    private static string currentLanguage = "tw";
     private static bool isLoaded = false;
     
     /// <summary>
@@ -75,7 +75,7 @@ public static class LanguageManager
     {
         languageData.Clear();
         
-        string path = $"Language/{currentLanguage}";
+        string path = $"Language/{currentLanguage}/{currentLanguage}";
         TextAsset textAsset = Resources.Load<TextAsset>(path);
         
         if (textAsset == null)

@@ -578,7 +578,6 @@ MonoBehaviour:
   hasSkillCardParent: {fileID: 3619782880324405382}
   chosenSkillCardParent: {fileID: 4540289389222079255}
   btn_save: {fileID: 7721567865913512644}
-  btn_back: {fileID: 157505140151243422}
 --- !u!1 &3006197061275104984
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,7 +846,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5406389083910209887}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -1411,8 +1410,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7463089032121609225}
   m_HandleRect: {fileID: 7264699274872548465}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999994
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

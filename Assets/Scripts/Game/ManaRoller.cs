@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using DG.Tweening;
 using System.Threading.Tasks;
 public enum manaRollerMode
@@ -47,6 +48,7 @@ public class ManaRoller : MonoBehaviour
     float skillStarBaseSpeed = 30f; // 定速旋轉速度（度/秒）
     float skillStarCurrentSpeed; // 當前旋轉速度
     Tweener skillStarSpeedTween; // 速度變化的 Tween
+    int skillBoxOpenFrame = -1; // 記錄技能面板打開的幀數
     void Awake()
     {
         //監聽技能選取事件
@@ -86,6 +88,7 @@ public class ManaRoller : MonoBehaviour
         {
             bool isActive = anim_skillBox.GetBool("isOpen");
             anim_skillBox.SetBool("isOpen", !isActive);
+            if (!isActive) skillBoxOpenFrame = Time.frameCount; // 記錄打開的幀數
             TriggerSkillStarBoost();
         });
         btn_roll.onClick.AddListener(() => { RollDices(); });//擲骰子
@@ -108,6 +111,15 @@ public class ManaRoller : MonoBehaviour
         if (rect_skillStar != null)
         {
             rect_skillStar.Rotate(0, 0, -skillStarCurrentSpeed * Time.deltaTime);
+        }
+
+        // 滑鼠左鍵放開時關閉技能面板
+        if (anim_skillBox.GetBool("isOpen") && Time.frameCount > skillBoxOpenFrame)
+        {
+            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                anim_skillBox.SetBool("isOpen", false);
+            }
         }
     }
 

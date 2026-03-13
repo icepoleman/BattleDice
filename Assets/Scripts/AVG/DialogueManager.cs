@@ -72,13 +72,13 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 檢測 Backspace 鍵快速跳到下一個選項
-       /* if (Keyboard.current.backspaceKey.wasPressedThisFrame)
-        {
-            if (!isOver && !isSkipPanelOpen && !onChoose)
-            {
-                JumpToNextChoose();
-            }
-        }*/
+        /* if (Keyboard.current.backspaceKey.wasPressedThisFrame)
+         {
+             if (!isOver && !isSkipPanelOpen && !onChoose)
+             {
+                 JumpToNextChoose();
+             }
+         }*/
 
         // 檢測 CTRL 鍵或 Skip 按鈕快轉
         bool ctrlPressed = Input.GetKey(KeyCode.LeftControl);
@@ -318,7 +318,7 @@ public class DialogueManager : MonoBehaviour
             }
             if (_sound.StartsWith("Bgm_"))
             {
-                AudioManager.Instance.PlayBGM(_sound, true, 1.0f);
+                AudioManager.Instance.PlayBGM(_sound);
                 Debug.Log("播放音樂:" + _sound);
             }
             Debug.Log("播放音效:" + dialogueDatas[_page].Sound);

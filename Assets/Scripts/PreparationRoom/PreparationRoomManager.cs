@@ -15,14 +15,14 @@ public class PreparationRoomManager : MonoBehaviour
         {
             Instantiate(powerUpPanelPrefab, transform);
         });
-        if (GameDataManager.CurrentMap > 2)
+        if (GameDataManager.CurrentMap > 2 || GameDataManager.TestMode) // 第三關以上開啟商店，或測試模式強制開啟
         {
             btn_shop.onClick.AddListener(async () =>
             {
-            GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
-            GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
-            ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
-            shopPanel.SetUp("MajoShop");
+                GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
+                GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
+                ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
+                shopPanel.SetUp("MajoShop");
             });
         }
         else

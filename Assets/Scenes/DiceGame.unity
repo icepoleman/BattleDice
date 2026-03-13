@@ -1129,6 +1129,10 @@ PrefabInstance:
       value: -32.6
       objectReference: {fileID: 0}
     - target: {fileID: 8376499096779394116, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_Spacing
+      value: 10.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376499096779394116, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_ChildControlWidth
       value: 0
       objectReference: {fileID: 0}

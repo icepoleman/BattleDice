@@ -33,9 +33,10 @@ public class BuffCard : MonoBehaviour
 
         if (buffData.duration > 0)
             txt_duration.text = buffData.duration.ToString();
+
         txt_effect.text = LanguageManager.GetFormat("T_Buff_Effect_Describe", buffData.buffName, buffData.describe);
-        if (buffData.usageCount > 0)
-            txt_effect.text += "\n" + LanguageManager.GetFormat("T_Buff_Effect_UsageCount", buffData.usageCount);
+        //if (buffData.usageCount > 0)
+            //txt_effect.text += "\n" + LanguageManager.GetFormat("T_Buff_Effect_UsageCount", buffData.usageCount);
     }
     void OnMouseEnter()
     {

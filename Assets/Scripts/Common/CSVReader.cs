@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -48,15 +47,16 @@ public class CSVReader
     {
         List<DialogueData> lines = new List<DialogueData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Dialogue/", fileName + ".csv");
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/{fileName}";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError("❌ 找不到對話 CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到對話 CSV 檔案: " + resourcePath);
             return null;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -85,7 +85,7 @@ public class CSVReader
             lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入對話資料完成，共 {lines.Count} 行: {filePath}");
+        Debug.Log($"✅ 從 Resources 載入對話資料完成，共 {lines.Count} 行: {resourcePath}");
         return lines;
     }
 
@@ -94,15 +94,16 @@ public class CSVReader
     {
         List<MapData> lines = new List<MapData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Map/", fileName + ".csv");
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Map/{fileName}";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError("❌ 找不到地圖 CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到地圖 CSV 檔案: " + resourcePath);
             return null;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -120,7 +121,7 @@ public class CSVReader
             lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {filePath}");
+        Debug.Log($"✅ 從 Resources 載入地圖資料完成，共 {lines.Count} 行: {resourcePath}");
         return lines;
     }
     //載入BUFF資料
@@ -128,15 +129,16 @@ public class CSVReader
     {
         Dictionary<int, BuffConfigData> buffs = new Dictionary<int, BuffConfigData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Buff/", "BuffData.csv");
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/BuffData";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError("❌ 找不到 Buff CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到 Buff CSV 檔案: " + resourcePath);
             return null;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -158,7 +160,7 @@ public class CSVReader
             buffs[data.buffID] = data;
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入 Buff 資料完成，共 {buffs.Count} 筆: {filePath}");
+        Debug.Log($"✅ 從 Resources 載入 Buff 資料完成，共 {buffs.Count} 筆: {resourcePath}");
         return buffs;
     }
 
@@ -205,15 +207,16 @@ public class CSVReader
     {
         Dictionary<int, SkillConfigData> skills = new Dictionary<int, SkillConfigData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Skill/", fileName + ".csv");
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/{fileName}";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError("❌ 找不到技能 CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到技能 CSV 檔案: " + resourcePath);
             return skills;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -243,7 +246,7 @@ public class CSVReader
             skills[data.skillID] = data;
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入技能資料完成，共 {skills.Count} 筆: {filePath}");
+        Debug.Log($"✅ 從 Resources 載入技能資料完成，共 {skills.Count} 筆: {resourcePath}");
         return skills;
     }
 
@@ -308,15 +311,16 @@ public class CSVReader
     {
         Dictionary<int, EnemyConfigData> enemies = new Dictionary<int, EnemyConfigData>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/Enemy/", fileName + ".csv");
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/{fileName}";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError("❌ 找不到敵人 CSV 檔案: " + filePath);
+            Debug.LogError("❌ 找不到敵人 CSV 檔案: " + resourcePath);
             return enemies;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -344,7 +348,7 @@ public class CSVReader
             }
         }
 
-        Debug.Log($"✅ 從 StreamingAssets 載入敵人資料完成，共 {enemies.Count} 筆: {filePath}");
+        Debug.Log($"✅ 從 Resources 載入敵人資料完成，共 {enemies.Count} 筆: {resourcePath}");
         return enemies;
     }
 
@@ -353,15 +357,18 @@ public class CSVReader
     {
         List<T> lines = new List<T>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath + "/" + subFolder + "/", fileName);
+        // 移除 .csv 副檔名（Resources.Load 不需要）
+        string fileNameWithoutExt = fileName.EndsWith(".csv") ? fileName.Substring(0, fileName.Length - 4) : fileName;
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/{subFolder}/{fileNameWithoutExt}";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
 
-        if (!File.Exists(filePath))
+        if (textAsset == null)
         {
-            Debug.LogError($"❌ 找不到 CSV 檔案: {filePath}");
+            Debug.LogError($"❌ 找不到 CSV 檔案: {resourcePath}");
             return null;
         }
 
-        string[] allLines = File.ReadAllLines(filePath);
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -376,7 +383,7 @@ public class CSVReader
                 lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 StreamingAssets/{subFolder} 載入完成，共 {lines.Count} 行: {filePath}");
+        Debug.Log($"✅ 從 Resources/{subFolder} 載入完成，共 {lines.Count} 行: {resourcePath}");
         return lines;
     }
 }

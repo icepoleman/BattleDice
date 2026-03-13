@@ -59,11 +59,11 @@ public class DiceGame : MonoBehaviour
         playerEnterBlood = playerData.currentBlood;//記錄進入時血量
 
         //test
-        enemyData = EnemyFactory.CreateEnemy(1);
+        /*enemyData = EnemyFactory.CreateEnemy(1);
         playerData = new PlayerData();
         playerData.maxRollCount = 2;
         playerData.diceCount = 8;
-        playerData.AddBuff(new BaseBuff(1, 0, 3));
+        playerData.AddBuff(new BaseBuff(1, 0, 3));*/
         //TEST
 
         //  enemyData.AddBuff(new BaseBuff(10, 0, 0));

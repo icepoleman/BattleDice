@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_continue;
     [SerializeField] Button btn_setting;
     [SerializeField] Button btn_test;
+    [SerializeField] Text text_TestMap;
 
     async void Start()
     {
@@ -33,12 +34,15 @@ public class MenuManager : MonoBehaviour
         btn_test.onClick.AddListener(OnTestClicked);
 
         AudioManager.Instance.PlayBGM("Bgm_Menu");
+
+       // Assets/DiceGame_ab/Music/BGM/
     }
     void OnTestClicked()
     {
+        GameDataManager.TestMode = true;
         //測試用
         GameDataManager.PreparationRoomStage = "0";//初始整備室
-        GameDataManager.CurrentMap = 2;//測試地圖
+        GameDataManager.CurrentMap = int.Parse(text_TestMap.text);
         GameDataManager.CurrentStage = "0";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
@@ -55,14 +59,6 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
-    }
-    //載入快速存檔(暫時停用 功能沒移除)
-    void OnContinueClicked()
-    {
-        SaveManager.LoadAutoSave();//載入自動存檔
-        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
-        Debug.Log("Continue Clicked");
-        // 在這裡添加繼續遊戲的邏輯
     }
 
     void OnNewGameClicked()
