@@ -104,6 +104,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.AddListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
         EventCenter.AddListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);//生成能量骰子給裝置
         EventCenter.AddListener(GameEvent.EVENT_ENEMY_REROLL, OnEnemyReroll);//敵人重新擲骰並再次攻擊
+        EventCenter.AddListener(GameEvent.EVENT_CLEAR_NEGATIVE_BUFFS, OnClearNegativeBuffs);//清除所有負面 Buff
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
         EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
@@ -125,7 +126,7 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_DESTROY_ENEMY_DICE, OnDestroyEnemyDice);
         EventCenter.RemoveListener(GameEvent.EVENT_GENERATE_MANA_DICE, OnGenerateManaDice);
         EventCenter.RemoveListener(GameEvent.EVENT_ENEMY_REROLL, OnEnemyReroll);
-
+        EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_NEGATIVE_BUFFS, OnClearNegativeBuffs);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
 
@@ -533,7 +534,22 @@ public class DiceGame : MonoBehaviour
             ProcessSkillQueue();
         }
     }
-
+    void OnClearNegativeBuffs(object[] args)
+    {
+        bool isPlayer = (bool)args[0];
+        if (isPlayer)
+        {
+            playerData.RemoveAllBuff();
+            UpdateBuffUIEvent(null);
+            Debug.Log($"消除玩家所有buff");
+        }
+        else
+        {
+            enemyData.RemoveAllBuff();
+            UpdateBuffUIEvent(null);
+            Debug.Log($"消除敵方所有buff");
+        }        
+    }
     // 處理技能排隊
     async void ProcessSkillQueue()
     {
@@ -544,21 +560,6 @@ public class DiceGame : MonoBehaviour
             SkillOrderData skillOrder = skillOrderQueue.Dequeue();
             BaseCharacterData attacker = skillOrder.isPlayerUse ? playerData : enemyData;
 
-            if (skillOrder.skillID == 25)//特殊技能 消除所有buff
-            {
-                if (skillOrder.isPlayerUse)
-                {
-                    playerData.RemoveAllBuff();
-                    UpdateBuffUIEvent(null);
-                    Debug.Log($"消除玩家所有buff");
-                }
-                else
-                {
-                    enemyData.RemoveAllBuff();
-                    UpdateBuffUIEvent(null);
-                    Debug.Log($"消除敵方所有buff");
-                }
-            }
             //角色喊技能
             //gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
             switch (skillOrder.skillType)

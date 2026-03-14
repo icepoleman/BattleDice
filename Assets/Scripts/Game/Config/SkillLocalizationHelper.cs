@@ -1,3 +1,7 @@
+using System;
+using System.Diagnostics;
+using Unity.VisualScripting;
+
 /// <summary>
 /// 技能文本本地化處理工具
 /// </summary>
@@ -72,6 +76,7 @@ public static class SkillLocalizationHelper
                 skill.effectText = LanguageManager.GetFormat("T_Skill_SkillType_heal", skill.skillValue);
                 break;
             case SkillType.Buff:
+                skill.effectText = "";
                 break;
         }
 
@@ -81,7 +86,7 @@ public static class SkillLocalizationHelper
             {
                 // icon 還沒畫完，先都用 0 的圖
                 int buffIconID = 0; // buff.buffID
-                skill.effectText += "\n" + LanguageManager.GetFormat("T_Skill_selfBuff", buff.buffID, buffIconID, buff.duration);
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_selfBuff", buff.buffID, buffIconID, buff.duration));
             }
         }
 
@@ -91,8 +96,40 @@ public static class SkillLocalizationHelper
             {
                 // icon 還沒畫完，先都用 0 的圖
                 int buffIconID = 0; // buff.buffID
-                skill.effectText += "\n" + LanguageManager.GetFormat("T_Skill_targetBuff", buff.buffID, buffIconID, buff.duration);
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_targetBuff", buff.buffID, buffIconID, buff.duration));
             }
         }
+        if (skill.breakDiceCount > 0)//怪物combo
+        {
+            AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_enemyCombo", skill.breakDiceCount));
+        }
+        if (skill.generateDicesData.Length > 0)//生成骰子
+        {
+            int diceCount = skill.generateDicesData.Length;//這裡用數量區分類型
+            int burnCount = skill.generateDicesData[skill.generateDicesData.Length - 1];
+            Console.WriteLine(LanguageManager.GetFormat("T_Skill_generateDices_spDice", burnCount));
+            if (skill.generateDicesData[0] == 0)
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_spDice", burnCount));
+            if (diceCount == 4)
+            {
+                if (skill.generateDicesData[0] == 1)
+                    AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_lowDice", burnCount));
+                if (skill.generateDicesData[0] == 4)
+                    AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_highDice", burnCount));
+            }
+            if (diceCount == 7)
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_randomDice", burnCount));
+        }
+    }
+
+    /// <summary>
+    /// 附加效果文本，如果 effectText 為空則直接設定，否則換行後附加
+    /// </summary>
+    private static void AppendEffectText(ref SkillConfigData skill, string text)
+    {
+        if (string.IsNullOrEmpty(skill.effectText))
+            skill.effectText = text;
+        else
+            skill.effectText += "\n" + text;
     }
 }

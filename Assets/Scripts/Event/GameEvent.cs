@@ -20,6 +20,7 @@ public class GameEvent
     public const string EVENT_DESTROY_ENEMY_DICE = "GameEvent_DestroyEnemyDice";//破壞敵人骰子
     public const string EVENT_GENERATE_MANA_DICE = "GameEvent_GenerateManaDice";//生成能量骰子給裝置
     public const string EVENT_ENEMY_REROLL = "GameEvent_EnemyReroll";//敵人重新擲骰並再次攻擊
+    public const string EVENT_CLEAR_NEGATIVE_BUFFS = "GameEvent_ClearNegativeBuffs";//清除所有負面 Buff
 
     //UI
     public const string EVENT_UPDATE_BLOOD_UI = "GameEvent_UpdateBloodUI";//更新血量UI

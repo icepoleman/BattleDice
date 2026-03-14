@@ -33,7 +33,8 @@ public enum BuffEffectType
     Sleep,
     LimitDiceRollResults,
     SpawnBuff,
-    EnemyReroll  // 敵人重新擲骰並再次攻擊
+    EnemyReroll,  // 敵人重新擲骰並再次攻擊
+    ClearBuffs, // 清除所有負面 Buff
 }
 public interface IBuffData
 {
@@ -214,6 +215,10 @@ public class BaseBuff : IBuffData
                     EventCenter.Dispatch(GameEvent.EVENT_ENEMY_REROLL);
                     Debug.Log($"{buffName} 觸發敵人重新擲骰！");
                 }
+                break;
+            case BuffEffectType.ClearBuffs:
+                EventCenter.Dispatch(GameEvent.EVENT_CLEAR_NEGATIVE_BUFFS, character.isPlayer);
+                Debug.Log($"{buffName} 清除了所有負面 Buff！");
                 break;
             default:
                 Debug.LogWarning($"{buffName} 未處理的 BuffEffectType: {buffEffectType}");

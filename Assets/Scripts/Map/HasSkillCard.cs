@@ -28,6 +28,8 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
     [SerializeField] Text text_skillEffect_title;
     [SerializeField] Transform trans_skillDiceParent;
     [SerializeField] GameObject obj_dice;
+    [SerializeField] GameObject obj_buffTip;
+    [SerializeField] TextMeshProUGUI text_buffTip;
     SkillConfigData skillData;
     private int currentLinkIndex = -1;
     public void SetData(SkillConfigData _skillData, Action<HasSkillCard> onCardClicked)
@@ -89,7 +91,13 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
                 currentLinkIndex = linkIndex;
                 TMP_LinkInfo linkInfo = text_skillEffect.textInfo.linkInfo[linkIndex];
                 string linkId = linkInfo.GetLinkID();
-                ShowTooltip(linkId, eventData.position);
+                
+                // 取得 link 在文字中的位置（使用第一個字符的位置）
+                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
+                TMP_CharacterInfo charInfo = text_skillEffect.textInfo.characterInfo[firstCharIndex];
+                Vector3 charWorldPos = text_skillEffect.transform.TransformPoint(charInfo.topLeft);
+                
+                ShowTooltip(linkId, charWorldPos);
             }
         }
         else
@@ -112,16 +120,24 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
     /// 顯示彈窗
     /// </summary>
     /// <param name="linkId">link 標籤的 ID，可用於識別要顯示的內容</param>
-    /// <param name="position">滑鼠位置</param>
-    void ShowTooltip(string linkId, Vector2 position)
+    /// <param name="position">link 的世界座標位置</param>
+    void ShowTooltip(string linkId, Vector3 _position)
     {
-        Debug.Log($"Show Tooltip: {linkId} at {position}");
-        // TODO: 實作彈窗顯示
+        obj_buffTip.SetActive(true);
+        BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
+        text_buffTip.text = buffData.describe;
+        
+        // 在 link 上方顯示
+        Vector3 tipPosition = _position + new Vector3(1.25F, 0.25f, 0);
+        obj_buffTip.transform.position = tipPosition;
+        
+        Debug.Log($"Show Tooltip: {linkId} at {tipPosition}");
     }
 
     void HideTooltip()
     {
         Debug.Log("Hide Tooltip");
+        obj_buffTip.SetActive(false);
         // TODO: 實作彈窗隱藏
     }
 }

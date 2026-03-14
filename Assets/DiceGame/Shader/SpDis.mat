@@ -102,15 +102,15 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _ChromaticAberration: 0.0046
+    - _ChromaticAberration: 0.0014
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionSpeed: 6.3
-    - _DistortionStrength: 0
+    - _DistortionSpeed: 20
+    - _DistortionStrength: 0.0017
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Enabled: 1
