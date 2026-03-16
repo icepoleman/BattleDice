@@ -132,7 +132,6 @@ public class GameUiView : MonoBehaviour
         {
             GameObject skillCard = Instantiate(skillCardPrefab, trans_enemySkillBoxs);
             littleSkillCard skillCardView = skillCard.GetComponent<littleSkillCard>();
-            skillCardView.skillID = skill.skillID;
             skillCardView.SetData(skill);
             enemy_skillCardViews.Add(skillCardView);
         }
@@ -141,7 +140,7 @@ public class GameUiView : MonoBehaviour
     {
         foreach (littleSkillCard skillCardView in enemy_skillCardViews)
         {
-            bool isInUse = skillsInUse.Exists(skill => skill.skillID == skillCardView.skillID);
+            bool isInUse = skillsInUse.Exists(skill => skill.skillID == skillCardView.GetSkillID());
             skillCardView.SkillSwitch(isInUse);
         }
     }

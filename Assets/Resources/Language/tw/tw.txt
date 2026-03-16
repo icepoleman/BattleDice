@@ -14,8 +14,8 @@ T_Menu_Save_Slot_Time|保存時間{0}
 T_Save_OverWrite_Hint|是否覆蓋存檔
 T_Buff_Effect_Describe|<size=24><b>{0}</b></size>\n{1}
 T_Buff_Effect_UsageCount|\n剩餘次數:{0}
-T_skill_condition_title|【條件】
-T_skill_effect_title|【效果】
+T_skill_condition_title|<size=33><b>條件</b></size>
+T_skill_effect_title|<size=33><b>效果</b></size>
 T_GirlName|女獄卒
 T_PowerUp_MaxBlood|最大血量
 T_PowerUp_MaxBlood_Desc|角色的最大生命值
@@ -45,10 +45,10 @@ T_ManaRoller_FreezeLimitReached|鎖不夠了!
 T_Screen_Fullscreen|全螢幕
 T_Screen_BorderlessWindow|視窗全螢幕
 T_Screen_Windowed|視窗化
-T_Skill_SkillType_atk|造成{0}點傷害
+T_Skill_SkillType_atk|造成<color=#FF1700> {0} </color>點傷害
 T_Skill_selfBuff|自身<link="{0}"><sprite={1}></link>{2}回合
 T_Skill_targetBuff|敵方<link="{0}"><sprite={1}></link>{2}回合
-T_Skill_SkillType_heal|恢復{0}點生命
+T_Skill_SkillType_heal|恢復<color=#00FF00> {0} </color>點生命
 T_Skill_SameDices|相同骰子×{0}
 T_Skill_SpecificDicesWithRepeat_low|低點數骰子×{0}
 T_Skill_SpecificDicesWithRepeat_high|高點數骰子×{0}
