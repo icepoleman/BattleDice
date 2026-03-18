@@ -195,8 +195,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 721162628513062860}
   m_HandleRect: {fileID: 6411075720811680894}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -293,8 +293,9 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 2
   completedStory: Prologue1_4
-  completedSkill: 0
-  saveRoomStory: []
+  saveRoomStory: 
+  lineWidth: 4
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
   - {fileID: 8576363104777203159}
 --- !u!114 &7380500953218599487
@@ -430,11 +431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 8
-  stageInfo: 
+  stageType: 0
+  stageInfo: Prologue3_2
   completedStory: 
-  completedSkill: 0
-  saveRoomStory: []
+  saveRoomStory: 
+  lineWidth: 4
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
   - {fileID: 3559853167661314477}
 --- !u!114 &370692905158354413
@@ -650,8 +652,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_3
   completedStory: 
-  completedSkill: 0
-  saveRoomStory: []
+  saveRoomStory: 
+  lineWidth: 4
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
   - {fileID: 3654208450377136276}
 --- !u!114 &8712532214350214287
@@ -1124,8 +1127,9 @@ MonoBehaviour:
   stageType: 2
   stageInfo: 
   completedStory: 
-  completedSkill: 0
-  saveRoomStory: []
+  saveRoomStory: 
+  lineWidth: 4
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
   - {fileID: 6218241374322527348}
 --- !u!114 &2384048164719639571
@@ -1264,8 +1268,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_5
   completedStory: 
-  completedSkill: 0
-  saveRoomStory: []
+  saveRoomStory: 
+  lineWidth: 4
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes: []
 --- !u!114 &6521644496419335165
 MonoBehaviour:
