@@ -302,6 +302,12 @@ public class DialogueManager : MonoBehaviour
                     Debug.LogError("❌ 無法解析Spine速度:" + speedStr);
                 }
             }
+            else if (flag.StartsWith("Affinity_"))
+            {
+                string affinity = flag.Substring(9); // "Affinity_".Length = 9
+                int affinityValue = int.Parse(affinity);
+                GameDataManager.AddAffinity(dialogueDatas[_page].Character, affinityValue);
+            }
         }
         if (dialogueDatas[_page].CameraAnim != "")
         {

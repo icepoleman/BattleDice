@@ -1,31 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class DialogueData
-{
-    public string Chapter;
-    public string Character;
-    public string Dialogue;//對話內容
-    public string Portrait;//表情立繪
-    public string Pos;
-    public string[] Choices;
-    public string[] JumpTo;
-    public string Tag;
-    public string Anim;
-    public string Flag;
-    public string Background;
-    public string CameraAnim;
-    public string Sound;
-}
-[System.Serializable]
-public class MapData
-{
-    public string stageID;
-    public string type;
-    public string stageInfo;
-}
-
 public class CSVReader
 {
     //單例模式
@@ -350,6 +325,45 @@ public class CSVReader
 
         Debug.Log($"✅ 從 Resources 載入敵人資料完成，共 {enemies.Count} 筆: {resourcePath}");
         return enemies;
+    }
+
+    //載入好感度故事資料
+    // CSV 欄位: storyID, storyName, unlockHint
+    public List<AffinityStoryData> LoadAffinityStoryCSV(string roleName)//根據角色名稱載入對應的好感度故事資料
+    {
+        List<AffinityStoryData> stories = new List<AffinityStoryData>();
+
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/AffinityStoryData";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+
+        if (textAsset == null)
+        {
+            Debug.LogError("❌ 找不到好感度故事 CSV 檔案: " + resourcePath);
+            return stories;
+        }
+
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; } // 跳過表頭
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] v = line.Split(',');
+
+            string storyID = v.Length > 0 ? v[0] : "";
+            string storyName = v.Length > 1 ? v[1] : "";
+            string unlockHint = v.Length > 2 ? v[2] : "";
+
+            if (storyID == roleName)
+            {
+                stories.Add(new AffinityStoryData(storyID, storyName, unlockHint));
+            }
+        }
+
+        Debug.Log($"✅ 從 Resources 載入好感度故事資料完成，共 {stories.Count} 筆: {resourcePath}");
+        return stories;
     }
 
     // 通用 CSV 載入方法（可指定子資料夾）

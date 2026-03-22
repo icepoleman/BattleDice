@@ -153,6 +153,7 @@ public class StateManager : MonoBehaviour
     void OnEnterAVG(object[] args)
     {
         string _chapter = (string)args[0];
+        GameDataManager.UnlockAffinityStage(_chapter);//嘗試解鎖好感度關卡
         GameDataManager.TmpAvgChapter = _chapter;
         Debug.Log("StateManager: 進入 AVG 模式");
 

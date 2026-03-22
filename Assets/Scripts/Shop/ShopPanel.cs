@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +36,7 @@ public class ShopPanel : MonoBehaviour
         List<SkillConfigData> shopSkills = SkillDatabase.GetSkillsByTag(shopTag);
         
         // 取得玩家已擁有的技能ID
-        List<int> ownedSkillIDs = GameDataManager.HasSkillIDs;
+        List<int> ownedSkillIDs = GameDataManager.HasSkillIDs.ToList();
         
         foreach (var skillConfig in shopSkills)
         {

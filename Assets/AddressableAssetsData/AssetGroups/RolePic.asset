@@ -45,6 +45,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - JailerGirl
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 593a4766a9af1864a8cfa191336faa7f
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/shy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d2f4608de572bd44a34670ee6f14249
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/happy.png
     m_ReadOnly: 0
@@ -69,17 +75,35 @@ MonoBehaviour:
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82c4837883a1ef4459495021cb58fbea
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/angry.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89d48c3376e3f104294383b5af602d4b
     m_Address: Assets/DiceGame_ab/AVG/Characters/Witch/scare.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d6e13f5a6a55844c927257233d9119a
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/scare.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8e88909ab62b8024fbe6d6cb7a4f7f0f
     m_Address: Assets/DiceGame_ab/AVG/Characters/Witch/shy.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Witch
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 913ed079d825ae6429aa998b5068ef19
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a180b15f68e9134e8547c5a048315f6
     m_Address: Assets/DiceGame_ab/Avg/RolePic/JailerGirl/angry.png
@@ -99,6 +123,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - JailerGirl
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf2a9d54e9993b049874e94afa392d3e
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/happy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: de9b06119bbdb404fa7b34eba010a23f
     m_Address: Assets/DiceGame_ab/AVG/Characters/Witch/angry.png
     m_ReadOnly: 0
@@ -116,6 +146,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f569dbf99a5de5842881e0aec48feca0
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/sad.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f7836fbaa08437649a78ef5342817de6
     m_Address: Assets/DiceGame_ab/Avg/RolePic/JailerGirl/scare.png

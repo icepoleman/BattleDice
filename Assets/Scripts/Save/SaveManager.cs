@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// 存档槽信息（用于 UI 显示）
@@ -224,7 +226,7 @@ public static class SaveManager
         currentSave.currentStage = GameDataManager.CurrentStage;
         currentSave.currentMap = GameDataManager.CurrentMap;
         currentSave.preparationRoomStage = GameDataManager.PreparationRoomStage;
-        currentSave.hasSkillIDs = GameDataManager.HasSkillIDs;
+        currentSave.hasSkillIDs = GameDataManager.HasSkillIDs.ToList();
         currentSave.gold = GameDataManager.Gold;
         currentSave.gear = GameDataManager.Gear;
         
@@ -233,7 +235,8 @@ public static class SaveManager
         currentSave.powerUpLevel_DiceCount = GameDataManager.GetPowerUpLevel(PowerUpType.DiceCount);
         currentSave.powerUpLevel_KeepDiceCount = GameDataManager.GetPowerUpLevel(PowerUpType.KeepDiceCount);
         currentSave.powerUpLevel_MaxRollCount = GameDataManager.GetPowerUpLevel(PowerUpType.MaxRollCount);
-        
+        currentSave.unlockedAffinityStages = GameDataManager.unlockedAffinityStages.ToList();
+        currentSave.charactersAffinity = GameDataManager.charactersAffinity;
         try
         {
             currentSave.SaveTime = System.DateTime.Now;
@@ -262,7 +265,7 @@ public static class SaveManager
                 GameDataManager.PlayerData.LoadFromSaveData(currentSave.playerData);
                 GameDataManager.CurrentStage = currentSave.currentStage;
                 GameDataManager.CurrentMap = currentSave.currentMap;
-                GameDataManager.HasSkillIDs = currentSave.hasSkillIDs;
+                GameDataManager.HasSkillIDs = new HashSet<int>(currentSave.hasSkillIDs);
                 GameDataManager.Gold = currentSave.gold;
                 GameDataManager.Gear = currentSave.gear;
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
@@ -272,6 +275,8 @@ public static class SaveManager
                 GameDataManager.SetPowerUpLevel(PowerUpType.DiceCount, currentSave.powerUpLevel_DiceCount);
                 GameDataManager.SetPowerUpLevel(PowerUpType.KeepDiceCount, currentSave.powerUpLevel_KeepDiceCount);
                 GameDataManager.SetPowerUpLevel(PowerUpType.MaxRollCount, currentSave.powerUpLevel_MaxRollCount);
+                GameDataManager.unlockedAffinityStages = new HashSet<string>(currentSave.unlockedAffinityStages);
+                GameDataManager.charactersAffinity = currentSave.charactersAffinity;
                 
                 Debug.Log($"{saveType}讀檔成功");
                 return true;

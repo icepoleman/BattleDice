@@ -27,6 +27,9 @@ public class GameSaveData
     public int powerUpLevel_DiceCount;
     public int powerUpLevel_KeepDiceCount;
     public int powerUpLevel_MaxRollCount;
+
+    public List<string> unlockedAffinityStages; // 已解鎖親密度關卡ID列表
+    public int[] charactersAffinity; // 角色親密度數值陣列 
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度
 }

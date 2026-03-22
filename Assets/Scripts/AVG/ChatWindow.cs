@@ -29,6 +29,7 @@ public class ChatWindow : MonoBehaviour
     private const string TYPING_SPEED_KEY = "TypingSpeed";
     private const float DEFAULT_TYPING_SPEED = 0.05f;
     private ContentSizeFitter fitter;
+    private Tween autoRotateTween;
 
     private void Start()
     {
@@ -45,7 +46,11 @@ public class ChatWindow : MonoBehaviour
                 ShowWindow();
             }
         });
-        btn_next.onClick.AddListener(() => { dialogueManager.OnNextClick(); });
+        btn_next.onClick.AddListener(() =>
+        {
+            dialogueManager.OnNextClick();
+            tog_skip.isOn = false;// 點擊下一句時取消跳過模式
+        });
         btn_set.onClick.AddListener(async () => { await UIManager.ShowCommonPanel("SetPanel"); });
         btn_log.onClick.AddListener(async () =>
         {
@@ -59,6 +64,31 @@ public class ChatWindow : MonoBehaviour
             if (isOn)
             {
                 CompleteDialogue();
+                tog_auto.image.color = new Color(1f, 1f, 1f, 0f);
+                // 開始順時針旋轉
+                autoRotateTween?.Kill();
+                autoRotateTween = tog_auto.image.rectTransform
+                    .DORotate(new Vector3(0, 0, -360f), 5f, RotateMode.FastBeyond360)
+                    .SetLoops(-1, LoopType.Restart)
+                    .SetEase(Ease.Linear);
+            }
+            else
+            {
+                tog_auto.image.color = new Color(1f, 1f, 1f, 1f); // 關閉時全亮
+                // 停止旋轉並回到 0
+                autoRotateTween?.Kill();
+                tog_auto.image.rectTransform.DORotate(Vector3.zero, 0.3f).SetEase(Ease.OutQuad);
+            }
+        });
+        tog_skip.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn)
+            {
+                tog_skip.image.color = new Color(1f, 1f, 1f, 0f);
+            }
+            else
+            {
+                tog_skip.image.color = new Color(1f, 1f, 1f, 1f); // 關閉時全亮
             }
         });
 
@@ -177,7 +207,6 @@ public class ChatWindow : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            tog_skip.isOn = false;
             tog_hide.isOn = false;
         }
     }

@@ -50,7 +50,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gear = 1000;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
-        GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
+        GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
         for (int i = 3; i <= 25; i++)
         {
             GameDataManager.HasSkillIDs.Add(i);
@@ -73,7 +73,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gear = 0;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
-        GameDataManager.HasSkillIDs = new List<int>() { 1, 2 }; //預設擁有技能ID
+        GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");
