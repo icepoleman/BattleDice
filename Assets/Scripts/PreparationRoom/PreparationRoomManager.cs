@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] GameObject powerUpPanelPrefab;
     [SerializeField] Button btn_shop;
     [SerializeField] Button btn_changeSkill;
+    [SerializeField] List<Button> btn_girls; // 角色模型列表，根據角色顯示對應模型
     void Start()
     {
         btn_back.onClick.AddListener(OnBackButtonClick);
@@ -33,6 +35,13 @@ public class PreparationRoomManager : MonoBehaviour
         btn_changeSkill.onClick.AddListener(async () =>
         {
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
+        });
+        btn_girls.ForEach(btn =>
+        {
+            btn.onClick.AddListener(() =>
+            {
+                
+            });
         });
     }
     void OnBackButtonClick()

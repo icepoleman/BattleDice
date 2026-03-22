@@ -50,6 +50,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3bfd279aa8e82e04d8f77dabe72859c3
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/AffinityPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 412a05a95efdbaa469fe13a841f4357a
     m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue1.prefab
     m_ReadOnly: 0

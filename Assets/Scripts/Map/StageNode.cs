@@ -156,6 +156,13 @@ public class StageNode : MonoBehaviour
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(stageInfo));
                     break;
                 case StageType.SavePoint:
+                    int preparationRoomLevel = GameDataManager.SafeRoomLevel; // 根據整備室等級決定進入哪個整備室
+                    int newLevel = int.Parse(stageInfo);
+                    if (preparationRoomLevel < newLevel)
+                    {
+                        GameDataManager.SafeRoomLevel = newLevel; // 更新整備室等級
+                        Debug.Log($"進入整備室關卡: {stageID}，整備室等級提升至 {newLevel}");
+                    }
                     EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
                     break;

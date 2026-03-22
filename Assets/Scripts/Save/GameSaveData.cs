@@ -30,6 +30,7 @@ public class GameSaveData
 
     public List<string> unlockedAffinityStages; // 已解鎖親密度關卡ID列表
     public int[] charactersAffinity; // 角色親密度數值陣列 
+    public int safeRoomLevel; // 整備室等級
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度
 }
@@ -42,4 +43,14 @@ public class SettingsSaveData
     public int resolutionWidth = 1920;
     public int resolutionHeight = 1080;
     public bool fullscreen = true;
+}
+
+/// <summary>
+/// 全域解鎖資料（所有存檔共用）
+/// </summary>
+[System.Serializable]
+public class GlobalUnlockData
+{
+    public List<string> unlocked_H_Stages = new List<string>();
+    // 未來可加其他全存檔共用資料
 }

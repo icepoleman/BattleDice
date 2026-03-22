@@ -34,6 +34,7 @@ public static class GameDataManager
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static HashSet<string> unlocked_H_Stages { get; set; } = new HashSet<string>();//已解鎖 H 關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
+    public static int SafeRoomLevel { get; set; } = 0;//整備室等級，目前用來判斷是否開啟商店等功能
 
     public static bool DreamMode { get; set; } = false;//回看模式
 
@@ -95,8 +96,11 @@ public static class GameDataManager
         }
         if (stageId.StartsWith("H_"))
         {
-            unlocked_H_Stages.Add(stageId);
-            Console.WriteLine($"解鎖 H 關卡: {stageId}");
+            if (unlocked_H_Stages.Add(stageId)) // 只有新增成功才儲存
+            {
+                Console.WriteLine($"解鎖 H 關卡: {stageId}");
+                SaveManager.SaveGlobalUnlock(); // 自動儲存全域解鎖資料
+            }
         }
     }
 

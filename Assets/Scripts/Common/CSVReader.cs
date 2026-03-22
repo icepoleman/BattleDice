@@ -366,6 +366,45 @@ public class CSVReader
         return stories;
     }
 
+    //載入整備室短劇情
+    // CSV 欄位: role, dialogue, face
+    public List<PreparationRoomShortData> LoadPreparationRoomShortCSV(string roleName)//根據角色名稱載入對應的整備室短劇情資料
+    {
+        List<PreparationRoomShortData> shortDataList = new List<PreparationRoomShortData>();
+
+        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/PreparationRoomShort";
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+
+        if (textAsset == null)
+        {
+            Debug.LogError("❌ 找不到整備室短劇情 CSV 檔案: " + resourcePath);
+            return shortDataList;
+        }
+
+        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; } // 跳過表頭
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] v = line.Split(',');
+
+            string role = v.Length > 0 ? v[0] : "";
+            string dialogue = v.Length > 1 ? v[1] : "";
+            string face = v.Length > 2 ? v[2] : "";
+
+            if (role == roleName)
+            {
+                shortDataList.Add(new PreparationRoomShortData(role, dialogue, face));
+            }
+        }
+
+        Debug.Log($"✅ 從 Resources 載入整備室短劇情資料完成，共 {shortDataList.Count} 筆: {resourcePath}");
+        return shortDataList;
+    }
+
     // 通用 CSV 載入方法（可指定子資料夾）
     public List<T> LoadGenericCSV<T>(string fileName, string subFolder, System.Func<string[], T> parseFunction) where T : class
     {

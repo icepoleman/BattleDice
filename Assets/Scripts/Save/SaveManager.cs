@@ -237,6 +237,7 @@ public static class SaveManager
         currentSave.powerUpLevel_MaxRollCount = GameDataManager.GetPowerUpLevel(PowerUpType.MaxRollCount);
         currentSave.unlockedAffinityStages = GameDataManager.unlockedAffinityStages.ToList();
         currentSave.charactersAffinity = GameDataManager.charactersAffinity;
+        currentSave.safeRoomLevel = GameDataManager.SafeRoomLevel;
         try
         {
             currentSave.SaveTime = System.DateTime.Now;
@@ -277,6 +278,7 @@ public static class SaveManager
                 GameDataManager.SetPowerUpLevel(PowerUpType.MaxRollCount, currentSave.powerUpLevel_MaxRollCount);
                 GameDataManager.unlockedAffinityStages = new HashSet<string>(currentSave.unlockedAffinityStages);
                 GameDataManager.charactersAffinity = currentSave.charactersAffinity;
+                GameDataManager.SafeRoomLevel = currentSave.safeRoomLevel; 
                 
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
@@ -291,6 +293,56 @@ public static class SaveManager
         {
             Debug.LogError($"{saveType}讀檔失敗: " + e.Message);
             return false;
+        }
+    }
+
+    // ==================== 全域解鎖資料（所有存檔共用） ====================
+
+    private static string globalUnlockFilePath => Application.persistentDataPath + "/global_unlock.json";
+    private static GlobalUnlockData globalUnlockData = new GlobalUnlockData();
+
+    /// <summary>
+    /// 儲存全域解鎖資料
+    /// </summary>
+    public static void SaveGlobalUnlock()
+    {
+        try
+        {
+            globalUnlockData.unlocked_H_Stages = GameDataManager.unlocked_H_Stages.ToList();
+            string json = JsonUtility.ToJson(globalUnlockData, true);
+            System.IO.File.WriteAllText(globalUnlockFilePath, json);
+            Debug.Log("全域解鎖資料儲存成功");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("全域解鎖資料儲存失敗: " + e.Message);
+        }
+    }
+
+    /// <summary>
+    /// 讀取全域解鎖資料（遊戲啟動時呼叫）
+    /// </summary>
+    public static void LoadGlobalUnlock()
+    {
+        try
+        {
+            if (System.IO.File.Exists(globalUnlockFilePath))
+            {
+                string json = System.IO.File.ReadAllText(globalUnlockFilePath);
+                globalUnlockData = JsonUtility.FromJson<GlobalUnlockData>(json);
+                GameDataManager.unlocked_H_Stages = new HashSet<string>(globalUnlockData.unlocked_H_Stages ?? new List<string>());
+                Debug.Log($"全域解鎖資料讀取成功，已解鎖 H 關卡數: {GameDataManager.unlocked_H_Stages.Count}");
+            }
+            else
+            {
+                Debug.Log("找不到全域解鎖檔案，使用預設值");
+                GameDataManager.unlocked_H_Stages = new HashSet<string>();
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("全域解鎖資料讀取失敗: " + e.Message);
+            GameDataManager.unlocked_H_Stages = new HashSet<string>();
         }
     }
 }
