@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class AffinityPanel : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class AffinityPanel : MonoBehaviour
     [SerializeField] private Button btn_back;
     [SerializeField] private Button btn_h_a;
     [SerializeField] private Button btn_h_b;
-    [SerializeField] private GameObject obj_h_lock;
+    [SerializeField] private GameObject[] obj_h_lock;
 
     string roleStr;
     int lastChatIndex = -1;
@@ -55,6 +56,10 @@ public class AffinityPanel : MonoBehaviour
                 StartCoroutine(ShowChat());
             }
         });
+
+        // 初始淡入效果
+        btn_role.image.color = new Color(1f, 1f, 1f, 0f);
+        btn_role.image.DOFade(1f, 1f);
         StartCoroutine(ShowChat());
 
         //H固定
@@ -68,7 +73,11 @@ public class AffinityPanel : MonoBehaviour
             // 進入H關卡的事件
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "H_" + roleStr + "_2");
         });
-        obj_h_lock.SetActive(GameDataManager.GetRoleAffinity(role) < 100);
+        if (roleStr == "JailerGirl")
+        {
+            obj_h_lock[0].SetActive(!GameDataManager.unlocked_H_Stages.Contains("H_JailerGirl_1"));//其他人預設開啟 只對獄卒鎖住第一個H關卡
+        }
+        obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
         btn_back.onClick.AddListener(() => Destroy(gameObject));
     }
     /// <summary>
@@ -91,7 +100,9 @@ public class AffinityPanel : MonoBehaviour
         lastChatIndex = randomIndex;
         string chat = shortChatData[randomIndex].dialogue;
         string face = shortChatData[randomIndex].face;
+
         btn_role.image.sprite = PortraitManager.Show(roleStr, face);
+
         txt_chat.text = "";
         foreach (char c in chat)
         {

@@ -206,7 +206,7 @@ public class DialogueManager : MonoBehaviour
                 GameDataManager.CurrentStage = GameDataManager.LastCurrentStage;//回到上一個關卡
                 SaveManager.AutoSave();//快速存檔
                 //EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
-                break;
+                return;
         }
 
         //處理跳轉邏輯

@@ -168,7 +168,6 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_3
   completedStory: 
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
@@ -417,7 +416,6 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 5
   completedStory: Prologue1_4
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
@@ -558,7 +556,6 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_5
   completedStory: 
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes: []
@@ -965,7 +962,6 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 1000
   completedStory: Prologue1_6
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
@@ -1140,9 +1136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 2
-  stageInfo: 
+  stageInfo: 100
   completedStory: 
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
@@ -1409,7 +1404,6 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_2
   completedStory: 
-  saveRoomStory: 
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:

@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 14289175}
   - component: {fileID: 14289177}
   m_Layer: 5
-  m_Name: btn_girl (2)
+  m_Name: WolfGirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 43383587}
   - component: {fileID: 43383589}
   m_Layer: 5
-  m_Name: btn_girl (1)
+  m_Name: Witch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -955,7 +955,7 @@ GameObject:
   - component: {fileID: 468673064}
   - component: {fileID: 468673066}
   m_Layer: 5
-  m_Name: btn_girl
+  m_Name: JailerGirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1177,7 +1177,7 @@ GameObject:
   - component: {fileID: 734143794}
   - component: {fileID: 734143796}
   m_Layer: 5
-  m_Name: btn_girl (3)
+  m_Name: Idol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

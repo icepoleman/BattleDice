@@ -87,29 +87,33 @@ public static class UIManager
         panel.SetUp(message, onConfirm, onCancel);
         return panel;
     }
-    public static async Task ShowCommonPanel(string panelAB, Transform parent = null)
+    public static async Task<GameObject> ShowCommonPanel(string panelAB, Transform parent = null)
     {
         GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + panelAB + ".prefab");
         if (prefab == null)
         {
             Debug.LogError($"無法載入 {panelAB} prefab");
+            return null;
         }
 
         Transform targetParent = parent ?? GetCanvas();
         GameObject panelObj = Object.Instantiate(prefab, targetParent);
         AddRightClickCloser(panelObj);
+        return panelObj;
     }
-    public static async Task ShowPanel(string panelAB, Transform parent = null)
+    public static async Task<GameObject> ShowPanel(string panelAB, Transform parent = null)
     {
         GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(panelAB + ".prefab");
         if (prefab == null)
         {
             Debug.LogError($"無法載入 {panelAB} prefab");
+            return null;
         }
 
         Transform targetParent = parent ?? GetCanvas();
         GameObject panelObj = Object.Instantiate(prefab, targetParent);
         AddRightClickCloser(panelObj);
+        return panelObj;
     }
 
     /// <summary>

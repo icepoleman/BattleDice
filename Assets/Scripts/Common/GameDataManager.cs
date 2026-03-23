@@ -30,7 +30,6 @@ public static class GameDataManager
     public static EnemyData TmpEnemyData { get; set; } = new EnemyData();
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
-    public static string TmpSaveRoomStory { get; set; } = "";//整備室特殊劇情 
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static HashSet<string> unlocked_H_Stages { get; set; } = new HashSet<string>();//已解鎖 H 關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度

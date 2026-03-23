@@ -30,8 +30,6 @@ public class StageNode : MonoBehaviour
     [SerializeField] string stageInfo;       //關卡資訊
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
-    [Header("整備室限定劇情(可選)")]
-    [SerializeField] string saveRoomStory;
 
     [Header("連線設定")]
     [SerializeField] float lineWidth = 4f;
@@ -68,7 +66,6 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-        GameDataManager.TmpSaveRoomStory = saveRoomStory;//記錄整備室劇情
         SetState(StageState.Locked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
 
