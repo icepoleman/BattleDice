@@ -171,7 +171,7 @@ MonoBehaviour:
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
-  - {fileID: 3763750294119477090}
+  - {fileID: 4214008320028607138}
 --- !u!114 &7157061382932458260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 313, y: 514}
+  m_AnchoredPosition: {x: 547, y: 514}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1754109931211834173
@@ -419,7 +419,7 @@ MonoBehaviour:
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
-  - {fileID: 4214008320028607138}
+  - {fileID: 2674644447118131793}
 --- !u!114 &9043041832009397072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 496, y: 516}
+  m_AnchoredPosition: {x: 315, y: 516}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &943524577084280309
@@ -965,7 +965,7 @@ MonoBehaviour:
   lineWidth: 4
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   nextStageNodes:
-  - {fileID: 2674644447118131793}
+  - {fileID: 3763750294119477090}
 --- !u!114 &2272183422384536897
 MonoBehaviour:
   m_ObjectHideFlags: 0

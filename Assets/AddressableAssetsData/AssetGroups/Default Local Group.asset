@@ -121,6 +121,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79ae1e95a370cc84fb2d1dab56b14571
+    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_End.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a2dd39149d18044dab2c2e0096e90e5
     m_Address: Assets/DiceGame_ab/Common/Prefabs/SetPanel.prefab
     m_ReadOnly: 0

@@ -19,8 +19,9 @@ public class MapManager : MonoBehaviour
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
+    private GameObject clearMapPrefab;
     //List<MapData> mapDatas = new List<MapData>();//關卡資料
-    void Start()
+    async void Start()
     {
         AudioManager.Instance.PlayBGM("Bgm_Map", true, 1.0f);
         slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
@@ -40,6 +41,7 @@ public class MapManager : MonoBehaviour
         {
             await UIManager.ShowCommonPanel("EditPanel");
         });
+        clearMapPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
     }
     void AddEvent()
     {
@@ -68,17 +70,23 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-        GameObject clearMapPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
-        GameObject _clearMap = Instantiate(clearMapPanel, transform);
+        GameObject _clearMap = Instantiate(clearMapPrefab, transform);
         UnloadMapPrefab();
         await Task.Delay(100);
-        GameDataManager.CurrentMap += 1;
-        GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
-        GameDataManager.CurrentStage = "0";
-        GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;//回滿血
-        LoadMapPrefab();
-        await Task.Delay(2000);
-        Destroy(_clearMap);
+        if (GameDataManager.CurrentMap == GameDataManager.EndMap)
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_END_SCENE);
+        }
+        else
+        {
+            GameDataManager.CurrentMap += 1;
+            GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
+            GameDataManager.CurrentStage = "0";
+            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;//回滿血
+            LoadMapPrefab();
+            await Task.Delay(2000);
+            Destroy(_clearMap);
+        }
     }
     async void OnRecoverHealth(object[] param)
     {
@@ -167,7 +175,7 @@ public class MapManager : MonoBehaviour
                 currentMapInstance = Instantiate(mapPrefab, trans_mapParent);
                 currentMapInstance.transform.localPosition = Vector3.zero;
                 currentMapInstance.transform.localScale = Vector3.one;
-                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
+                EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
                 Debug.Log("地圖載入並實例化成功");
             }
             else

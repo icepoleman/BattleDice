@@ -67,6 +67,7 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
         EventCenter.AddListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
         EventCenter.AddListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
 
         // 添加其他事件監聽...
     }
@@ -81,6 +82,7 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_SHOP, OnEnterShop);
         EventCenter.RemoveListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
         EventCenter.RemoveListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -123,7 +125,13 @@ public class StateManager : MonoBehaviour
         // 廣播狀態切換事件，讓其他系統響應
         // EventCenter.Dispatch(GameEvent.EVENT_GAME_STATE_CHANGED, from, to);
     }
+    void OnEnterEndScene(object[] args)
+    {
+        Debug.Log("StateManager: 進入 結算畫面 模式");
 
+        // 使用帶延遲的場景載入
+        SceneLoader.LoadSceneWithDelay("EndScene");
+    }
     void OnEnterMenu(object[] args)
     {
         Debug.Log("StateManager: 進入 主選單 模式");
