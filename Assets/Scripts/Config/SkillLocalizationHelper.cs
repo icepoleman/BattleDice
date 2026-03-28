@@ -67,6 +67,19 @@ public static class SkillLocalizationHelper
     /// </summary>
     public static void LocalizeEffect(ref SkillConfigData skill)
     {
+        if(SkillDatabase.SpSkillIDs.Contains(skill.skillID))
+        {
+            switch (skill.skillID)
+            {
+                case 38: // 毒爆術
+                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                    break;
+                case 39: // 弱點破壞 
+                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                    break;
+            }
+            return;
+        }
         switch (skill.skillType)
         {
             case SkillType.Attack:

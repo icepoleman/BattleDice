@@ -54,6 +54,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isFrozen) return;
         if (eventData.button != PointerEventData.InputButton.Left) return;
         isPointerDown = true;
         if (!isSelected)

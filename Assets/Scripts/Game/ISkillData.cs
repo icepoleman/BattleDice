@@ -45,6 +45,8 @@ public struct SkillConfigData
     public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
     public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
     public int price;                  // 技能價格（購買或升級用）
+    public string modifierConditions;  // 技能額外效果條件（用於升級後）
+    public string modifierEffects;     // 技能額外效果說明（用於升級後）
 
     /// <summary>
     /// 計算需要的骰子數量 (根據 requirementType 和 needDicesData)

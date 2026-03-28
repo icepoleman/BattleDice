@@ -40,7 +40,9 @@ public static class SkillFactory
         int breakDiceCount = 0,
         int[] generateDices = null,
         string tag = "",
-        int price = 0   
+        int price = 0,
+        string modifierConditions="",
+        string modifierEffects=""   
         )
     {
         return new SkillConfigData
@@ -58,7 +60,9 @@ public static class SkillFactory
             breakDiceCount = breakDiceCount,
             generateDicesData = generateDices ?? new int[] { },
             tag = tag,
-            price = price
+            price = price,
+            modifierConditions = modifierConditions,
+            modifierEffects = modifierEffects
         };
     }
 }

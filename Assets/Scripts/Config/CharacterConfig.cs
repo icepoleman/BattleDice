@@ -78,6 +78,7 @@ public abstract class BaseCharacterData : ICharacterData
         {
             useDice = limitDiceCount;
         }
+        Debug.Log($"限制骰子數量: {limitDiceCount}");
         rollDiceResult.Clear(); // 清空之前的結果
         for (int i = 0; i < useDice; i++)
         {

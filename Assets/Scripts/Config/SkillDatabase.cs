@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public static class SkillDatabase
 {
+    public static HashSet<int> SpSkillIDs = new HashSet<int> {38, 39}; // 特殊技能ID列表，供遊戲邏輯判斷使用
     private static Dictionary<int, SkillConfigData> _skills;
     
     public static Dictionary<int, SkillConfigData> Skills
@@ -26,7 +27,7 @@ public static class SkillDatabase
         LoadAdditionalCSV("enemySkill");
 
         // 統一處理本地化文本
-        SkillLocalizationHelper.LocalizeAllSkills(_skills);
+        SkillLocalizationHelper.LocalizeAllSkills(_skills); 
     }
     
     // 載入額外的 CSV 並合併到技能庫

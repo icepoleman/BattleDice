@@ -141,7 +141,8 @@ public class StageNode : MonoBehaviour
             isProcessing = true;
 
             GameDataManager.TmpCompletedStory = completedStory;
-            GameDataManager.CurrentStage = stageID;
+            if(!GameDataManager.TestMode)
+                GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
                 case StageType.Story:

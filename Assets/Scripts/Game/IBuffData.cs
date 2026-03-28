@@ -152,7 +152,7 @@ public class BaseBuff : IBuffData
                 // 增加最大生命值
                 float maxHpIncrease = effectValues[0];
                 character.maxBlood += maxHpIncrease;
-                character.currentBlood += maxHpIncrease; // 同時增加當前血量
+                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, maxHpIncrease, character.isPlayer); // 同時增加當前血量
                 Debug.Log($"{buffName} 增加了 {maxHpIncrease} 點最大生命！");
                 break;
 

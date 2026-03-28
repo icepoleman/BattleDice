@@ -215,7 +215,9 @@ public class CSVReader
                 breakDiceCount: v.Length > 10 && !string.IsNullOrWhiteSpace(v[10]) ? int.Parse(v[10]) : 0,
                 generateDices: v.Length > 11 ? ParseIntArrayStatic(v[11]) : null,
                 tag: v.Length > 12 ? v[12] : "",
-                price: v.Length > 13 && !string.IsNullOrWhiteSpace(v[13]) ? int.Parse(v[13]) : 0
+                price: v.Length > 13 && !string.IsNullOrWhiteSpace(v[13]) ? int.Parse(v[13]) : 0,
+                modifierConditions: v.Length > 14 ? v[14] : "",
+                modifierEffects: v.Length > 15 ? v[15] : ""
             );
 
             skills[data.skillID] = data;

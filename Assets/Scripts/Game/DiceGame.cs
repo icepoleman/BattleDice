@@ -548,7 +548,7 @@ public class DiceGame : MonoBehaviour
             enemyData.RemoveAllBuff();
             UpdateBuffUIEvent(null);
             Debug.Log($"消除敵方所有buff");
-        }        
+        }
     }
     // 處理技能排隊
     async void ProcessSkillQueue()
@@ -559,6 +559,10 @@ public class DiceGame : MonoBehaviour
         {
             SkillOrderData skillOrder = skillOrderQueue.Dequeue();
             BaseCharacterData attacker = skillOrder.isPlayerUse ? playerData : enemyData;
+
+            // 處理特殊技能效果 
+            if (SkillDatabase.SpSkillIDs.Contains(skillOrder.skillID))
+                SpSkillEffect(ref skillOrder);
 
             //角色喊技能
             //gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
@@ -590,6 +594,36 @@ public class DiceGame : MonoBehaviour
         }
 
         isProcessingSkill = false;
+    }
+    //處理特殊技能效果的函式，根據技能ID或其他條件來決定要執行什麼額外效果
+    private void SpSkillEffect(ref SkillOrderData _skillOrder)
+    {
+        BaseCharacterData attacker = _skillOrder.isPlayerUse ? playerData : enemyData;
+        BaseCharacterData defender = _skillOrder.isPlayerUse ? enemyData : playerData;
+        switch (_skillOrder.skillID)
+        {
+            case 38: // 毒爆術 消耗敵方中毒狀態增加傷害
+                //中毒狀態的buff ID為 1，每個中毒回合增加x倍傷害
+                IBuffData poisonBuff = defender.buffData.Find(buff => buff.buffID == 1);
+
+                if (poisonBuff != null)
+                {
+                    _skillOrder.values[0] = _skillOrder.values[0] * poisonBuff.duration; // 增加額外傷害
+                    poisonBuff.duration = 0;//移除中毒狀態
+                }
+                break;
+            case 39: // 弱點破壞 敵方撕裂(id 3)時傷害加倍
+                IBuffData tearBuff = defender.buffData.Find(buff => buff.buffID == 3);
+                if (tearBuff != null)
+                {
+                    int attackDiceCount = attacker.rollDiceResult.Count; // 假設攻擊骰子數量等於當前擲出的骰子數量
+                    _skillOrder.values[0] = _skillOrder.values[0] * 2; // 增加額外傷害
+                }
+                break;
+            // 可以根據需要添加更多技能ID的處理
+            default:
+                break;
+        }
     }
     void OnBuffEffectBlood(object[] args)
     {

@@ -24,10 +24,12 @@ public class StateManager : MonoBehaviour
     public GameState currentState = GameState.MainMenu;
     private GameState previousState = GameState.MainMenu;
     [SerializeField] bool testMode;
+    [SerializeField] TMPro.TMP_InputField testInputField; // 用於測試輸入的 InputField
     //todo 轉場載入畫面黑幕
 
     void Awake()
     {
+        GameDataManager.TestMode = testMode; // 透過 Inspector 設定測試模式
         if (Instance == null)
         {
             Instance = this;
@@ -148,9 +150,25 @@ public class StateManager : MonoBehaviour
             Debug.LogError("EnterDiceGame: 無效的參數，預期為敵人ID的整數值");
             return;
         }
-        int enemyId = (int)args[0];
-        Debug.Log("StateManager: 進入 骰子遊戲 模式 Enemy" + enemyId);
-        GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
+        if(testMode && testInputField != null)
+        {
+            if (int.TryParse(testInputField.text, out int testEnemyId))
+            {
+                Debug.Log($"測試模式: 使用輸入的敵人ID {testEnemyId}");
+                GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(testEnemyId);
+            }
+            else
+            {
+                Debug.LogError("測試模式: 無效的輸入，請輸入有效的敵人ID");
+                return;
+            }
+        }
+        else
+        {
+            int enemyId = (int)args[0];
+            Debug.Log($"非測試模式: 使用參數中的敵人ID {enemyId}");
+            GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
+        }
 
         //TODO: 設定玩家資料
         // GameDataManager.PlayerData = new PlayerData();
