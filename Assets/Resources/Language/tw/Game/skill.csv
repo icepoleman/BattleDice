@@ -1,40 +1,44 @@
-技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,Combo(怪物用),生成骰子,出處Tag,Price
-1,魔力彈,Attack,ConsecutiveDices,3,30,連續x3 ,30點傷害,,,,,,100
-2,雷擊,Attack,SameDices,2,20,相同×2,20點傷害,,,,,,100
-3,幸運一擊,Attack,ConsecutiveDices,3,30,連續×3,30點傷害，生成隨機骰子,,,,1|2|3|4|5|6|1,MajoShop,100
-4,魔法衝擊,Attack,ConsecutiveDices,3,50,連續×3,50點傷害,,,,,MajoShop,100
-5,炎射術,Attack,ConsecutiveDices,4,100,連續×4,100點傷害，虛脫2回合,21:0:2,,,,MajoShop,500
-6,詛咒,Attack,SameDices,2,10,重複x2,10點傷害，敵方魔力衰弱、麻痺3回合,,8:0:3|27:0:3,,,MajoShop,300
-7,連續雷擊,Attack,SameDices,2,20,相同×2,20點傷害，生成隨機骰子,,,,1|2|3|4|5|6|1,MajoShop,300
-8,魔力操控,Buff,AnyDices,3,,骰子×3,生成萬用骰，魔力增幅3回合, 6:0:3,,,0|1,,100
-9,伏特攻擊,Attack,SameDices,3,50,相同×3,40點傷害，敵方麻痺3回合,,27:0:3,,,MajoShop,300
-10,轟雷,Attack,SameDices,4,80,相同×4,80點傷害，敵方麻痺3回合,,27:0:3,,,MajoShop,500
-11,防禦魔法,Buff,SameDices,2,,相同×2,魔力護盾3回合,14:0:3,,,,MajoShop,300
-12,魔力湧動,Buff,ConsecutiveDices,3,,連續x3 ,生成隨機骰子，魔力增幅3回合, 6:0:3,,,1|2|3|4|5|6|1,MajoShop,100
-13,回春術,Buff,ConsecutiveDices,2,,連續x2,治癒3回合,16:0:3,,,,MajoShop,100
-14,緊急恢復,Heal,ConsecutiveDices,3,50,連續x3 ,生命+50,,,,,MajoShop,100
-15,淤泥炮,Attack,ConsecutiveDices,2,20,連續×2,20點傷害，敵方中毒3回合,,1:0:3,,,NoraShop,100
-16,荊棘護甲,Attack,ConsecutiveDices,2,,連續x2,尖刺3回合,,,,,NoraShop,100
-17,生命之音,Attack,ConsecutiveDices,5,10,連續×5,10點傷害，敵方定時炸彈3回合,,23:0:3,,,NoraShop,300
-18,黑焰射擊,Attack,SameDices,3,50,相同×3,50點傷害，敵方燃燒2回合,,24:0:2,,,NoraShop,300
-19,美味燒鴨,Buff,AnyDices,1,,骰子×1,雙方治癒1回合,16:0:1,16:0:1,,,NoraShop,300
-20,火球術,Attack,SpecificDices,1|2|3,60,1・2・3,60點傷害,,,,,NoraShop,300
-21,水球術,Attack,SpecificDices,4|5|6,40,4・5・6,40點傷害，敵方魔力衰弱3回合,,8:0:3,,,NoraShop,300
-22,星火暴斬,Attack,ConsecutiveDices,6,160,連續×6,160點傷害 敵方暈眩1回合,,4:0:1,,,NoraShop,500
-23,力量增幅,Buff,ConsecutiveDices,2,,連續×2,力量增幅3回合,10:0:3,,,,MajoShop,300
-24,魔力爪,Attack,SameDices,2,20,相同×2,20點傷害，敵方撕裂1回合,,3:0:1,,,MajoShop,300
-25,不屈之心,Buff,SpecificDices,1|1,,1・1,魔力護盾Ex 1回合，力量增幅3回合,15:0:1|10:0:3,,,,NoraShop,300
-26,魔法劍,Attack,SpecificDices,1|1|1,100,1・1・1,100點傷害,,,,,NoraShop,300
-27,女神祝福,Heal,SpecificDices,2|2,80,2・2,生命+80，淨化1回合,30:0:1,,,,NoraShop,300
-28,巨人術,Buff,SpecificDices,2|2|2,,2・2・2,力量增幅Ex+巨人化5回合,18:0:5|11:0:5,,,,NoraShop,500
-29,催眠術,Buff,SpecificDices,3|3,,3・3,敵方睡眠,,5:0:0,,,NoraShop,300
-30,大力三巴掌,Attack,SpecificDices,3|3|3,80,3・3・3,造成80點傷害 敵方暈眩1回合,,4:0:1,,,NoraShop,300
-31,雷火箭,Attack,SpecificDices,4|4,10,4・4,造成10點傷害，敵方麻痺、燃燒3回合,,27:0:3|24:0:3,,,NoraShop,300
-32,雷槍,Attack,SpecificDices,4|4|4,100,4・4・4,造成100點傷害，敵方麻痺Ex,,28:0:1,,,NoraShop,500
-33,破魂鐵爪,Attack,SpecificDices,5|5,60,5・5,造成60點傷害,,,,,NoraShop,300
-34,重生,Heal,SpecificDices,5|5|5,1000,5・5・5,回滿血量,,,,,NoraShop,300
-35,無限66,Attack,SpecificDices,6|6,60,6・6,造成60點傷害，生成萬用骰,,,,0|1,NoraShop,300
-36,無限666,Attack,SpecificDices,6|6|6,60,6・6・6,造成60點傷害，生成3顆隨機骰子,,,,1|2|3|4|5|6|3,NoraShop,500
-37,毒煙,Buff,AnyDices,2,,,敵方中毒5回合,,1:0:5,,,NoraShop,500
-38,毒爆術,Attack,ConsecutiveDices,3,20,連續×3,解除敵方中毒\n造成20點傷害×敵方中毒回合,,,,,NoraShop,500
-39,弱點破壞,Attack,SameDices,2,50,相同×2,造成50點傷害，如果敵方撕裂則造成100點傷害,,,,,NoraShop,500
+技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,Combo(怪物用),生成骰子,出處Tag,Price,第 1 欄,第 2 欄,第 3 欄,第 4 欄,第 5 欄,第 6 欄
+1,魔力彈,Attack,ConsecutiveDices,3,30,連續x3 ,30點傷害,,,,,,100,,,,,,
+2,雷擊,Attack,SameDices,2,20,相同×2,20點傷害,,,,,,100,,,,,,
+3,幸運一擊,Attack,ConsecutiveDices,3,30,連續×3,30點傷害，生成隨機骰子,,,,1|2|3|4|5|6|1,MajoShop,100,,,,,,
+4,魔法衝擊,Attack,ConsecutiveDices,3,50,連續×3,50點傷害,,,,,MajoShop,100,,,,,,
+5,炎射術,Attack,ConsecutiveDices,4,100,連續×4,100點傷害，虛脫3回合,15:0:3,,,,MajoShop,500,,,,,,
+6,詛咒,DeBuff,SameDices,2,,重複x2,敵方魔力衰弱、攻擊弱化3回合,,6:0:3|8:0:3,,,MajoShop,300,,,,,,
+7,連續雷擊,Attack,SameDices,2,20,相同×2,20點傷害，生成隨機骰子,,,,1|2|3|4|5|6|1,MajoShop,300,,,,,,
+8,魔力操控,Buff,AnyDices,3,,骰子×3,生成萬用骰，魔力增幅3回合,5:0:3,,,0|1,,100,,,,,,
+9,電球,Attack,SameDices,3,40,相同×3,40點傷害，敵方麻痺3回合,,20:0:3,,,MajoShop,300,,,,,,
+10,黑閃電,Attack,SameDices,4,80,相同×4,80點傷害，敵方麻痺3回合,,20:0:3,,,MajoShop,500,,,,,,
+11,防禦魔法,Buff,SameDices,2,,相同×2,魔力護盾3回合,9:0:3,,,,MajoShop,300,,,,,,
+12,魔力湧動,Buff,ConsecutiveDices,3,,連續x3 ,生成隨機骰子，魔力增幅3回合,5:0:3,,,1|2|3|4|5|6|1,MajoShop,100,,,,,,
+13,回春術,Buff,ConsecutiveDices,2,,連續x2,治癒3回合,11:0:3,,,,MajoShop,100,,,,,,
+14,緊急恢復,Heal,ConsecutiveDices,3,50,連續x3 ,生命+50,,,,,MajoShop,100,,,,,,
+15,淤泥炮,Attack,ConsecutiveDices,3,30,連續×2,30點傷害，敵方中毒3回合,,1:0:3,,,NoraShop,100,,,,,,
+16,荊棘護甲,Buff,ConsecutiveDices,2,,連續x2,尖刺3回合,16:0:3,,,,NoraShop,100,,,,,,
+17,生命之音,Attack,ConsecutiveDices,5,10,連續×5,10點傷害，敵方定時炸彈3回合,,17:0:3,,,NoraShop,300,,,,,,
+18,黑火球術,Attack,SameDices,3,60,相同×3,60點傷害，敵方燃燒1回合,,18:0:1,,,NoraShop,300,,,,,,
+19,美味燒鴨,Buff,AnyDices,1,,骰子×1,雙方治癒1回合,11:0:1,11:0:1,,,NoraShop,300,,,,,,
+20,火球術,Attack,ConsecutiveDices,3,40,1・2・3,40點傷害，敵方燃燒2回合,,18:0:2,,,NoraShop,300,,,,,,
+21,漩渦,Attack,ConsecutiveDices,3,40,4・5・6,40點傷害，敵方魔力衰弱3回合,,6:0:3,,,NoraShop,300,,,,,,
+22,星火暴斬,Attack,ConsecutiveDices,6,160,連續×6,160點傷害 敵方暈眩1回合,,3:0:1,,,NoraShop,500,,,,,,
+23,力量增幅,Buff,ConsecutiveDices,2,,連續×2,攻擊強化3回合,7:0:3,,,,MajoShop,300,,,,,,
+24,魔力爪,Attack,ConsecutiveDices,2,20,連續×2,20點傷害，敵方撕裂2回合,,2:0:2,,,MajoShop,300,,,,,,
+25,不屈之心,Buff,SpecificDices,1|1,,1・1,魔力護盾 (大) 1回合，攻擊強化3回合,10:0:1|7:0:3,,,,NoraShop,300,,,,,,
+26,裁決之刃,Attack,SpecificDices,1|1|1,100,1・1・1,100點傷害,,,,,NoraShop,300,,,,,,
+27,女神祝福,Heal,SpecificDices,2|2,60,2・2,生命+60，治癒3回合,11:0:3,,,,NoraShop,300,,,,,,
+28,極巨化,Buff,SpecificDices,2|2|2,,2・2・2,攻擊強化+巨人化5回合,7:0:5|12:0:5,,,,NoraShop,500,,,,,,
+29,催眠術,DeBuff,SpecificDices,3|3,,3・3,敵方睡眠,,4:0:0,,,NoraShop,300,,,,,,
+30,大力三巴掌,Attack,SpecificDices,3|3|3,80,3・3・3,造成80點傷害 敵方暈眩1回合,,3:0:1,,,NoraShop,300,,,,,,
+31,雷火箭,Attack,SpecificDices,4|4,40,4・4,造成40點傷害，敵方麻痺、燃燒4回合,,20:0:4|18:0:4,,,NoraShop,300,,,,,,
+32,雷槍,Attack,SpecificDices,4|4|4,100,4・4・4,造成100點傷害，敵方麻痺,,20:0:1,,,NoraShop,500,,,,,,
+33,弱點破壞,Attack,SpecificDices,5|5,60,5・5,造成60點傷害，如果敵方撕裂則造成120點傷害,,,,,NoraShop,300,,,,,,
+34,重生,Heal,SpecificDices,5|5|5,1000,5・5・5,回滿血量,,,,,NoraShop,300,,,,,,
+35,無限66,Attack,SpecificDices,6|6,60,6・6,造成60點傷害，生成萬用骰,,,,0|1,NoraShop,300,,,,,,
+36,無限666,Attack,SpecificDices,6|6|6,60,6・6・6,造成60點傷害，生成3顆隨機骰子,,,,1|2|3|4|5|6|3,NoraShop,500,,,,,,
+37,腐化詛咒,DeBuff,ConsecutiveDices,2,,,敵方中毒5回合,,1:0:5,,,NoraShop,500,,,,,,
+38,毒爆術,Attack,ConsecutiveDices,3,20,連續×3,解除敵方中毒\n造成20點傷害×敵方中毒回合,,,,,NoraShop,500,,,,,,
+39,破魂鐵爪,Attack,SameDices,3,50,相同×3,造成60點傷害,,,,,NoraShop,500,,,,,,
+40,不乾淨小手,Attack,ConsecutiveDices,2,10,連續×2,10點傷害，敵方中毒3回合,,1:0:3,,,,,,,,,,
+41,毒刺,Attack,ConsecutiveDices,4,50,連續×4,50點傷害，敵方中毒5回合,,1:0:5,,,NoraShop,100,,,,,,
+42,螺旋鑽,Attack,SameDices,2,30,相同×2,造成30點傷害，撕裂三回合,,2:0:3,,,,,,,,,,
+43,水彈,Attack,ConsecutiveDices,2,20,連續×2,造成20點傷害，敵方魔力衰弱1回合,,6:0:1,,,,,,,,,,

@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 53f01c95f6a51d747804bf4a0bebf2e3
   m_SerializeEntries:
+  - m_GUID: 03d21312ba1831e4ea555d787bd115c5
+    m_Address: Assets/DiceGame_ab/Game/VFX/vfx_debuff.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ebafd611d468fc4c8f59b8d4231528e
     m_Address: Assets/DiceGame_ab/Game/Sprites/player_2.png
     m_ReadOnly: 0

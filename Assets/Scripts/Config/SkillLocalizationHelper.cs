@@ -74,7 +74,7 @@ public static class SkillLocalizationHelper
                 case 38: // 毒爆術
                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
                     break;
-                case 39: // 弱點破壞 
+                case 33: // 弱點破壞 
                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
                     break;
             }
@@ -89,6 +89,7 @@ public static class SkillLocalizationHelper
                 skill.effectText = LanguageManager.GetFormat("T_Skill_SkillType_heal", skill.skillValue);
                 break;
             case SkillType.Buff:
+            case SkillType.DeBuff:
                 skill.effectText = "";
                 break;
         }

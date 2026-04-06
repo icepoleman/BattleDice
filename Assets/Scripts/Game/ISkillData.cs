@@ -73,7 +73,8 @@ public enum SkillType
 {
     Attack,
     Heal,
-    Buff
+    Buff,
+    DeBuff
 }
 // 技能需求類型枚舉
 public enum SkillRequirementType

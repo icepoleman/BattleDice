@@ -36,7 +36,7 @@ public class GameUiView : MonoBehaviour
     Sprite[] diceSprites;
     GameObject prefab_manaDice;
 
-    GameObject prefab_buffVFX, prefab_bloodVfx, prefab_buffCard;
+    GameObject prefab_buffVFX,prefab_deBuffVFX, prefab_bloodVfx, prefab_buffCard;
 
     [SerializeField] Button btn_set;
     async void Start()
@@ -54,6 +54,7 @@ public class GameUiView : MonoBehaviour
         diceSprites = spriteList.ToArray();
         prefab_manaDice = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "manaDice.prefab");
         prefab_buffVFX = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_VFX + "vfx_buff.prefab");
+        prefab_deBuffVFX = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_VFX + "vfx_debuff.prefab");
         prefab_bloodVfx = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_VFX + "vfx_blood.prefab");
         prefab_buffCard = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "buffCard.prefab");
         btn_set.onClick.AddListener(async () =>
@@ -232,8 +233,29 @@ public class GameUiView : MonoBehaviour
     public void PlayBuffVfx(bool isPlayer)
     {
         GameObject buffVFX = Instantiate(prefab_buffVFX);
-        buffVFX.transform.position = isPlayer ? img_player.transform.position : img_enemy.transform.position;
+        Transform targetTrans = isPlayer ? img_player.transform : img_enemy.transform;
+        buffVFX.transform.position = targetTrans.position;
         Destroy(buffVFX, 2f);
+        
+        // 往上跳一下
+        Vector3 originalPos = targetTrans.localPosition;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(targetTrans.DOLocalMoveY(originalPos.y + 30f, 0.1f).SetEase(Ease.OutQuad));
+        seq.Append(targetTrans.DOLocalMoveY(originalPos.y, 0.1f).SetEase(Ease.InQuad));
+    }
+    public void PlayDebuffVfx(bool isPlayer)
+    {
+        GameObject debuffVFX = Instantiate(prefab_deBuffVFX);
+        Transform targetTrans = isPlayer ? img_player.transform : img_enemy.transform;
+        debuffVFX.transform.position = targetTrans.position;
+        Destroy(debuffVFX, 2f);
+        
+        // 俐落的左右晃動
+        Vector3 originalPos = targetTrans.localPosition;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(targetTrans.DOLocalMoveX(originalPos.x + 20f, 0.05f).SetEase(Ease.OutSine));
+        seq.Append(targetTrans.DOLocalMoveX(originalPos.x - 20f, 0.05f).SetEase(Ease.InOutSine));
+        seq.Append(targetTrans.DOLocalMoveX(originalPos.x, 0.05f).SetEase(Ease.OutSine));
     }
     public async void PlayBloodVfx(bool isPlayer)
     {

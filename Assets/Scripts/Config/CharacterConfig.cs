@@ -146,10 +146,13 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void AddBuff(IBuffData buff)
     {
-        //如果已經有相同的 Buff ID，則刷新效果
-        if (buffData.Any(b => b.buffID == buff.buffID))
+        //如果已經有相同的 Buff ID，則堆疊回合數
+        var existingBuff = buffData.FirstOrDefault(b => b.buffID == buff.buffID);
+        if (existingBuff != null)
         {
-            buffData.Remove(buffData.First(b => b.buffID == buff.buffID));
+            if (buff.buffID != 17)//炸彈的特殊處理：不堆疊回合數
+                existingBuff.duration += buff.duration;
+            return;
         }
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this);
         buffData.Add(buff);

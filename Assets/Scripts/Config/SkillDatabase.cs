@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class SkillDatabase
 {
-    public static HashSet<int> SpSkillIDs = new HashSet<int> {38, 39}; // 特殊技能ID列表，供遊戲邏輯判斷使用
+    public static HashSet<int> SpSkillIDs = new HashSet<int> {38, 33}; // 特殊技能ID列表，供遊戲邏輯判斷使用
     private static Dictionary<int, SkillConfigData> _skills;
     
     public static Dictionary<int, SkillConfigData> Skills

@@ -584,6 +584,9 @@ public class DiceGame : MonoBehaviour
                     gameUiView.PlayBuffVfx(skillOrder.isPlayerUse);
                     //之後依照buff做對應特效
                     break;
+                case SkillType.DeBuff://補上deuff特效
+                    gameUiView.PlayDebuffVfx(!skillOrder.isPlayerUse);
+                    break;
                 default:
                     Debug.LogWarning("未知的技能類型");
                     break;
@@ -612,7 +615,7 @@ public class DiceGame : MonoBehaviour
                     poisonBuff.duration = 0;//移除中毒狀態
                 }
                 break;
-            case 39: // 弱點破壞 敵方撕裂(id 3)時傷害加倍
+            case 33: // 弱點破壞 敵方撕裂(id 3)時傷害加倍
                 IBuffData tearBuff = defender.buffData.Find(buff => buff.buffID == 3);
                 if (tearBuff != null)
                 {
@@ -715,7 +718,7 @@ public class DiceGame : MonoBehaviour
         playerData.RemoveAllBuff();
         enemyData.RemoveAllBuff();
         playerData.currentBlood = playerEnterBlood;
-        enemyData.currentBlood = enemyData.maxBlood;
+        enemyData = GameDataManager.TmpEnemyData;
         await Task.Delay(500);
         //重置遊戲
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
