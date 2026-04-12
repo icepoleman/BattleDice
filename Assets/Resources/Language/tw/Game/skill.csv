@@ -23,7 +23,7 @@
 22,星火暴斬,Attack,ConsecutiveDices,6,160,連續×6,160點傷害 敵方暈眩1回合,,3:0:1,,,NoraShop,500,,,,,,
 23,力量增幅,Buff,ConsecutiveDices,2,,連續×2,攻擊強化3回合,7:0:3,,,,MajoShop,300,,,,,,
 24,魔力爪,Attack,ConsecutiveDices,2,20,連續×2,20點傷害，敵方撕裂1回合,,2:0:1,,,MajoShop,300,,,,,,
-25,不屈之心,Buff,SpecificDices,1|1,,1・1,魔力護盾 (大) 1回合，攻擊強化3回合,10:0:1|7:0:3,,,,NoraShop,300,,,,,,
+25,不屈之心,Buff,SpecificDices,1|1,,1・1,魔力護盾 (大) ，攻擊強化3回合,10:1:0|7:0:3,,,,NoraShop,300,,,,,,
 26,裁決之刃,Attack,SpecificDices,1|1|1,100,1・1・1,120點傷害,,,,,NoraShop,300,,,,,,
 27,女神祝福,Heal,SpecificDices,2|2,60,2・2,生命+60，治癒3回合,11:0:3,,,,NoraShop,300,,,,,,
 28,極巨化,Buff,SpecificDices,2|2|2,,2・2・2,攻擊強化+巨人化5回合,7:0:5|12:0:5,,,,NoraShop,500,,,,,,

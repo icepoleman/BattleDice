@@ -161,7 +161,7 @@ public class StateManager : MonoBehaviour
             Debug.LogError("EnterDiceGame: 無效的參數，預期為敵人ID的整數值");
             return;
         }
-        if(testMode && testInputField != null)
+        if (testMode && testInputField != null)
         {
             if (int.TryParse(testInputField.text, out int testEnemyId))
             {

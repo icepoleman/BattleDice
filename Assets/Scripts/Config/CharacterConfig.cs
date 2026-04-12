@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 public enum CharacterState
 {
     Idle,
@@ -114,14 +115,16 @@ public abstract class BaseCharacterData : ICharacterData
         TriggerBuffs(BuffTrigger.OnAttactk);
         EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, damage + buffDamage, !isPlayer);
     }
-    public virtual void TakeDamage(float damage)
+    public virtual async void TakeDamage(float damage)
     {
         // 受到傷害時解除睡眠狀態
         if (state == CharacterState.Sleep)
         {
             RemoveSleepBuff();
         }
-        TriggerBuffs(BuffTrigger.OnDamageTaken);
+        if (damage > 0)
+            TriggerBuffs(BuffTrigger.OnDamageTaken);
+        await Task.Yield(); // 確保Buff觸發效果先執行
         float takeDmg = damage - buffDefense;
         if (takeDmg < 0) takeDmg = 0;
         if (damage < 0) takeDmg = damage;//如果是治療則不受防禦力影響
@@ -159,6 +162,7 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void RemoveBuff(IBuffData buff)//只被動作內部呼叫
     {
+        Debug.Log($"移除Buff: {buff.buffID}");
         buff.CheckBuffTrigger(BuffTrigger.OnRemove, this);
         buff.RemoveBuffEffect(this);
     }

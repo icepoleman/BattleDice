@@ -48,7 +48,6 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 10000;
         GameDataManager.Gear = 1000;
-        GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
         for (int i = 3; i <= 45; i++)
@@ -56,8 +55,9 @@ public class MenuManager : MonoBehaviour
             GameDataManager.HasSkillIDs.Add(i);
         }
 
-        GameDataManager.PlayerData.diceCount = 3;
-        GameDataManager.PlayerData.maxRollCount = 1;
+        GameDataManager.PlayerData.diceCount = 6;
+        GameDataManager.PlayerData.maxRollCount = 5;
+        GameDataManager.PlayerData.keepDiceCount = 4;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
     }
 

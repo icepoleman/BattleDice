@@ -38,6 +38,8 @@ public class DiceGame : MonoBehaviour
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
 
+    bool enemyEatBuff = false;
+
     [SerializeField] Button btn_skip;//測試用工具
     void Awake()
     {
@@ -138,6 +140,7 @@ public class DiceGame : MonoBehaviour
         if (currentState == newState) return;
         playerData.RemoveInvalidBuffs();
         enemyData.RemoveInvalidBuffs();
+        UpdateBloodUI(null);
 
         switch (newState)
         {
@@ -153,6 +156,22 @@ public class DiceGame : MonoBehaviour
             case TurnState.roundEnd:
                 await HandleRoundEnd();
                 break;
+        }
+        if (enemyEatBuff)
+        {
+            enemyEatBuff = false;
+            List<IBuffData> allBuffs = new List<IBuffData>(playerData.buffData);
+            playerData.RemoveAllBuff(); // 移除被吞噬者的所有buff
+            if (allBuffs != null)
+            {
+                // 處理吞噬效果
+                foreach (IBuffData buff in allBuffs)
+                {
+                    buff.canRemove = false; // 重置標記，避免被誤移除
+                    enemyData.AddBuff(buff); // 將被吞噬者的buff加到攻擊者身上
+                }
+            }
+            UpdateBuffUIEvent(null);
         }
         currentState = newState;
     }
@@ -183,8 +202,8 @@ public class DiceGame : MonoBehaviour
     async Task HandlePlayerTurn()
     {
         turnAnim.Play("playerTurn");
-        await Task.Delay(1000);
         UpdateBloodUI(null);
+        await Task.Delay(1000);
         manaRoller.SetDice(playerData.rollDiceResult, playerData.keepDiceCount, playerData.maxRollCount);
         Debug.Log("Player's Turn");
         playerData.TurnStartBuffEffect();
@@ -627,11 +646,7 @@ public class DiceGame : MonoBehaviour
                 }
                 break;
             case 128: // 吞噬
-                IBuffData allBuffs = defender.buffData.Find(buff => buff.buffID == 128);
-                if (allBuffs != null)
-                {
-                    // 處理吞噬效果
-                }
+                enemyEatBuff = true;//標記敵人正在吞噬，結束回合時會有額外等待
                 break;
 
             // 可以根據需要添加更多技能ID的處理

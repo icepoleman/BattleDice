@@ -8,7 +8,7 @@ ID,Buff名稱,觸發時機,效果,數值,效果文
 7,攻擊強化,OnApply,AttackPower,20,傷害+20
 8,攻擊弱化,OnApply,AttackPower,-20,傷害-20
 9,魔力護盾,OnApply,Defense,20,減傷 20
-10,魔力護盾 (大),OnApply,Defense,1000,抵擋攻擊的護盾
+10,魔力護盾 (大),OnDamageTaken,Defense,1000,抵擋攻擊的護盾
 11,治癒,OnTurnEnd,HP,20,回合結束時，生命+20
 12,巨人化,OnApply,MaxHP,100,最大生命+100
 13,狼之怒,OnDamageTaken,SpawnBuff,14|0|1,受傷時，獲得狂暴
