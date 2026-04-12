@@ -27,7 +27,7 @@ public static class GameDataManager
     public static string PreparationRoomStage { get; set; } = "PreparationRoom"; //打輸回到的準備室關卡
     public static int Gold { get; set; } = 0;          // 當前金幣數量
     public static int Gear { get; set; } = 0;    // 當前齒輪數量(強化素材)
-    public static EnemyData TmpEnemyData { get; set; } = new EnemyData();
+    public static int TmpEnemyID { get; set; } = 0;
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID

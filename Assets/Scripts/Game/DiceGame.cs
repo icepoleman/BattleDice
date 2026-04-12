@@ -54,7 +54,7 @@ public class DiceGame : MonoBehaviour
         playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
         enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         playerData = GameDataManager.PlayerData;
-        enemyData = GameDataManager.TmpEnemyData;
+        enemyData = new EnemyData(GameDataManager.TmpEnemyID);
 
         playerEnterBlood = playerData.currentBlood;//記錄進入時血量
 
@@ -200,7 +200,7 @@ public class DiceGame : MonoBehaviour
                 await HandleSleepState(playerData, isPlayer: true);
                 break;
             default:
-                gameUiView.ClearDiceBox(true);
+                gameUiView.ClearDiceBox();
                 break;
         }
     }
@@ -216,7 +216,7 @@ public class DiceGame : MonoBehaviour
         manaRoller.BtnMode(manaRollerMode.Off);
         Debug.Log("Enemy's Turn");
         enemyData.TurnStartBuffEffect();
-        gameUiView.ClearDiceBox(false);
+        gameUiView.ClearDiceBox();
 
         switch (enemyData.state)
         {
@@ -328,7 +328,7 @@ public class DiceGame : MonoBehaviour
         List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
         gameUiView.UpdateEnemySkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
         await Task.Delay(1000);
-        gameUiView.ClearDiceBox(false);
+        gameUiView.ClearDiceBox();
         // 敵人使用技能
         enemyRerollPending = 0; // 重置重骰計數
         enemyData.UseSkill();
@@ -343,6 +343,7 @@ public class DiceGame : MonoBehaviour
         enemyData.TurnEndBuffDecrease();
         await Task.Delay(200);
         gameUiView.ClearUsedEnemySkillCards();
+        gameUiView.ClearDiceBox();
         ChangeState(TurnState.roundEnd);
     }
     #endregion
@@ -476,7 +477,7 @@ public class DiceGame : MonoBehaviour
         playerData.UseSkill();
         // gameUiView.PlayFightAnim("playerAtk");
         manaRoller.BtnMode(manaRollerMode.Idle);
-        gameUiView.ClearDiceBox(true);
+        gameUiView.ClearDiceBox();
 
         // 清空技能的 diceBox
         playerData.wantUseSkill.diceBox.Clear();
@@ -605,6 +606,7 @@ public class DiceGame : MonoBehaviour
         BaseCharacterData defender = _skillOrder.isPlayerUse ? enemyData : playerData;
         switch (_skillOrder.skillID)
         {
+            case 113:
             case 38: // 毒爆術 消耗敵方中毒狀態增加傷害
                 //中毒狀態的buff ID為 1，每個中毒回合增加x倍傷害
                 IBuffData poisonBuff = defender.buffData.Find(buff => buff.buffID == 1);
@@ -615,6 +617,7 @@ public class DiceGame : MonoBehaviour
                     poisonBuff.duration = 0;//移除中毒狀態
                 }
                 break;
+            case 116:
             case 33: // 弱點破壞 敵方撕裂(id 3)時傷害加倍
                 IBuffData tearBuff = defender.buffData.Find(buff => buff.buffID == 3);
                 if (tearBuff != null)
@@ -623,6 +626,14 @@ public class DiceGame : MonoBehaviour
                     _skillOrder.values[0] = _skillOrder.values[0] * 2; // 增加額外傷害
                 }
                 break;
+            case 128: // 吞噬
+                IBuffData allBuffs = defender.buffData.Find(buff => buff.buffID == 128);
+                if (allBuffs != null)
+                {
+                    // 處理吞噬效果
+                }
+                break;
+
             // 可以根據需要添加更多技能ID的處理
             default:
                 break;
@@ -718,7 +729,6 @@ public class DiceGame : MonoBehaviour
         playerData.RemoveAllBuff();
         enemyData.RemoveAllBuff();
         playerData.currentBlood = playerEnterBlood;
-        enemyData = GameDataManager.TmpEnemyData;
         await Task.Delay(500);
         //重置遊戲
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

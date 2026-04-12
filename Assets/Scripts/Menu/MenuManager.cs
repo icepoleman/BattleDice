@@ -39,6 +39,7 @@ public class MenuManager : MonoBehaviour
     }
     void OnTestClicked()
     {
+        StateManager.Instance.OpenTestMode();
         //測試用
         GameDataManager.PreparationRoomStage = "0";//初始整備室
         GameDataManager.CurrentMap = int.Parse(text_TestMap.text);
@@ -50,7 +51,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
-        for (int i = 3; i <= 39; i++)
+        for (int i = 3; i <= 45; i++)
         {
             GameDataManager.HasSkillIDs.Add(i);
         }

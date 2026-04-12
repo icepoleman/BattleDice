@@ -150,7 +150,7 @@ public abstract class BaseCharacterData : ICharacterData
         var existingBuff = buffData.FirstOrDefault(b => b.buffID == buff.buffID);
         if (existingBuff != null)
         {
-            if (buff.buffID != 17)//炸彈的特殊處理：不堆疊回合數
+            if (!BuffDatabase.SpBuffIDs.Contains(buff.buffID))//炸彈 狂暴的特殊處理：不堆疊回合數
                 existingBuff.duration += buff.duration;
             return;
         }

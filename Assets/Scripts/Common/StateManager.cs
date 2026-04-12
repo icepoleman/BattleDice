@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,7 @@ public class StateManager : MonoBehaviour
     void Awake()
     {
         GameDataManager.TestMode = testMode; // 透過 Inspector 設定測試模式
+        testInputField.gameObject.SetActive(testMode); // 根據測試模式顯示或隱藏輸入框
         if (Instance == null)
         {
             Instance = this;
@@ -50,6 +52,15 @@ public class StateManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    public void OpenTestMode()
+    {
+        testMode = true;
+        GameDataManager.TestMode = true;
+        if (testInputField != null)
+        {
+            testInputField.gameObject.SetActive(true);
         }
     }
     void OnDestroy()
@@ -155,7 +166,7 @@ public class StateManager : MonoBehaviour
             if (int.TryParse(testInputField.text, out int testEnemyId))
             {
                 Debug.Log($"測試模式: 使用輸入的敵人ID {testEnemyId}");
-                GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(testEnemyId);
+                GameDataManager.TmpEnemyID = testEnemyId;
             }
             else
             {
@@ -167,7 +178,7 @@ public class StateManager : MonoBehaviour
         {
             int enemyId = (int)args[0];
             Debug.Log($"非測試模式: 使用參數中的敵人ID {enemyId}");
-            GameDataManager.TmpEnemyData = EnemyFactory.CreateEnemy(enemyId);
+            GameDataManager.TmpEnemyID = enemyId;
         }
 
         //TODO: 設定玩家資料

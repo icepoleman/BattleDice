@@ -11,12 +11,13 @@ ID,Buff名稱,觸發時機,效果,數值,效果文
 10,魔力護盾 (大),OnApply,Defense,1000,抵擋攻擊的護盾
 11,治癒,OnTurnEnd,HP,20,回合結束時，生命+20
 12,巨人化,OnApply,MaxHP,100,最大生命+100
-13,狼之怒,OnDamageTaken,SpawnBuff,20|0|1,受傷時，獲得狂暴
+13,狼之怒,OnDamageTaken,SpawnBuff,14|0|1,受傷時，獲得狂暴
 14,狂暴,OnApply,LimitBornDice,8,生成骰變為8
 15,虛脫,OnApply,LimitBornDice,1,生成骰變為1
 16,尖刺,OnDamageTaken,EnemyHP,-20,受傷時，敵方生命-20
 17,定時炸彈,OnRemove,HP,-666,倒數結束時，生命-666
 18,燃燒,OnTurnEnd,HP,-20,回合結束，生命-20
-19,吃飽就睡,OnHealReceived,SpawnBuff,5|1|0,生命+時，進入睡眠
-20,麻痺,OnApply,LimitDiceRollResults,1|2|3|4,生成骰子點數上限變為 4
+19,吃飽就睡,OnHealReceived,SpawnBuff,4|1|0,生命+時，進入睡眠
+20,麻痺,OnApply,LimitDiceRollResults,1|2|3|4|5,生成骰子點數上限變為 5
 21,粉絲的應援,OnApply,BornDice,2,生成骰子+2
+22,連擊,OnSkillUse,EnemyReroll,1,再次執行擲骰判定

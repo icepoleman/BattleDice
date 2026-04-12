@@ -45,6 +45,7 @@ T_ManaRoller_FreezeLimitReached|鎖不夠了!
 T_Screen_Fullscreen|全螢幕
 T_Screen_BorderlessWindow|視窗全螢幕
 T_Screen_Windowed|視窗化
+T_Skill_DiceSum|點數總和<color=#FF1700> {0} </color>以上
 T_Skill_SkillType_atk|造成<color=#FF1700> {0} </color>點傷害
 T_Skill_selfBuff|自身<link="{0}"><sprite={1}></link>{2}回合
 T_Skill_targetBuff|對方<link="{0}"><sprite={1}></link>{2}回合
@@ -61,4 +62,5 @@ T_Skill_generateDices_highDice|生成{0}個高點數骰
 T_Skill_generateDices_randomDice|生成{0}個隨機點數骰
 T_Skill_Effect_Sp_38|消耗對方中毒狀態，造成<color=#FF1700> 20 × 消耗回合數 </color>點傷害
 T_Skill_Effect_Sp_33|造成<color=#FF1700> 50 </color>點傷害，對方處於撕裂狀態則傷害加倍
+T_Skill_Effect_Sp_128|造成<color=#FF1700> 50 </color>點傷害，奪取對方所有狀態並轉化為自身狀態
 T_AffinityIncrease|好感度增加 {0} 點

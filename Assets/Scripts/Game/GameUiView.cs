@@ -36,7 +36,7 @@ public class GameUiView : MonoBehaviour
     Sprite[] diceSprites;
     GameObject prefab_manaDice;
 
-    GameObject prefab_buffVFX,prefab_deBuffVFX, prefab_bloodVfx, prefab_buffCard;
+    GameObject prefab_buffVFX, prefab_deBuffVFX, prefab_bloodVfx, prefab_buffCard;
 
     [SerializeField] Button btn_set;
     async void Start()
@@ -160,7 +160,7 @@ public class GameUiView : MonoBehaviour
             return;
         }
         Debug.Log("顯示擲骰子動畫");
-        ClearDiceBox(isPlayer);
+        ClearDiceBox();
 
         await Task.Delay(500);// 等待0.5秒後開始顯示動畫
 
@@ -172,10 +172,13 @@ public class GameUiView : MonoBehaviour
         }
         await Task.Delay(500);
     }
-    public void ClearDiceBox(bool isPlayer)
+    public void ClearDiceBox()
     {
-        Transform diceBox = isPlayer ? trans_playerDiceBox : trans_enemyDiceBox;
-        foreach (Transform child in diceBox.transform)
+        foreach (Transform child in trans_playerDiceBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in trans_enemyDiceBox.transform)
         {
             Destroy(child.gameObject);
         }
@@ -236,7 +239,7 @@ public class GameUiView : MonoBehaviour
         Transform targetTrans = isPlayer ? img_player.transform : img_enemy.transform;
         buffVFX.transform.position = targetTrans.position;
         Destroy(buffVFX, 2f);
-        
+
         // 往上跳一下
         Vector3 originalPos = targetTrans.localPosition;
         Sequence seq = DOTween.Sequence();
@@ -249,7 +252,7 @@ public class GameUiView : MonoBehaviour
         Transform targetTrans = isPlayer ? img_player.transform : img_enemy.transform;
         debuffVFX.transform.position = targetTrans.position;
         Destroy(debuffVFX, 2f);
-        
+
         // 俐落的左右晃動
         Vector3 originalPos = targetTrans.localPosition;
         Sequence seq = DOTween.Sequence();

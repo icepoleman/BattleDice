@@ -28,6 +28,7 @@ public struct BuffConfigData
 // Buff 配置資料庫
 public static class BuffDatabase
 {
+    public static HashSet<int> SpBuffIDs = new HashSet<int> {14,17}; // 不堆疊回合的Buff
     private static Dictionary<int, BuffConfigData> _buffs;
     private static bool _isLoaded = false;
 

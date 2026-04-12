@@ -45,7 +45,7 @@ public static class SkillLocalizationHelper
                 skill.conditionText = LanguageManager.GetFormat("T_Skill_SameDices", skill.GetNeedDiceNum());
                 break;
             case SkillRequirementType.DiceSum:
-                // 不動作，直接顯示在說明裡面
+                skill.conditionText = LanguageManager.GetFormat("T_Skill_DiceSum", skill.needDicesData[0]);
                 break;
             case SkillRequirementType.SpecificDicesWithRepeat:
                 if (skill.needDicesData[0] == 1)
@@ -67,14 +67,19 @@ public static class SkillLocalizationHelper
     /// </summary>
     public static void LocalizeEffect(ref SkillConfigData skill)
     {
-        if(SkillDatabase.SpSkillIDs.Contains(skill.skillID))
+        if (SkillDatabase.SpSkillIDs.Contains(skill.skillID))
         {
             switch (skill.skillID)
             {
+                case 113:
                 case 38: // 毒爆術
                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
                     break;
+                case 116:
                 case 33: // 弱點破壞 
+                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                    break;
+                case 128: // 吞噬
                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
                     break;
             }
