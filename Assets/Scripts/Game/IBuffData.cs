@@ -126,7 +126,6 @@ public class BaseBuff : IBuffData
         switch (buffEffectType)
         {
             case BuffEffectType.HP:
-                // 對自己治療 或扣血
                 float _value = -effectValues[0];
                 EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, _value, character.isPlayer);
                 Debug.Log($"{buffName} 治療了 {_value} 點生命！");
@@ -152,7 +151,8 @@ public class BaseBuff : IBuffData
                 // 增加最大生命值
                 float maxHpIncrease = effectValues[0];
                 character.maxBlood += maxHpIncrease;
-                EventCenter.Dispatch(GameEvent.EVENT_BUFF_EFFECT_BLOOD, maxHpIncrease, character.isPlayer); // 同時增加當前血量
+                character.currentBlood += maxHpIncrease; // 同時增加當前血量
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BLOOD_UI); // 同時增加當前血量
                 Debug.Log($"{buffName} 增加了 {maxHpIncrease} 點最大生命！");
                 break;
 
@@ -227,7 +227,12 @@ public class BaseBuff : IBuffData
     }
     public void RemoveBuffEffect(ICharacterData character)
     {
+        if (canRemove) return; // 防止重複執行
         canRemove = true;
+        if (buffTrigger == BuffTrigger.OnRemove && duration == 0)
+        {
+            UseBuff(character); // 如果有移除時觸發的效果，先執行一次
+        }
         // 根據 buffEffectType 反向移除效果
         switch (buffEffectType)
         {
@@ -281,7 +286,6 @@ public class BaseBuff : IBuffData
                 break;
             // 其他效果通常不需要反向移除，因為它們是即時效果
             default:
-                Debug.Log($"{buffName} 無需移除效果或未實作移除邏輯。");
                 break;
         }
     }

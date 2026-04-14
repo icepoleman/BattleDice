@@ -163,7 +163,7 @@ public abstract class BaseCharacterData : ICharacterData
     public virtual void RemoveBuff(IBuffData buff)//只被動作內部呼叫
     {
         Debug.Log($"移除Buff: {buff.buffID}");
-        buff.CheckBuffTrigger(BuffTrigger.OnRemove, this);
+       // buff.CheckBuffTrigger(BuffTrigger.OnRemove, this);
         buff.RemoveBuffEffect(this);
     }
     public virtual bool IsDead()

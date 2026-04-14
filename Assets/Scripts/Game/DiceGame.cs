@@ -674,7 +674,7 @@ public class DiceGame : MonoBehaviour
         UpdateBloodUI(null);
         Debug.Log($"Buff效果造成 {(value > 0 ? "傷害" : "治療")} {Math.Abs(value)} 點");
     }
-    void OnAttackCharacter(object[] args)//技能打擊
+    async void OnAttackCharacter(object[] args)//技能打擊
     {
         float damage = (float)args[0];
         bool isPlayer = (bool)args[1];//攻擊對象
@@ -689,13 +689,15 @@ public class DiceGame : MonoBehaviour
             enemyData.TakeDamage(damage);
             gameUiView.CreateFlyBloodText((int)damage, false, true);
         }
+        await Task.Yield(); // 確保傷害計算先執行
         UpdateBloodUI(null);
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())
         // EventCenter.Dispatch(GameEvent.EVENT_CHANGE_STATE, TurnState.roundEnd);
         Debug.Log($" 造成 {damage} 點傷害");
         //等一秒CheckLive
-        Invoke("CheckLive", 1f);
+        await Task.Delay(1000);
+        CheckLive();
     }
     void CheckLive()
     {

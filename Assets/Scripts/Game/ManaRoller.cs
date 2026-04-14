@@ -33,7 +33,7 @@ public class ManaRoller : MonoBehaviour
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
     [SerializeField] ToggleGroup skillToggleGroup;
-    List<SkillCard> skillCardList= new List<SkillCard>();
+    List<SkillCard> skillCardList = new List<SkillCard>();
     [SerializeField] Transform skillCardParent;
     [SerializeField] GameObject skillCardPrefab;
     [SerializeField] SkillCard chooseSkillCard;
@@ -57,7 +57,7 @@ public class ManaRoller : MonoBehaviour
     public async Task Init()
     {
         if (isOpen) return;
- 
+
         for (int i = 0; i < 4; i++)
         {
             GameObject cardObj = Instantiate(skillCardPrefab, skillCardParent);
@@ -176,8 +176,13 @@ public class ManaRoller : MonoBehaviour
     //獲取初始骰子
     public async void SetDice(List<int> _dices, int _keepDiceCount, int _maxRollCount)
     {
+        if (_maxRollCount > 6)
+        {
+            _maxRollCount = 6;//最大擲骰次數限制為6次，避免UI顯示問題
+        }
         rollCount = _maxRollCount;
         img_rollCount.sprite = diceSprites[rollCount];
+
         OpenRollCount();
         maxFreezeCount = _keepDiceCount;
         text_freezeCount.text = maxFreezeCount.ToString();
@@ -380,8 +385,9 @@ public class ManaRoller : MonoBehaviour
                     }
                     else
                     {
- 
-                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));                    }
+
+                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));
+                    }
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
             }
