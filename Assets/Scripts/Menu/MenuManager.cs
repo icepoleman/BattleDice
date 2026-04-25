@@ -50,10 +50,10 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gear = 1000;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
-        for (int i = 3; i <= 45; i++)
+        /*for (int i = 3; i <= 45; i++)
         {
             GameDataManager.HasSkillIDs.Add(i);
-        }
+        }*/
 
         GameDataManager.PlayerData.diceCount = 6;
         GameDataManager.PlayerData.maxRollCount = 5;

@@ -63,13 +63,13 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
         // 檢測 ESC 鍵跳過劇情
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        /*if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (!isOver && !isSkipPanelOpen)
             {
                 ShowSkipConfirmPanel();
             }
-        }
+        }*/
 
         // 檢測 Backspace 鍵快速跳到下一個選項
         /* if (Keyboard.current.backspaceKey.wasPressedThisFrame)
@@ -504,26 +504,6 @@ public class DialogueManager : MonoBehaviour
             spineCharacter.AnimationState.SetAnimation(0, animName, true);
             Debug.Log("Spine模型播放動畫:" + animName);
         }
-    }
-    /// <summary>
-    /// 顯示跳過劇情確認彈窗
-    /// </summary>
-    private async void ShowSkipConfirmPanel()
-    {
-        isSkipPanelOpen = true;
-        await UIManager.ShowConfirmPanel(LanguageManager.GetText("T_Skip_Dialogue_Hint"),
-                    () =>
-                    {
-                        // 確認跳過
-                        Debug.Log("跳過劇情");
-                        isSkipPanelOpen = false;
-                        SkipDialogue();
-                    },
-                    () =>
-                    {
-                        // 取消
-                        isSkipPanelOpen = false;
-                    });
     }
 
     /// <summary>

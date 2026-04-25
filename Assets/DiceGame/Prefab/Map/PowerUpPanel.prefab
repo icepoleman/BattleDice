@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
   m_Padding:
-    m_Left: 61
+    m_Left: -29
     m_Right: 0
-    m_Top: 0
+    m_Top: 17
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
@@ -245,15 +245,15 @@ RectTransform:
   m_GameObject: {fileID: 3309353036118223432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4801694916267335603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -8.9, y: 13.5}
+  m_SizeDelta: {x: 4189.738, y: 2144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1737256714868305190
 CanvasRenderer:
@@ -276,14 +276,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -130070610015097871, guid: fbf17b339af7a3040829e189ee97e5e6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.87058824}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -935,6 +935,14 @@ PrefabInstance:
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_SizeDelta.y
       value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1139,6 +1147,14 @@ PrefabInstance:
       value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 300
       objectReference: {fileID: 0}
@@ -1339,6 +1355,14 @@ PrefabInstance:
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_SizeDelta.y
       value: 463
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5808184957549480145, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1545,6 +1569,14 @@ PrefabInstance:
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_SizeDelta.y
       value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5480077359000471899, guid: fa2f13408e0916040a6041414b8d0e32, type: 3}
       propertyPath: m_AnchoredPosition.x

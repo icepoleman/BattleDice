@@ -166,6 +166,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a674401dbde86764bbdf160dad634f98
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/ShopConfirmPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a905789a14da46540b9b7b42779d5962
     m_Address: Assets/DiceGame_ab/Common/Prefabs/EditPanel.prefab
     m_ReadOnly: 0

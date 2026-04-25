@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
-
+using TMPro;
 public class SettingPanel : MonoBehaviour
 {
     [Header("音量滑桿")]
@@ -30,6 +30,8 @@ public class SettingPanel : MonoBehaviour
 
     [Header("解析度設定")]
     [SerializeField] private Dropdown dropdown_screenSize;
+
+    [SerializeField] private TMPro.TMP_Text txt_title;
     private const string RESOLUTION_KEY = "Resolution";
 
     // 16:9 解析度列表
@@ -45,6 +47,7 @@ public class SettingPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        txt_title.text = LanguageManager.GetText("T_Setting");
         InitializeUI();
         RegisterListeners();
     }

@@ -104,7 +104,7 @@ public static class SkillLocalizationHelper
             foreach (var buff in skill.selfBuffs)
             {
                 // icon 還沒畫完，先都用 0 的圖
-                int buffIconID = 0; // buff.buffID
+                int buffIconID = 1; // buff.buffID
                 AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_selfBuff", buff.buffID, buffIconID, buff.duration));
             }
         }
@@ -114,7 +114,7 @@ public static class SkillLocalizationHelper
             foreach (var buff in skill.targetBuffs)
             {
                 // icon 還沒畫完，先都用 0 的圖
-                int buffIconID = 0; // buff.buffID
+                int buffIconID = 1; // buff.buffID
                 AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_targetBuff", buff.buffID, buffIconID, buff.duration));
             }
         }

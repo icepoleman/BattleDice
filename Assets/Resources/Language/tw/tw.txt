@@ -31,7 +31,7 @@ T_ChangeSkill_SkillMax|技能已滿（最多 {0} 個）
 T_ChangeSkill_Limit|請至少選擇一個技能
 T_Shop_AlreadyOwned|已擁有此技能
 T_Shop_NotEnoughGold|金幣不足
-T_Shop_ConfirmBuy|確定購買 {0}？\n價格：{1} 金幣
+T_Shop_ConfirmBuy|確定購買
 T_TypeSpeedTest|劇情文字速度
 T_NotEnoughGold|金幣不足
 T_SkillOnNoraShopCondition|需求骰子:{0}\n技能效果:{1}
@@ -47,20 +47,26 @@ T_Screen_BorderlessWindow|視窗全螢幕
 T_Screen_Windowed|視窗化
 T_Skill_DiceSum|點數總和<color=#FF1700> {0} </color>以上
 T_Skill_SkillType_atk|造成<color=#FF1700> {0} </color>點傷害
-T_Skill_selfBuff|自身<link="{0}"><sprite={1}></link>{2}回合
-T_Skill_targetBuff|對方<link="{0}"><sprite={1}></link>{2}回合
+T_Skill_selfBuff|自身<link="{0}"><sprite name="Buff_{1}"></link>{2}回合
+T_Skill_targetBuff|對方<link="{0}"><sprite name="Buff_{1}"></link>{2}回合
 T_Skill_SkillType_heal|恢復<color=#00FF00> {0} </color>點生命
-T_Skill_SameDices|<color=#FF6100>重複骰子</color>×{0}
+T_Skill_SameDices|<color=#FFFF00>重複骰子</color>×{0}
 T_Skill_SpecificDicesWithRepeat_low|低點數骰子×{0}
 T_Skill_SpecificDicesWithRepeat_high|高點數骰子×{0}
-T_Skill_ConsecutiveDices|<color=#00BCFF>連續骰子</color>×{0}
+T_Skill_ConsecutiveDices|<color=#00FF0E>連續骰子</color>×{0}
 T_Skill_AnyDices|任意骰子×{0}
 T_Skill_enemyCombo|再骰一次判定
 T_Skill_generateDices_spDice|生成{0}個萬用骰
 T_Skill_generateDices_lowDice|生成{0}個低點數骰
 T_Skill_generateDices_highDice|生成{0}個高點數骰    
 T_Skill_generateDices_randomDice|生成{0}個隨機點數骰
-T_Skill_Effect_Sp_38|消耗對方中毒狀態，造成<color=#FF1700> 20 × 消耗回合數 </color>點傷害
-T_Skill_Effect_Sp_33|造成<color=#FF1700> 50 </color>點傷害，對方處於撕裂狀態則傷害加倍
+T_Skill_Effect_Sp_38|消耗對方<sprite name="Buff_1">，造成<color=#FF1700> 20 × 消耗回合數 </color>點傷害
+T_Skill_Effect_Sp_33|造成<color=#FF1700> 50 </color>點傷害，對方處於<sprite name="Buff_2">狀態則傷害加倍
 T_Skill_Effect_Sp_128|造成<color=#FF1700> 50 </color>點傷害，奪取對方所有狀態並轉化為自身狀態
 T_AffinityIncrease|好感度增加 {0} 點
+T_Setting|設定
+T_Shop_BuyPrice|價格：{0}金幣
+T_Shop_BuyItem|【{0}】
+T_GetNewSkill|習得新技能【{0}】!!!!
+T_Shop_Skill_Condition_Dice|<sprite name="dice_{0}">
+T_Skill_Condition_Title|【發動條件】

@@ -21,13 +21,11 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
 
     [SerializeField] Button btn_card;
     [SerializeField] Image img_choose;
-    [SerializeField] Text text_skillTitle;
-    [SerializeField] Text text_skillCondition_title;
-    [SerializeField] Text text_skillCondition;
+    [SerializeField] TextMeshProUGUI text_skillTitle;
+    [SerializeField] TextMeshProUGUI text_skillCondition_title;
+    [SerializeField] TextMeshProUGUI text_skillCondition;
+    [SerializeField] TextMeshProUGUI text_skillCondition_dice;
     [SerializeField] TextMeshProUGUI text_skillEffect;
-    [SerializeField] Text text_skillEffect_title;
-    [SerializeField] Transform trans_skillDiceParent;
-    [SerializeField] GameObject obj_dice;
     [SerializeField] GameObject obj_buffTip;
     [SerializeField] TextMeshProUGUI text_buffTip;
     SkillConfigData skillData;
@@ -36,7 +34,8 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
     {
         btn_card.onClick.AddListener(() => onCardClicked?.Invoke(this));
         text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
-        text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");
+        text_skillCondition_dice.text = "";
+        // text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
@@ -44,16 +43,13 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
         if (skillData.conditionText == "")
             BurnConditionDices();
     }
-    void BurnConditionDices()//如果沒有條件骰子就不顯示
+    void BurnConditionDices()
     {
         text_skillCondition.gameObject.SetActive(false);
+        text_skillCondition_dice.text = "";
         for (int i = 0; i < skillData.needDicesData.Length; i++)
         {
-            int sideNum = skillData.needDicesData[i];
-            GameObject diceObj = Instantiate(obj_dice, trans_skillDiceParent);
-            diceObj.SetActive(true);
-            Image img = diceObj.GetComponent<Image>();
-            img.sprite = ResourcesLoader.GetDiceSprite(sideNum);
+            text_skillCondition_dice.text += LanguageManager.GetFormat("Shop_Skill_Condition_Dice", skillData.needDicesData[i]);
         }
     }
 
@@ -91,12 +87,12 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
                 currentLinkIndex = linkIndex;
                 TMP_LinkInfo linkInfo = text_skillEffect.textInfo.linkInfo[linkIndex];
                 string linkId = linkInfo.GetLinkID();
-                
+
                 // 取得 link 在文字中的位置（使用第一個字符的位置）
                 int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
                 TMP_CharacterInfo charInfo = text_skillEffect.textInfo.characterInfo[firstCharIndex];
                 Vector3 charWorldPos = text_skillEffect.transform.TransformPoint(charInfo.topLeft);
-                
+
                 ShowTooltip(linkId, charWorldPos);
             }
         }
@@ -126,11 +122,11 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
         obj_buffTip.SetActive(true);
         BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
         text_buffTip.text = buffData.describe;
-        
+
         // 在 link 上方顯示
         Vector3 tipPosition = _position + new Vector3(1.25F, 0.25f, 0);
         obj_buffTip.transform.position = tipPosition;
-        
+
         Debug.Log($"Show Tooltip: {linkId} at {tipPosition}");
     }
 
