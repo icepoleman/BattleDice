@@ -72,6 +72,7 @@ public class SettingPanel : MonoBehaviour
     /// </summary>
     private void InitializeUI()
     {
+        txt_textSpeedTitle.text = LanguageManager.GetText("T_Setting_TextSpeed");
         btn_backToMenu.GetComponent<TextMeshProUGUI>().text = LanguageManager.GetText("T_Setting_backMenu");
         btn_exit.GetComponent<TextMeshProUGUI>().text = LanguageManager.GetText("T_Setting_ExitGame");
         btn_backToMenu.onClick.AddListener(() =>
