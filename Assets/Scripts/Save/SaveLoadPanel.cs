@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +9,15 @@ public class SaveLoadPanel : MonoBehaviour
         Save,
         Load
     }
-    [SerializeField] PanelType panelType;
     [SerializeField] GameObject saveItemPrefab;
     [SerializeField] Transform contentTransform;
     [SerializeField] Button btn_close;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    async void Start()
+    public void SetUp(PanelType panelType)
     {
         btn_close.onClick.AddListener(() => { Destroy(gameObject); });
+
         saveItemPrefab.SetActive(false);
-        
-        GameObject confirmPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ConfirmPanel" + ".prefab");
 
         // Load 模式時，先顯示自動存檔
         if (panelType == PanelType.Load)
@@ -26,7 +25,7 @@ public class SaveLoadPanel : MonoBehaviour
             SaveSlotInfo autoSaveInfo = SaveManager.GetAutoSaveInfo();
             if (autoSaveInfo != null)
             {
-                CreateSaveItem(autoSaveInfo, confirmPanel, isAutoSave: true);
+                CreateSaveItem(autoSaveInfo, isAutoSave: true, panelType: panelType);
             }
         }
 
@@ -34,16 +33,16 @@ public class SaveLoadPanel : MonoBehaviour
         SaveSlotInfo[] saveInfos = SaveManager.GetAllSlotInfos();
         foreach (var info in saveInfos)
         {
-            CreateSaveItem(info, confirmPanel, isAutoSave: false);
+            CreateSaveItem(info, isAutoSave: false, panelType: panelType);
         }
     }
 
-    void CreateSaveItem(SaveSlotInfo info, GameObject confirmPanel, bool isAutoSave)
+    async Task CreateSaveItem(SaveSlotInfo info, bool isAutoSave, PanelType panelType = PanelType.Load)
     {
         GameObject itemObj = Instantiate(saveItemPrefab, contentTransform);
         SaveItemView saveItem = itemObj.GetComponent<SaveItemView>();
         Button itemBtn = itemObj.GetComponent<Button>();
-
+        GameObject confirmPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "ConfirmPanel" + ".prefab");
         itemBtn.onClick.AddListener(async () =>
         {
             if (panelType == PanelType.Save)

@@ -13,6 +13,7 @@ public class AffinityPanel : MonoBehaviour
     [SerializeField] private GameObject affinityEventPrefab;
     [SerializeField] private TextMeshProUGUI txt_chat;
     [SerializeField] private Button btn_role;//點擊角色頭像顯示對話
+    [SerializeField] private Image img_role;
 
     [SerializeField] private Button btn_back;
     [SerializeField] private Button btn_h_a;
@@ -58,8 +59,8 @@ public class AffinityPanel : MonoBehaviour
         });
 
         // 初始淡入效果
-        btn_role.image.color = new Color(1f, 1f, 1f, 0f);
-        btn_role.image.DOFade(1f, 1f);
+        img_role.color = new Color(1f, 1f, 1f, 0f);
+        img_role.DOFade(1f, 1f);
         StartCoroutine(ShowChat());
 
         //H固定
@@ -79,6 +80,25 @@ public class AffinityPanel : MonoBehaviour
         }
         obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
         btn_back.onClick.AddListener(() => Destroy(gameObject));
+
+        switch (role)
+        {
+            case "JailerGirl":
+                img_role.rectTransform.localPosition = new Vector3(54, -300f, 0f);
+                break;
+            case "Witch":
+                img_role.rectTransform.localPosition = new Vector3(54, -520f, 0f);
+                break;
+            case "Idol":
+                img_role.rectTransform.localPosition = new Vector3(54, -390, 0f);
+                break;
+            case "WolfGirl":
+                img_role.rectTransform.localPosition = new Vector3(54, -430, 0f);
+                break;
+            default:
+
+                break;
+        }
     }
     /// <summary>
     /// 逐字顯示範例文字
@@ -101,7 +121,7 @@ public class AffinityPanel : MonoBehaviour
         string chat = shortChatData[randomIndex].dialogue;
         string face = shortChatData[randomIndex].face;
 
-        btn_role.image.sprite = PortraitManager.Show(roleStr, face);
+        img_role.sprite = PortraitManager.Show(roleStr, face);
 
         txt_chat.text = "";
         foreach (char c in chat)

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Collections;
 using TMPro;
 public class SettingPanel : MonoBehaviour
 {
@@ -10,28 +9,40 @@ public class SettingPanel : MonoBehaviour
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
 
-    [Header("靜音開關")]
+    [SerializeField] private TextMeshProUGUI txt_masterVolume;
+    [SerializeField] private TextMeshProUGUI txt_bgmVolume;
+    [SerializeField] private TextMeshProUGUI txt_sfxVolume;
+    [SerializeField] private TextMeshProUGUI txt_masterVolumeTitle;
+    [SerializeField] private TextMeshProUGUI txt_bgmVolumeTitle;
+    [SerializeField] private TextMeshProUGUI txt_sfxVolumeTitle;
+
+    /*[Header("靜音開關")]
     [SerializeField] private Toggle masterMuteToggle;
     [SerializeField] private Toggle bgmMuteToggle;
-    [SerializeField] private Toggle sfxMuteToggle;
+    [SerializeField] private Toggle sfxMuteToggle;*/
 
     [Header("其他按鈕 (可選)")]
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button btn_close_bg;
+    [SerializeField] private Button btn_backToMenu;
+    [SerializeField] private Button btn_exit;
 
     [Header("文字顯示速度")]
-    [SerializeField] private Slider textSpeedSlider;
-    [SerializeField] private Text txt_speedShowSample;
-    private Coroutine sampleTypingCoroutine;
-    private string str_typeSpeedSample;
+    [SerializeField] private TMP_Dropdown dropdown_textSpeed;
+    [SerializeField] private TextMeshProUGUI txt_textSpeedTitle;
+    private const string TEXT_SPEED_KEY = "TextSpeed";
+    private readonly float[] textSpeedValues = { 0.1f, 0.05f, 0.01f };
 
     [Header("銀幕顯示設定")]
-    [SerializeField] private Dropdown dropdown_displayMode;
+    [SerializeField] private TMP_Dropdown dropdown_displayMode;
+    [SerializeField] private TextMeshProUGUI txt_displayModeTitle;
     private const string SCREEN_MODE_KEY = "ScreenMode";
 
     [Header("解析度設定")]
-    [SerializeField] private Dropdown dropdown_screenSize;
+    [SerializeField] private TMP_Dropdown dropdown_screenSize;
+    [SerializeField] private TextMeshProUGUI txt_screenSizeTitle;
 
-    [SerializeField] private TMPro.TMP_Text txt_title;
+    [SerializeField] private TMP_Text txt_title;
     private const string RESOLUTION_KEY = "Resolution";
 
     // 16:9 解析度列表
@@ -41,8 +52,7 @@ public class SettingPanel : MonoBehaviour
         (1366, 768),
         (1600, 900),
         (1920, 1080),
-        (2560, 1440),
-        (3840, 2160)
+        (2560, 1440)
     };
 
     private void OnEnable()
@@ -62,24 +72,74 @@ public class SettingPanel : MonoBehaviour
     /// </summary>
     private void InitializeUI()
     {
+        btn_backToMenu.GetComponent<TextMeshProUGUI>().text = LanguageManager.GetText("T_Setting_backMenu");
+        btn_exit.GetComponent<TextMeshProUGUI>().text = LanguageManager.GetText("T_Setting_ExitGame");
+        btn_backToMenu.onClick.AddListener(() =>
+        {
+            Destroy(gameObject);
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
+        });
+        btn_exit.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
         masterVolumeSlider.value = AudioManager.Instance.MasterVolume;
         bgmVolumeSlider.value = AudioManager.Instance.BGMVolume;
         sfxVolumeSlider.value = AudioManager.Instance.SFXVolume;
-        masterMuteToggle.isOn = AudioManager.Instance.IsMasterMuted;
+        txt_masterVolume.text = Mathf.RoundToInt(AudioManager.Instance.MasterVolume * 100).ToString();
+        txt_bgmVolume.text = Mathf.RoundToInt(AudioManager.Instance.BGMVolume * 100).ToString();
+        txt_sfxVolume.text = Mathf.RoundToInt(AudioManager.Instance.SFXVolume * 100).ToString();
+
+        txt_masterVolumeTitle.text = LanguageManager.GetText("T_Master_Volume");
+        txt_bgmVolumeTitle.text = LanguageManager.GetText("T_BGM_Volume");
+        txt_sfxVolumeTitle.text = LanguageManager.GetText("T_SFX_Volume");
+        /*masterMuteToggle.isOn = AudioManager.Instance.IsMasterMuted;
         bgmMuteToggle.isOn = AudioManager.Instance.IsBGMMuted;
-        sfxMuteToggle.isOn = AudioManager.Instance.IsSFXMuted;
+        sfxMuteToggle.isOn = AudioManager.Instance.IsSFXMuted;*/
 
-        str_typeSpeedSample = LanguageManager.GetText("T_TypeSpeedTest");
-
-        // 文字速度滑桿（0.01~0.1，預設0.05）
-        textSpeedSlider.value = ChatWindow.TypingSpeed;
-        PlaySampleText(ChatWindow.TypingSpeed);
+        // 文字速度下拉選單（慢、正常、快）
+        InitializeTextSpeedDropdown();
 
         // 螢幕模式下拉選單
         InitializeScreenDropdown();
 
         // 解析度下拉選單
         InitializeResolutionDropdown();
+    }
+
+    /// <summary>
+    /// 初始化文字速度下拉選單
+    /// </summary>
+    private void InitializeTextSpeedDropdown()
+    {
+        dropdown_textSpeed.ClearOptions();
+        dropdown_textSpeed.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_TextSpeed_Slow")));
+        dropdown_textSpeed.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_TextSpeed_Normal")));
+        dropdown_textSpeed.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_TextSpeed_Fast")));
+
+        int defaultIndex = GetClosestTextSpeedIndex(ChatWindow.TypingSpeed);
+        int savedIndex = PlayerPrefs.GetInt(TEXT_SPEED_KEY, defaultIndex);
+        savedIndex = Mathf.Clamp(savedIndex, 0, textSpeedValues.Length - 1);
+
+        dropdown_textSpeed.value = savedIndex;
+        dropdown_textSpeed.RefreshShownValue();
+        ChatWindow.TypingSpeed = textSpeedValues[savedIndex];
+    }
+
+    private int GetClosestTextSpeedIndex(float value)
+    {
+        int index = 0;
+        float minDiff = Mathf.Abs(value - textSpeedValues[0]);
+        for (int i = 1; i < textSpeedValues.Length; i++)
+        {
+            float diff = Mathf.Abs(value - textSpeedValues[i]);
+            if (diff < minDiff)
+            {
+                minDiff = diff;
+                index = i;
+            }
+        }
+        return index;
     }
 
     /// <summary>
@@ -91,11 +151,12 @@ public class SettingPanel : MonoBehaviour
 
         int currentIndex = 0;
         int savedIndex = PlayerPrefs.GetInt(RESOLUTION_KEY, -1);
+        savedIndex = Mathf.Clamp(savedIndex, -1, resolutions16_9.Length - 1);
 
         for (int i = 0; i < resolutions16_9.Length; i++)
         {
             var res = resolutions16_9[i];
-            dropdown_screenSize.options.Add(new Dropdown.OptionData($"{res.width} x {res.height}"));
+            dropdown_screenSize.options.Add(new TMP_Dropdown.OptionData($"{res.width} x {res.height}"));
 
             // 如果沒有儲存的設定，檢查當前解析度
             if (savedIndex == -1 && Screen.width == res.width && Screen.height == res.height)
@@ -114,9 +175,9 @@ public class SettingPanel : MonoBehaviour
     private void InitializeScreenDropdown()
     {
         dropdown_displayMode.ClearOptions();
-        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_Fullscreen")));
-        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_BorderlessWindow")));
-        dropdown_displayMode.options.Add(new Dropdown.OptionData(LanguageManager.GetText("T_Screen_Windowed")));
+        dropdown_displayMode.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_Screen_Fullscreen")));
+        dropdown_displayMode.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_Screen_BorderlessWindow")));
+        dropdown_displayMode.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_Screen_Windowed")));
 
         // 讀取已儲存的螢幕模式
         int savedMode = PlayerPrefs.GetInt(SCREEN_MODE_KEY, 0);
@@ -130,29 +191,25 @@ public class SettingPanel : MonoBehaviour
     private void RegisterListeners()
     {
         masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
-
-
         bgmVolumeSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
-
-
         sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
         AddPointerUpEvent(sfxVolumeSlider.gameObject, OnSFXSliderPointerUp);
 
-        masterMuteToggle.onValueChanged.AddListener(OnMasterMuteChanged);
-
-
+        /*masterMuteToggle.onValueChanged.AddListener(OnMasterMuteChanged);
         bgmMuteToggle.onValueChanged.AddListener(OnBGMMuteChanged);
-
-
-        sfxMuteToggle.onValueChanged.AddListener(OnSFXMuteChanged);
-
-
-        closeButton.onClick.AddListener(() => {
-            Destroy(gameObject); 
+        sfxMuteToggle.onValueChanged.AddListener(OnSFXMuteChanged);*/
+        closeButton.onClick.AddListener(() =>
+        {
+            Destroy(gameObject);
+            EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
+        });
+        btn_close_bg.onClick.AddListener(() =>
+        {
+            Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
         });
 
-        textSpeedSlider.onValueChanged.AddListener(OnTextSpeedChanged);
+        dropdown_textSpeed.onValueChanged.AddListener(OnTextSpeedChanged);
 
         dropdown_displayMode.onValueChanged.AddListener(OnScreenModeChanged);
 
@@ -167,29 +224,29 @@ public class SettingPanel : MonoBehaviour
         masterVolumeSlider.onValueChanged.RemoveListener(OnMasterVolumeChanged);
         bgmVolumeSlider.onValueChanged.RemoveListener(OnBGMVolumeChanged);
         sfxVolumeSlider.onValueChanged.RemoveListener(OnSFXVolumeChanged);
-        masterMuteToggle.onValueChanged.RemoveListener(OnMasterMuteChanged);
+        /*masterMuteToggle.onValueChanged.RemoveListener(OnMasterMuteChanged);
         bgmMuteToggle.onValueChanged.RemoveListener(OnBGMMuteChanged);
-        sfxMuteToggle.onValueChanged.RemoveListener(OnSFXMuteChanged);
-        textSpeedSlider.onValueChanged.RemoveListener(OnTextSpeedChanged);
+        sfxMuteToggle.onValueChanged.RemoveListener(OnSFXMuteChanged);*/
+        dropdown_textSpeed.onValueChanged.RemoveListener(OnTextSpeedChanged);
         dropdown_displayMode.onValueChanged.RemoveListener(OnScreenModeChanged);
         dropdown_screenSize.onValueChanged.RemoveListener(OnResolutionChanged);
-
-        if (sampleTypingCoroutine != null)
-            StopCoroutine(sampleTypingCoroutine);
     }
 
     private void OnMasterVolumeChanged(float value)
     {
+        txt_masterVolume.text = Mathf.RoundToInt(value * 100).ToString();
         AudioManager.Instance.SetMasterVolume(value);
     }
 
     private void OnBGMVolumeChanged(float value)
     {
+        txt_bgmVolume.text = Mathf.RoundToInt(value * 100).ToString();
         AudioManager.Instance.SetBGMVolume(value);
     }
 
     private void OnSFXVolumeChanged(float value)
     {
+        txt_sfxVolume.text = Mathf.RoundToInt(value * 100).ToString();
         AudioManager.Instance.SetSFXVolume(value);
     }
 
@@ -239,36 +296,13 @@ public class SettingPanel : MonoBehaviour
     /// <summary>
     /// 文字速度變更
     /// </summary>
-    private void OnTextSpeedChanged(float value)
+    private void OnTextSpeedChanged(int index)
     {
-        ChatWindow.TypingSpeed = value;
-        PlaySampleText(value);
-    }
+        if (index < 0 || index >= textSpeedValues.Length) return;
 
-    /// <summary>
-    /// 播放範例文字展示效果
-    /// </summary>
-    private void PlaySampleText(float speed)
-    {
-        if (sampleTypingCoroutine != null)
-            StopCoroutine(sampleTypingCoroutine);
-        sampleTypingCoroutine = StartCoroutine(TypeSampleText(speed));
-    }
-
-    /// <summary>
-    /// 逐字顯示範例文字
-    /// </summary>
-    private IEnumerator TypeSampleText(float speed)
-    {
-        txt_speedShowSample.text = "";
-        foreach (char c in str_typeSpeedSample)
-        {
-            txt_speedShowSample.text += c;
-            yield return new WaitForSeconds(speed);
-        }
-        // 顯示完畢後等待一下再重新播放
-        yield return new WaitForSeconds(1f);
-        PlaySampleText(speed);
+        ChatWindow.TypingSpeed = textSpeedValues[index];
+        PlayerPrefs.SetInt(TEXT_SPEED_KEY, index);
+        PlayerPrefs.Save();
     }
     #endregion
 

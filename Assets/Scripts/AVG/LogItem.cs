@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class LogItem : MonoBehaviour
 {
-    [SerializeField] private Text nameText; // 角色名稱文字
-    [SerializeField] private Text dialogueText; // 對話文本
+    [SerializeField] private TMPro.TextMeshProUGUI nameText; // 角色名稱文字
+    [SerializeField] private TMPro.TextMeshProUGUI dialogueText; // 對話文本
     public void SetData(string name, string dialogue)
     {
         // 根據 DialogueData 設置日誌項目的顯示內容

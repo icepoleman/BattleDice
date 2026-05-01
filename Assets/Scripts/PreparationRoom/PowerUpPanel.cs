@@ -12,7 +12,7 @@ public class PowerUpPanel : MonoBehaviour
     [SerializeField] Button btn_close;
     
     [Header("玩家資源顯示")]
-    [SerializeField] Text txt_gearCount;
+    [SerializeField] TMPro.TextMeshProUGUI txt_gearCount;
     
     private List<PowerUpItemView> itemViews = new List<PowerUpItemView>();
     

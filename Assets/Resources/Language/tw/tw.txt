@@ -70,3 +70,17 @@ T_Shop_BuyItem|【{0}】
 T_GetNewSkill|習得新技能【{0}】!!!!
 T_Shop_Skill_Condition_Dice|<sprite name="dice_{0}">
 T_Skill_Condition_Title|【發動條件】
+T_Setting_Save|保存
+T_Setting_Load|讀取
+T_Setting_Set|設定
+T_Setting_backMenu|返回菜單
+T_Setting_Language|語言
+T_Setting_ScreenMode|螢幕模式
+T_Master_Volume|主音量
+T_BGM_Volume|BGM
+T_SFX_Volume|音效
+T_TextSpeed_Slow|慢
+T_TextSpeed_Normal|正常
+T_TextSpeed_Fast|快
+T_Setting_backMenu|返回菜單
+T_Setting_ExitGame|退出遊戲

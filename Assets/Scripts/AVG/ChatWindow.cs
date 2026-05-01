@@ -54,6 +54,7 @@ public class ChatWindow : MonoBehaviour
         btn_set.onClick.AddListener(async () => { await UIManager.ShowCommonPanel("SetPanel"); });
         btn_log.onClick.AddListener(async () =>
         {
+            tog_auto.isOn = false;// 打開日誌時取消自動模式
             GameObject logPanelprefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "logPanel" + ".prefab");
             GameObject logPanelObj = Instantiate(logPanelprefab, transform);
             logPanelObj.GetComponent<LogView>().SetData(showedDialogues);

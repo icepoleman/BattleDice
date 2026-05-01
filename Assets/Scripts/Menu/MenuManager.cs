@@ -20,7 +20,8 @@ public class MenuManager : MonoBehaviour
         btn_exitGame.onClick.AddListener(() => { Application.Quit(); });
         btn_continue.onClick.AddListener(async () =>
         {
-            await UIManager.ShowCommonPanel("LoadPanel");
+            GameObject loadPanel = await UIManager.ShowCommonPanel("SaveLoadPanel");
+            loadPanel.GetComponent<SaveLoadPanel>().SetUp(SaveLoadPanel.PanelType.Load);
             AudioManager.Instance.PlaySFX("Sound_Click1");
         });
         btn_setting.onClick.AddListener(async () =>
