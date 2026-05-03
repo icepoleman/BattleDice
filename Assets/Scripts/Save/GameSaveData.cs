@@ -7,6 +7,7 @@ public class GameSaveData
 {
     public string playerName;
     public int currentMap;        // 當前地圖
+    public float mapScrollValue;   // 地圖滾動位置
     public string currentStage;          // 當前關卡
     public string preparationRoomStage; // 前個整備室關卡
     public string saveTimeString; // 存檔時間字串（用於 JSON 序列化）

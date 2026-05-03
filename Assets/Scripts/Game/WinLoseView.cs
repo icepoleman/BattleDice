@@ -1,20 +1,22 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class WinLoseView : MonoBehaviour
 {
-    [SerializeField] GameObject obj_win;
-    [SerializeField] GameObject obj_lose;
+    [SerializeField] TextMeshProUGUI txt_title;
     [SerializeField] Button btn_check;
     [SerializeField] Button btn_escape;
     [SerializeField] Button btn_restart;
-    [SerializeField] Text txt_reward;
-    public void SetData(bool isWin, string rewardText)
+    [SerializeField] TextMeshProUGUI txt_gold;
+    [SerializeField] TextMeshProUGUI txt_gear;
+    public void SetData(bool isWin, string goldReward, string gearReward)
     {
-        txt_reward.text = isWin ? rewardText : "";
-        obj_win.SetActive(isWin);
-        obj_lose.SetActive(!isWin);
+        txt_gold.text = isWin ? goldReward : "";
+        txt_gear.text = isWin ? gearReward : "";
+        txt_title.text = isWin ? "Win!!!" : "You Lose!";
+        
         btn_escape.gameObject.SetActive(!isWin);
         btn_restart.gameObject.SetActive(!isWin);
         btn_check.gameObject.SetActive(isWin);

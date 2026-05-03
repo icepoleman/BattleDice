@@ -872,6 +872,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6312102922876918648, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6428730135399880518, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_Name
       value: gamePanel
@@ -879,6 +883,10 @@ PrefabInstance:
     - target: {fileID: 6428730135399880518, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729659899877732172, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7591881298347872063, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.y
@@ -973,7 +981,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4041048986270203367, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e03b798704b472c44bfb7111c33463bc, type: 3}

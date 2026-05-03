@@ -31,9 +31,10 @@ public class ChatWindow : MonoBehaviour
     private ContentSizeFitter fitter;
     private Tween autoRotateTween;
 
-    private async void Start()
+    private void Start()
     {
-        GameObject logPanelprefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "logPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "logPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
         fitter = dialogueText.GetComponent<ContentSizeFitter>();
         typingSpeed = TypingSpeed; // 從 PlayerPrefs 讀取速度
         tog_hide.onValueChanged.AddListener(isOn =>
@@ -56,6 +57,7 @@ public class ChatWindow : MonoBehaviour
         btn_log.onClick.AddListener(async () =>
         {
             tog_auto.isOn = false;// 打開日誌時取消自動模式
+            GameObject logPanelprefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "logPanel" + ".prefab");
             GameObject logPanelObj = Instantiate(logPanelprefab, transform);
             logPanelObj.GetComponent<LogView>().SetData(showedDialogues);
         });
@@ -209,6 +211,12 @@ public class ChatWindow : MonoBehaviour
         if (Input.anyKeyDown)
         {
             tog_hide.isOn = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // 若 SetPanel 已開啟則不重複開
+            if (transform.Find("SetPanel(Clone)") == null)
+                btn_set.onClick.Invoke();
         }
     }
 }

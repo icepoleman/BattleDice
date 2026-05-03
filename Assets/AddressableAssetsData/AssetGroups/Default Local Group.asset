@@ -45,13 +45,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e6c5fe44a5292242a40c8f39f333773
-    m_Address: Assets/DiceGame_ab/Game/Sprites/player_1.png
+  - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
+    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Story1.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36c691d1e76cd2648a6189f5851d2128
-    m_Address: Assets/DiceGame_ab/Common/Prefabs/SavePanel.prefab
+  - m_GUID: 2e6c5fe44a5292242a40c8f39f333773
+    m_Address: Assets/DiceGame_ab/Game/Sprites/player_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -240,7 +240,7 @@ MonoBehaviour:
     - Dice
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e148e52ba54708a4abdbdfa2f769e607
-    m_Address: Assets/DiceGame_ab/Common/Prefabs/LoadPanel.prefab
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/SaveLoadPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -13,6 +13,9 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] List<Button> btn_girls; // 角色模型列表，根據角色顯示對應模型
     async Task Start()
     {
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ChangeSkillPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "AffinityPanel" + ".prefab");
         btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {

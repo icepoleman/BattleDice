@@ -25,9 +25,9 @@ public class RightClickCloser : MonoBehaviour
         }
 
         // ESC 放開時關閉
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasReleasedThisFrame)
+       /* if (Keyboard.current != null && Keyboard.current.escapeKey.wasReleasedThisFrame)
         {
             Destroy(gameObject);
-        }
+        }*/
     }
 }

@@ -13,6 +13,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Text text_gold;
     [SerializeField] Text text_gear;
     [SerializeField] Transform trans_mapParent;
+    [SerializeField] Scrollbar scrollbar_map;
     [SerializeField] Text text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
@@ -53,6 +54,9 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
+        EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
+        EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
+        EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
     }
     void OnDestroy()
     {
@@ -64,6 +68,9 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
+        EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
+        EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
+        EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
         // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
@@ -79,6 +86,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
+            GameDataManager.MapScrollValue = 0f;//重置地圖滾動位置
             GameDataManager.CurrentMap += 1;
             GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
             GameDataManager.CurrentStage = "0";
@@ -150,6 +158,22 @@ public class MapManager : MonoBehaviour
         GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
         Instantiate(mapShopPanel, transform);
     }
+    void OnEnterStageStory(object[] param)
+    {
+        GameDataManager.MapScrollValue = scrollbar_map.value;//記錄當前地圖滾動位置
+        string stageInfo = (string)param[0];
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
+    }
+    void OnEnterStageBattle(object[] param)
+    {
+        GameDataManager.MapScrollValue = scrollbar_map.value;//記錄當前地圖滾動位置
+        int enemyID = (int)param[0];
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, enemyID);
+    }
+    void OnEnterStageSavepoint(object[] param)
+    {
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
+    }
     //特殊道具用
     void OnGetItem(object[] param)
     {
@@ -175,6 +199,8 @@ public class MapManager : MonoBehaviour
                 currentMapInstance = Instantiate(mapPrefab, trans_mapParent);
                 currentMapInstance.transform.localPosition = Vector3.zero;
                 currentMapInstance.transform.localScale = Vector3.one;
+                scrollbar_map = currentMapInstance.GetComponentInChildren<Scrollbar>();
+                scrollbar_map.value = GameDataManager.MapScrollValue;
                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
                 Debug.Log("地圖載入並實例化成功");
             }

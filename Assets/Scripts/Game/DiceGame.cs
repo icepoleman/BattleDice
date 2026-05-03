@@ -53,8 +53,8 @@ public class DiceGame : MonoBehaviour
         gameUiView = GetComponent<GameUiView>();
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         await manaRoller.Init();
-        playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
-        enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
+       // playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
+      //  enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         playerData = GameDataManager.PlayerData;
         enemyData = new EnemyData(GameDataManager.TmpEnemyID);
 
@@ -327,8 +327,8 @@ public class DiceGame : MonoBehaviour
         GameDataManager.Gold += playerWon ? enemyData.goldReward : 0;
         GameDataManager.Gear += playerWon ? enemyData.gearReward : 0;
 
-        string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
-        winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, winText);
+        //string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
+        winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, " x  " + enemyData.goldReward, " x  " + enemyData.gearReward);
     }
     #endregion
 
@@ -522,20 +522,20 @@ public class DiceGame : MonoBehaviour
     {
         playerData.wantUseSkill = null;
     }
-    void OnBuffUse(object[] args)
+    void OnBuffUse(object[] args)//TODO 之後換成生成特效
     {
         string buffname = (string)args[0];
         bool isPlayer = (bool)args[1];
 
         //顯示提示泡泡
-        Transform bubblePos = isPlayer ? playerBuffBubblePos : enemyBuffBubblePos;
+        /*Transform bubblePos = isPlayer ? playerBuffBubblePos : enemyBuffBubblePos;
         GameObject bubble = Instantiate(buffBubblePrefab, bubblePos);
         bubble.transform.GetComponentInChildren<Text>().text = buffname;
         string str_buffAnim = isPlayer ? "BornBuff_L" : "BornBuff_R";
-        bubble.GetComponent<Animator>().Play(str_buffAnim);
+        bubble.GetComponent<Animator>().Play(str_buffAnim);*/
 
         Debug.Log($"{(isPlayer ? "Player" : "Enemy")} 使用buff {buffname}");
-        Destroy(bubble, 2f); // 假設提示泡泡持續2秒
+     //   Destroy(bubble, 2f); // 假設提示泡泡持續2秒
     }
     //敵我雙方使用技能都經過這裡
     void OnSkillUse(object[] args)

@@ -146,12 +146,12 @@ public class StageNode : MonoBehaviour
             switch (stageType)
             {
                 case StageType.Story:
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, stageInfo);
+                    EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, stageInfo);
                     break;
                 case StageType.Battle:
                     //string to int
                     Debug.Log($"進入戰鬥關卡: {stageID}{stageInfo}");
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(stageInfo));
+                    EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, int.Parse(stageInfo));
                     break;
                 case StageType.SavePoint:
                     int preparationRoomLevel = GameDataManager.SafeRoomLevel; // 根據整備室等級決定進入哪個整備室
@@ -161,8 +161,8 @@ public class StageNode : MonoBehaviour
                         GameDataManager.SafeRoomLevel = newLevel; // 更新整備室等級
                         Debug.Log($"進入整備室關卡: {stageID}，整備室等級提升至 {newLevel}");
                     }
-                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
+                    EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
                     break;
                 case StageType.Item:
                     Debug.Log($"取得道具: {stageID}{stageInfo}");
@@ -202,7 +202,7 @@ public class StageNode : MonoBehaviour
         {
             string tmpStory = GameDataManager.TmpCompletedStory;
             GameDataManager.TmpCompletedStory = "";
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, tmpStory);
+            EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
         }
     }
     /// <summary>

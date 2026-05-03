@@ -225,6 +225,7 @@ public static class SaveManager
         currentSave.playerData = GameDataManager.PlayerData.ToSaveData();
         currentSave.currentStage = GameDataManager.CurrentStage;
         currentSave.currentMap = GameDataManager.CurrentMap;
+        currentSave.mapScrollValue = GameDataManager.MapScrollValue;
         currentSave.preparationRoomStage = GameDataManager.PreparationRoomStage;
         currentSave.hasSkillIDs = GameDataManager.HasSkillIDs.ToList();
         currentSave.gold = GameDataManager.Gold;
@@ -266,6 +267,7 @@ public static class SaveManager
                 GameDataManager.PlayerData.LoadFromSaveData(currentSave.playerData);
                 GameDataManager.CurrentStage = currentSave.currentStage;
                 GameDataManager.CurrentMap = currentSave.currentMap;
+                GameDataManager.MapScrollValue = currentSave.mapScrollValue;
                 GameDataManager.HasSkillIDs = new HashSet<int>(currentSave.hasSkillIDs);
                 GameDataManager.Gold = currentSave.gold;
                 GameDataManager.Gear = currentSave.gear;

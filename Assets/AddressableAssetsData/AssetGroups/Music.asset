@@ -25,11 +25,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
-    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Story.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36fa4cf0ad199854a958f4473a4cd712
     m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Shot.mp3
     m_ReadOnly: 0

@@ -45,6 +45,8 @@ public class DialogueManager : MonoBehaviour
 
     // 文本替換的特殊暗號
     private readonly string PLAYER_NAME_TOKEN = "{PlayerName}";
+    private const string FLAG_EVENT_PREFIX = "#sym:FlagEvent";
+    private const string HINT_BUBBLE_PREFIX = "#sym:HintBubble";
 
     Animator animator;
     bool isOpen = false;
@@ -278,36 +280,7 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(flag))
         {
             Debug.Log("紀錄flag:" + flag);
-
-            if (flag.StartsWith("Spine_"))
-            {
-                await HandleSpineModel(flag);
-            }
-            else if (flag.StartsWith("SpineAnim_") && spineCharacter != null)
-            {
-                string animName = flag.Substring(10); // "SpineAnim_".Length = 10
-                spineCharacter.AnimationState.SetAnimation(0, animName, true);
-                Debug.Log("Spine模型播放動畫:" + animName);
-            }
-            else if (flag.StartsWith("SpineSpeed_") && spineCharacter != null)
-            {
-                string speedStr = flag.Substring(11); // "SpineSpeed_".Length = 11
-                if (float.TryParse(speedStr, out float speed))
-                {
-                    DOTween.To(() => spineCharacter.timeScale, x => spineCharacter.timeScale = x, speed, 0.5f);
-                    Debug.Log("Spine模型設置速度:" + speed);
-                }
-                else
-                {
-                    Debug.LogError("❌ 無法解析Spine速度:" + speedStr);
-                }
-            }
-            else if (flag.StartsWith("Affinity_"))
-            {
-                string affinity = flag.Substring(9); // "Affinity_".Length = 9
-                int affinityValue = int.Parse(affinity);
-                GameDataManager.AddAffinity(dialogueDatas[_page].Character, affinityValue);
-            }
+            await FlagEvent(flag, _page);
         }
         if (dialogueDatas[_page].CameraAnim != "")
         {
@@ -346,6 +319,181 @@ public class DialogueManager : MonoBehaviour
             //跳過無對話的行
             OnNextClick();
         }
+    }
+    private async Task FlagEvent(string flag, int page)
+    {
+        if (string.IsNullOrWhiteSpace(flag))
+        {
+            return;
+        }
+
+        Debug.Log("觸發Flag事件:" + flag);
+
+        string normalizedFlag = flag.Trim();
+        if (normalizedFlag.StartsWith(FLAG_EVENT_PREFIX))
+        {
+            normalizedFlag = normalizedFlag.Substring(FLAG_EVENT_PREFIX.Length).TrimStart(':', '|', ' ');
+        }
+
+        string[] commands = normalizedFlag.Split('|');
+        foreach (string rawCommand in commands)
+        {
+            string command = rawCommand.Trim();
+            if (string.IsNullOrEmpty(command))
+            {
+                continue;
+            }
+
+            if (command.StartsWith("Spine_"))
+            {
+                await HandleSpineModel(command);
+                continue;
+            }
+
+            if (command.StartsWith("SpineAnim_"))
+            {
+                if (spineCharacter != null)
+                {
+                    string animName = command.Substring("SpineAnim_".Length);
+                    spineCharacter.AnimationState.SetAnimation(0, animName, true);
+                    Debug.Log("Spine模型播放動畫:" + animName);
+                }
+                continue;
+            }
+
+            if (command.StartsWith("SpineSpeed_"))
+            {
+                string speedStr = command.Substring("SpineSpeed_".Length);
+                if (float.TryParse(speedStr, out float speed))
+                {
+                    DOTween.To(() => spineCharacter.timeScale, x => spineCharacter.timeScale = x, speed, 0.5f);
+                    Debug.Log("Spine模型設置速度:" + speed);
+                }
+                continue;
+            }
+
+            if (command.StartsWith("Affinity_"))
+            {
+                string affinity = command.Substring("Affinity_".Length);
+                if (int.TryParse(affinity, out int affinityValue))
+                {
+                    GameDataManager.AddAffinity(dialogueDatas[page].Character, affinityValue);
+                }
+                continue;
+            }
+
+            if (command.StartsWith("MoneyAdd_"))
+            {
+                if (TryParseCommandValue(command, "MoneyAdd_", out int amount))
+                {
+                    GameDataManager.Gold += amount;
+                    await UIManager.ShowHintBubble($"獲得 {amount} 金幣");
+                }
+                continue;
+            }
+
+            if (command.StartsWith("MoneyDiff_"))
+            {
+                if (TryParseCommandValue(command, "MoneyDiff_", out int amount))
+                {
+                    int before = GameDataManager.Gold;
+                    GameDataManager.Gold = Mathf.Max(0, GameDataManager.Gold - amount);
+                    int diff = before - GameDataManager.Gold;
+                    await UIManager.ShowHintBubble($"失去 {diff} 金幣");
+                }
+                continue;
+            }
+
+            if (command.StartsWith("GearAdd_"))
+            {
+                if (TryParseCommandValue(command, "GearAdd_", out int amount))
+                {
+                    GameDataManager.Gear += amount;
+                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGear", amount));
+                }
+                continue;
+            }
+
+            if (command.StartsWith("GearDiff_"))
+            {
+                if (TryParseCommandValue(command, "GearDiff_", out int amount))
+                {
+                    int before = GameDataManager.Gear;
+                    GameDataManager.Gear = Mathf.Max(0, GameDataManager.Gear - amount);
+                    int diff = before - GameDataManager.Gear;
+                    await UIManager.ShowHintBubble($"失去 {diff} 個齒輪");
+                }
+                continue;
+            }
+
+            if (command.StartsWith("BloodAdd_"))
+            {
+                if (TryParseCommandValue(command, "BloodAdd_", out int amount))
+                {
+                    float before = GameDataManager.PlayerData.currentBlood;
+                    GameDataManager.PlayerData.currentBlood = Mathf.Min(
+                        GameDataManager.PlayerData.maxBlood,
+                        GameDataManager.PlayerData.currentBlood + amount
+                    );
+                    int diff = Mathf.RoundToInt(GameDataManager.PlayerData.currentBlood - before);
+                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_RecoverHealth", diff));
+                }
+                continue;
+            }
+
+            if (command.StartsWith("BloodDiff_"))
+            {
+                if (TryParseCommandValue(command, "BloodDiff_", out int amount))
+                {
+                    float before = GameDataManager.PlayerData.currentBlood;
+                    // 劇情 flag 扣血保底 1 滴，避免直接死亡
+                    GameDataManager.PlayerData.currentBlood = Mathf.Max(1f, GameDataManager.PlayerData.currentBlood - amount);
+                    int diff = Mathf.RoundToInt(before - GameDataManager.PlayerData.currentBlood);
+                    await UIManager.ShowHintBubble($"失去 {diff} 點生命");
+                }
+                continue;
+            }
+
+            if (command.StartsWith("playerskill_"))
+            {
+                if (TryParseCommandValue(command, "playerskill_", out int skillId))
+                {
+                    if (!GameDataManager.HasSkillIDs.Contains(skillId))
+                    {
+                        GameDataManager.HasSkillIDs.Add(skillId);
+                        SkillConfigData skill = SkillDatabase.GetSkillConfig(skillId);
+                        string skillName = string.IsNullOrEmpty(skill.skillName) ? skillId.ToString() : skill.skillName;
+                        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetNewSkill", skillName));
+                    }
+                }
+                continue;
+            }
+
+            if (command.StartsWith(HINT_BUBBLE_PREFIX))
+            {
+                string bubbleMessage = command.Substring(HINT_BUBBLE_PREFIX.Length).TrimStart(':', ' ');
+                if (!string.IsNullOrEmpty(bubbleMessage))
+                {
+                    await UIManager.ShowHintBubble(bubbleMessage);
+                }
+                continue;
+            }
+
+            Debug.LogWarning("未處理的Flag事件: " + command);
+        }
+    }
+
+    private bool TryParseCommandValue(string command, string prefix, out int value)
+    {
+        string valueText = command.Substring(prefix.Length);
+        if (int.TryParse(valueText, out value))
+        {
+            return true;
+        }
+
+        Debug.LogWarning($"Flag指令數值解析失敗: {command}");
+        value = 0;
+        return false;
     }
     //    
     // 替換劇情玩家名字的方法
