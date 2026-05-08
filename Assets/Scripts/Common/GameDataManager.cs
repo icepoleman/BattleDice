@@ -31,10 +31,11 @@ public static class GameDataManager
     public static int TmpEnemyID { get; set; } = 0;
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
-    public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static HashSet<string> unlocked_H_Stages { get; set; } = new HashSet<string>();//已解鎖 H 關卡ID
+    public static int SocialPoint { get; set; } = 0;//社交點數 用於解鎖好感度關卡
+    public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
-    public static int SafeRoomLevel { get; set; } = 0;//整備室等級，目前用來判斷是否開啟商店等功能
+    public static int SafeRoomLevel { get; set; } = 0;//整備室等級，0 女獄卒 1 女巫 2 狼少女 3 偶像
 
     public static bool DreamMode { get; set; } = false;//回看模式
 
@@ -84,7 +85,6 @@ public static class GameDataManager
                 return -1;
         }
     }
-
     //記錄解鎖好感度關卡 H關卡共用
     public static void UnlockAffinityStage(string stageId)
     {

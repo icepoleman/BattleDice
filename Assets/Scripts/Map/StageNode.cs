@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,9 +45,12 @@ public class StageNode : MonoBehaviour
     // 防連點
     private bool isProcessing = false;
 
-    void GoNextStage()
+    async void GoNextStage()
     {
         SetState(StageState.Locked);
+        EventCenter.Dispatch(MapEvent.EVENT_HIDE_OTHER_STAGE);//隱藏其他關卡
+
+        await Task.Delay(500); // 等待動畫或過場效果
         if (nextStageNodes.Count > 0)
         {
             foreach (var node in nextStageNodes)
@@ -59,15 +64,18 @@ public class StageNode : MonoBehaviour
             EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
         }
     }
-
+    bool isOpen;
     void Awake()
     {
+        if(isOpen) return;
+        isOpen = true;
         stageID = gameObject.name;
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
         SetState(StageState.Locked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
+        EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
         // 繪製連線到下一個節點
         DrawLinesToNextNodes();
@@ -76,6 +84,11 @@ public class StageNode : MonoBehaviour
     void OnDestroy()
     {
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
+        EventCenter.RemoveListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
+    }
+    void OnHideOtherStage(object[] param)
+    {
+        SetState(StageState.Locked);
     }
     public void OnOpenNextStageNode(object[] param)
     {
@@ -109,10 +122,10 @@ public class StageNode : MonoBehaviour
     {
         // 設定按鈕互動性
         nodeButton.interactable = currentState == StageState.Unlocked;
-        if (stageType == StageType.SavePoint && currentState != StageState.Locked)
+        /*if (stageType == StageType.SavePoint && currentState != StageState.Locked)
         {
             nodeButton.interactable = true; //準備室關卡永遠可點
-        }
+        }*/
 
         // 根據狀態顯示對應視覺
         switch (currentState)
@@ -155,6 +168,7 @@ public class StageNode : MonoBehaviour
                     break;
                 case StageType.SavePoint:
                     int preparationRoomLevel = GameDataManager.SafeRoomLevel; // 根據整備室等級決定進入哪個整備室
+                    GameDataManager.SocialPoint += 1;//每次進入整備室增加社交點數
                     int newLevel = int.Parse(stageInfo);
                     if (preparationRoomLevel < newLevel)
                     {

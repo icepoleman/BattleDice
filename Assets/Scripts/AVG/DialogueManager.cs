@@ -52,6 +52,8 @@ public class DialogueManager : MonoBehaviour
     bool isOpen = false;
 
     SkeletonAnimation spineCharacter;
+
+    bool canSkip = false;
     async void Start()
     {
         if (isOpen) return;
@@ -61,7 +63,13 @@ public class DialogueManager : MonoBehaviour
         animator = GetComponent<Animator>();
         AddEvent();
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
+
+        await Task.Delay(1000);
+        canSkip = true;
     }
+    bool ctrlPressed;
+    bool shouldFastForward;
+
     void Update()
     {
         // 檢測 ESC 鍵跳過劇情
@@ -83,10 +91,10 @@ public class DialogueManager : MonoBehaviour
          }*/
 
         // 檢測 CTRL 鍵或 Skip 按鈕快轉
-        bool ctrlPressed = Input.GetKey(KeyCode.LeftControl);
-        bool shouldFastForward = (ctrlPressed || chatWindow.tog_skip.isOn) && !onChoose && !isOver;
+        ctrlPressed = Input.GetKey(KeyCode.LeftControl);
+        shouldFastForward = (ctrlPressed || chatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
-        if (shouldFastForward)
+        if (shouldFastForward && canSkip)
         {
             if (!isFastForwarding)
             {
@@ -724,7 +732,7 @@ public class DialogueManager : MonoBehaviour
             int index = i;
             string choiceText = btnText[i];
             GameObject btn = Instantiate(chooseBtnPrefab, trans_chooseBoxParent);
-            btn.GetComponentInChildren<Text>().text = choiceText;
+            btn.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = choiceText;
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
                 EventCenter.Dispatch(AdvEvent.EVENT_CLICK_CHOICE, targetTag[index], choiceText);

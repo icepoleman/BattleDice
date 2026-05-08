@@ -11,11 +11,11 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Button btn_shop;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] List<Button> btn_girls; // 角色模型列表，根據角色顯示對應模型
-    async Task Start()
+    [SerializeField] TMPro.TextMeshProUGUI txt_socialPoint; // 社交點數顯示
+
+    void Start()
     {
-        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
-        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ChangeSkillPanel" + ".prefab");
-        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "AffinityPanel" + ".prefab");
+        PreLoadAssets();
         btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {
@@ -43,6 +43,13 @@ public class PreparationRoomManager : MonoBehaviour
         });
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
         OpenLevel(GameDataManager.SafeRoomLevel);
+        txt_socialPoint.text = LanguageManager.GetFormat("T_SocialPoint",GameDataManager.SocialPoint);
+    }
+    void PreLoadAssets()
+    {
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ChangeSkillPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "AffinityPanel" + ".prefab");
     }
     void OpenLevel(int level)
     {

@@ -20,7 +20,6 @@ public class MapManager : MonoBehaviour
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;
-    private GameObject clearMapPrefab;
     //List<MapData> mapDatas = new List<MapData>();//關卡資料
     async void Start()
     {
@@ -42,7 +41,7 @@ public class MapManager : MonoBehaviour
         {
             await UIManager.ShowCommonPanel("EditPanel");
         });
-        clearMapPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
     }
     void AddEvent()
     {
@@ -77,7 +76,7 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-        GameObject _clearMap = Instantiate(clearMapPrefab, transform);
+        GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
         UnloadMapPrefab();
         await Task.Delay(100);
         if (GameDataManager.CurrentMap == GameDataManager.EndMap)

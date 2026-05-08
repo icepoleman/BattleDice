@@ -19,6 +19,7 @@ public class AffinityPanel : MonoBehaviour
     [SerializeField] private Button btn_h_a;
     [SerializeField] private Button btn_h_b;
     [SerializeField] private GameObject[] obj_h_lock;
+    [SerializeField] private Button btn_loveEvent;
 
     string roleStr;
     int lastChatIndex = -1;
@@ -27,7 +28,53 @@ public class AffinityPanel : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameDataManager.SocialPoint = 1;
         GameDataManager.DreamMode = true; // 開啟回看模式測試
+        btn_loveEvent.onClick.AddListener(() =>
+        {
+            if (GameDataManager.SocialPoint > 0)
+            {
+                RoleEventData eventDataList = AffinityEventConfig.GetRoleEventData(roleStr);
+                string nextSpEvent = GetNextUnseenSpEvent(eventDataList);
+                if (!string.IsNullOrEmpty(nextSpEvent))
+                {
+                    ShowSpAffinityEvent(nextSpEvent);
+                }
+                else
+                {
+                    UIManager.ShowHintBubble(LanguageManager.GetText("T_SpEvent_ReedALL"));
+                }
+            }
+            else
+            {
+                UIManager.ShowHintBubble(LanguageManager.GetText("T_SocialPoint_notEnough"));
+            }
+        });
+    }
+
+    string GetNextUnseenSpEvent(RoleEventData eventDataList)
+    {
+        if (eventDataList == null || eventDataList.allSpEventNames == null)
+        {
+            return null;
+        }
+
+        foreach (string eventName in eventDataList.allSpEventNames)
+        {
+            if (!GameDataManager.unlockedAffinityStages.Contains(eventName))
+            {
+                return eventName;
+            }
+        }
+
+        return null;
+    }
+
+    void ShowSpAffinityEvent(string _roleEventName)
+    {
+        GameDataManager.SocialPoint -= 1;
+        GameDataManager.UnlockAffinityStage(_roleEventName);
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, _roleEventName);//解鎖好感度事件
     }
     void OnDestroy()
     {

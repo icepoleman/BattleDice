@@ -13,7 +13,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_setting;
     [SerializeField] Button btn_test;
     [SerializeField] Text text_TestMap;
-
+    void Awake()
+    {
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SaveLoadPanel" + ".prefab");
+        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
+    }
     async void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);

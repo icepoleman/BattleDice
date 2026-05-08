@@ -72,6 +72,7 @@ public class GameUiView : MonoBehaviour
         enemySprites = new Sprite[] { enemyIdle, enemyHurt, enemyAttack };
         img_enemy.sprite = enemySprites[0];
         img_enemy.SetNativeSize();
+        img_enemy.transform.localPosition = new Vector3(img_enemy.transform.localPosition.x, GetEnemyYPosition(enemyData.enemyId), 1);
         Sprite playerIdle = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_0.png");
         Sprite playerHurt = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_1.png");
         Sprite playerAttack = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_2.png");
@@ -83,6 +84,15 @@ public class GameUiView : MonoBehaviour
         UpdateNames(LanguageManager.GetText("T_GirlName"), enemyData.enemyName);
         BornEnemySkillCards(enemyData.skillData);
         anim.Play("enterPlace");
+    }
+    private float GetEnemyYPosition(int enemyId)
+    {
+        // 根據敵人ID返回不同的Y位置，這裡只是示例，你可以根據實際需求調整
+        switch (enemyId)
+        {
+            case 10: return 228f;
+            default: return 158f;
+        }
     }
     public void UpdateNames(string playerName, string enemyName)
     {
