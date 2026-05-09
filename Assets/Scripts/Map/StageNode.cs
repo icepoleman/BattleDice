@@ -67,7 +67,7 @@ public class StageNode : MonoBehaviour
     bool isOpen;
     void Awake()
     {
-        if(isOpen) return;
+        if (isOpen) return;
         isOpen = true;
         stageID = gameObject.name;
         stageImage = GetComponent<Image>();
@@ -154,7 +154,7 @@ public class StageNode : MonoBehaviour
             isProcessing = true;
 
             GameDataManager.TmpCompletedStory = completedStory;
-            if(!GameDataManager.TestMode)
+            if (!GameDataManager.TestMode)
                 GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
@@ -167,13 +167,11 @@ public class StageNode : MonoBehaviour
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, int.Parse(stageInfo));
                     break;
                 case StageType.SavePoint:
-                    int preparationRoomLevel = GameDataManager.SafeRoomLevel; // 根據整備室等級決定進入哪個整備室
                     GameDataManager.SocialPoint += 1;//每次進入整備室增加社交點數
-                    int newLevel = int.Parse(stageInfo);
-                    if (preparationRoomLevel < newLevel)
+                    if (stageInfo != "")
                     {
-                        GameDataManager.SafeRoomLevel = newLevel; // 更新整備室等級
-                        Debug.Log($"進入整備室關卡: {stageID}，整備室等級提升至 {newLevel}");
+                        GameDataManager.SafeRoomLevel = int.Parse(stageInfo);
+                        Debug.Log($"進入整備室關卡: {stageID}，整備室等級提升至 {stageInfo}");
                     }
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);

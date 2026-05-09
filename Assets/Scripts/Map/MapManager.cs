@@ -5,18 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading.Tasks;
+using TMPro;
 
 public class MapManager : MonoBehaviour
 {
     [SerializeField] Slider slider_blood;
-    [SerializeField] Text slider_blood_text;
-    [SerializeField] Text text_gold;
-    [SerializeField] Text text_gear;
+    [SerializeField] TextMeshProUGUI slider_blood_text;
+    [SerializeField] TextMeshProUGUI text_gold;
+    [SerializeField] TextMeshProUGUI text_gear;
     [SerializeField] Transform trans_mapParent;
-    [SerializeField] Scrollbar scrollbar_map;
-    [SerializeField] Text text_stageName;
+    [SerializeField] TextMeshProUGUI text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
+
+    private Scrollbar scrollbar_map;
 
     private AsyncOperationHandle<GameObject> mapHandle;
     private GameObject currentMapInstance;

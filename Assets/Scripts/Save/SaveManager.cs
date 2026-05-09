@@ -237,7 +237,7 @@ public static class SaveManager
         currentSave.powerUpLevel_KeepDiceCount = GameDataManager.GetPowerUpLevel(PowerUpType.KeepDiceCount);
         currentSave.powerUpLevel_MaxRollCount = GameDataManager.GetPowerUpLevel(PowerUpType.MaxRollCount);
         currentSave.unlockedAffinityStages = GameDataManager.unlockedAffinityStages.ToList();
-        currentSave.charactersAffinity = GameDataManager.charactersAffinity;
+        currentSave.charactersAffinity = GetSafeAffinityArray(GameDataManager.charactersAffinity);
         currentSave.safeRoomLevel = GameDataManager.SafeRoomLevel;
         try
         {
@@ -278,8 +278,8 @@ public static class SaveManager
                 GameDataManager.SetPowerUpLevel(PowerUpType.DiceCount, currentSave.powerUpLevel_DiceCount);
                 GameDataManager.SetPowerUpLevel(PowerUpType.KeepDiceCount, currentSave.powerUpLevel_KeepDiceCount);
                 GameDataManager.SetPowerUpLevel(PowerUpType.MaxRollCount, currentSave.powerUpLevel_MaxRollCount);
-                GameDataManager.unlockedAffinityStages = new HashSet<string>(currentSave.unlockedAffinityStages);
-                GameDataManager.charactersAffinity = currentSave.charactersAffinity;
+                GameDataManager.unlockedAffinityStages = new HashSet<string>(currentSave.unlockedAffinityStages ?? new List<string>());
+                GameDataManager.charactersAffinity = GetSafeAffinityArray(currentSave.charactersAffinity);
                 GameDataManager.SafeRoomLevel = currentSave.safeRoomLevel; 
                 
                 Debug.Log($"{saveType}讀檔成功");
@@ -296,6 +296,20 @@ public static class SaveManager
             Debug.LogError($"{saveType}讀檔失敗: " + e.Message);
             return false;
         }
+    }
+
+    private static int[] GetSafeAffinityArray(int[] source)
+    {
+        const int affinityRoleCount = 4;
+        int[] result = new int[affinityRoleCount];
+        if (source == null)
+        {
+            return result;
+        }
+
+        int copyLength = Mathf.Min(source.Length, affinityRoleCount);
+        System.Array.Copy(source, result, copyLength);
+        return result;
     }
 
     // ==================== 全域解鎖資料（所有存檔共用） ====================

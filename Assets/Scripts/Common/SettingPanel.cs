@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.Burst.Intrinsics;
 public class SettingPanel : MonoBehaviour
 {
     [Header("音量滑桿")]
@@ -82,7 +83,11 @@ public class SettingPanel : MonoBehaviour
         });
         btn_exit.onClick.AddListener(() =>
         {
-            Application.Quit();
+            UIManager.ShowConfirmPanel(
+                LanguageManager.GetText("T_Confirm_ExitGame"),
+                () => { Application.Quit(); },
+                () => { }
+            );
         });
         masterVolumeSlider.value = AudioManager.Instance.MasterVolume;
         bgmVolumeSlider.value = AudioManager.Instance.BGMVolume;
@@ -182,8 +187,12 @@ public class SettingPanel : MonoBehaviour
 
         // 讀取已儲存的螢幕模式
         int savedMode = PlayerPrefs.GetInt(SCREEN_MODE_KEY, 0);
+        savedMode = Mathf.Clamp(savedMode, 0, 2);
         dropdown_displayMode.value = savedMode;
         dropdown_displayMode.RefreshShownValue();
+
+        // 初始化時同步套用已儲存的螢幕模式
+        ApplyScreenMode(savedMode);
     }
 
     /// <summary>
@@ -313,9 +322,15 @@ public class SettingPanel : MonoBehaviour
     /// </summary>
     private void OnScreenModeChanged(int index)
     {
+        index = Mathf.Clamp(index, 0, 2);
         PlayerPrefs.SetInt(SCREEN_MODE_KEY, index);
         PlayerPrefs.Save();
 
+        ApplyScreenMode(index);
+    }
+
+    private void ApplyScreenMode(int index)
+    {
         switch (index)
         {
             case 0: // 全螢幕

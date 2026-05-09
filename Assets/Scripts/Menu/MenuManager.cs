@@ -81,6 +81,9 @@ public class MenuManager : MonoBehaviour
         GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
+        GameDataManager.charactersAffinity = new int[] { 0, 0, 0, 0 };//角色親密度歸零
+        GameDataManager.SocialPoint = 0;//社交點數歸零
+        GameDataManager.unlockedAffinityStages.Clear();//解鎖的親密度關卡
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");
         Debug.Log("Start Game Clicked");
     }
