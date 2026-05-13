@@ -684,6 +684,22 @@ PrefabInstance:
       propertyPath: img_cg2
       value: 
       objectReference: {fileID: 2113276519}
+    - target: {fileID: 4373038309898103970, guid: 04c32f21a506e884eaf66b3a41c48892, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121279398993134435, guid: 04c32f21a506e884eaf66b3a41c48892, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121279398993134435, guid: 04c32f21a506e884eaf66b3a41c48892, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121279398993134435, guid: 04c32f21a506e884eaf66b3a41c48892, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -425
+      objectReference: {fileID: 0}
     - target: {fileID: 5456661229448791598, guid: 04c32f21a506e884eaf66b3a41c48892, type: 3}
       propertyPath: m_Camera
       value: 

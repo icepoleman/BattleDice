@@ -28,7 +28,6 @@ public class AffinityPanel : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameDataManager.SocialPoint = 1;
         GameDataManager.DreamMode = true; // 開啟回看模式測試
         btn_loveEvent.onClick.AddListener(() =>
         {

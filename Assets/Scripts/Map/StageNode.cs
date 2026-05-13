@@ -73,7 +73,7 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-        SetState(StageState.Locked);
+        SetState(StageState.Unlocked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
@@ -88,7 +88,7 @@ public class StageNode : MonoBehaviour
     }
     void OnHideOtherStage(object[] param)
     {
-        SetState(StageState.Locked);
+        SetState(StageState.Unlocked);
     }
     public void OnOpenNextStageNode(object[] param)
     {
@@ -210,12 +210,12 @@ public class StageNode : MonoBehaviour
                     break;
             }
         }
-        if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
+       /* if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
         {
             string tmpStory = GameDataManager.TmpCompletedStory;
             GameDataManager.TmpCompletedStory = "";
             EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
-        }
+        }*/
     }
     /// <summary>
     /// 繪製連線到所有 nextStageNodes

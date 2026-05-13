@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] Button btn_newGame;
-    [SerializeField] Button btn_exitGame;
     [SerializeField] Button btn_continue;
     [SerializeField] Button btn_setting;
+    [SerializeField] Button btn_creator;
+    [SerializeField] Button btn_exitGame;
+
     [SerializeField] Button btn_test;
     [SerializeField] Text text_TestMap;
     void Awake()
@@ -34,14 +37,46 @@ public class MenuManager : MonoBehaviour
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
+        PlayButtonsEnterAnimation();
+
         //TEST
         BuffDatabase.LoadFromCSV();
         btn_test.onClick.AddListener(OnTestClicked);
 
         AudioManager.Instance.PlayBGM("Bgm_Menu");
 
-       // Assets/DiceGame_ab/Music/BGM/
+        // Assets/DiceGame_ab/Music/BGM/
     }
+
+    void PlayButtonsEnterAnimation()
+    {
+        const float targetLocalX = 0f;
+        const float moveDuration = 0.35f;
+        const float enterInterval = 0.1f;
+
+        // Keep the current declaration order; btn_exitGame remains the last one.
+        List<Button> orderedButtons = new List<Button>
+        {
+            btn_newGame,
+            btn_continue,
+            btn_setting,
+            btn_creator,
+            btn_exitGame
+        };
+
+        Sequence sequence = DOTween.Sequence();
+        for (int i = 0; i < orderedButtons.Count; i++)
+        {
+            Button button = orderedButtons[i];
+            if (button == null)
+            {
+                continue;
+            }
+
+            sequence.Insert(i * enterInterval, button.transform.DOLocalMoveX(targetLocalX, moveDuration).SetEase(Ease.OutCubic));
+        }
+    }
+
     void OnTestClicked()
     {
         StateManager.Instance.OpenTestMode();

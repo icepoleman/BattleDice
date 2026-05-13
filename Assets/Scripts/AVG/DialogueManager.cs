@@ -36,7 +36,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private ChatWindow chatWindow;
     [Header("選項按鈕")]
     [SerializeField] Transform trans_chooseBoxParent;
-    GameObject chooseBtnPrefab;
 
     private List<string> jumpTo = new List<string>();
     private string pendingJumpTag = null; // 等待跳轉的標籤（選項文字顯示後跳轉）
@@ -53,19 +52,28 @@ public class DialogueManager : MonoBehaviour
 
     SkeletonAnimation spineCharacter;
 
+    //字典 紀錄常用名稱
+    private Dictionary<string, string> commonNames = new Dictionary<string, string>();
+
     bool canSkip = false;
     async void Start()
     {
         if (isOpen) return;
         isOpen = true;
         chatWindow.SetDatalogueManager(this);
-        chooseBtnPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
+        await AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
         animator = GetComponent<Animator>();
         AddEvent();
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
 
         await Task.Delay(1000);
         canSkip = true;
+
+        commonNames["Hero"] = GetPlayerName();
+        commonNames["JailerGirl"] = LanguageManager.GetText("T_JailerGirl");
+        commonNames["WolfGirl"] = LanguageManager.GetText("T_WolfGirl");
+        commonNames["Witch"] = LanguageManager.GetText("T_Witch");
+        commonNames["Warden"] = LanguageManager.GetText("T_Warden");
     }
     bool ctrlPressed;
     bool shouldFastForward;
@@ -315,12 +323,16 @@ public class DialogueManager : MonoBehaviour
         {
             // 替換文本中的玩家名字
             string processedDialogue = ReplaceDialoguePlayerName(dialogueDatas[pageIndex].Dialogue);
-            if (dialogueDatas[pageIndex].Character == "Hero")
-                dialogueDatas[pageIndex].Character = GetPlayerName();
+            string characterName = dialogueDatas[pageIndex].Character;
+            if (commonNames.ContainsKey(characterName))
+            {
+                characterName = commonNames[characterName];
+            }
             else if (dialogueDatas[pageIndex].Character != "Choose" && dialogueDatas[pageIndex].Character != "")
-                dialogueDatas[pageIndex].Character = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character);
-
-            chatWindow.ShowDialogue(dialogueDatas[pageIndex].Character, processedDialogue);
+                characterName = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character);
+            else
+                characterName = "";
+            chatWindow.ShowDialogue(characterName, processedDialogue);
         }
         else
         {
@@ -721,16 +733,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (chooseBtnPrefab == null)
-        {
-            Debug.LogError("❌ chooseBtnPrefab 尚未設定");
-            return;
-        }
-
         for (int i = 0; i < btnText.Length; i++)
         {
             int index = i;
             string choiceText = btnText[i];
+            GameObject chooseBtnPrefab = AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab").Result;
             GameObject btn = Instantiate(chooseBtnPrefab, trans_chooseBoxParent);
             btn.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = choiceText;
             btn.GetComponent<Button>().onClick.AddListener(() =>

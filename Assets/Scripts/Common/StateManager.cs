@@ -249,7 +249,7 @@ public class StateManager : MonoBehaviour
     void OnBackPreviousScene(object[] args)
     {
         Debug.Log($"StateManager: 返回上一個場景 ({previousState})");
-        if (previousState == GameState.MainMenu)
+        if (previousState == GameState.MainMenu||previousState == GameState.DiceGame)
         {
             previousState = GameState.Map; // 返回地圖而不是主選單
         }

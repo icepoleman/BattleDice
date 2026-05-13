@@ -1,7 +1,7 @@
 Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 Prologue1_4,Hero,這個是?,,,,,,,,bg_jail,,
 ,,眼前有一些機械零件在眼前。,,,,,,,,,,
-,Hero,就是這個！有這個就能繼續升級裝置了！,,,,,,,1,,,
+,Hero,就是這個！有這個就能繼續升級裝置了！,,,,,,,GearAdd_5,,,
 ,,雫探頭靠了過來。好像有點香香的,,,,,,,,,,
 ,JailerGirl,這個監獄有很多，但都丟在路邊沒人清理。,normal,,,,,,,,,
 ,Hero,是這樣的嗎?,,,,,,,,,,
