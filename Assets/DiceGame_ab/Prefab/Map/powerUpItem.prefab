@@ -439,10 +439,10 @@ RectTransform:
   m_LocalScale: {x: 0.0069399998, y: 0.0069399998, z: 0.0069399998}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3517685224527764585}
   - {fileID: 597608447200602460}
   - {fileID: 2821704278166429379}
   - {fileID: 3205709655410829942}
+  - {fileID: 3517685224527764585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.28627452, g: 1, b: 0.9254902, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

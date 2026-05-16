@@ -78,7 +78,7 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-        GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
+       // GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
         UnloadMapPrefab();
         await Task.Delay(100);
         if (GameDataManager.CurrentMap == GameDataManager.EndMap)
@@ -94,7 +94,7 @@ public class MapManager : MonoBehaviour
             GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;//回滿血
             LoadMapPrefab();
             await Task.Delay(2000);
-            Destroy(_clearMap);
+            //Destroy(_clearMap);
         }
     }
     async void OnRecoverHealth(object[] param)

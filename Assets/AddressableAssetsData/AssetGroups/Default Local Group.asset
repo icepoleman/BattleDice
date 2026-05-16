@@ -60,6 +60,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 166311193f9cef849ae04a046d530c3c
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/duck1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 171dda363e9efd94ca9bc63e38ca9658
     m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Blood_01.prefab
     m_ReadOnly: 0
@@ -238,6 +243,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c722a74daad30441b29192106d9397d
     m_Address: Assets/DiceGame_ab/H_Data/Prefabs/Spine_WitchH_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 836a16a80ed346e478107a6e9a63ba2c
+    m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_witch_H.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -450,6 +460,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dice
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9c42a86672f89c4bbf3db1ccd676856
+    m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/cookduck.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ec9688d29e3614248b072966c972241e
     m_Address: Assets/DiceGame_ab/Prefab/Game/skillCard.prefab

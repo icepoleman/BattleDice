@@ -74,6 +74,7 @@ public class AffinityPanel : MonoBehaviour
         GameDataManager.SocialPoint -= 1;
         GameDataManager.UnlockAffinityStage(_roleEventName);
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, _roleEventName);//解鎖好感度事件
+        Destroy(gameObject);
     }
     void OnDestroy()
     {

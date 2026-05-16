@@ -23,7 +23,7 @@ public class PortraitStageManager : MonoBehaviour
         {
             //沒有這個角色 創建一個新的
             GameObject roleViewObj = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "RolePrefab" + ".prefab");
-            GameObject roleObj = Instantiate(roleViewObj,transform);
+            GameObject roleObj = Instantiate(roleViewObj, transform);
             roleObj.name = characterName;
             roleObj.transform.localScale = Vector3.one;
             roleObj.transform.localPosition = Vector3.zero;
@@ -38,6 +38,8 @@ public class PortraitStageManager : MonoBehaviour
             // 立即計算並設置正確的初始位置（無動畫）
             Vector2 initialPos = CalculateInitialPosition(characterName, portraitPos);
             roleView.SetPosition(initialPos);
+            // 根據角色名稱設置大小
+            roleView.SetSize(CalculateInitialSize(characterName));
 
             Debug.Log($"新角色 {characterName} 初始位置設置為: {initialPos}");
         }
@@ -214,6 +216,18 @@ public class PortraitStageManager : MonoBehaviour
         {
             float offsetX = CalculateOffsetX(newCharacterIndex, characterCount, spacing);
             return new Vector2(baseX + offsetX, baseY);
+        }
+    }
+    Vector2 CalculateInitialSize(string characterName)
+    {
+        switch (characterName)
+        {
+            case "duck1":
+                return new Vector2(0.7f, 0.7f);
+            case "cookduck":
+                return new Vector2(0.7f, 0.7f);
+            default:
+                return Vector2.one;
         }
     }
 }

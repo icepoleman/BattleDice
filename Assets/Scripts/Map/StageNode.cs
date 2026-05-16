@@ -34,7 +34,7 @@ public class StageNode : MonoBehaviour
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
 
     [Header("連線設定")]
-    [SerializeField] float lineWidth = 4f;
+    [SerializeField] float lineWidth = 65f;
     [SerializeField] Color lineColor = Color.white;
 
     Image stageImage;
@@ -258,7 +258,8 @@ public class StageNode : MonoBehaviour
         lineRect.anchoredPosition = (fromPos + toPos) / 2f;
 
         // 設置線條大小
-        lineRect.sizeDelta = new Vector2(distance, lineWidth);
+        float thickLineWidth = Mathf.Max(lineWidth, 6f);
+        lineRect.sizeDelta = new Vector2(distance, thickLineWidth);
 
         // 設置旋轉
         lineRect.localRotation = Quaternion.Euler(0, 0, angle);

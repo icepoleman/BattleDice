@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f0e758437cae2ea479be661376689649
+guid: d5aef5b967cdc95439373adfce1a241d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1861763409306132244
-    second: Takara_0
+      213: -2315193151578540282
+    second: map story_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Takara_0
+      name: map story_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 8
-        width: 295
-        height: 287
+        x: 9
+        y: 9
+        width: 304
+        height: 273
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce0ec741b00b926e0800000000000000
-      internalID: -1861763409306132244
+      spriteID: 6077eb55818cedfd0800000000000000
+      internalID: -2315193151578540282
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Takara_0: -1861763409306132244
+      map story_0: -2315193151578540282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

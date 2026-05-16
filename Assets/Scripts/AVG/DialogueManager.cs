@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
+using NUnit.Framework;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -263,6 +264,8 @@ public class DialogueManager : MonoBehaviour
             chatWindow.HideWindow();
         }
     }
+    HashSet<string> girlNames = new HashSet<string>() { "JailerGirl", "WolfGirl", "Witch", "Idol", "Warden" };
+    HashSet<string> enemyNames = new HashSet<string>() { "duck1", "cookduck"};
     private async void CheckDialogueCmd(int _page)
     {
         if (dialogueDatas[_page].Chapter != "")
@@ -281,8 +284,8 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("更換背景:" + dialogueDatas[_page].Background);
             await CrossFadeBackground(dialogueDatas[_page].Background);
         }
-        //更換立繪
-        if (dialogueDatas[_page].Portrait != "" && dialogueDatas[_page].Character != "Hero" && dialogueDatas[_page].Character != "Choose")
+        //更換女角色立繪
+        if (girlNames.Contains(dialogueDatas[_page].Character) && dialogueDatas[_page].Portrait != "")
         {
             // 先載入角色立繪（如果尚未載入）
             await PortraitManager.LoadRoleIfNeeded(dialogueDatas[_page].Character);
@@ -291,6 +294,17 @@ public class DialogueManager : MonoBehaviour
             stageManager.SetCharacter(dialogueDatas[_page].Character, _sprite, dialogueDatas[_page].Anim, dialogueDatas[_page].Pos);
             Debug.Log("更換立繪:" + dialogueDatas[_page].Portrait);
         }
+        //更換敵人立繪
+        if (enemyNames.Contains(dialogueDatas[_page].Character) && dialogueDatas[_page].Portrait != "")
+        {
+            // 先載入敵人立繪（如果尚未載入）
+            await PortraitManager.LoadMonster(dialogueDatas[_page].Character, ABconfig.AVG_CHAR_Enemy + dialogueDatas[_page].Character + ".png");
+
+            Sprite _sprite = PortraitManager.GetMonster(dialogueDatas[_page].Character);
+            stageManager.SetCharacter(dialogueDatas[_page].Character, _sprite, dialogueDatas[_page].Anim, dialogueDatas[_page].Pos);
+            Debug.Log("更換敵人立繪:" + dialogueDatas[_page].Portrait);
+        }
+
         //紀錄flag
         string flag = dialogueDatas[_page].Flag;
         if (!string.IsNullOrEmpty(flag))

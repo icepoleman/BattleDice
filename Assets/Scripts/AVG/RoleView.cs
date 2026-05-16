@@ -30,6 +30,7 @@ public class RoleView : MonoBehaviour
             roleImage.DOFade(1, 0.5f);
         }
         roleImage.sprite = _newPortrait;
+        roleImage.SetNativeSize();
 
         if (_animationName == "hide")
         {
@@ -84,6 +85,10 @@ public class RoleView : MonoBehaviour
         rectTrans.anchoredPosition = _newPos;
 
         Debug.Log($"角色 {gameObject.name} 立即設置位置為: {_newPos}");
+    }
+    public void SetSize(Vector2 _newSize)
+    {
+        transform.localScale = _newSize;
     }
 
     public string GetPortraitPos()
