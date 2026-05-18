@@ -5,7 +5,15 @@ using UnityEngine.UI;
 public class EndSceneManager : MonoBehaviour
 {
     [SerializeField] GameObject flyingTextPrefab; // 飛出文字的預製件
+    [SerializeField] TextMeshProUGUI endMessageBig; // 結束訊息文字
     [SerializeField] Button btn_returnMainMenu; // 返回主選單按鈕
+
+    [Header("大標題特效")]
+    [SerializeField] float bigMessagePulseSpeed = 2.5f;
+    [SerializeField] float bigMessagePulseAmount = 0.12f;
+    [SerializeField] float bigMessageRainbowSpeed = 0.2f;
+    [SerializeField] float bigMessageOutlineWidth = 0.28f;
+    [SerializeField] float bigMessageWhiteBlend = 0.35f;
     
     [Header("生成設定")]
     [SerializeField] float spawnIntervalMin = 0.5f;  // 最小生成間隔
@@ -81,9 +89,11 @@ public class EndSceneManager : MonoBehaviour
     };
     
     private float nextSpawnTime;
+    private Vector3 endMessageBaseScale;
     
     void Start()
     {
+        InitializeBigEndMessageEffect();
         nextSpawnTime = Time.time + Random.Range(spawnIntervalMin, spawnIntervalMax);
         AudioManager.Instance.PlayBGM("Bgm_End");
         btn_returnMainMenu.onClick.AddListener(() =>
@@ -95,11 +105,38 @@ public class EndSceneManager : MonoBehaviour
 
     void Update()
     {
+        AnimateBigEndMessage();
+
         if (Time.time >= nextSpawnTime)
         {
             SpawnFlyingText();
             nextSpawnTime = Time.time + Random.Range(spawnIntervalMin, spawnIntervalMax);
         }
+    }
+
+    void InitializeBigEndMessageEffect()
+    {
+        if (endMessageBig == null) return;
+
+        endMessageBaseScale = endMessageBig.rectTransform.localScale;
+        endMessageBig.enableVertexGradient = false;
+        endMessageBig.outlineWidth = bigMessageOutlineWidth;
+    }
+
+    void AnimateBigEndMessage()
+    {
+        if (endMessageBig == null) return;
+
+        float pulse = 1f + Mathf.Sin(Time.time * bigMessagePulseSpeed) * bigMessagePulseAmount;
+        endMessageBig.rectTransform.localScale = endMessageBaseScale * pulse;
+
+        float hue = Mathf.Repeat(Time.time * bigMessageRainbowSpeed, 1f);
+        Color rainbow = Color.HSVToRGB(hue, 0.85f, 1f);
+        Color faceColor = Color.Lerp(rainbow, Color.white, bigMessageWhiteBlend);
+        Color outlineColor = Color.Lerp(rainbow, Color.white, 0.1f);
+
+        endMessageBig.color = faceColor;
+        endMessageBig.outlineColor = outlineColor;
     }
     
     void SpawnFlyingText()

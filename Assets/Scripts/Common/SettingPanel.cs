@@ -78,11 +78,13 @@ public class SettingPanel : MonoBehaviour
         btn_exit.GetComponent<TextMeshProUGUI>().text = LanguageManager.GetText("T_Setting_ExitGame");
         btn_backToMenu.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX("Sound_Click_base");
             Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
         });
         btn_exit.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX("Sound_Click_base");
             UIManager.ShowConfirmPanel(
                 LanguageManager.GetText("T_Confirm_ExitGame"),
                 () => { Application.Quit(); },
@@ -210,11 +212,13 @@ public class SettingPanel : MonoBehaviour
         sfxMuteToggle.onValueChanged.AddListener(OnSFXMuteChanged);*/
         closeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX("Sound_Click_base");
             Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
         });
         btn_close_bg.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX("Sound_Click_base");
             Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
         });

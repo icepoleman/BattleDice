@@ -57,7 +57,7 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<string, string> commonNames = new Dictionary<string, string>();
 
     bool canSkip = false;
-    async void Start()
+    async void Awake()
     {
         if (isOpen) return;
         isOpen = true;
@@ -67,14 +67,14 @@ public class DialogueManager : MonoBehaviour
         AddEvent();
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
 
-        await Task.Delay(1000);
-        canSkip = true;
-
         commonNames["Hero"] = GetPlayerName();
         commonNames["JailerGirl"] = LanguageManager.GetText("T_JailerGirl");
         commonNames["WolfGirl"] = LanguageManager.GetText("T_WolfGirl");
         commonNames["Witch"] = LanguageManager.GetText("T_Witch");
         commonNames["Warden"] = LanguageManager.GetText("T_Warden");
+
+        await Task.Delay(1000);
+        canSkip = true;
     }
     bool ctrlPressed;
     bool shouldFastForward;
@@ -265,7 +265,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
     HashSet<string> girlNames = new HashSet<string>() { "JailerGirl", "WolfGirl", "Witch", "Idol", "Warden" };
-    HashSet<string> enemyNames = new HashSet<string>() { "duck1", "cookduck"};
+    HashSet<string> enemyNames = new HashSet<string>() { "duck1", "cookduck" };
     private async void CheckDialogueCmd(int _page)
     {
         if (dialogueDatas[_page].Chapter != "")
@@ -285,7 +285,7 @@ public class DialogueManager : MonoBehaviour
             await CrossFadeBackground(dialogueDatas[_page].Background);
         }
         //更換女角色立繪
-        if (girlNames.Contains(dialogueDatas[_page].Character) && dialogueDatas[_page].Portrait != "")
+        if (girlNames.Contains(dialogueDatas[_page].Character))
         {
             // 先載入角色立繪（如果尚未載入）
             await PortraitManager.LoadRoleIfNeeded(dialogueDatas[_page].Character);
@@ -295,7 +295,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("更換立繪:" + dialogueDatas[_page].Portrait);
         }
         //更換敵人立繪
-        if (enemyNames.Contains(dialogueDatas[_page].Character) && dialogueDatas[_page].Portrait != "")
+        if (enemyNames.Contains(dialogueDatas[_page].Character))
         {
             // 先載入敵人立繪（如果尚未載入）
             await PortraitManager.LoadMonster(dialogueDatas[_page].Character, ABconfig.AVG_CHAR_Enemy + dialogueDatas[_page].Character + ".png");
@@ -335,6 +335,10 @@ public class DialogueManager : MonoBehaviour
         //顯示對話
         if (dialogueDatas[pageIndex].Dialogue != "")
         {
+            if (dialogueDatas[pageIndex].Flag == "nameOff")
+                commonNames[dialogueDatas[pageIndex].Character] = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character + "_title");
+            if (dialogueDatas[pageIndex].Flag == "nameOn")
+                commonNames[dialogueDatas[pageIndex].Character] = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character);
             // 替換文本中的玩家名字
             string processedDialogue = ReplaceDialoguePlayerName(dialogueDatas[pageIndex].Dialogue);
             string characterName = dialogueDatas[pageIndex].Character;
@@ -631,7 +635,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// 處理 Spine 模型的生成與刪除（toggle 模式）
     /// </summary>
-    private async System.Threading.Tasks.Task HandleSpineModel(string spineAddress)
+    private async Task HandleSpineModel(string spineAddress)
     {
         // 已存在則淡出刪除（toggle off）
         if (spineCharacter != null)
@@ -645,10 +649,11 @@ public class DialogueManager : MonoBehaviour
                 });
             spineCharacter = null;
             currentState = DialogueState.Story;
+            stageManager.gameObject.SetActive(true);
             Debug.Log("淡出刪除Spine模型");
             return;
         }
-
+        stageManager.gameObject.SetActive(false);
         // 不存在則生成並淡入（toggle on）
         currentState = DialogueState.SpineShow;
         GameObject spinePrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.H_DATA_PREFABS + spineAddress);

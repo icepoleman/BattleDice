@@ -81,6 +81,7 @@ public class MapManager : MonoBehaviour
        // GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
         UnloadMapPrefab();
         await Task.Delay(100);
+        Debug.LogError($"當前地圖: {GameDataManager.CurrentMap}，結束地圖: {GameDataManager.EndMap}");
         if (GameDataManager.CurrentMap == GameDataManager.EndMap)
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_END_SCENE);
@@ -173,6 +174,7 @@ public class MapManager : MonoBehaviour
     }
     void OnEnterStageSavepoint(object[] param)
     {
+        GameDataManager.MapScrollValue = scrollbar_map.value;//記錄當前地圖滾動位置
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
     }
     //特殊道具用

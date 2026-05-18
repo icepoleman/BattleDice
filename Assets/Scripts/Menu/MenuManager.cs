@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
     async void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
-        btn_exitGame.onClick.AddListener(() => { Application.Quit(); });
+        btn_exitGame.onClick.AddListener(() => { AudioManager.Instance.PlaySFX("Sound_Click1"); Application.Quit(); });
         btn_continue.onClick.AddListener(async () =>
         {
             GameObject loadPanel = await UIManager.ShowCommonPanel("SaveLoadPanel");
@@ -33,6 +33,7 @@ public class MenuManager : MonoBehaviour
         });
         btn_setting.onClick.AddListener(async () =>
         {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
             await UIManager.ShowCommonPanel("SetPanel");
         });
 
@@ -103,6 +104,7 @@ public class MenuManager : MonoBehaviour
 
     void OnNewGameClicked()
     {
+        AudioManager.Instance.PlaySFX("Sound_Click1");
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "0";//初始整備室
         GameDataManager.CurrentMap = 1;

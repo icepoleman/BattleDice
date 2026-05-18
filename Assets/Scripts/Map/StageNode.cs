@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public enum StageState
@@ -42,6 +43,8 @@ public class StageNode : MonoBehaviour
     StageState currentState;
     [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
 
+    private Sprite lineSprite;
+
     // 防連點
     private bool isProcessing = false;
 
@@ -77,8 +80,10 @@ public class StageNode : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
+        lineSprite = Resources.Load<Sprite>("Sprites/LineSprite"); // 確保有一個名為 LineSprite 的白色方形圖片在 Resources/Sprites 資料夾中
+
         // 繪製連線到下一個節點
-        DrawLinesToNextNodes();
+        //DrawLinesToNextNodes();
     }
 
     void OnDestroy()
@@ -210,12 +215,12 @@ public class StageNode : MonoBehaviour
                     break;
             }
         }
-       /* if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
-        {
-            string tmpStory = GameDataManager.TmpCompletedStory;
-            GameDataManager.TmpCompletedStory = "";
-            EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
-        }*/
+        /* if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
+         {
+             string tmpStory = GameDataManager.TmpCompletedStory;
+             GameDataManager.TmpCompletedStory = "";
+             EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
+         }*/
     }
     /// <summary>
     /// 繪製連線到所有 nextStageNodes
@@ -242,6 +247,8 @@ public class StageNode : MonoBehaviour
         // 添加 Image 組件
         Image lineImage = lineObj.AddComponent<Image>();
         lineImage.color = lineColor;
+        lineImage.sprite = lineSprite;
+        lineImage.SetNativeSize();
 
         RectTransform lineRect = lineObj.GetComponent<RectTransform>();
 
@@ -259,7 +266,6 @@ public class StageNode : MonoBehaviour
 
         // 設置線條大小
         float thickLineWidth = Mathf.Max(lineWidth, 6f);
-        lineRect.sizeDelta = new Vector2(distance, thickLineWidth);
 
         // 設置旋轉
         lineRect.localRotation = Quaternion.Euler(0, 0, angle);
@@ -268,6 +274,6 @@ public class StageNode : MonoBehaviour
         lineRect.anchorMin = from.anchorMin;
         lineRect.anchorMax = from.anchorMax;
         lineRect.pivot = new Vector2(0.5f, 0.5f);
-        lineRect.localScale = Vector3.one;
+        lineRect.localScale = new Vector2(0.3f, 0.3f);//固定大小
     }
 }

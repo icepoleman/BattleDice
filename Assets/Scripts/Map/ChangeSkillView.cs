@@ -22,10 +22,11 @@ public class ChangeSkillView : MonoBehaviour
     {
         EventCenter.AddListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
     }
-    void OnDestroy() {
+    void OnDestroy()
+    {
         EventCenter.RemoveListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
     }
-    void Start()
+    async void Start()
     {
         // 從GameDataManager取得擁有的技能ID
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
@@ -58,6 +59,7 @@ public class ChangeSkillView : MonoBehaviour
     async void CreateChosenSkillCard(SkillConfigData config)
     {
         GameObject cardObj = Instantiate(chosenSkillCardPrefab, chosenSkillCardParent);
+        cardObj.SetActive(true);
         ChooseSkillCard card = cardObj.GetComponent<ChooseSkillCard>();
         card.SetData(config);
     }
@@ -70,6 +72,7 @@ public class ChangeSkillView : MonoBehaviour
     {
         GameObject cardObj = Instantiate(hasSkillCardPrefab, hasSkillCardParent);
         HasSkillCard card = cardObj.GetComponent<HasSkillCard>();
+        cardObj.SetActive(true);
         card.SetData(config, OnHasSkillCardClicked);
         card.isChosen = isChosen;
     }

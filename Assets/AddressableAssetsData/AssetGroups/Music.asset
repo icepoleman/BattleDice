@@ -20,16 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13c1b92a3b30a8843ab8dc36c6b3943f
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_OpaiPapa.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36fa4cf0ad199854a958f4473a4cd712
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Shot.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 553b23b2d8bbc5547bbb628c6b7d69d9
     m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Map.mp3
     m_ReadOnly: 0
@@ -37,16 +27,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b762115e3680c445bb13359bed7c99a
     m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Menu.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 73f34dd155253b74385b331a5e4979ae
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Click.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e527242df874ba046905051217ce9658
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Click1.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

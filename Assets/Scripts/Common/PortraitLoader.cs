@@ -80,6 +80,8 @@ public static class PortraitManager
     /// </summary>
     public static Sprite Show(string roleLabel, string expression)
     {
+        if(expression == "")
+            expression = "normal";
         string key = expression.ToLower();
 
         if (!allRoleSprites.ContainsKey(roleLabel))

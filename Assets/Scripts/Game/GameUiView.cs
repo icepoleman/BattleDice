@@ -228,6 +228,7 @@ public class GameUiView : MonoBehaviour
     }
     public async void PlayFightAnim(bool isPlayer)
     {
+        AudioManager.Instance.PlaySFX("Sound_Hit");
         // 被攻擊的角色移到最底層顯示
         if (isPlayer)
             trans_enemyPos.SetAsFirstSibling();
