@@ -637,6 +637,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private async Task HandleSpineModel(string spineAddress)
     {
+        EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, true); // 顯示加載中黑幕
+        await Task.Delay(500); // 等待黑幕完全顯示
         // 已存在則淡出刪除（toggle off）
         if (spineCharacter != null)
         {
@@ -651,6 +653,9 @@ public class DialogueManager : MonoBehaviour
             currentState = DialogueState.Story;
             stageManager.gameObject.SetActive(true);
             Debug.Log("淡出刪除Spine模型");
+            await Task.Delay(500); 
+            EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
+            await Task.Delay(500); 
             return;
         }
         stageManager.gameObject.SetActive(false);
@@ -661,12 +666,15 @@ public class DialogueManager : MonoBehaviour
         {
             GameObject spineObj = Instantiate(spinePrefab);
             spineCharacter = spineObj.GetComponent<SkeletonAnimation>();
-            spineCharacter.skeleton.A = 0f; // 初始透明
+            spineCharacter.skeleton.A = 1f;
             spineCharacter.AnimationState.SetAnimation(0, "A", true);
             spineCharacter.AnimationState.Event += OnSpineEvent;
 
             // 淡入效果
-            DOTween.To(() => spineCharacter.skeleton.A, x => spineCharacter.skeleton.A = x, 1f, 0.5f);
+            // DOTween.To(() => spineCharacter.skeleton.A, x => spineCharacter.skeleton.A = x, 1f, 0.5f);
+            await Task.Delay(500); 
+            EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
+            await Task.Delay(500); 
             Debug.Log("淡入生成Spine模型:" + spineAddress);
         }
         else

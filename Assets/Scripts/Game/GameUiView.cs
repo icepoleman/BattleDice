@@ -153,6 +153,10 @@ public class GameUiView : MonoBehaviour
         {
             bool isInUse = skillsInUse.Exists(skill => skill.skillID == skillCardView.GetSkillID());
             skillCardView.SkillSwitch(isInUse);
+            if (isInUse && SkillDatabase.SpEnemySkillIDs.Contains(skillCardView.GetSkillID()))
+            {
+                Debug.LogError("觸發怪物技能特效，技能ID：" + skillCardView.GetSkillID());
+            }
         }
     }
     public void ClearUsedEnemySkillCards()

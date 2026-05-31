@@ -41,10 +41,12 @@ public class ChatWindow : MonoBehaviour
         {
             if (isOn)
             {
+                tog_hide.image.color = new Color(1f, 1f, 1f, 0f);
                 HideWindow();
             }
             else
             {
+                tog_hide.image.color = new Color(1f, 1f, 1f, 1f); // 關閉時全亮
                 ShowWindow();
             }
         });

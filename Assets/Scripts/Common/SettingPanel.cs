@@ -187,9 +187,17 @@ public class SettingPanel : MonoBehaviour
         dropdown_displayMode.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_Screen_BorderlessWindow")));
         dropdown_displayMode.options.Add(new TMP_Dropdown.OptionData(LanguageManager.GetText("T_Screen_Windowed")));
 
-        // 讀取已儲存的螢幕模式
-        int savedMode = PlayerPrefs.GetInt(SCREEN_MODE_KEY, 0);
+        // 沒有存檔時預設視窗化
+        int defaultMode = PlayerPrefs.HasKey(SCREEN_MODE_KEY) ? 0 : 2;
+        int savedMode = PlayerPrefs.GetInt(SCREEN_MODE_KEY, defaultMode);
         savedMode = Mathf.Clamp(savedMode, 0, 2);
+
+        if (!PlayerPrefs.HasKey(SCREEN_MODE_KEY))
+        {
+            PlayerPrefs.SetInt(SCREEN_MODE_KEY, savedMode);
+            PlayerPrefs.Save();
+        }
+
         dropdown_displayMode.value = savedMode;
         dropdown_displayMode.RefreshShownValue();
 

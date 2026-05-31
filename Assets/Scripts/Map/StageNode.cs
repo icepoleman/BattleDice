@@ -76,7 +76,7 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-        SetState(StageState.Unlocked);
+        SetState(StageState.Locked);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
@@ -93,7 +93,10 @@ public class StageNode : MonoBehaviour
     }
     void OnHideOtherStage(object[] param)
     {
-        SetState(StageState.Unlocked);
+        if (GameDataManager.TestMode)
+            SetState(StageState.Unlocked);
+        else
+            SetState(StageState.Locked);
     }
     public void OnOpenNextStageNode(object[] param)
     {

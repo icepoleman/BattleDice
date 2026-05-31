@@ -183,6 +183,27 @@ public static class SaveManager
     }
 
     /// <summary>
+    /// 檢查是否存在任一存檔（自動存檔或任一手動槽位）
+    /// </summary>
+    public static bool HasAnySave()
+    {
+        if (HasAutoSave())
+        {
+            return true;
+        }
+
+        for (int i = 0; i < MAX_SAVE_SLOTS; i++)
+        {
+            if (System.IO.File.Exists(GetSlotFilePath(i)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// 獲取自動存檔資訊
     /// </summary>
     /// <returns>自動存檔資訊，如果沒有則返回 null</returns>
