@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class GameUiView : MonoBehaviour
 {
+    const int IdleSpriteIndex = 0;
+    const int HurtSpriteIndex = 1;
+    const int AttackSpriteIndex = 2;
     [Header("血量")]
     [SerializeField] Slider slider_playerBlood;
     [SerializeField] Text text_playerBlood;
@@ -26,10 +29,14 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Transform trans_playerDiceBox;
     [SerializeField] Animator anim;
     [Header("攻擊表演相關")]
-    Transform trans_enemyPos;
-    Transform trans_playerPos;
     [SerializeField] Image img_player;
     [SerializeField] Image img_enemy;
+    [SerializeField] Image img_spSkill_player;
+    [SerializeField] Image img_spSkill_enemy;
+    [SerializeField] Animator spSkillAnim_player;
+    [SerializeField] Animator spSkillAnim_enemy;
+    Transform trans_enemyPos;
+    Transform trans_playerPos;
     Sprite[] playerSprites;
     Sprite[] enemySprites;
 
@@ -64,26 +71,42 @@ public class GameUiView : MonoBehaviour
     }
     public async Task UpdatePlayerInfo(PlayerData playerData, EnemyData enemyData)
     {
-        // 載入敵人圖片，失敗時使用預設圖片
-        Sprite defaultEnemy = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy0_0.png");
-        Sprite enemyIdle = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy" + enemyData.enemyId + "_0.png") ?? defaultEnemy;
-        Sprite enemyHurt = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy" + enemyData.enemyId + "_1.png") ?? defaultEnemy;
-        Sprite enemyAttack = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy" + enemyData.enemyId + "_2.png") ?? defaultEnemy;
-        enemySprites = new Sprite[] { enemyIdle, enemyHurt, enemyAttack };
-        img_enemy.sprite = enemySprites[0];
+        enemySprites = await LoadEnemySprites(enemyData.enemyId);
+        img_enemy.sprite = enemySprites[IdleSpriteIndex];
         img_enemy.SetNativeSize();
+        img_spSkill_enemy.sprite = enemySprites[AttackSpriteIndex];
+
         img_enemy.transform.localPosition = new Vector3(img_enemy.transform.localPosition.x, GetEnemyYPosition(enemyData.enemyId), 1);
-        Sprite playerIdle = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_0.png");
-        Sprite playerHurt = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_1.png");
-        Sprite playerAttack = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "player_2.png");
-        playerSprites = new Sprite[] { playerIdle, playerHurt, playerAttack };
-        img_player.sprite = playerSprites[0];
+        playerSprites = await LoadPlayerSprites();
+        img_player.sprite = playerSprites[IdleSpriteIndex];
+        img_spSkill_player.sprite = playerSprites[AttackSpriteIndex];
         img_player.SetNativeSize();
+
         UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
         UpdateBlood(false, enemyData.currentBlood, enemyData.maxBlood);
         UpdateNames(LanguageManager.GetText("T_GirlName"), enemyData.enemyName);
-        BornEnemySkillCards(enemyData.skillData);
+        await BornEnemySkillCards(enemyData.skillData);
         anim.Play("enterPlace");
+    }
+    private async Task<Sprite[]> LoadEnemySprites(int enemyId)
+    {
+        Sprite defaultEnemy = await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + "enemy0_0.png");
+        return await LoadSpriteSet("enemy" + enemyId, defaultEnemy);
+    }
+    private Task<Sprite[]> LoadPlayerSprites()
+    {
+        return LoadSpriteSet("player");
+    }
+    private async Task<Sprite[]> LoadSpriteSet(string spritePrefix, Sprite fallbackSprite = null)
+    {
+        Sprite idleSprite = await LoadSprite(spritePrefix, IdleSpriteIndex, fallbackSprite);
+        Sprite hurtSprite = await LoadSprite(spritePrefix, HurtSpriteIndex, idleSprite);
+        Sprite attackSprite = await LoadSprite(spritePrefix, AttackSpriteIndex, idleSprite);
+        return new[] { idleSprite, hurtSprite, attackSprite };
+    }
+    private async Task<Sprite> LoadSprite(string spritePrefix, int spriteIndex, Sprite fallbackSprite = null)
+    {
+        return await AddressableManager.LoadAssetAsync<Sprite>(ABconfig.GAME_SPRITES + spritePrefix + "_" + spriteIndex + ".png") ?? fallbackSprite;
     }
     private float GetEnemyYPosition(int enemyId)
     {
@@ -103,16 +126,19 @@ public class GameUiView : MonoBehaviour
     {
         if (isPlayer)
         {
-            slider_playerBlood.value = currentBlood / maxBlood;
-            text_playerBlood.text = $"{currentBlood}/{maxBlood}";
+            UpdateBloodDisplay(slider_playerBlood, text_playerBlood, currentBlood, maxBlood);
         }
         else
         {
-            slider_enemyBlood.value = currentBlood / maxBlood;
-            text_enemyBlood.text = $"{currentBlood}/{maxBlood}";
+            UpdateBloodDisplay(slider_enemyBlood, text_enemyBlood, currentBlood, maxBlood);
         }
     }
-    public async void UpdateBuffs(bool isPlayer, IBuffData[] buffs)
+    void UpdateBloodDisplay(Slider bloodSlider, Text bloodText, float currentBlood, float maxBlood)
+    {
+        bloodSlider.value = maxBlood <= 0 ? 0 : currentBlood / maxBlood;
+        bloodText.text = $"{currentBlood}/{maxBlood}";
+    }
+    public void UpdateBuffs(bool isPlayer, IBuffData[] buffs)
     {
         Transform buffParent = isPlayer ? trans_playerBuffParent : trans_enemyBuffParent;
         ClearBuffs(buffParent);
@@ -122,8 +148,7 @@ public class GameUiView : MonoBehaviour
         }
         foreach (var buff in buffs)
         {
-            GameObject buffIcon = Instantiate(prefab_buffCard);
-            buffIcon.transform.SetParent(buffParent);
+            GameObject buffIcon = Instantiate(prefab_buffCard, buffParent);
             buffIcon.transform.localScale = Vector3.one;
             buffIcon.transform.localPosition = Vector3.zero;
             buffIcon.GetComponent<BuffCard>().SetBuffInfo(buff);
@@ -136,8 +161,9 @@ public class GameUiView : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    public async void BornEnemySkillCards(List<ISkillData> skills)
+    public async Task BornEnemySkillCards(List<ISkillData> skills)
     {
+        ClearEnemySkillCards();
         GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "enemySkillItem" + ".prefab");
         foreach (ISkillData skill in skills)
         {
@@ -147,6 +173,17 @@ public class GameUiView : MonoBehaviour
             enemy_skillCardViews.Add(skillCardView);
         }
     }
+    void ClearEnemySkillCards()
+    {
+        foreach (littleSkillCard skillCardView in enemy_skillCardViews)
+        {
+            if (skillCardView != null)
+            {
+                Destroy(skillCardView.gameObject);
+            }
+        }
+        enemy_skillCardViews.Clear();
+    }
     public void UpdateEnemySkillCards(List<ISkillData> skillsInUse)
     {
         foreach (littleSkillCard skillCardView in enemy_skillCardViews)
@@ -155,6 +192,7 @@ public class GameUiView : MonoBehaviour
             skillCardView.SkillSwitch(isInUse);
             if (isInUse && SkillDatabase.SpEnemySkillIDs.Contains(skillCardView.GetSkillID()))
             {
+                spSkillAnim_enemy.Play("spSkill");
                 Debug.LogError("觸發怪物技能特效，技能ID：" + skillCardView.GetSkillID());
             }
         }
@@ -200,9 +238,9 @@ public class GameUiView : MonoBehaviour
     public void BurnDice(int sideNum, bool isPlayer)//之後改用ab
     {
         Transform diceBox = isPlayer ? trans_playerDiceBox : trans_enemyDiceBox;
-        GameObject dice = Instantiate(prefab_manaDice);
-        dice.transform.SetParent(diceBox.transform);
+        GameObject dice = Instantiate(prefab_manaDice, diceBox);
         dice.transform.localScale = Vector3.one;
+        dice.transform.localPosition = Vector3.zero;
         manaDice diceView = dice.GetComponent<manaDice>();
         diceView.SetDiceFace(sideNum, diceSprites[sideNum]);
     }
@@ -242,11 +280,11 @@ public class GameUiView : MonoBehaviour
         string _animName = isPlayer ? "playerAtk" : "enemyAtk";
         anim.Play(_animName);
 
-        img_player.sprite = isPlayer ? playerSprites[2] : playerSprites[1];
-        img_enemy.sprite = isPlayer ? enemySprites[1] : enemySprites[2];
+        img_player.sprite = isPlayer ? playerSprites[AttackSpriteIndex] : playerSprites[HurtSpriteIndex];
+        img_enemy.sprite = isPlayer ? enemySprites[HurtSpriteIndex] : enemySprites[AttackSpriteIndex];
         await Task.Delay(1000);
-        img_player.sprite = playerSprites[0];
-        img_enemy.sprite = enemySprites[0];
+        img_player.sprite = playerSprites[IdleSpriteIndex];
+        img_enemy.sprite = enemySprites[IdleSpriteIndex];
     }
     public void PlayBuffVfx(bool isPlayer)
     {
@@ -278,16 +316,16 @@ public class GameUiView : MonoBehaviour
     public async void PlayBloodVfx(bool isPlayer)
     {
         if (isPlayer)
-            img_player.sprite = playerSprites[1];
+            img_player.sprite = playerSprites[HurtSpriteIndex];
         else
-            img_enemy.sprite = enemySprites[1];
+            img_enemy.sprite = enemySprites[HurtSpriteIndex];
         GameObject bloodVFX = Instantiate(prefab_bloodVfx);
         bloodVFX.transform.position = isPlayer ? img_player.transform.position : img_enemy.transform.position;
         float yRotation = isPlayer ? 0 : 180; // 根據角色方向決定是否翻轉特效
         bloodVFX.transform.rotation = Quaternion.Euler(0, yRotation, 0); // 根據角色方向旋轉血液特效
         Destroy(bloodVFX, 2f);
         await Task.Delay(1000);
-        img_player.sprite = playerSprites[0];
-        img_enemy.sprite = enemySprites[0];
+        img_player.sprite = playerSprites[IdleSpriteIndex];
+        img_enemy.sprite = enemySprites[IdleSpriteIndex];
     }
 }

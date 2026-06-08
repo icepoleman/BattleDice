@@ -196,6 +196,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -483,6 +484,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -595,10 +597,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1149749793}
     m_Modifications:
-    - target: {fileID: 199146702931285105, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 673445078562306964, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -717,6 +715,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8554215430338895705, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157755675938131683, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -204,8 +204,14 @@ namespace Spine.Unity.Editor {
 #endif
 
 #if UNITY_2021_2_OR_NEWER
+#if UNITY_6000_0_OR_NEWER
+            // Unity 6 uses EntityId-based hierarchy drop handlers.
+            // Registering legacy int-based handlers can throw conversion exceptions
+            // and break built-in hierarchy drag-and-drop.
+#else
 			DragAndDrop.RemoveDropHandler(HierarchyHandler.HandleDragAndDrop);
 			DragAndDrop.AddDropHandler(HierarchyHandler.HandleDragAndDrop);
+#endif
 #else
 			EditorApplication.hierarchyWindowItemOnGUI -= HierarchyHandler.HandleDragAndDrop;
 			EditorApplication.hierarchyWindowItemOnGUI += HierarchyHandler.HandleDragAndDrop;
