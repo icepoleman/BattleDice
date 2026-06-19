@@ -55,6 +55,7 @@ public class MapEvent
     public const string EVENT_ENTER_STAGE_STORY = "MapEvent_EnterStageStory";//進入劇情關卡
     public const string EVENT_ENTER_STAGE_BATTLE = "MapEvent_EnterStageBattle";//進入戰鬥關卡
     public const string EVENT_ENTER_STAGE_SAVEPOINT = "MapEvent_EnterStageSavepoint";//進入整備室關卡
+    public const string EVENT_OPEN_TREASURE_BOX = "MapEvent_OpenTreasureBox";//開啟寶箱事件
 }
 public class AdvEvent
 {

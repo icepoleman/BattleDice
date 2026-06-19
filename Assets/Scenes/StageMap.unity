@@ -653,6 +653,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777481544}
   m_CullTransparentMesh: 1
+--- !u!114 &2096801681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1831034424607643475, guid: c4c5168306413c342beff4e2e08629fc, type: 3}
+  m_PrefabInstance: {fileID: 370489277691955563}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcbf235a95063f49a252d2153a60dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TreasureBoxGame
 --- !u!1001 &370489277691955563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,6 +675,10 @@ PrefabInstance:
     - target: {fileID: 5554715191894911256, guid: c4c5168306413c342beff4e2e08629fc, type: 3}
       propertyPath: m_Name
       value: TreasureBoxGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554715191894911256, guid: c4c5168306413c342beff4e2e08629fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6137294984152180314, guid: c4c5168306413c342beff4e2e08629fc, type: 3}
       propertyPath: m_Pivot.x
@@ -762,6 +777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 612064362266976975, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1898386281677629411, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -842,6 +861,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2131636539144340724, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+      propertyPath: treasureBox
+      value: 
+      objectReference: {fileID: 2096801681}
     - target: {fileID: 2788024172072770613, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
       propertyPath: m_Camera
       value: 
@@ -855,8 +878,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5386405256329317960, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}

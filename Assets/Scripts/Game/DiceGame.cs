@@ -53,8 +53,8 @@ public class DiceGame : MonoBehaviour
         gameUiView = GetComponent<GameUiView>();
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         await manaRoller.Init();
-       // playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
-      //  enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
+        // playerBuffBubblePos = GameObject.Find("BuffBubbles/player").transform;
+        //  enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         playerData = GameDataManager.PlayerData;
         enemyData = new EnemyData(GameDataManager.TmpEnemyID);
 
@@ -527,7 +527,7 @@ public class DiceGame : MonoBehaviour
         bubble.GetComponent<Animator>().Play(str_buffAnim);*/
 
         Debug.Log($"{(isPlayer ? "Player" : "Enemy")} 使用buff {buffname}");
-     //   Destroy(bubble, 2f); // 假設提示泡泡持續2秒
+        //   Destroy(bubble, 2f); // 假設提示泡泡持續2秒
     }
     //敵我雙方使用技能都經過這裡
     void OnSkillUse(object[] args)
@@ -693,17 +693,10 @@ public class DiceGame : MonoBehaviour
     }
     void CheckLive()
     {
+        gameUiView.FightEndAnim(playerData.IsDead(), enemyData.IsDead());
         if (currentState == TurnState.roundEnd) return;
         if (playerData.IsDead() || enemyData.IsDead())
         {
-            if (playerData.IsDead())
-            {
-                //playerView.PlayAnim("defeat");
-            }
-            if (enemyData.IsDead())
-            {
-                //enemyView.PlayAnim("defeat");
-            }
             Debug.Log("Game Over");
             ChangeState(TurnState.roundEnd);
         }

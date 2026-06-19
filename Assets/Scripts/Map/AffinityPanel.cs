@@ -8,7 +8,8 @@ using DG.Tweening;
 
 public class AffinityPanel : MonoBehaviour
 {
-    [SerializeField] Image img_loveValue;
+    [SerializeField] TextMeshProUGUI txt_loveValue;
+    [SerializeField] TextMeshProUGUI txt_roleName;
     [SerializeField] private Transform affinityEventParent;
     [SerializeField] private GameObject affinityEventPrefab;
     [SerializeField] private TextMeshProUGUI txt_chat;
@@ -85,7 +86,8 @@ public class AffinityPanel : MonoBehaviour
     {
         roleStr = role;
         await PortraitManager.LoadRoleIfNeeded(role);
-        img_loveValue.fillAmount = GameDataManager.GetRoleAffinity(role) * 0.01f;
+        txt_loveValue.text = GameDataManager.GetRoleAffinity(role).ToString() + "/100";
+        txt_roleName.text = LanguageManager.GetText("T_" + role);
         List<AffinityStoryData> storyDataList = CSVReader.Instance.LoadAffinityStoryCSV(role);
         for (int i = 0; i < storyDataList.Count; i++)
         {

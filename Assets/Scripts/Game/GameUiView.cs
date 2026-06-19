@@ -32,9 +32,9 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Image img_player;
     [SerializeField] Image img_enemy;
     [SerializeField] Image img_spSkill_player;
-    [SerializeField] Image img_spSkill_enemy;
+   // [SerializeField] Image img_spSkill_enemy;
     [SerializeField] Animator spSkillAnim_player;
-    [SerializeField] Animator spSkillAnim_enemy;
+  //  [SerializeField] Animator spSkillAnim_enemy;
     Transform trans_enemyPos;
     Transform trans_playerPos;
     Sprite[] playerSprites;
@@ -74,7 +74,7 @@ public class GameUiView : MonoBehaviour
         enemySprites = await LoadEnemySprites(enemyData.enemyId);
         img_enemy.sprite = enemySprites[IdleSpriteIndex];
         img_enemy.SetNativeSize();
-        img_spSkill_enemy.sprite = enemySprites[AttackSpriteIndex];
+        //img_spSkill_enemy.sprite = enemySprites[AttackSpriteIndex];
 
         img_enemy.transform.localPosition = new Vector3(img_enemy.transform.localPosition.x, GetEnemyYPosition(enemyData.enemyId), 1);
         playerSprites = await LoadPlayerSprites();
@@ -190,11 +190,11 @@ public class GameUiView : MonoBehaviour
         {
             bool isInUse = skillsInUse.Exists(skill => skill.skillID == skillCardView.GetSkillID());
             skillCardView.SkillSwitch(isInUse);
-            if (isInUse && SkillDatabase.SpEnemySkillIDs.Contains(skillCardView.GetSkillID()))
+            /*if (isInUse && SkillDatabase.SpEnemySkillIDs.Contains(skillCardView.GetSkillID()))
             {
                 spSkillAnim_enemy.Play("spSkill");
                 Debug.LogError("觸發怪物技能特效，技能ID：" + skillCardView.GetSkillID());
-            }
+            }*/
         }
     }
     public void ClearUsedEnemySkillCards()
@@ -282,10 +282,40 @@ public class GameUiView : MonoBehaviour
 
         img_player.sprite = isPlayer ? playerSprites[AttackSpriteIndex] : playerSprites[HurtSpriteIndex];
         img_enemy.sprite = isPlayer ? enemySprites[HurtSpriteIndex] : enemySprites[AttackSpriteIndex];
-        await Task.Delay(1000);
+        /*await Task.Delay(1000);
+        img_player.sprite = playerSprites[IdleSpriteIndex];
+        img_enemy.sprite = enemySprites[IdleSpriteIndex];*/
+    }
+    public void FightEndAnim(bool playerIsDead, bool enemyIsDead)
+    {
+        if (playerIsDead)
+        {
+            img_player.DOKill();
+            img_player.sprite = playerSprites[HurtSpriteIndex];
+            img_player.DOFade(0f, 2f).SetEase(Ease.OutQuad);
+            return;
+        }
+
+        if (enemyIsDead)
+        {
+            img_enemy.DOKill();
+            img_enemy.sprite = enemySprites[HurtSpriteIndex];
+            img_enemy.DOFade(0f, 2f).SetEase(Ease.OutQuad);
+            return;
+        }
+
+        img_player.DOKill();
+        img_enemy.DOKill();
+
+        Color playerColor = img_player.color;
+        img_player.color = new Color(playerColor.r, playerColor.g, playerColor.b, 1f);
+        Color enemyColor = img_enemy.color;
+        img_enemy.color = new Color(enemyColor.r, enemyColor.g, enemyColor.b, 1f);
+
         img_player.sprite = playerSprites[IdleSpriteIndex];
         img_enemy.sprite = enemySprites[IdleSpriteIndex];
     }
+
     public void PlayBuffVfx(bool isPlayer)
     {
         GameObject buffVFX = Instantiate(prefab_buffVFX);

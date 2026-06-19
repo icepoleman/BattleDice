@@ -24,13 +24,23 @@ public class TreasureBoxGame : MonoBehaviour
     private int lockCount = 3;
 
     bool isDone;
+    private TreasureBoxRewardType rewardType;
+    private int rewardValue;
 
+    public void Setup(int initialLockCount, TreasureBoxRewardType rewardType, int _value)
+    {
+        isDone = false;
+        lastPoint = Random.Range(1, 13);//初始點數 (1-12)
+        lockCount = initialLockCount;
+        this.rewardType = rewardType;
+        this.rewardValue = _value;
+        RefreshLastPointText();
+    }
     void Start()
     {
         btn_close.onClick.AddListener(() => Destroy(gameObject));
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
-        RefreshLastPointText();
         ResetButtonSelection();
     }
 
@@ -181,9 +191,28 @@ public class TreasureBoxGame : MonoBehaviour
         lockCount--;
         if (lockCount <= 0)
         {
-            UIManager.ShowHintBubble("獲得xx獎勵");
-            Debug.LogError("玩家獲勝！");
+            switch (rewardType)
+            {
+                case TreasureBoxRewardType.Gold:
+                    // 玩家獲得金幣
+                    Debug.Log($"玩家獲得 {rewardValue} 金幣！");
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, rewardValue); //取得金幣
+                    break;
+                case TreasureBoxRewardType.Gear:
+                    // 玩家獲得裝備
+                    Debug.Log($"玩家獲得齒輪：{rewardValue}！");
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, rewardValue); //取得裝備
+                    break;
+                case TreasureBoxRewardType.Skill:
+                    // 玩家獲得技能
+                    Debug.Log($"玩家獲得一個技能，等級：{rewardValue}！");
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, rewardValue); //取得技能
+                    break;
+            }
+            //UIManager.ShowHintBubble($"獲得{rewardType}獎勵");
+            //Debug.LogError("玩家獲勝！");
             isDone = true;
+            gameObject.SetActive(false);
         }
     }
 
@@ -206,6 +235,13 @@ public class TreasureBoxGame : MonoBehaviour
         UIManager.ShowHintBubble(LanguageManager.GetText("T_UnLock_Fail"));
         isDone = true;
         await Task.Delay(1000);
-        Destroy(gameObject);
+        EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, 100); //取得金幣
+        gameObject.SetActive(false);
     }
+}
+public enum TreasureBoxRewardType
+{
+    Gold,
+    Gear,
+    Skill
 }

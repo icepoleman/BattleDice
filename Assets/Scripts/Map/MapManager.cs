@@ -17,6 +17,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
+    [SerializeField] TreasureBoxGame treasureBox;
 
     private Scrollbar scrollbar_map;
 
@@ -58,6 +59,7 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
     }
     void OnDestroy()
     {
@@ -72,13 +74,14 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
         // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
-       // GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
+        // GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
         UnloadMapPrefab();
         await Task.Delay(100);
         Debug.LogError($"當前地圖: {GameDataManager.CurrentMap}，結束地圖: {GameDataManager.EndMap}");
@@ -110,6 +113,13 @@ public class MapManager : MonoBehaviour
         slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         await UIManager.ShowHintBubble(
          LanguageManager.GetFormat("T_RecoverHealth", recoverAmount));
+    }
+    void OnOpenTreasureBox(object[] param)
+    {
+        TreasureBoxRewardType rewardType = (TreasureBoxRewardType)param[0];
+        int rewardValue = (int)param[1];
+        treasureBox.Setup(3, rewardType, rewardValue * 5);
+        treasureBox.gameObject.SetActive(true);
     }
     async void OnGetGold(object[] param)
     {

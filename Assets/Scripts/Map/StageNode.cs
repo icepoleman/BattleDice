@@ -31,6 +31,7 @@ public class StageNode : MonoBehaviour
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
     [SerializeField] string stageInfo;       //關卡資訊
+    [SerializeField] int lockNum;
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
 
@@ -190,7 +191,8 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Gear:
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                   // EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX, TreasureBoxRewardType.Gear, int.Parse(stageInfo)); //開啟寶箱事件
                     Debug.Log($"齒輪: {stageInfo}");
                     GoNextStage();
                     break;
@@ -202,7 +204,8 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Gold:
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
+                    //EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX, TreasureBoxRewardType.Gold, int.Parse(stageInfo));
                     Debug.Log($"金幣: {stageInfo}");
                     GoNextStage();
                     break;
