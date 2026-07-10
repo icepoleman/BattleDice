@@ -30,7 +30,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_exitGame;
 
     [SerializeField] Button btn_test;
-    [SerializeField] Text text_TestMap;
+    [Header("表演用")]
+    [SerializeField] Animator anim_menu;
     void Awake()
     {
         LoadSavedSettingsIfHasSave();
@@ -122,7 +123,6 @@ public class MenuManager : MonoBehaviour
         });
 
         btn_continue.interactable = SaveManager.HasAutoSave();
-        PlayButtonsEnterAnimation();
 
         //TEST
         BuffDatabase.LoadFromCSV();
@@ -133,41 +133,11 @@ public class MenuManager : MonoBehaviour
         // Assets/DiceGame_ab/Music/BGM/
     }
 
-    void PlayButtonsEnterAnimation()
-    {
-        const float targetLocalX = 0f;
-        const float moveDuration = 0.35f;
-        const float enterInterval = 0.1f;
-
-        // Keep the current declaration order; btn_exitGame remains the last one.
-        List<Button> orderedButtons = new List<Button>
-        {
-            btn_newGame,
-            btn_continue,
-            btn_setting,
-            btn_creator,
-            btn_exitGame
-        };
-
-        Sequence sequence = DOTween.Sequence();
-        for (int i = 0; i < orderedButtons.Count; i++)
-        {
-            Button button = orderedButtons[i];
-            if (button == null)
-            {
-                continue;
-            }
-
-            sequence.Insert(i * enterInterval, button.transform.DOLocalMoveX(targetLocalX, moveDuration).SetEase(Ease.OutCubic));
-        }
-    }
-
     void OnTestClicked()
     {
-        StateManager.Instance.OpenTestMode();
         //測試用
         GameDataManager.PreparationRoomStage = "0";//初始整備室
-        GameDataManager.CurrentMap = int.Parse(text_TestMap.text);
+        GameDataManager.CurrentMap = 0;
         GameDataManager.CurrentStage = "0";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
@@ -175,10 +145,10 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gear = 1000;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.HasSkillIDs.UnionWith(new HashSet<int> { 1, 2 }); //預設擁有技能ID
-        /*for (int i = 3; i <= 45; i++)
+        for (int i = 3; i <= 45; i++)
         {
             GameDataManager.HasSkillIDs.Add(i);
-        }*/
+        }
 
         GameDataManager.PlayerData.diceCount = 6;
         GameDataManager.PlayerData.maxRollCount = 5;
@@ -186,9 +156,12 @@ public class MenuManager : MonoBehaviour
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
     }
 
-    void OnNewGameClicked()
+    async void OnNewGameClicked()
     {
+        anim_menu.Play("fadeOut");
         AudioManager.Instance.PlaySFX("Sound_Click1");
+        //等一秒
+        await Task.Delay(1000);
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "0";//初始整備室
         GameDataManager.CurrentMap = 1;

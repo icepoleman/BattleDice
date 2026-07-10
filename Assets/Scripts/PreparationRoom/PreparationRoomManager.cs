@@ -73,6 +73,7 @@ public class PreparationRoomManager : MonoBehaviour
         });
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
         OpenLevel(GameDataManager.SafeRoomLevel);
+        SceneLoader.HideLoadingScreen();
         txt_socialPoint.text = LanguageManager.GetFormat("T_SocialPoint", GameDataManager.SocialPoint);
     }
 

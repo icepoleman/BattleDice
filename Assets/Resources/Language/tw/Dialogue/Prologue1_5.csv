@@ -1,4 +1,4 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 Prologue1_5,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,
 ,,雫轉動一旁火把。,,,,,,,,,,
 ,,旁邊牆壁隨著震動打了一個隱藏空間。,,,,,shake,,,,,
@@ -28,4 +28,8 @@ Prologue1_5,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,
 ,JailerGirl,嗯...,normal,,,,,,,,,
 ,,其實也不知道是不是真的就是了。,,,,,,,,,,
 ,,算了總比繼續待在這好多了。,,,,,,,,,,
-SAVEROOM,,,,,,,,,,,,
+SAVEROOM,,,,,,,,,0.0,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

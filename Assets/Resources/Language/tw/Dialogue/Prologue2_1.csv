@@ -1,4 +1,4 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 Prologue2_1,Hero,好了打起精神出發吧！,,,,,,,,bg_jail,,
 ,Hero,嘿！嘿！喔！,,,,,,,,,,
 ,JailerGirl,(嚇),scare,Center,,,,,,,,
@@ -8,3 +8,5 @@ Prologue2_1,Hero,好了打起精神出發吧！,,,,,,,,bg_jail,,
 ,,雫貌似下定了決心。,,,,,,,,,,
 ,JailerGirl,嘿...嘿...喔...,shy,,,,,,,,,
 END,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

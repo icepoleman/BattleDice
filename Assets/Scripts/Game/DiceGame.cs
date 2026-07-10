@@ -70,6 +70,8 @@ public class DiceGame : MonoBehaviour
 
         await gameUiView.UpdatePlayerInfo(playerData, enemyData);
 
+        SceneLoader.HideLoadingScreen();
+
         //生成初始buff
         UpdateBuffUIEvent(null);
         ChangeState(TurnState.roundStart);

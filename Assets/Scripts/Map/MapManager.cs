@@ -44,7 +44,7 @@ public class MapManager : MonoBehaviour
         {
             await UIManager.ShowCommonPanel("EditPanel");
         });
-        AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
+        //AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab");
     }
     void AddEvent()
     {
@@ -216,6 +216,7 @@ public class MapManager : MonoBehaviour
                 scrollbar_map.value = GameDataManager.MapScrollValue;
                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
                 Debug.Log("地圖載入並實例化成功");
+                SceneLoader.HideLoadingScreen();
             }
             else
             {

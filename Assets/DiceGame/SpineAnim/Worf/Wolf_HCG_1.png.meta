@@ -1,0 +1,2613 @@
+fileFormatVersion: 2
+guid: 48c6e165086467f49be6650f4c689476
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8980024157863073792
+    second: Wolf_HCG_1_0
+  - first:
+      213: 8919904072511817590
+    second: Wolf_HCG_1_1
+  - first:
+      213: 4128764174445483450
+    second: Wolf_HCG_1_2
+  - first:
+      213: -1962290507079367865
+    second: Wolf_HCG_1_3
+  - first:
+      213: -3760308945228202170
+    second: Wolf_HCG_1_4
+  - first:
+      213: 2777766436415756689
+    second: Wolf_HCG_1_5
+  - first:
+      213: 4211564462352532357
+    second: Wolf_HCG_1_6
+  - first:
+      213: 7506184477904622709
+    second: Wolf_HCG_1_7
+  - first:
+      213: 1558370668704146415
+    second: Wolf_HCG_1_8
+  - first:
+      213: -3808724552675770792
+    second: Wolf_HCG_1_9
+  - first:
+      213: 5750839345656451718
+    second: Wolf_HCG_1_10
+  - first:
+      213: 6935537675000516278
+    second: Wolf_HCG_1_11
+  - first:
+      213: -5605635113878867411
+    second: Wolf_HCG_1_12
+  - first:
+      213: -3015838238224562846
+    second: Wolf_HCG_1_13
+  - first:
+      213: -679834455118380147
+    second: Wolf_HCG_1_14
+  - first:
+      213: 9219138489138201177
+    second: Wolf_HCG_1_15
+  - first:
+      213: -5704337642396849354
+    second: Wolf_HCG_1_16
+  - first:
+      213: -7723548590645905295
+    second: Wolf_HCG_1_17
+  - first:
+      213: -444405457717734245
+    second: Wolf_HCG_1_18
+  - first:
+      213: 5767773105146380629
+    second: Wolf_HCG_1_19
+  - first:
+      213: -6717624172071855754
+    second: Wolf_HCG_1_20
+  - first:
+      213: 7600810730047467935
+    second: Wolf_HCG_1_21
+  - first:
+      213: -6741929767957025653
+    second: Wolf_HCG_1_22
+  - first:
+      213: 7813888499136999107
+    second: Wolf_HCG_1_23
+  - first:
+      213: -4954481233782295502
+    second: Wolf_HCG_1_24
+  - first:
+      213: -3294627736348506980
+    second: Wolf_HCG_1_25
+  - first:
+      213: 4441479551584124463
+    second: Wolf_HCG_1_26
+  - first:
+      213: 9135146844883026550
+    second: Wolf_HCG_1_27
+  - first:
+      213: -7360272145497635105
+    second: Wolf_HCG_1_28
+  - first:
+      213: 6680961876211050055
+    second: Wolf_HCG_1_29
+  - first:
+      213: -7667807469258093754
+    second: Wolf_HCG_1_30
+  - first:
+      213: 8899306550709716047
+    second: Wolf_HCG_1_31
+  - first:
+      213: -3341312973492894056
+    second: Wolf_HCG_1_32
+  - first:
+      213: -1437310174165819157
+    second: Wolf_HCG_1_33
+  - first:
+      213: 1564707189128533704
+    second: Wolf_HCG_1_34
+  - first:
+      213: 5276826352027102688
+    second: Wolf_HCG_1_35
+  - first:
+      213: -6973390526332893353
+    second: Wolf_HCG_1_36
+  - first:
+      213: 5420702469044170571
+    second: Wolf_HCG_1_37
+  - first:
+      213: -4254843905086268306
+    second: Wolf_HCG_1_38
+  - first:
+      213: 8217621412730339013
+    second: Wolf_HCG_1_39
+  - first:
+      213: 8299995022421197181
+    second: Wolf_HCG_1_40
+  - first:
+      213: -1254501162651626352
+    second: Wolf_HCG_1_41
+  - first:
+      213: -1770759576777768062
+    second: Wolf_HCG_1_42
+  - first:
+      213: -8373410284411221250
+    second: Wolf_HCG_1_43
+  - first:
+      213: -4072926027100299765
+    second: Wolf_HCG_1_44
+  - first:
+      213: -2446298306075332542
+    second: Wolf_HCG_1_45
+  - first:
+      213: 6120179361430077590
+    second: Wolf_HCG_1_46
+  - first:
+      213: 2425313516350452197
+    second: Wolf_HCG_1_47
+  - first:
+      213: -4394037813544723846
+    second: Wolf_HCG_1_48
+  - first:
+      213: 5430851453293513516
+    second: Wolf_HCG_1_49
+  - first:
+      213: 5554702058846087059
+    second: Wolf_HCG_1_50
+  - first:
+      213: -4878371793910055561
+    second: Wolf_HCG_1_51
+  - first:
+      213: -8285338819622733655
+    second: Wolf_HCG_1_52
+  - first:
+      213: 6054338551309155147
+    second: Wolf_HCG_1_53
+  - first:
+      213: 5523814949108623530
+    second: Wolf_HCG_1_54
+  - first:
+      213: 4351553070573983633
+    second: Wolf_HCG_1_55
+  - first:
+      213: 7584745587108926815
+    second: Wolf_HCG_1_56
+  - first:
+      213: 6608599016705487336
+    second: Wolf_HCG_1_57
+  - first:
+      213: -868848420972812984
+    second: Wolf_HCG_1_58
+  - first:
+      213: 2966763611927030694
+    second: Wolf_HCG_1_59
+  - first:
+      213: -1491098417549706492
+    second: Wolf_HCG_1_60
+  - first:
+      213: -2817882789300792446
+    second: Wolf_HCG_1_61
+  - first:
+      213: 7574292256210956106
+    second: Wolf_HCG_1_62
+  - first:
+      213: -2032088105105321248
+    second: Wolf_HCG_1_63
+  - first:
+      213: 3283225772512548270
+    second: Wolf_HCG_1_64
+  - first:
+      213: 1484531461243932179
+    second: Wolf_HCG_1_65
+  - first:
+      213: -7447321945744001148
+    second: Wolf_HCG_1_66
+  - first:
+      213: -454955683288487531
+    second: Wolf_HCG_1_67
+  - first:
+      213: 4842075362514849067
+    second: Wolf_HCG_1_68
+  - first:
+      213: -6717711516481860120
+    second: Wolf_HCG_1_69
+  - first:
+      213: 8079076743192900703
+    second: Wolf_HCG_1_70
+  - first:
+      213: -9194531952218203871
+    second: Wolf_HCG_1_71
+  - first:
+      213: -8097884579828175874
+    second: Wolf_HCG_1_72
+  - first:
+      213: -4398425176834796110
+    second: Wolf_HCG_1_73
+  - first:
+      213: 3636423176437949919
+    second: Wolf_HCG_1_74
+  - first:
+      213: 6180625660049890083
+    second: Wolf_HCG_1_75
+  - first:
+      213: -703324577738755150
+    second: Wolf_HCG_1_76
+  - first:
+      213: -1516762916078262600
+    second: Wolf_HCG_1_77
+  - first:
+      213: -6915737799122564836
+    second: Wolf_HCG_1_78
+  - first:
+      213: 7711918657952701898
+    second: Wolf_HCG_1_79
+  - first:
+      213: 2791696926469082822
+    second: Wolf_HCG_1_80
+  - first:
+      213: -9021450071101314505
+    second: Wolf_HCG_1_81
+  - first:
+      213: -6121638400279637380
+    second: Wolf_HCG_1_82
+  - first:
+      213: 898151687669961736
+    second: Wolf_HCG_1_83
+  - first:
+      213: 7527619586229577788
+    second: Wolf_HCG_1_84
+  - first:
+      213: 2852492657967707071
+    second: Wolf_HCG_1_85
+  - first:
+      213: -350578868728562621
+    second: Wolf_HCG_1_86
+  - first:
+      213: 6324465699457742545
+    second: Wolf_HCG_1_87
+  - first:
+      213: 827264712803835131
+    second: Wolf_HCG_1_88
+  - first:
+      213: -6813539216362735480
+    second: Wolf_HCG_1_89
+  - first:
+      213: 8520190802206233243
+    second: Wolf_HCG_1_90
+  - first:
+      213: -1235598701721127133
+    second: Wolf_HCG_1_91
+  - first:
+      213: 7001438674005394668
+    second: Wolf_HCG_1_92
+  - first:
+      213: -6497703708394072917
+    second: Wolf_HCG_1_93
+  - first:
+      213: 4627349567200540903
+    second: Wolf_HCG_1_94
+  - first:
+      213: 1037742242226096021
+    second: Wolf_HCG_1_95
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wolf_HCG_1_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 4000
+        width: 172
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 008dad3b4647f9c70800000000000000
+      internalID: 8980024157863073792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_1
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 4001
+        width: 156
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67780a88e7dd9cb70800000000000000
+      internalID: 8919904072511817590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2300
+        width: 531
+        height: 1132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab59e2b34215c4930800000000000000
+      internalID: 4128764174445483450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_3
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 3432
+        width: 517
+        height: 566
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 743c9633e2b84c4e0800000000000000
+      internalID: -1962290507079367865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_4
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 3404
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64ff2f1ffe2b0dbc0800000000000000
+      internalID: -3760308945228202170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_5
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 3267
+        width: 575
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 199509f4bdb9c8620800000000000000
+      internalID: 2777766436415756689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_6
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 3132
+        width: 318
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5838e2f809b727a30800000000000000
+      internalID: 4211564462352532357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_7
+      rect:
+        serializedVersion: 2
+        x: 1563
+        y: 3110
+        width: 291
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5745e0063035b2860800000000000000
+      internalID: 7506184477904622709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_8
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 2552
+        width: 704
+        height: 714
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe3af78ddd170a510800000000000000
+      internalID: 1558370668704146415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_9
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 3051
+        width: 71
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85eb376e231b42bc0800000000000000
+      internalID: -3808724552675770792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_10
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 2650
+        width: 264
+        height: 455
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68251366ae51fcf40800000000000000
+      internalID: 5750839345656451718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_11
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 2734
+        width: 79
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6be8eb4f4caff3060800000000000000
+      internalID: 6935537675000516278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_12
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 2758
+        width: 72
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d223bc85098c432b0800000000000000
+      internalID: -5605635113878867411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_13
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 2650
+        width: 135
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 265c596d9179526d0800000000000000
+      internalID: -3015838238224562846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_14
+      rect:
+        serializedVersion: 2
+        x: 1911
+        y: 2886
+        width: 25
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d83099c3a2eb096f0800000000000000
+      internalID: -679834455118380147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_15
+      rect:
+        serializedVersion: 2
+        x: 2021
+        y: 2922
+        width: 55
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 952c63c5c95f0ff70800000000000000
+      internalID: 9219138489138201177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_16
+      rect:
+        serializedVersion: 2
+        x: 2077
+        y: 2900
+        width: 151
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63beb0a132f16d0b0800000000000000
+      internalID: -5704337642396849354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_17
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 2809
+        width: 20
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 178f4195a7170d490800000000000000
+      internalID: -7723548590645905295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_18
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 2721
+        width: 42
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b945d7c379725d9f0800000000000000
+      internalID: -444405457717734245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_19
+      rect:
+        serializedVersion: 2
+        x: 1909
+        y: 2603
+        width: 196
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5514d45841f3b0050800000000000000
+      internalID: 5767773105146380629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_20
+      rect:
+        serializedVersion: 2
+        x: 2107
+        y: 2622
+        width: 288
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6795411386436c2a0800000000000000
+      internalID: -6717624172071855754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_21
+      rect:
+        serializedVersion: 2
+        x: 2396
+        y: 2621
+        width: 176
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91f47196118b7960800000000000000
+      internalID: 7600810730047467935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_22
+      rect:
+        serializedVersion: 2
+        x: 1412
+        y: 2685
+        width: 21
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8c2a48a89adf62a0800000000000000
+      internalID: -6741929767957025653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_23
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 2652
+        width: 17
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ce2291b032807c60800000000000000
+      internalID: 7813888499136999107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_24
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 2551
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 234311e51952e3bb0800000000000000
+      internalID: -4954481233782295502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_25
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 2468
+        width: 532
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c944ccb87812742d0800000000000000
+      internalID: -3294627736348506980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_26
+      rect:
+        serializedVersion: 2
+        x: 1855
+        y: 1758
+        width: 299
+        height: 843
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e3555ce1e43ad30800000000000000
+      internalID: 4441479551584124463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_27
+      rect:
+        serializedVersion: 2
+        x: 2156
+        y: 2514
+        width: 107
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6728844c7af86ce70800000000000000
+      internalID: 9135146844883026550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_28
+      rect:
+        serializedVersion: 2
+        x: 2261
+        y: 2573
+        width: 85
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd64965ea7f0bd990800000000000000
+      internalID: -7360272145497635105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_29
+      rect:
+        serializedVersion: 2
+        x: 2339
+        y: 2545
+        width: 181
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 746ac7ddd6b87bc50800000000000000
+      internalID: 6680961876211050055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_30
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 1854
+        width: 718
+        height: 697
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64bc8c48bb9769590800000000000000
+      internalID: -7667807469258093754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_31
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 1758
+        width: 542
+        height: 710
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f440c564820b08b70800000000000000
+      internalID: 8899306550709716047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_32
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 2372
+        width: 173
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8964d8bbd8541a1d0800000000000000
+      internalID: -3341312973492894056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_33
+      rect:
+        serializedVersion: 2
+        x: 2276
+        y: 2351
+        width: 234
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be0aac40306ad0ce0800000000000000
+      internalID: -1437310174165819157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_34
+      rect:
+        serializedVersion: 2
+        x: 2433
+        y: 2468
+        width: 84
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c69189f5e4f6b510800000000000000
+      internalID: 1564707189128533704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_35
+      rect:
+        serializedVersion: 2
+        x: 2448
+        y: 2405
+        width: 96
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0edeefdfb9d0b3940800000000000000
+      internalID: 5276826352027102688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_36
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 2300
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7578add434a893f90800000000000000
+      internalID: -6973390526332893353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_37
+      rect:
+        serializedVersion: 2
+        x: 2347
+        y: 2296
+        width: 87
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4fe57cec243a3b40800000000000000
+      internalID: 5420702469044170571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_38
+      rect:
+        serializedVersion: 2
+        x: 2433
+        y: 2302
+        width: 85
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6cd89ee202c3f4c0800000000000000
+      internalID: -4254843905086268306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_39
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 935
+        width: 589
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce7f64d22bda0270800000000000000
+      internalID: 8217621412730339013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_40
+      rect:
+        serializedVersion: 2
+        x: 2156
+        y: 1863
+        width: 413
+        height: 432
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d710de46f718f2370800000000000000
+      internalID: 8299995022421197181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_41
+      rect:
+        serializedVersion: 2
+        x: 2572
+        y: 1883
+        width: 328
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 094d5d5d6dd179ee0800000000000000
+      internalID: -1254501162651626352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_42
+      rect:
+        serializedVersion: 2
+        x: 2928
+        y: 2085
+        width: 112
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2834a8bfb8ffc67e0800000000000000
+      internalID: -1770759576777768062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_43
+      rect:
+        serializedVersion: 2
+        x: 3010
+        y: 2065
+        width: 93
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efa0117e5bbabcb80800000000000000
+      internalID: -8373410284411221250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_44
+      rect:
+        serializedVersion: 2
+        x: 2906
+        y: 1894
+        width: 28
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0e5e3e8b5f0a77c0800000000000000
+      internalID: -4072926027100299765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_45
+      rect:
+        serializedVersion: 2
+        x: 2924
+        y: 1884
+        width: 103
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2407db3d6a00d0ed0800000000000000
+      internalID: -2446298306075332542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_46
+      rect:
+        serializedVersion: 2
+        x: 3131
+        y: 1952
+        width: 50
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69087bff3be3fe450800000000000000
+      internalID: 6120179361430077590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_47
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 933
+        width: 698
+        height: 919
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e1b5031bc178a120800000000000000
+      internalID: 2425313516350452197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_48
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 1404
+        width: 473
+        height: 456
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a5802a3ed3503c0800000000000000
+      internalID: -4394037813544723846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_49
+      rect:
+        serializedVersion: 2
+        x: 2641
+        y: 1756
+        width: 421
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2b49757f924e5b40800000000000000
+      internalID: 5430851453293513516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_50
+      rect:
+        serializedVersion: 2
+        x: 3063
+        y: 1779
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 397e6aaa714461d40800000000000000
+      internalID: 5554702058846087059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_51
+      rect:
+        serializedVersion: 2
+        x: 3063
+        y: 1754
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77db4bd33ba8c4cb0800000000000000
+      internalID: -4878371793910055561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_52
+      rect:
+        serializedVersion: 2
+        x: 3100
+        y: 1752
+        width: 126
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8f1acbd30940d80800000000000000
+      internalID: -8285338819622733655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_53
+      rect:
+        serializedVersion: 2
+        x: 3289
+        y: 1657
+        width: 225
+        height: 220
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b3cbcc5d4550450800000000000000
+      internalID: 6054338551309155147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_54
+      rect:
+        serializedVersion: 2
+        x: 3514
+        y: 1656
+        width: 114
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa8ac960e6888ac40800000000000000
+      internalID: 5523814949108623530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_55
+      rect:
+        serializedVersion: 2
+        x: 3628
+        y: 1771
+        width: 224
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19792d05672d36c30800000000000000
+      internalID: 4351553070573983633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_56
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 1364
+        width: 874
+        height: 392
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f55d65ffced624960800000000000000
+      internalID: 7584745587108926815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_57
+      rect:
+        serializedVersion: 2
+        x: 2640
+        y: 1315
+        width: 460
+        height: 439
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1f9b5bac576bb50800000000000000
+      internalID: 6608599016705487336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_58
+      rect:
+        serializedVersion: 2
+        x: 3103
+        y: 1642
+        width: 186
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 845a148e6fa31f3f0800000000000000
+      internalID: -868848420972812984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_59
+      rect:
+        serializedVersion: 2
+        x: 3306
+        y: 1366
+        width: 321
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab277559cf0c2920800000000000000
+      internalID: 2966763611927030694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_60
+      rect:
+        serializedVersion: 2
+        x: 3628
+        y: 1654
+        width: 17
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40b7dc0b3ed8e4be0800000000000000
+      internalID: -1491098417549706492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_61
+      rect:
+        serializedVersion: 2
+        x: 3663
+        y: 1593
+        width: 28
+        height: 177
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2831a0d688ed4e8d0800000000000000
+      internalID: -2817882789300792446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_62
+      rect:
+        serializedVersion: 2
+        x: 3102
+        y: 1322
+        width: 199
+        height: 317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4f227c3daa4d1960800000000000000
+      internalID: 7574292256210956106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_63
+      rect:
+        serializedVersion: 2
+        x: 3816
+        y: 1569
+        width: 39
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e296e682a29cc3e0800000000000000
+      internalID: -2032088105105321248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_64
+      rect:
+        serializedVersion: 2
+        x: 3670
+        y: 1403
+        width: 98
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea59400e17c509d20800000000000000
+      internalID: 3283225772512548270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_65
+      rect:
+        serializedVersion: 2
+        x: 3738
+        y: 1388
+        width: 93
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31e0655af7d1a9410800000000000000
+      internalID: 1484531461243932179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_66
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 1364
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48735ffd52cc5a890800000000000000
+      internalID: -7447321945744001148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_67
+      rect:
+        serializedVersion: 2
+        x: 2218
+        y: 661
+        width: 422
+        height: 740
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5996b0d673cafa9f0800000000000000
+      internalID: -454955683288487531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_68
+      rect:
+        serializedVersion: 2
+        x: 1305
+        y: 659
+        width: 907
+        height: 704
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2d4e5643e1823340800000000000000
+      internalID: 4842075362514849067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_69
+      rect:
+        serializedVersion: 2
+        x: 2640
+        y: 858
+        width: 473
+        height: 456
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ed4c8cb7f4e5c2a0800000000000000
+      internalID: -6717711516481860120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_70
+      rect:
+        serializedVersion: 2
+        x: 3114
+        y: 858
+        width: 189
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f54f12f3e75ae1070800000000000000
+      internalID: 8079076743192900703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_71
+      rect:
+        serializedVersion: 2
+        x: 3306
+        y: 848
+        width: 265
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1291e0877e5766080800000000000000
+      internalID: -9194531952218203871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_72
+      rect:
+        serializedVersion: 2
+        x: 3629
+        y: 1217
+        width: 21
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efb6a3b01e88e9f80800000000000000
+      internalID: -8097884579828175874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_73
+      rect:
+        serializedVersion: 2
+        x: 3652
+        y: 1207
+        width: 103
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b590a30b97a5f2c0800000000000000
+      internalID: -4398425176834796110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_74
+      rect:
+        serializedVersion: 2
+        x: 3871
+        y: 1267
+        width: 35
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd5e494cc9b277230800000000000000
+      internalID: 3636423176437949919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_75
+      rect:
+        serializedVersion: 2
+        x: 3572
+        y: 1206
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b10fc9a4ef5c550800000000000000
+      internalID: 6180625660049890083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_76
+      rect:
+        serializedVersion: 2
+        x: 3592
+        y: 1053
+        width: 125
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b3741ed50a4d36f0800000000000000
+      internalID: -703324577738755150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_77
+      rect:
+        serializedVersion: 2
+        x: 3682
+        y: 1034
+        width: 90
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b66baaf92063fae0800000000000000
+      internalID: -1516762916078262600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_78
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 1301
+        height: 923
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c19ce83ec1d5600a0800000000000000
+      internalID: -6915737799122564836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_79
+      rect:
+        serializedVersion: 2
+        x: 3573
+        y: 859
+        width: 30
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acd5affe82d360b60800000000000000
+      internalID: 7711918657952701898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_80
+      rect:
+        serializedVersion: 2
+        x: 3595
+        y: 852
+        width: 101
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce4db640991eb620800000000000000
+      internalID: 2791696926469082822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_81
+      rect:
+        serializedVersion: 2
+        x: 3791
+        y: 917
+        width: 68
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73a651145fe5dc280800000000000000
+      internalID: -9021450071101314505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_82
+      rect:
+        serializedVersion: 2
+        x: 2641
+        y: 474
+        width: 661
+        height: 382
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7211fb0f429b0ba0800000000000000
+      internalID: -6121638400279637380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_83
+      rect:
+        serializedVersion: 2
+        x: 3305
+        y: 474
+        width: 367
+        height: 372
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8045cf98330e67c00800000000000000
+      internalID: 898151687669961736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_84
+      rect:
+        serializedVersion: 2
+        x: 3675
+        y: 704
+        width: 41
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c38ac71712a777860800000000000000
+      internalID: 7527619586229577788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_85
+      rect:
+        serializedVersion: 2
+        x: 3722
+        y: 673
+        width: 63
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3339295f6169720800000000000000
+      internalID: 2852492657967707071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_86
+      rect:
+        serializedVersion: 2
+        x: 3795
+        y: 674
+        width: 69
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34cfca7506e722bf0800000000000000
+      internalID: -350578868728562621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_87
+      rect:
+        serializedVersion: 2
+        x: 3925
+        y: 715
+        width: 16
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d632529b0405c750800000000000000
+      internalID: 6324465699457742545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_88
+      rect:
+        serializedVersion: 2
+        x: 3964
+        y: 689
+        width: 33
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfc53ed8fd80b7b00800000000000000
+      internalID: 827264712803835131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_89
+      rect:
+        serializedVersion: 2
+        x: 3997
+        y: 713
+        width: 21
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8887181be227171a0800000000000000
+      internalID: -6813539216362735480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_90
+      rect:
+        serializedVersion: 2
+        x: 4069
+        y: 672
+        width: 25
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b929d08846ccd3670800000000000000
+      internalID: 8520190802206233243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_91
+      rect:
+        serializedVersion: 2
+        x: 1307
+        y: 2
+        width: 1274
+        height: 652
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3277afaf6854adee0800000000000000
+      internalID: -1235598701721127133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_92
+      rect:
+        serializedVersion: 2
+        x: 2591
+        y: 474
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce406c8f06b1a2160800000000000000
+      internalID: 7001438674005394668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_93
+      rect:
+        serializedVersion: 2
+        x: 3860
+        y: 426
+        width: 233
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba4de6d47e483d5a0800000000000000
+      internalID: -6497703708394072917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_94
+      rect:
+        serializedVersion: 2
+        x: 2591
+        y: 1
+        width: 1097
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e8bb842ae5a73040800000000000000
+      internalID: 4627349567200540903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wolf_HCG_1_95
+      rect:
+        serializedVersion: 2
+        x: 3689
+        y: 2
+        width: 398
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 597cd44321dc66e00800000000000000
+      internalID: 1037742242226096021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Wolf_HCG_1_0: 8980024157863073792
+      Wolf_HCG_1_1: 8919904072511817590
+      Wolf_HCG_1_10: 5750839345656451718
+      Wolf_HCG_1_11: 6935537675000516278
+      Wolf_HCG_1_12: -5605635113878867411
+      Wolf_HCG_1_13: -3015838238224562846
+      Wolf_HCG_1_14: -679834455118380147
+      Wolf_HCG_1_15: 9219138489138201177
+      Wolf_HCG_1_16: -5704337642396849354
+      Wolf_HCG_1_17: -7723548590645905295
+      Wolf_HCG_1_18: -444405457717734245
+      Wolf_HCG_1_19: 5767773105146380629
+      Wolf_HCG_1_2: 4128764174445483450
+      Wolf_HCG_1_20: -6717624172071855754
+      Wolf_HCG_1_21: 7600810730047467935
+      Wolf_HCG_1_22: -6741929767957025653
+      Wolf_HCG_1_23: 7813888499136999107
+      Wolf_HCG_1_24: -4954481233782295502
+      Wolf_HCG_1_25: -3294627736348506980
+      Wolf_HCG_1_26: 4441479551584124463
+      Wolf_HCG_1_27: 9135146844883026550
+      Wolf_HCG_1_28: -7360272145497635105
+      Wolf_HCG_1_29: 6680961876211050055
+      Wolf_HCG_1_3: -1962290507079367865
+      Wolf_HCG_1_30: -7667807469258093754
+      Wolf_HCG_1_31: 8899306550709716047
+      Wolf_HCG_1_32: -3341312973492894056
+      Wolf_HCG_1_33: -1437310174165819157
+      Wolf_HCG_1_34: 1564707189128533704
+      Wolf_HCG_1_35: 5276826352027102688
+      Wolf_HCG_1_36: -6973390526332893353
+      Wolf_HCG_1_37: 5420702469044170571
+      Wolf_HCG_1_38: -4254843905086268306
+      Wolf_HCG_1_39: 8217621412730339013
+      Wolf_HCG_1_4: -3760308945228202170
+      Wolf_HCG_1_40: 8299995022421197181
+      Wolf_HCG_1_41: -1254501162651626352
+      Wolf_HCG_1_42: -1770759576777768062
+      Wolf_HCG_1_43: -8373410284411221250
+      Wolf_HCG_1_44: -4072926027100299765
+      Wolf_HCG_1_45: -2446298306075332542
+      Wolf_HCG_1_46: 6120179361430077590
+      Wolf_HCG_1_47: 2425313516350452197
+      Wolf_HCG_1_48: -4394037813544723846
+      Wolf_HCG_1_49: 5430851453293513516
+      Wolf_HCG_1_5: 2777766436415756689
+      Wolf_HCG_1_50: 5554702058846087059
+      Wolf_HCG_1_51: -4878371793910055561
+      Wolf_HCG_1_52: -8285338819622733655
+      Wolf_HCG_1_53: 6054338551309155147
+      Wolf_HCG_1_54: 5523814949108623530
+      Wolf_HCG_1_55: 4351553070573983633
+      Wolf_HCG_1_56: 7584745587108926815
+      Wolf_HCG_1_57: 6608599016705487336
+      Wolf_HCG_1_58: -868848420972812984
+      Wolf_HCG_1_59: 2966763611927030694
+      Wolf_HCG_1_6: 4211564462352532357
+      Wolf_HCG_1_60: -1491098417549706492
+      Wolf_HCG_1_61: -2817882789300792446
+      Wolf_HCG_1_62: 7574292256210956106
+      Wolf_HCG_1_63: -2032088105105321248
+      Wolf_HCG_1_64: 3283225772512548270
+      Wolf_HCG_1_65: 1484531461243932179
+      Wolf_HCG_1_66: -7447321945744001148
+      Wolf_HCG_1_67: -454955683288487531
+      Wolf_HCG_1_68: 4842075362514849067
+      Wolf_HCG_1_69: -6717711516481860120
+      Wolf_HCG_1_7: 7506184477904622709
+      Wolf_HCG_1_70: 8079076743192900703
+      Wolf_HCG_1_71: -9194531952218203871
+      Wolf_HCG_1_72: -8097884579828175874
+      Wolf_HCG_1_73: -4398425176834796110
+      Wolf_HCG_1_74: 3636423176437949919
+      Wolf_HCG_1_75: 6180625660049890083
+      Wolf_HCG_1_76: -703324577738755150
+      Wolf_HCG_1_77: -1516762916078262600
+      Wolf_HCG_1_78: -6915737799122564836
+      Wolf_HCG_1_79: 7711918657952701898
+      Wolf_HCG_1_8: 1558370668704146415
+      Wolf_HCG_1_80: 2791696926469082822
+      Wolf_HCG_1_81: -9021450071101314505
+      Wolf_HCG_1_82: -6121638400279637380
+      Wolf_HCG_1_83: 898151687669961736
+      Wolf_HCG_1_84: 7527619586229577788
+      Wolf_HCG_1_85: 2852492657967707071
+      Wolf_HCG_1_86: -350578868728562621
+      Wolf_HCG_1_87: 6324465699457742545
+      Wolf_HCG_1_88: 827264712803835131
+      Wolf_HCG_1_89: -6813539216362735480
+      Wolf_HCG_1_9: -3808724552675770792
+      Wolf_HCG_1_90: 8520190802206233243
+      Wolf_HCG_1_91: -1235598701721127133
+      Wolf_HCG_1_92: 7001438674005394668
+      Wolf_HCG_1_93: -6497703708394072917
+      Wolf_HCG_1_94: 4627349567200540903
+      Wolf_HCG_1_95: 1037742242226096021
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

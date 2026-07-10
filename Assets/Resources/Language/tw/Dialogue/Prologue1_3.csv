@@ -1,4 +1,4 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 Prologue1_3,Hero,這邊也有怪物嗎?,,,,,,,,bg_jail,,
 ,Hero,我們快逃！,,,,,,,,,,
 ,JailerGirl,哇！,scare,Center,,,,run,,,,
@@ -9,4 +9,4 @@ Prologue1_3,Hero,這邊也有怪物嗎?,,,,,,,,bg_jail,,
 ,JailerGirl,不...不要！,scare,,,,,jump,,,,
 ,Hero,接好！快用我的輔助裝置！,,,,,,,,,,
 ,JailerGirl,好...好的！,happy,,,,,,,,,
-BATTLE,,,,,,,,,1,,,
+BATTLE,,,,,,,,,1.0,,,

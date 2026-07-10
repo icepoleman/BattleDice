@@ -1,4 +1,4 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 Prologue2_2,,<東側監獄>,,,,,,,,bg_jail,,
 ,,比起其他地方，這邊更加安靜整潔。,,,,,,,,,,
 ,,彷彿外面的騷亂跟這邊沒有關係。,,,,,,,,,,
@@ -61,4 +61,6 @@ Prologue2_2,,<東側監獄>,,,,,,,,bg_jail,,
 ,Witch,接下來我會稍微認真用魔法攻擊你們呦。,normal,,,,,,,,,
 ,Hero,加油！雫，我們一定可以的。,,,,,,,,,,
 ,JailerGirl,咦！?,scare,,,,,jump,,,,
-BATTLE,,,,,,,,,10,,,
+BATTLE,,,,,,,,,10.0,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

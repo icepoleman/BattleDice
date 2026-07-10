@@ -15,13 +15,15 @@ public enum StageType
 {
     Story,
     Battle,
+    Battle_Hard,//困難戰鬥關卡
+    Battle_Boss,
     SavePoint,
-    Item,
     Blood,
+    MapShop,//地圖商店
     Gold,
     Skill,
     Gear,
-    MapShop//地圖商店
+    Takara,//寶箱
 }
 public class StageNode : MonoBehaviour
 {
@@ -31,14 +33,14 @@ public class StageNode : MonoBehaviour
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
     [SerializeField] string stageInfo;       //關卡資訊
-    [SerializeField] int lockNum;
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
 
     [Header("連線設定")]
-    [SerializeField] float lineWidth = 65f;
-    [SerializeField] Color lineColor = Color.white;
-
+    [SerializeField] private Transform lineRoot; // 用於存放連線的父物件
+    [SerializeField] private GameObject linePrefab; // 連線的Prefab
+    [Header("節點圖片")]
+    [SerializeField] Sprite[] stageSpList;
     Image stageImage;
     Button nodeButton;
     StageState currentState;
@@ -49,6 +51,10 @@ public class StageNode : MonoBehaviour
     // 防連點
     private bool isProcessing = false;
 
+    public void SetStageInfo(string _info)
+    {
+        stageInfo = _info;
+    }
     async void GoNextStage()
     {
         SetState(StageState.Locked);
@@ -68,23 +74,110 @@ public class StageNode : MonoBehaviour
             EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
         }
     }
-    bool isOpen;
-    void Awake()
+    async void Start()
     {
-        if (isOpen) return;
-        isOpen = true;
         stageID = gameObject.name;
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
         SetState(StageState.Locked);
+        if(GameDataManager.TestMode)
+        {
+            SetState(StageState.Unlocked);
+        }
         EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
         lineSprite = Resources.Load<Sprite>("Sprites/LineSprite"); // 確保有一個名為 LineSprite 的白色方形圖片在 Resources/Sprites 資料夾中
 
-        // 繪製連線到下一個節點
-        //DrawLinesToNextNodes();
+        if (stageSpList == null || stageSpList.Length == 0)
+        {
+            await Task.Yield();
+            Canvas.ForceUpdateCanvases();
+            DrawLinesToNextNodes();
+            return;
+        }
+        switch (stageType)
+        {
+            case StageType.Gold:
+            case StageType.Gear:
+            case StageType.Skill:
+            case StageType.Takara:
+                stageImage.sprite = stageSpList[7];
+                break;
+            case StageType.Battle_Boss:
+                //stageImage.sprite = stageSpList[(int)stageType];
+                break;
+            default:
+                stageImage.sprite = stageSpList[(int)stageType];
+                break;
+        }
+
+        await Task.Yield();
+        Canvas.ForceUpdateCanvases();
+        DrawLinesToNextNodes();
+    }
+
+    void DrawLinesToNextNodes()
+    {
+        if (linePrefab == null)
+        {
+            Debug.LogWarning($"[{name}] 尚未設定 linePrefab，無法繪製連線");
+            return;
+        }
+
+        if (nextStageNodes == null || nextStageNodes.Count == 0)
+            return;
+
+        if (lineRoot == null)
+        {
+            Debug.LogWarning($"[{name}] 尚未設定 lineRoot，無法繪製連線");
+            return;
+        }
+
+        RectTransform fromRect = transform as RectTransform;
+        RectTransform lineRootRect = lineRoot as RectTransform;
+        if (fromRect == null || lineRootRect == null)
+        {
+            Debug.LogWarning($"[{name}] 節點或 lineRoot 不是 UI RectTransform，無法繪製連線");
+            return;
+        }
+
+        foreach (var node in nextStageNodes)
+        {
+            if (node == null) continue;
+
+            RectTransform toRect = node.transform as RectTransform;
+            GameObject lineObj = Instantiate(linePrefab, lineRoot);
+            lineObj.name = $"Line_{stageID}_To_{node.name}";
+
+            RectTransform lineRect = lineObj.GetComponent<RectTransform>();
+            if (lineRect == null || toRect == null)
+            {
+                Debug.LogWarning($"[{name}] 連線或節點不是 UI RectTransform，略過連線 {node.name}");
+                Destroy(lineObj);
+                continue;
+            }
+
+            Vector3 startWorld = fromRect.TransformPoint(fromRect.rect.center);
+            Vector3 endWorld = toRect.TransformPoint(toRect.rect.center);
+
+            Vector2 startLocal = lineRootRect.InverseTransformPoint(startWorld);
+            Vector2 endLocal = lineRootRect.InverseTransformPoint(endWorld);
+
+            Vector2 dir = endLocal - startLocal;
+            float distance = dir.magnitude;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            Vector2 lineStartOffset = new Vector2(140f, angle);
+            lineRect.localScale = new Vector3(0.3f, 0.3f, 1f);
+            lineRect.anchoredPosition = startLocal + lineStartOffset;
+            lineRect.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+            Vector2 size = lineRect.sizeDelta;
+            size.x = distance / lineRect.localScale.x;
+            lineRect.sizeDelta = size * 0.5f;
+        }
     }
 
     void OnDestroy()
@@ -170,6 +263,8 @@ public class StageNode : MonoBehaviour
                 case StageType.Story:
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, stageInfo);
                     break;
+                case StageType.Battle_Boss:
+                case StageType.Battle_Hard:
                 case StageType.Battle:
                     //string to int
                     Debug.Log($"進入戰鬥關卡: {stageID}{stageInfo}");
@@ -185,14 +280,14 @@ public class StageNode : MonoBehaviour
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
                     break;
-                case StageType.Item:
-                    Debug.Log($"取得道具: {stageID}{stageInfo}");
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_ITEM, stageInfo); //取得道具
-                    GoNextStage();
-                    break;
+                /* case StageType.Item:
+                     Debug.Log($"取得道具: {stageID}{stageInfo}");
+                     EventCenter.Dispatch(MapEvent.EVENT_GET_ITEM, stageInfo); //取得道具
+                     GoNextStage();
+                     break;*/
                 case StageType.Gear:
-                   // EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
-                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX, TreasureBoxRewardType.Gear, int.Parse(stageInfo)); //開啟寶箱事件
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
                     Debug.Log($"齒輪: {stageInfo}");
                     GoNextStage();
                     break;
@@ -204,8 +299,8 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Gold:
-                    //EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
-                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX, TreasureBoxRewardType.Gold, int.Parse(stageInfo));
+                    EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
+                                                                                         //  EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
                     Debug.Log($"金幣: {stageInfo}");
                     GoNextStage();
                     break;
@@ -219,6 +314,10 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"地圖商店: {stageInfo}");
                     GoNextStage();
                     break;
+                case StageType.Takara:
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱
+                    GoNextStage();
+                    break;
             }
         }
         /* if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
@@ -227,59 +326,5 @@ public class StageNode : MonoBehaviour
              GameDataManager.TmpCompletedStory = "";
              EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
          }*/
-    }
-    /// <summary>
-    /// 繪製連線到所有 nextStageNodes
-    /// </summary>
-    void DrawLinesToNextNodes()
-    {
-        foreach (var nextNode in nextStageNodes)
-        {
-            if (nextNode == null) continue;
-            DrawLine(transform as RectTransform, nextNode.transform as RectTransform);
-        }
-    }
-
-    /// <summary>
-    /// 在兩個 RectTransform 之間繪製一條線
-    /// </summary>
-    void DrawLine(RectTransform from, RectTransform to)
-    {
-        // 創建線條 GameObject
-        GameObject lineObj = new GameObject($"Line_{from.name}_to_{to.name}");
-        lineObj.transform.SetParent(transform.parent);
-        lineObj.transform.SetAsFirstSibling(); // 放到最底層
-
-        // 添加 Image 組件
-        Image lineImage = lineObj.AddComponent<Image>();
-        lineImage.color = lineColor;
-        lineImage.sprite = lineSprite;
-        lineImage.SetNativeSize();
-
-        RectTransform lineRect = lineObj.GetComponent<RectTransform>();
-
-        // 計算兩點的位置
-        Vector2 fromPos = from.anchoredPosition;
-        Vector2 toPos = to.anchoredPosition;
-
-        // 計算距離和角度
-        Vector2 direction = toPos - fromPos;
-        float distance = direction.magnitude;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 設置線條位置（中點）
-        lineRect.anchoredPosition = (fromPos + toPos) / 2f;
-
-        // 設置線條大小
-        float thickLineWidth = Mathf.Max(lineWidth, 6f);
-
-        // 設置旋轉
-        lineRect.localRotation = Quaternion.Euler(0, 0, angle);
-
-        // 設置錨點和軸心
-        lineRect.anchorMin = from.anchorMin;
-        lineRect.anchorMax = from.anchorMax;
-        lineRect.pivot = new Vector2(0.5f, 0.5f);
-        lineRect.localScale = new Vector2(0.3f, 0.3f);//固定大小
     }
 }

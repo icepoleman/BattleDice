@@ -597,6 +597,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1149749793}
     m_Modifications:
+    - target: {fileID: 61487590848293383, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 673445078562306964, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -613,6 +617,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -7443756053782179069, guid: af1a4a632cb900e4ba567e9a75b10477, type: 3}
+    - target: {fileID: 1160845083095069740, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1238893230830131515, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -620,6 +628,14 @@ PrefabInstance:
     - target: {fileID: 1238893230830131515, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695988628717619767, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 48765d94502b9964fa07d51db567af2c, type: 3}
+    - target: {fileID: 1695988628717619767, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173479091437549184, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_IsActive
@@ -736,6 +752,14 @@ PrefabInstance:
     - target: {fileID: 8705909877538026802, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801816947868708653, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2031
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801816947868708653, guid: e03b798704b472c44bfb7111c33463bc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1480
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

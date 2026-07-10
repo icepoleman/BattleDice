@@ -74,6 +74,7 @@ public class DialogueManager : MonoBehaviour
         commonNames["Warden"] = LanguageManager.GetText("T_Warden");
 
         await Task.Delay(1000);
+        SceneLoader.HideLoadingScreen();
         canSkip = true;
     }
     bool ctrlPressed;
@@ -211,8 +212,9 @@ public class DialogueManager : MonoBehaviour
                 // 在這些章節中不處理下一步
                 isOver = true;
                 chatWindow.HideWindow();
-                Debug.Log("劇情結束 進入戰鬥" + int.Parse(dialogueDatas[pageIndex].Flag));
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(dialogueDatas[pageIndex].Flag));
+                float flagValue = float.Parse(dialogueDatas[pageIndex].Flag);
+                Debug.Log("劇情結束 進入戰鬥" + flagValue);
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, (int)flagValue);
                 return;
             case "SAVEROOM":
                 isOver = true;

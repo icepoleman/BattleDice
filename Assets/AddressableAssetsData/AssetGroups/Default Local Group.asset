@@ -80,8 +80,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 255d9a70c7c8fe544a138a0fdbd55ab7
+    m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_wolf_H.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b6324a7d45e3dc48a646c33522588c2
     m_Address: Assets/DiceGame_ab/Common/Prefabs/ConfirmPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c381cf6d581d1a4cbd374d2a95834ce
+    m_Address: Assets/DiceGame_ab/H_Data/Prefabs/Spine_WolfgirlH_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -155,6 +165,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4da882132b3bbd147a6725be36a3146e
+    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4f869c46762845d43a6a49a90fa5f987
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy1_2.png
     m_ReadOnly: 0
@@ -206,11 +221,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Dice
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ec3203cfaa15c049a9bbc74b908c55c
-    m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue3.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63af7bb6ef0b9b74abfc2aec34ea97fd
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy3_0.png
     m_ReadOnly: 0
@@ -243,6 +253,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a2dd39149d18044dab2c2e0096e90e5
     m_Address: Assets/DiceGame_ab/Common/Prefabs/SetPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b9adac59b0575f46b099de7bee48e76
+    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_WolfPapa.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

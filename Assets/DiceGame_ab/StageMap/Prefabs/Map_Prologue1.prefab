@@ -167,8 +167,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_3
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 3763750294119477090}
 --- !u!114 &7157061382932458260
@@ -415,8 +416,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_4
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 4214008320028607138}
 --- !u!114 &9043041832009397072
@@ -630,8 +632,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_5
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes: []
 --- !u!114 &7842742990286571053
 MonoBehaviour:
@@ -1036,8 +1039,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3099997359127566570}
   m_HandleRect: {fileID: 413701454159699427}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.94092035
+  m_Value: 0.0000010340545
+  m_Size: 0.9409203
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1209,8 +1212,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_6
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 2674644447118131793}
 --- !u!114 &2272183422384536897
@@ -1457,11 +1461,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 2
-  stageInfo: 100
+  stageType: 4
+  stageInfo: 
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 1392224374323184879}
 --- !u!114 &3584711852344115898
@@ -1675,8 +1680,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue1_2
   completedStory: 
-  lineWidth: 4
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 3007364967079735081}
 --- !u!114 &2148166395848396133

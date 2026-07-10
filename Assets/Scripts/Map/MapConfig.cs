@@ -7,6 +7,7 @@ public static class MapConfig
         "TestMap",             // 测试地图
         "Map_Prologue1",      // 第1张
         "Map_Prologue2",        // 第2张
+        "Map_Prologue3",        // 第3张
     };
     //关卡名称
     public static readonly string[] StageNames = new string[]
