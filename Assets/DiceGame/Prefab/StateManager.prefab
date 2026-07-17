@@ -259,6 +259,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8115483211905510591}
     m_Modifications:
+    - target: {fileID: 3718323824323849722, guid: 4e43da58b579ac548bbe4ee1a2cc1431, type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6379009499574450918, guid: 4e43da58b579ac548bbe4ee1a2cc1431, type: 3}
       propertyPath: m_Name
       value: TestPanel

@@ -27,8 +27,6 @@ public enum StageType
 }
 public class StageNode : MonoBehaviour
 {
-    //"關卡設定"
-    string stageID;              // 關卡唯一ID 
     [Header("關卡類型")]
     [SerializeField] StageType stageType;
     [Header("關卡資訊")]
@@ -43,23 +41,25 @@ public class StageNode : MonoBehaviour
     [SerializeField] Sprite[] stageSpList;
     Image stageImage;
     Button nodeButton;
-    StageState currentState;
+    public StageState currentState;
     [SerializeField] List<StageNode> nextStageNodes = new List<StageNode>();
+    //[Header("滑鼠效果")]
+    private BaseMouseEffect mouseEffect; // 用於滑鼠效果的組件
+    private OnMouseOutline mouseOutline; // 用於點擊效果的組件
 
-    private Sprite lineSprite;
-
-    // 防連點
-    private bool isProcessing = false;
-
-    public void SetStageInfo(string _info)
+    string stageID => gameObject.name; // 使用 GameObject 的名稱作為關卡 ID
+    void Awake()
+    {
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
+        EventCenter.AddListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
+    }
+    public void SetStageInfo(string _info)//測試用
     {
         stageInfo = _info;
     }
     async void GoNextStage()
     {
-        SetState(StageState.Locked);
-        EventCenter.Dispatch(MapEvent.EVENT_HIDE_OTHER_STAGE);//隱藏其他關卡
-
+        EventCenter.Dispatch(MapEvent.EVENT_HIDE_ALL_STAGE);
         await Task.Delay(500); // 等待動畫或過場效果
         if (nextStageNodes.Count > 0)
         {
@@ -70,25 +70,18 @@ public class StageNode : MonoBehaviour
         }
         else
         {
-            Debug.Log("已完成所有關卡!");
-            EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
+            EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);
         }
     }
     async void Start()
     {
-        stageID = gameObject.name;
+        mouseEffect = GetComponent<BaseMouseEffect>();
+        mouseOutline = GetComponent<OnMouseOutline>();
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-        SetState(StageState.Locked);
-        if(GameDataManager.TestMode)
-        {
-            SetState(StageState.Unlocked);
-        }
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
-        EventCenter.AddListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
 
-        lineSprite = Resources.Load<Sprite>("Sprites/LineSprite"); // 確保有一個名為 LineSprite 的白色方形圖片在 Resources/Sprites 資料夾中
+        //lineSprite = Resources.Load<Sprite>("Sprites/LineSprite"); // 確保有一個名為 LineSprite 的白色方形圖片在 Resources/Sprites 資料夾中
 
         if (stageSpList == null || stageSpList.Length == 0)
         {
@@ -120,20 +113,8 @@ public class StageNode : MonoBehaviour
 
     void DrawLinesToNextNodes()
     {
-        if (linePrefab == null)
-        {
-            Debug.LogWarning($"[{name}] 尚未設定 linePrefab，無法繪製連線");
-            return;
-        }
-
         if (nextStageNodes == null || nextStageNodes.Count == 0)
             return;
-
-        if (lineRoot == null)
-        {
-            Debug.LogWarning($"[{name}] 尚未設定 lineRoot，無法繪製連線");
-            return;
-        }
 
         RectTransform fromRect = transform as RectTransform;
         RectTransform lineRootRect = lineRoot as RectTransform;
@@ -149,7 +130,7 @@ public class StageNode : MonoBehaviour
 
             RectTransform toRect = node.transform as RectTransform;
             GameObject lineObj = Instantiate(linePrefab, lineRoot);
-            lineObj.name = $"Line_{stageID}_To_{node.name}";
+            lineObj.name = $"Line__To_{node.name}";
 
             RectTransform lineRect = lineObj.GetComponent<RectTransform>();
             if (lineRect == null || toRect == null)
@@ -182,52 +163,31 @@ public class StageNode : MonoBehaviour
 
     void OnDestroy()
     {
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, OnOpenNextStageNode);
-        EventCenter.RemoveListener(MapEvent.EVENT_HIDE_OTHER_STAGE, OnHideOtherStage);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
+        EventCenter.RemoveListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
     }
-    void OnHideOtherStage(object[] param)
+    void OnHideStage(object[] param)
     {
+        Debug.LogError(gameObject.name + GameDataManager.TestMode);
         if (GameDataManager.TestMode)
             SetState(StageState.Unlocked);
         else
             SetState(StageState.Locked);
     }
-    public void OnOpenNextStageNode(object[] param)
+    public async void OnOpenTargetStageNode(object[] param)
     {
         string targetStage = (string)param[0];
-        if (currentState == StageState.Completed)
-            SetState(StageState.Locked);
-        if (targetStage != stageID) return;
-        Debug.Log("OnOpenNextStageNode called");
-        SetState(StageState.Completed);
-        if (nextStageNodes.Count > 0)
+        if (targetStage == gameObject.name)
         {
-            foreach (var node in nextStageNodes)
-            {
-                node.SetState(StageState.Unlocked);
-            }
-        }
-        else
-        {
-            Debug.Log("已完成所有關卡!");
-            EventCenter.Dispatch(MapEvent.EVENT_COMPLETE_MAP);//第一個節點都要是start 並快速存檔
+            GoNextStage();
+            await Task.Delay(500);
+            SetState(StageState.Completed);
         }
     }
 
     public void SetState(StageState newState)
     {
         currentState = newState;
-        UpdateVisuals();
-    }
-
-    void UpdateVisuals()
-    {
-        // 設定按鈕互動性
-        nodeButton.interactable = currentState == StageState.Unlocked;
-        /*if (stageType == StageType.SavePoint && currentState != StageState.Locked)
-        {
-            nodeButton.interactable = true; //準備室關卡永遠可點
-        }*/
 
         // 根據狀態顯示對應視覺
         switch (currentState)
@@ -244,17 +204,26 @@ public class StageNode : MonoBehaviour
                 stageImage.color = Color.green;
                 break;
         }
+        if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
+        {
+            nodeButton.interactable = true;
+            stageImage.color = Color.white;
+            mouseEffect.EffectEnabled = true;
+            mouseOutline.EffectEnabled = true;
+        }
+        else
+        {
+            bool isOpen = currentState == StageState.Unlocked;
+            nodeButton.interactable = isOpen;
+            mouseEffect.EffectEnabled = isOpen;
+            mouseOutline.EffectEnabled = isOpen;
+        }
     }
 
     void OnNodeClick()
     {
-        // 防連點
-        if (isProcessing) return;
-
         if (currentState != StageState.Locked)
         {
-            isProcessing = true;
-
             GameDataManager.TmpCompletedStory = completedStory;
             if (!GameDataManager.TestMode)
                 GameDataManager.CurrentStage = stageID;

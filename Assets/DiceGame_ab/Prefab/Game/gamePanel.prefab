@@ -128,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2363903549750723219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6085984063637319283, guid: c105bf3824af3ca499feea5c2c750ed7, type: 3}
+  m_Sprite: {fileID: -7443756053782179069, guid: af1a4a632cb900e4ba567e9a75b10477, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2468,7 +2468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9157755675938131683
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4266,9 +4266,7 @@ MonoBehaviour:
   img_player: {fileID: 828837591888606678}
   img_enemy: {fileID: 3525385943892046511}
   img_spSkill_player: {fileID: 1695988628717619767}
-  img_spSkill_enemy: {fileID: 5440301613631866195}
   spSkillAnim_player: {fileID: 9212953491137321040}
-  spSkillAnim_enemy: {fileID: 1709665605066928458}
   btn_set: {fileID: 6480979504069020008}
 --- !u!1 &6674387200687343228
 GameObject:

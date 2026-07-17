@@ -8,6 +8,9 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private float pressedScaleMultiplier = 0.92f;
     [SerializeField] private float lerpSpeed = 14f;
 
+    [Header("State")]
+    [SerializeField] private bool effectEnabled = true;
+
     [Header("Bounce Settings")]
     [SerializeField] private float bounceDuration = 0.14f;
     [SerializeField] private float bounceOvershoot = 0.06f;
@@ -18,6 +21,12 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private bool isPressed;
     private bool isBouncing;
     private Coroutine bounceRoutine;
+
+    public bool EffectEnabled
+    {
+        get => effectEnabled;
+        set => SetEffectEnabled(value);
+    }
 
     private void Awake()
     {
@@ -42,6 +51,11 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void Update()
     {
+        if (!effectEnabled)
+        {
+            return;
+        }
+
         if (isPressed && Input.GetMouseButtonUp(0))
         {
             HandleMouseUp();
@@ -55,6 +69,11 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!effectEnabled)
+        {
+            return;
+        }
+
         if (isPressed)
         {
             return;
@@ -65,6 +84,11 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!effectEnabled)
+        {
+            return;
+        }
+
         if (isPressed)
         {
             return;
@@ -75,12 +99,22 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!effectEnabled)
+        {
+            return;
+        }
+
         isPressed = true;
         SetTargetScale(pressedScaleMultiplier);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!effectEnabled)
+        {
+            return;
+        }
+
         HandleMouseUp();
     }
 
@@ -103,6 +137,35 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
 
         bounceRoutine = StartCoroutine(BounceToOriginal());
+    }
+
+    public void SetEffectEnabled(bool enabled)
+    {
+        if (effectEnabled == enabled)
+        {
+            return;
+        }
+
+        effectEnabled = enabled;
+
+        if (!effectEnabled)
+        {
+            StopBounce();
+            isPressed = false;
+            targetScale = originalScale;
+            scaleTarget.localScale = originalScale;
+        }
+    }
+
+    private void StopBounce()
+    {
+        if (bounceRoutine != null)
+        {
+            StopCoroutine(bounceRoutine);
+            bounceRoutine = null;
+        }
+
+        isBouncing = false;
     }
 
     private System.Collections.IEnumerator BounceToOriginal()

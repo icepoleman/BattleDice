@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 730270112815522083}
   - component: {fileID: 2289798096345151957}
   - component: {fileID: 376365621053315636}
+  - component: {fileID: 4796535464261890343}
+  - component: {fileID: 2150392333805009319}
   m_Layer: 5
   m_Name: 2-3
   m_TagString: Untagged
@@ -92,8 +94,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 5
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 3564558196212918379}
   - {fileID: 1535735259592496989}
@@ -141,6 +144,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4796535464261890343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257250283466823065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &2150392333805009319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257250283466823065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &305844508918473440
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +337,8 @@ GameObject:
   - component: {fileID: 6418966755062133687}
   - component: {fileID: 519467460298530901}
   - component: {fileID: 6673836237637530141}
+  - component: {fileID: 5097561342379498246}
+  - component: {fileID: 7678461577081435766}
   m_Layer: 5
   m_Name: 9-3
   m_TagString: Untagged
@@ -383,8 +418,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 4084243503480921538}
 --- !u!114 &6673836237637530141
@@ -431,6 +467,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5097561342379498246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539588121007856390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &7678461577081435766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539588121007856390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &543900323563316332
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +510,8 @@ GameObject:
   - component: {fileID: 6834047006922381489}
   - component: {fileID: 7816084189763479020}
   - component: {fileID: 2637024135114537160}
+  - component: {fileID: 7321276348771245749}
+  - component: {fileID: 2200455251873885717}
   m_Layer: 5
   m_Name: 8-1
   m_TagString: Untagged
@@ -523,8 +591,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 7435639992299960521}
   - {fileID: 1371123038575361461}
@@ -572,6 +641,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7321276348771245749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543900323563316332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &2200455251873885717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543900323563316332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &582325200028977698
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +684,8 @@ GameObject:
   - component: {fileID: 7763522099517254997}
   - component: {fileID: 9045855858005659859}
   - component: {fileID: 6231659123776943915}
+  - component: {fileID: 5038070405520243700}
+  - component: {fileID: 7476996687961758883}
   m_Layer: 5
   m_Name: 11-1
   m_TagString: Untagged
@@ -664,8 +765,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 5346064471413175292}
 --- !u!114 &6231659123776943915
@@ -712,6 +814,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5038070405520243700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582325200028977698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &7476996687961758883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582325200028977698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &584877185585965206
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +1082,8 @@ GameObject:
   - component: {fileID: 2868507768293952259}
   - component: {fileID: 1371123038575361461}
   - component: {fileID: 5321363681927857720}
+  - component: {fileID: 538816549226220605}
+  - component: {fileID: 8831340073221310905}
   m_Layer: 5
   m_Name: 9-2
   m_TagString: Untagged
@@ -1029,8 +1163,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 69387674630824729}
   - {fileID: 4084243503480921538}
@@ -1078,6 +1213,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &538816549226220605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953967554528944497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &8831340073221310905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953967554528944497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &983380641769406173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1451,8 @@ GameObject:
   - component: {fileID: 7517236443637306155}
   - component: {fileID: 2860070014242458362}
   - component: {fileID: 3688670842061308368}
+  - component: {fileID: 2747792037523137068}
+  - component: {fileID: 8101887000514461418}
   m_Layer: 5
   m_Name: 14
   m_TagString: Untagged
@@ -1365,8 +1532,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Prologue2_2
   completedStory: Prologue2_3
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 5350425964224081899}
 --- !u!114 &3688670842061308368
@@ -1413,6 +1581,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2747792037523137068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063798942748882881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &8101887000514461418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063798942748882881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &1077698177024469657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +2043,8 @@ GameObject:
   - component: {fileID: 3870116458825128542}
   - component: {fileID: 5346064471413175292}
   - component: {fileID: 8796641892002725575}
+  - component: {fileID: 7803162615516752923}
+  - component: {fileID: 7632639632560558905}
   m_Layer: 5
   m_Name: 12-1
   m_TagString: Untagged
@@ -1924,8 +2124,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 6
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 6948905329525653848}
 --- !u!114 &8796641892002725575
@@ -1972,6 +2173,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7803162615516752923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916390099638400840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &7632639632560558905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916390099638400840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &1985278587752955779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2216,8 @@ GameObject:
   - component: {fileID: 2790130573044226131}
   - component: {fileID: 4597664882651641811}
   - component: {fileID: 909891764498961658}
+  - component: {fileID: 1587895027864202591}
+  - component: {fileID: 3899251975500777619}
   m_Layer: 5
   m_Name: 8-2
   m_TagString: Untagged
@@ -2064,8 +2297,9 @@ MonoBehaviour:
   stageType: 6
   stageInfo: 13
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 1371123038575361461}
   - {fileID: 519467460298530901}
@@ -2113,6 +2347,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1587895027864202591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985278587752955779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &3899251975500777619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985278587752955779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &2101186613438730660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,6 +2465,8 @@ GameObject:
   - component: {fileID: 94279828323409086}
   - component: {fileID: 2188569197803284892}
   - component: {fileID: 8596531985895858288}
+  - component: {fileID: 3547798716151259487}
+  - component: {fileID: 3331108729611003343}
   m_Layer: 5
   m_Name: 4-2
   m_TagString: Untagged
@@ -2280,8 +2546,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 6
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 7485077625761745970}
 --- !u!114 &8596531985895858288
@@ -2328,6 +2595,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3547798716151259487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2227820667159232358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &3331108729611003343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2227820667159232358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &2321832427927211886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,7 +2728,7 @@ RectTransform:
   m_GameObject: {fileID: 2458302808127869179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 144, y: 144, z: 144}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2728299987367252319}
@@ -2674,6 +2971,8 @@ GameObject:
   - component: {fileID: 6111277561915550920}
   - component: {fileID: 5962194730070383238}
   - component: {fileID: 4584152020917582382}
+  - component: {fileID: 629756231261028362}
+  - component: {fileID: 5595787173369261898}
   m_Layer: 5
   m_Name: 4-1
   m_TagString: Untagged
@@ -2753,8 +3052,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 5790094002849323373}
   - {fileID: 8176291332092638068}
@@ -2802,6 +3102,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &629756231261028362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2498859515094172884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &5595787173369261898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2498859515094172884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &2629714409487919943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3389,8 @@ GameObject:
   - component: {fileID: 866334525791930266}
   - component: {fileID: 4084243503480921538}
   - component: {fileID: 7187582072500642026}
+  - component: {fileID: 7994631252692647419}
+  - component: {fileID: 1149628917153637343}
   m_Layer: 5
   m_Name: 10-2
   m_TagString: Untagged
@@ -3138,8 +3470,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 6058472283827717302}
   - {fileID: 7702369820738545034}
@@ -3187,6 +3520,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7994631252692647419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167890473905574934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1149628917153637343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167890473905574934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &3191655705657990117
 GameObject:
   m_ObjectHideFlags: 0
@@ -3394,6 +3757,8 @@ GameObject:
   - component: {fileID: 8996074012898153026}
   - component: {fileID: 6267954068028440110}
   - component: {fileID: 3631840188081069988}
+  - component: {fileID: 8593039862506681980}
+  - component: {fileID: 135025520824075235}
   m_Layer: 5
   m_Name: 3-1
   m_TagString: Untagged
@@ -3473,8 +3838,9 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 3
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 5962194730070383238}
 --- !u!114 &3631840188081069988
@@ -3521,6 +3887,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8593039862506681980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238896654200345316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &135025520824075235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238896654200345316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &3437834616805659636
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,6 +4005,8 @@ GameObject:
   - component: {fileID: 8521647119525257339}
   - component: {fileID: 1085300791884810076}
   - component: {fileID: 1106442588807773508}
+  - component: {fileID: 7373990988301092661}
+  - component: {fileID: 4315483014721755805}
   m_Layer: 5
   m_Name: 1-2
   m_TagString: Untagged
@@ -3688,8 +4086,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 3670294038557752651}
   - {fileID: 2289798096345151957}
@@ -3737,6 +4136,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7373990988301092661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752091867781248727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &4315483014721755805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752091867781248727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4062742154583945269
 GameObject:
   m_ObjectHideFlags: 0
@@ -4050,6 +4479,8 @@ GameObject:
   - component: {fileID: 5750118308731066091}
   - component: {fileID: 7702369820738545034}
   - component: {fileID: 3321702176672190561}
+  - component: {fileID: 1533307947617078681}
+  - component: {fileID: 1420481999576552686}
   m_Layer: 5
   m_Name: 11-3
   m_TagString: Untagged
@@ -4129,8 +4560,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 8781511046203913083}
 --- !u!114 &3321702176672190561
@@ -4177,6 +4609,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1533307947617078681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4131574469619815167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1420481999576552686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4131574469619815167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4150138557614291644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4346,6 +4808,8 @@ GameObject:
   - component: {fileID: 4323340790760284953}
   - component: {fileID: 5350425964224081899}
   - component: {fileID: 6133588215258034605}
+  - component: {fileID: 1360742774869701610}
+  - component: {fileID: 1428031103832243591}
   m_Layer: 5
   m_Name: 15
   m_TagString: Untagged
@@ -4425,8 +4889,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: H_Witch_1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes: []
 --- !u!114 &6133588215258034605
 MonoBehaviour:
@@ -4472,6 +4937,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1360742774869701610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296061263917133299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1428031103832243591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296061263917133299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4340512296867230214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4485,6 +4980,8 @@ GameObject:
   - component: {fileID: 5488330975675128665}
   - component: {fileID: 891683894262940920}
   - component: {fileID: 1653014412681004813}
+  - component: {fileID: 4843071371548680171}
+  - component: {fileID: 3276417566681416765}
   m_Layer: 5
   m_Name: 6-1
   m_TagString: Untagged
@@ -4564,8 +5061,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 1000
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 4057367456474407678}
 --- !u!114 &1653014412681004813
@@ -4612,6 +5110,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4843071371548680171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340512296867230214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &3276417566681416765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340512296867230214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4374234453576334547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4820,6 +5348,8 @@ GameObject:
   - component: {fileID: 7033438630616416370}
   - component: {fileID: 8781511046203913083}
   - component: {fileID: 1971000245722431502}
+  - component: {fileID: 1911645962365902215}
+  - component: {fileID: 5387125123022496070}
   m_Layer: 5
   m_Name: 12-3
   m_TagString: Untagged
@@ -4899,8 +5429,9 @@ MonoBehaviour:
   stageType: 6
   stageInfo: 11
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 6948905329525653848}
 --- !u!114 &1971000245722431502
@@ -4947,6 +5478,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1911645962365902215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4659547196144969574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &5387125123022496070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4659547196144969574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4761237467583786085
 GameObject:
   m_ObjectHideFlags: 0
@@ -4960,6 +5521,8 @@ GameObject:
   - component: {fileID: 8144693724204195020}
   - component: {fileID: 7485077625761745970}
   - component: {fileID: 2924607004746587761}
+  - component: {fileID: 3781226048239017922}
+  - component: {fileID: 1986296788413276248}
   m_Layer: 5
   m_Name: 5-3
   m_TagString: Untagged
@@ -5039,8 +5602,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 1000
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 1762286908239653496}
 --- !u!114 &2924607004746587761
@@ -5087,6 +5651,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3781226048239017922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761237467583786085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1986296788413276248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761237467583786085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &4931098215861098362
 GameObject:
   m_ObjectHideFlags: 0
@@ -5670,6 +6264,8 @@ GameObject:
   - component: {fileID: 339974890731059550}
   - component: {fileID: 6948905329525653848}
   - component: {fileID: 3068423828900359794}
+  - component: {fileID: 8127164631100132247}
+  - component: {fileID: 9117223868400480458}
   m_Layer: 5
   m_Name: 13
   m_TagString: Untagged
@@ -5749,8 +6345,9 @@ MonoBehaviour:
   stageType: 2
   stageInfo: 
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 2860070014242458362}
 --- !u!114 &3068423828900359794
@@ -5797,6 +6394,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8127164631100132247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955468024089104217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &9117223868400480458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955468024089104217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &6006895742947301404
 GameObject:
   m_ObjectHideFlags: 0
@@ -6154,6 +6781,8 @@ GameObject:
   - component: {fileID: 4204773803572453134}
   - component: {fileID: 4057367456474407678}
   - component: {fileID: 435175633913087886}
+  - component: {fileID: 5165072200907734877}
+  - component: {fileID: 1167874698775466489}
   m_Layer: 5
   m_Name: 7
   m_TagString: Untagged
@@ -6233,8 +6862,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 3
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 7816084189763479020}
   - {fileID: 4597664882651641811}
@@ -6282,6 +6912,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5165072200907734877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507754343037755584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1167874698775466489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507754343037755584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &6526171761944940895
 GameObject:
   m_ObjectHideFlags: 0
@@ -6414,6 +7074,8 @@ GameObject:
   - component: {fileID: 5892400795248162649}
   - component: {fileID: 3670294038557752651}
   - component: {fileID: 345166125344701756}
+  - component: {fileID: 3122201965813830457}
+  - component: {fileID: 2278320501419723171}
   m_Layer: 5
   m_Name: 2-2
   m_TagString: Untagged
@@ -6493,8 +7155,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 1535735259592496989}
 --- !u!114 &345166125344701756
@@ -6541,6 +7204,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3122201965813830457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563323687552731491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &2278320501419723171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563323687552731491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &6588010137340170331
 GameObject:
   m_ObjectHideFlags: 0
@@ -6554,6 +7247,8 @@ GameObject:
   - component: {fileID: 8153751477225931168}
   - component: {fileID: 3564558196212918379}
   - component: {fileID: 7249974276208364355}
+  - component: {fileID: 9007483638409006934}
+  - component: {fileID: 2366868281775384272}
   m_Layer: 5
   m_Name: 3-3
   m_TagString: Untagged
@@ -6633,8 +7328,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: Affinity_JailerGirl_1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 2188569197803284892}
 --- !u!114 &7249974276208364355
@@ -6681,6 +7377,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9007483638409006934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588010137340170331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &2366868281775384272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588010137340170331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &6591069497072523204
 GameObject:
   m_ObjectHideFlags: 0
@@ -6935,6 +7661,8 @@ GameObject:
   - component: {fileID: 678405275995776219}
   - component: {fileID: 5790094002849323373}
   - component: {fileID: 2825492770476400373}
+  - component: {fileID: 5459571904793221382}
+  - component: {fileID: 6335837308413295001}
   m_Layer: 5
   m_Name: 5-1
   m_TagString: Untagged
@@ -7014,8 +7742,9 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 3
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 891683894262940920}
 --- !u!114 &2825492770476400373
@@ -7062,6 +7791,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5459571904793221382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913446100740549787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &6335837308413295001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913446100740549787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &6947491189452892935
 GameObject:
   m_ObjectHideFlags: 0
@@ -7300,6 +8059,8 @@ GameObject:
   - component: {fileID: 8209677574880579674}
   - component: {fileID: 7435639992299960521}
   - component: {fileID: 7404588996018717559}
+  - component: {fileID: 7319413853304541030}
+  - component: {fileID: 8354136463571596903}
   m_Layer: 5
   m_Name: 9-1
   m_TagString: Untagged
@@ -7379,8 +8140,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 69387674630824729}
 --- !u!114 &7404588996018717559
@@ -7427,6 +8189,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7319413853304541030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061017650435548775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &8354136463571596903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061017650435548775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &7249215978958595281
 GameObject:
   m_ObjectHideFlags: 0
@@ -7440,6 +8232,8 @@ GameObject:
   - component: {fileID: 5253539736816114547}
   - component: {fileID: 8176291332092638068}
   - component: {fileID: 543524297175938742}
+  - component: {fileID: 8310329877620924603}
+  - component: {fileID: 6731553417132038895}
   m_Layer: 5
   m_Name: 5-2
   m_TagString: Untagged
@@ -7519,8 +8313,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 891683894262940920}
   - {fileID: 1762286908239653496}
@@ -7568,6 +8363,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8310329877620924603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249215978958595281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &6731553417132038895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249215978958595281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &7321258763290133670
 GameObject:
   m_ObjectHideFlags: 0
@@ -7581,6 +8406,8 @@ GameObject:
   - component: {fileID: 828841608702279597}
   - component: {fileID: 6058472283827717302}
   - component: {fileID: 7570440557736357704}
+  - component: {fileID: 7444590960794511756}
+  - component: {fileID: 6810058968526020987}
   m_Layer: 5
   m_Name: 11-2
   m_TagString: Untagged
@@ -7660,8 +8487,9 @@ MonoBehaviour:
   stageType: 0
   stageInfo: event_01
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 4566004420749602720}
 --- !u!114 &7570440557736357704
@@ -7708,6 +8536,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7444590960794511756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321258763290133670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &6810058968526020987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321258763290133670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &7436113488984692024
 GameObject:
   m_ObjectHideFlags: 0
@@ -7840,6 +8698,8 @@ GameObject:
   - component: {fileID: 1395867700412147255}
   - component: {fileID: 1762286908239653496}
   - component: {fileID: 5671339971289502232}
+  - component: {fileID: 2233286554784716025}
+  - component: {fileID: 8065440730609178352}
   m_Layer: 5
   m_Name: 6-2
   m_TagString: Untagged
@@ -7919,8 +8779,9 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 3
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 4057367456474407678}
 --- !u!114 &5671339971289502232
@@ -7967,6 +8828,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2233286554784716025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470932276877875131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &8065440730609178352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470932276877875131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &7490347100637534578
 GameObject:
   m_ObjectHideFlags: 0
@@ -8088,7 +8979,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6750156624374380208}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.33539748
+  m_Size: 0.33539742
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8526,6 +9417,8 @@ GameObject:
   - component: {fileID: 1986371306506713272}
   - component: {fileID: 332652940731565242}
   - component: {fileID: 6798367549793144207}
+  - component: {fileID: 3840357428176944840}
+  - component: {fileID: 8910008284173497480}
   m_Layer: 5
   m_Name: 2-1
   m_TagString: Untagged
@@ -8605,8 +9498,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 5
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 6267954068028440110}
   - {fileID: 1535735259592496989}
@@ -8654,6 +9548,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3840357428176944840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002203479186259109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &8910008284173497480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002203479186259109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8008632236708105801
 GameObject:
   m_ObjectHideFlags: 0
@@ -8667,6 +9591,8 @@ GameObject:
   - component: {fileID: 6232900225886176642}
   - component: {fileID: 9045842649708123170}
   - component: {fileID: 3321399545121501916}
+  - component: {fileID: 3206592632285282578}
+  - component: {fileID: 5457619743905277921}
   m_Layer: 5
   m_Name: 1-1
   m_TagString: Untagged
@@ -8746,8 +9672,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 332652940731565242}
 --- !u!114 &3321399545121501916
@@ -8794,6 +9721,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3206592632285282578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008632236708105801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &5457619743905277921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008632236708105801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8028031646523522685
 GameObject:
   m_ObjectHideFlags: 0
@@ -9077,6 +10034,8 @@ GameObject:
   - component: {fileID: 4565327570264168297}
   - component: {fileID: 69387674630824729}
   - component: {fileID: 1692969511821062292}
+  - component: {fileID: 8362346125137519570}
+  - component: {fileID: 6102849050053738246}
   m_Layer: 5
   m_Name: 10-1
   m_TagString: Untagged
@@ -9156,8 +10115,9 @@ MonoBehaviour:
   stageType: 7
   stageInfo: 3
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 9045855858005659859}
 --- !u!114 &1692969511821062292
@@ -9204,6 +10164,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8362346125137519570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230899476367356972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &6102849050053738246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230899476367356972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8276495240499999788
 GameObject:
   m_ObjectHideFlags: 0
@@ -9337,6 +10327,8 @@ GameObject:
   - component: {fileID: 4564797259093712749}
   - component: {fileID: 4566004420749602720}
   - component: {fileID: 4746395765306549484}
+  - component: {fileID: 5952205691284377334}
+  - component: {fileID: 5682387414069340422}
   m_Layer: 5
   m_Name: 12-2
   m_TagString: Untagged
@@ -9416,8 +10408,9 @@ MonoBehaviour:
   stageType: 1
   stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 6948905329525653848}
 --- !u!114 &4746395765306549484
@@ -9464,6 +10457,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5952205691284377334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583124617664977809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &5682387414069340422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583124617664977809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8588149551104180966
 GameObject:
   m_ObjectHideFlags: 0
@@ -9477,6 +10500,8 @@ GameObject:
   - component: {fileID: 3810995812773424953}
   - component: {fileID: 1535735259592496989}
   - component: {fileID: 6216392026448922570}
+  - component: {fileID: 2271559271998324229}
+  - component: {fileID: 1851065248815111431}
   m_Layer: 5
   m_Name: 3-2
   m_TagString: Untagged
@@ -9556,8 +10581,9 @@ MonoBehaviour:
   stageType: 4
   stageInfo: 1000
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 5962194730070383238}
   - {fileID: 2188569197803284892}
@@ -9605,6 +10631,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2271559271998324229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588149551104180966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &1851065248815111431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588149551104180966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8595089116508505635
 GameObject:
   m_ObjectHideFlags: 0
@@ -9618,8 +10674,10 @@ GameObject:
   - component: {fileID: 7701248967464475096}
   - component: {fileID: 6817107155533186865}
   - component: {fileID: 717575907923038467}
+  - component: {fileID: 8083602663635365470}
+  - component: {fileID: 4106780100583038740}
   m_Layer: 5
-  m_Name: 0
+  m_Name: StartPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9694,11 +10752,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 2
-  stageInfo: 
+  stageType: 4
+  stageInfo: 1
   completedStory: 
-  lineWidth: 65
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineRoot: {fileID: 0}
+  linePrefab: {fileID: 0}
+  stageSpList: []
   nextStageNodes:
   - {fileID: 1085300791884810076}
   - {fileID: 9045842649708123170}
@@ -9746,6 +10805,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8083602663635365470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595089116508505635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+--- !u!114 &4106780100583038740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595089116508505635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &8933910535747442819
 GameObject:
   m_ObjectHideFlags: 0

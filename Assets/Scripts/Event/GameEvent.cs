@@ -42,8 +42,8 @@ public class StateEvent
 public class MapEvent
 {
     public const string EVENT_COMPLETE_MAP = "MapEvent_CompleteMap"; //完成當前地圖事件
-    public const string EVENT_OPEN_NEXT_STAGE_NODE = "MapEvent_OpenNextStageNode"; //開啟關卡節點事件
-    public const string EVENT_HIDE_OTHER_STAGE = "MapEvent_HideOtherStage"; //隱藏其他關卡事件
+    public const string EVENT_OPEN_TARGET_STAGE_NODE = "MapEvent_OpenTargetStageNode"; //開啟關卡節點事件
+    public const string EVENT_HIDE_ALL_STAGE = "MapEvent_HideALLStage"; //隱藏其他關卡事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知
     public const string EVENT_SPEND_GOLD = "MapEvent_SpendGold"; //花費金幣通知

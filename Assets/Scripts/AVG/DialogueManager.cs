@@ -72,9 +72,8 @@ public class DialogueManager : MonoBehaviour
         commonNames["WolfGirl"] = LanguageManager.GetText("T_WolfGirl");
         commonNames["Witch"] = LanguageManager.GetText("T_Witch");
         commonNames["Warden"] = LanguageManager.GetText("T_Warden");
-
-        await Task.Delay(1000);
         SceneLoader.HideLoadingScreen();
+        await Task.Delay(1000);
         canSkip = true;
     }
     bool ctrlPressed;
@@ -182,7 +181,7 @@ public class DialogueManager : MonoBehaviour
     }
     bool onChoose;
     bool isOver;
-    public void OnNextClick()
+    public async void OnNextClick()
     {
         if (isOver) return;
 
@@ -222,7 +221,9 @@ public class DialogueManager : MonoBehaviour
                 return;
             case "DIE":
                 isOver = true;
-                Debug.Log("角色死亡，跳回主畫面");
+                await Task.Delay(1000);
+                animator.Play("dead");
+                await Task.Delay(3000); // 等待動畫播放完畢
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
                 GameDataManager.CurrentStage = GameDataManager.LastCurrentStage;//回到上一個關卡
                 SaveManager.AutoSave();//快速存檔
@@ -655,9 +656,9 @@ public class DialogueManager : MonoBehaviour
             currentState = DialogueState.Story;
             stageManager.gameObject.SetActive(true);
             Debug.Log("淡出刪除Spine模型");
-            await Task.Delay(500); 
+            await Task.Delay(500);
             EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
-            await Task.Delay(500); 
+            await Task.Delay(500);
             return;
         }
         stageManager.gameObject.SetActive(false);
@@ -674,9 +675,9 @@ public class DialogueManager : MonoBehaviour
 
             // 淡入效果
             // DOTween.To(() => spineCharacter.skeleton.A, x => spineCharacter.skeleton.A = x, 1f, 0.5f);
-            await Task.Delay(500); 
+            await Task.Delay(500);
             EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
-            await Task.Delay(500); 
+            await Task.Delay(500);
             Debug.Log("淡入生成Spine模型:" + spineAddress);
         }
         else

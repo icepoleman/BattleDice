@@ -220,13 +220,11 @@ public class SettingPanel : MonoBehaviour
         sfxMuteToggle.onValueChanged.AddListener(OnSFXMuteChanged);*/
         closeButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlaySFX("Sound_Click_base");
             Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
         });
         btn_close_bg.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlaySFX("Sound_Click_base");
             Destroy(gameObject);
             EventCenter.Dispatch(StateEvent.EVENT_SETTING_CHANGED); // 通知設定變更
         });

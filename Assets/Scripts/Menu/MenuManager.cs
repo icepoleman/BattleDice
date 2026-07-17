@@ -122,13 +122,14 @@ public class MenuManager : MonoBehaviour
             await UIManager.ShowCommonPanel("SetPanel");
         });
 
-        btn_continue.interactable = SaveManager.HasAutoSave();
+        btn_continue.interactable = SaveManager.HasAnySave();
 
         //TEST
         BuffDatabase.LoadFromCSV();
         btn_test.onClick.AddListener(OnTestClicked);
 
         AudioManager.Instance.PlayBGM("Bgm_Menu");
+        SceneLoader.HideLoadingScreen();
 
         // Assets/DiceGame_ab/Music/BGM/
     }
@@ -163,9 +164,9 @@ public class MenuManager : MonoBehaviour
         //等一秒
         await Task.Delay(1000);
         //Todo 加入載入存檔
-        GameDataManager.PreparationRoomStage = "0";//初始整備室
+        GameDataManager.PreparationRoomStage = "StartPoint";//初始整備室
         GameDataManager.CurrentMap = 1;
-        GameDataManager.CurrentStage = "0";
+        GameDataManager.CurrentStage = "StartPoint";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;

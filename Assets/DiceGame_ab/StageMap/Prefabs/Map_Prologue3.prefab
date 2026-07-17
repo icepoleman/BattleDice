@@ -121,7 +121,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8041193392339213026}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.1788687
+  m_Size: 0.17886868
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2265,7 +2265,7 @@ RectTransform:
   m_GameObject: {fileID: 3952724372376562363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.99935997, y: 0.99935997, z: 0.99935997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5090706548847353695}
@@ -8992,7 +8992,7 @@ PrefabInstance:
       objectReference: {fileID: 7844267662081123923}
     - target: {fileID: 6798165899143359731, guid: d21a3312e0967a244903cce0a0d84da7, type: 3}
       propertyPath: m_Name
-      value: 0
+      value: StartPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

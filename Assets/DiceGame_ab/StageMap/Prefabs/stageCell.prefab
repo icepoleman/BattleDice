@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 7061254000764525909}
   - component: {fileID: 4736134182784802893}
   - component: {fileID: 2376349972425627210}
+  - component: {fileID: 8820635468377574645}
+  - component: {fileID: 6321065937314416248}
   m_Layer: 5
   m_Name: stageCell
   m_TagString: Untagged
@@ -150,6 +152,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f0e758437cae2ea479be661376689649, type: 3}
   nextStageNodes:
   - {fileID: 0}
+  mouseEffect: {fileID: 8820635468377574645}
+  mouseOutline: {fileID: 6321065937314416248}
 --- !u!114 &2376349972425627210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,3 +198,33 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8820635468377574645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798165899143359731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
+--- !u!114 &6321065937314416248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798165899143359731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
+  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}

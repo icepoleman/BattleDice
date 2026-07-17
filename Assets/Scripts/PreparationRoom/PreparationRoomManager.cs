@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using TMPro;
+using UniRx;
 public class PreparationRoomManager : MonoBehaviour
 {
     [SerializeField] Button btn_back;
@@ -13,7 +14,10 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Button btn_shop;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] List<Button> btn_girls; // 角色模型列表，根據角色顯示對應模型
-    [SerializeField] TMPro.TextMeshProUGUI txt_socialPoint; // 社交點數顯示
+    [Header("社交點數顯示")]
+    [SerializeField] TextMeshProUGUI txt_socialPoint;
+    [SerializeField] Transform lovePointRoot;
+    [SerializeField] GameObject lovePointPrefab;
 
     [Header("出口鐵門")]
     [SerializeField] Transform img_doorIron; // 鐵門的Transform，用於控制鐵門的動畫或位置
@@ -58,23 +62,45 @@ public class PreparationRoomManager : MonoBehaviour
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
             shopPanel.SetUp("MajoShop");
         });
-
         btn_changeSkill.onClick.AddListener(async () =>
         {
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
         });
-        btn_girls.ForEach(btn =>
+        btn_powerUp.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        btn_shop.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        btn_changeSkill.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        foreach (var btn in btn_girls)
         {
+            btn.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
             btn.onClick.AddListener(async () =>
             {
                 AffinityPanel affinityPanel = (await UIManager.ShowCommonPanel("AffinityPanel")).GetComponent<AffinityPanel>();
                 affinityPanel.SetUp(btn.name);
             });
-        });
+        }
+
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
         OpenLevel(GameDataManager.SafeRoomLevel);
         SceneLoader.HideLoadingScreen();
-        txt_socialPoint.text = LanguageManager.GetFormat("T_SocialPoint", GameDataManager.SocialPoint);
+        Observable.EveryUpdate()
+            .Select(_ => GameDataManager.SocialPoint)
+            .DistinctUntilChanged()
+            .StartWith(GameDataManager.SocialPoint)
+            .Subscribe(UpdateSocialPointText)
+            .AddTo(this);
+    }
+
+    void UpdateSocialPointText(int socialPoint)
+    {
+        foreach (Transform child in lovePointRoot)
+        {
+            Destroy(child.gameObject);
+        }
+        for (int i = 0; i < socialPoint; i++)
+        {
+            Instantiate(lovePointPrefab, lovePointRoot);
+        }
+        txt_socialPoint.text = LanguageManager.GetFormat("T_SocialPoint", socialPoint);
     }
 
     void SetUpDoorSwitchEventTrigger()
@@ -137,25 +163,28 @@ public class PreparationRoomManager : MonoBehaviour
         switch (level)
         {
             case 0:
+                // 初始狀態，僅顯示第一個角色模型
+                break;
+            case 1:
                 // 第一關，增加一些裝飾或特效
                 //開放獄卒
                 btn_girls[0].gameObject.SetActive(true);
                 btn_shop.gameObject.SetActive(false);
                 break;
-            case 1:
+            case 2:
                 // 第二關，增加更多裝飾或特效 開啟商店
                 btn_girls[0].gameObject.SetActive(true);
                 btn_girls[1].gameObject.SetActive(true);
                 btn_shop.gameObject.SetActive(true);
                 break;
-            case 2:
+            case 3:
                 // 第三關，增加更多裝飾或特效 開啟商店
                 btn_girls[0].gameObject.SetActive(true);
                 btn_girls[1].gameObject.SetActive(true);
                 btn_girls[2].gameObject.SetActive(true);
                 btn_shop.gameObject.SetActive(true);
                 break;
-            case 3:
+            case 4:
                 // 第四關，增加更多裝飾或特效 開啟商店
                 btn_girls.ForEach(btn => btn.gameObject.SetActive(true));
                 btn_shop.gameObject.SetActive(true);

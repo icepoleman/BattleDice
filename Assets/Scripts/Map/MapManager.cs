@@ -93,9 +93,8 @@ public class MapManager : MonoBehaviour
         {
             GameDataManager.MapScrollValue = 0f;//重置地圖滾動位置
             GameDataManager.CurrentMap += 1;
-            GameDataManager.PreparationRoomStage = "0";//起點 初始整備室
-            GameDataManager.CurrentStage = "0";
-            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;//回滿血
+            GameDataManager.PreparationRoomStage = "StartPoint";//起點 初始整備室
+            GameDataManager.CurrentStage = "StartPoint";
             LoadMapPrefab();
             await Task.Delay(2000);
             //Destroy(_clearMap);
@@ -214,8 +213,9 @@ public class MapManager : MonoBehaviour
                 currentMapInstance.transform.localScale = Vector3.one;
                 scrollbar_map = currentMapInstance.GetComponentInChildren<Scrollbar>();
                 scrollbar_map.value = GameDataManager.MapScrollValue;
-                EventCenter.Dispatch(MapEvent.EVENT_OPEN_NEXT_STAGE_NODE, GameDataManager.CurrentStage);
-                Debug.Log("地圖載入並實例化成功");
+                await Task.Delay(500);
+                EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);
+                await Task.Delay(1000);
                 SceneLoader.HideLoadingScreen();
             }
             else
