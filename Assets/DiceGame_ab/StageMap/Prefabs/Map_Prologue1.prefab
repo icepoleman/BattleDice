@@ -172,6 +172,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes:
   - {fileID: 3763750294119477090}
 --- !u!114 &7157061382932458260
@@ -231,6 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &1261031080958835068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +248,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!1 &2979159917881082167
@@ -286,7 +289,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 2254.19, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5893744596672397708
 CanvasRenderer:
@@ -453,6 +456,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes:
   - {fileID: 4214008320028607138}
 --- !u!114 &9043041832009397072
@@ -512,6 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &8028269492706507993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,6 +532,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!1 &3474879996326044807
@@ -701,6 +707,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes: []
 --- !u!114 &7842742990286571053
 MonoBehaviour:
@@ -759,6 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &7621646190281639440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,6 +782,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!1 &4671731122489737589
@@ -960,7 +969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.789978, y: 0}
+  m_AnchoredPosition: {x: 14.790039, y: 0}
   m_SizeDelta: {x: -39.9, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6121437289523944961
@@ -1313,6 +1322,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes:
   - {fileID: 2674644447118131793}
 --- !u!114 &2272183422384536897
@@ -1372,6 +1382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &1548002433615477952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1387,6 +1398,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!1 &5454483172508577754
@@ -1597,6 +1609,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes:
   - {fileID: 1392224374323184879}
 --- !u!114 &3584711852344115898
@@ -1656,6 +1669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &4384884349071549188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,6 +1685,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!1 &8465130831845916323
@@ -1845,6 +1860,7 @@ MonoBehaviour:
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
   stageSpList: []
+  currentState: 0
   nextStageNodes:
   - {fileID: 3007364967079735081}
 --- !u!114 &2148166395848396133
@@ -1904,6 +1920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
   outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  effectEnabled: 1
 --- !u!114 &8353595287143788445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,5 +1936,6 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06

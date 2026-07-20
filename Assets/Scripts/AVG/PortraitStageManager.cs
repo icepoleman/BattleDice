@@ -10,6 +10,9 @@ public class PortraitStageManager : MonoBehaviour
 
     public async Task SetCharacter(string characterName, Sprite _newPortrait, string _animationName, string portraitPos)
     {
+        if (portraitPos == "")
+            portraitPos = "Center";
+
         string oldPosition = null;
 
         if (roleViews.ContainsKey(characterName))
@@ -23,6 +26,15 @@ public class PortraitStageManager : MonoBehaviour
         {
             //沒有這個角色 創建一個新的
             GameObject roleViewObj = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "RolePrefab" + ".prefab");
+
+            if (roleViews.ContainsKey(characterName))
+            {
+                RoleView roleView = roleViews[characterName];
+                oldPosition = roleView.GetPortraitPos();
+                roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
+            }
+            else
+            {
             GameObject roleObj = Instantiate(roleViewObj, transform);
             roleObj.name = characterName;
             roleObj.transform.localScale = Vector3.one;
@@ -30,8 +42,6 @@ public class PortraitStageManager : MonoBehaviour
             RoleView roleView = roleObj.GetComponent<RoleView>();
             roleViews[characterName] = roleView;
 
-            if (portraitPos == "")
-                portraitPos = "Center";
             // 先設置角色信息，但不執行位置動畫
             roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
 
@@ -42,6 +52,7 @@ public class PortraitStageManager : MonoBehaviour
             roleView.SetSize(CalculateInitialSize(characterName));
 
             Debug.Log($"新角色 {characterName} 初始位置設置為: {initialPos}");
+            }
         }
 
         // 如果角色位置改變了，需要更新原位置和新位置

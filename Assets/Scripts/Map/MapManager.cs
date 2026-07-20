@@ -9,8 +9,8 @@ using TMPro;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] Slider slider_blood;
-    [SerializeField] TextMeshProUGUI slider_blood_text;
+    [SerializeField] Image img_bloodFill;
+    [SerializeField] TextMeshProUGUI txt_blood;
     [SerializeField] TextMeshProUGUI text_gold;
     [SerializeField] TextMeshProUGUI text_gear;
     [SerializeField] Transform trans_mapParent;
@@ -27,8 +27,8 @@ public class MapManager : MonoBehaviour
     async void Start()
     {
         AudioManager.Instance.PlayBGM("Bgm_Map", true, 1.0f);
-        slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
-        slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
+        UpdateBloodFill();
+        txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
         text_gear.text = GameDataManager.Gear.ToString();
 
@@ -108,11 +108,26 @@ public class MapManager : MonoBehaviour
         {
             GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
         }
-        slider_blood.value = GameDataManager.PlayerData.currentBlood / GameDataManager.PlayerData.maxBlood;
-        slider_blood_text.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
+        UpdateBloodFill();
+        txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         await UIManager.ShowHintBubble(
          LanguageManager.GetFormat("T_RecoverHealth", recoverAmount));
     }
+
+    void UpdateBloodFill()
+    {
+        if (img_bloodFill == null)
+        {
+            return;
+        }
+
+        float maxBlood = GameDataManager.PlayerData.maxBlood;
+        float bloodRatio = maxBlood <= 0f ? 0f : Mathf.Clamp01(GameDataManager.PlayerData.currentBlood / maxBlood);
+        float targetHeight = Mathf.Lerp(220f, 800f, bloodRatio);
+        RectTransform rectTransform = img_bloodFill.rectTransform;
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, targetHeight);
+    }
+
     void OnOpenTreasureBox(object[] param)
     {
         TreasureBoxRewardType rewardType = (TreasureBoxRewardType)param[0];

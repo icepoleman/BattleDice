@@ -861,84 +861,15 @@ PrefabInstance:
       propertyPath: treasureBox
       value: 
       objectReference: {fileID: 2096801681}
-    - target: {fileID: 2735326791629253035, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2788024172072770613, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1177388962}
-    - target: {fileID: 4828511401951790831, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 319
-      objectReference: {fileID: 0}
-    - target: {fileID: 4828511401951790831, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 621
-      objectReference: {fileID: 0}
-    - target: {fileID: 4828511401951790831, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -388
-      objectReference: {fileID: 0}
-    - target: {fileID: 7173759431798478673, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b59f348e4c0e9574b9da7eec3493f548, type: 3}
-    - target: {fileID: 7289275547296262275, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7289275547296262275, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2735326791629253035, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4996299769418516981}
-    - targetCorrespondingSourceObject: {fileID: 2735326791629253035, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4996299769418516980}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
---- !u!1 &4996299769418516979 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2735326791629253035, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-  m_PrefabInstance: {fileID: 4996299769418516978}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4996299769418516980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4996299769418516979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
---- !u!114 &4996299769418516981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4996299769418516979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
-  hoverScaleMultiplier: 1.08
-  pressedScaleMultiplier: 0.92
-  lerpSpeed: 14
-  bounceDuration: 0.14
-  bounceOvershoot: 0.06
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

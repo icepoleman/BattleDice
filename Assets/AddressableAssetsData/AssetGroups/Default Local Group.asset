@@ -35,11 +35,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e884f1d438c1854eb96bedc6b3fa171
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Click_base.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ebafd611d468fc4c8f59b8d4231528e
     m_Address: Assets/DiceGame_ab/Game/Sprites/player_2.png
     m_ReadOnly: 0
@@ -52,11 +47,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1307da4cf2fee664487df8d488490b2a
     m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue2.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13c1b92a3b30a8843ab8dc36c6b3943f
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_OpaiPapa.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -95,18 +85,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
-    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Story1.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e6c5fe44a5292242a40c8f39f333773
     m_Address: Assets/DiceGame_ab/Game/Sprites/player_1.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36fa4cf0ad199854a958f4473a4cd712
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Shot.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -236,28 +216,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 73f34dd155253b74385b331a5e4979ae
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Click.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78ce52e89aa685a4daf0a8c2124f5a1b
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy1_0.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 79ae1e95a370cc84fb2d1dab56b14571
-    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_End.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a2dd39149d18044dab2c2e0096e90e5
     m_Address: Assets/DiceGame_ab/Common/Prefabs/SetPanel.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7b9adac59b0575f46b099de7bee48e76
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_WolfPapa.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -293,11 +258,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a105461741bc5448bd592dccbc941ad
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy0_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c7114f73a6534740baca0887636ea4e
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Hit.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -490,11 +450,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Dice
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e527242df874ba046905051217ce9658
-    m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Click1.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e8a6ec261accfc34e91a1b7d4d76e14b
     m_Address: Assets/DiceGame_ab/Game/Sprites/dice_6.png
     m_ReadOnly: 0
@@ -518,11 +473,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8775ba0a65ee1a4e952b328f6635966
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy5_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f95f1f6323b002a439bd9816b792bbb2
-    m_Address: Assets/DiceGame_ab/Music/SFX/enterGame.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

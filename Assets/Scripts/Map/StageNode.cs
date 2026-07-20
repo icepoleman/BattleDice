@@ -168,7 +168,6 @@ public class StageNode : MonoBehaviour
     }
     void OnHideStage(object[] param)
     {
-        Debug.LogError(gameObject.name + GameDataManager.TestMode);
         if (GameDataManager.TestMode)
             SetState(StageState.Unlocked);
         else

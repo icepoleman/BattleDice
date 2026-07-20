@@ -13,8 +13,8 @@ public static class MapConfig
     public static readonly string[] StageNames = new string[]
     {
         "測試關卡",
-        "第一關",
-        "第二關",
+        "廢物牢房",
+        "監獄走廊",
         "東側監獄",
         "第四關",
         "第五關",
