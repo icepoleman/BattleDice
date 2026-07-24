@@ -61,3 +61,7 @@ public class AdvEvent
 {
     public const string EVENT_CLICK_CHOICE = "AdvEvent_ClickChoice";//點擊選項
 }
+public class PreparationRoomEvent
+{
+    public const string OPEN_FIRE = "OPEN_FIRE";//開關火焰
+}

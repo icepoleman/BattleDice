@@ -20,7 +20,7 @@ public class SaveItemView : MonoBehaviour
         {
             txt_saveTitle.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Number", (info.slotIndex + 1).ToString());
         }
-        
+
         if (info.isEmpty)
         {
             // 设置为空槽位的显示
@@ -30,9 +30,9 @@ public class SaveItemView : MonoBehaviour
         {
             txt_playerName.text = info.playerName;
             txt_stageName.text = MapConfig.StageNames[info.currentMap];
-            txt_gear.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Gear", info.gear.ToString());
-            txt_gold.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Gold", info.gold.ToString());
-            txt_saveTime.text =  LanguageManager.GetFormat("T_Menu_Save_Slot_Time", info.saveTime);
+            txt_gear.text = info.gear.ToString();//LanguageManager.GetFormat("T_Menu_Save_Slot_Gear", info.gear.ToString());
+            txt_gold.text = info.gold.ToString(); //LanguageManager.GetFormat("T_Menu_Save_Slot_Gold", info.gold.ToString());
+            txt_saveTime.text = LanguageManager.GetFormat("T_Menu_Save_Slot_Time", info.saveTime);
         }
     }
 }

@@ -32,7 +32,7 @@ public class ChangeSkillView : MonoBehaviour
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);
         btn_save.onClick.AddListener(SaveChosenSkills);
-        btn_back.onClick.AddListener(() => Destroy(gameObject));
+        btn_back.onClick.AddListener(() => { Destroy(gameObject); EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE); });
         GenerateSkillCards();
     }
 
@@ -122,5 +122,6 @@ public class ChangeSkillView : MonoBehaviour
         GameDataManager.PlayerData.skillIDs = new List<int>(chosenSkillsID);
         SaveManager.AutoSave();
         Destroy(this.gameObject);
+        EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
     }
 }

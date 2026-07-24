@@ -87,8 +87,11 @@ public class AffinityPanel : MonoBehaviour
     {
         roleStr = role;
         await PortraitManager.LoadRoleIfNeeded(role);
-        txt_loveValue.text = GameDataManager.GetRoleAffinity(role).ToString() + "/100";
-        img_loveFill.fillAmount = GameDataManager.GetRoleAffinity(role) / 100f;
+        int roleAffinity = GameDataManager.GetRoleAffinity(role);
+        float targetFill = Mathf.Clamp01(roleAffinity / 100f);
+        txt_loveValue.text = roleAffinity.ToString() + "/100";
+        img_loveFill.fillAmount = 0f;
+        img_loveFill.DOFillAmount(targetFill, 0.6f).SetEase(Ease.OutCubic);
         txt_roleName.text = LanguageManager.GetText("T_" + role);
         List<AffinityStoryData> storyDataList = CSVReader.Instance.LoadAffinityStoryCSV(role);
         for (int i = 0; i < storyDataList.Count; i++)
@@ -108,10 +111,6 @@ public class AffinityPanel : MonoBehaviour
                 StartCoroutine(ShowChat());
             }
         });
-
-        // 初始淡入效果
-        img_role.color = new Color(1f, 1f, 1f, 0f);
-        img_role.DOFade(1f, 1f);
         StartCoroutine(ShowChat());
 
         //H固定
@@ -130,7 +129,11 @@ public class AffinityPanel : MonoBehaviour
             obj_h_lock[0].SetActive(!GameDataManager.unlocked_H_Stages.Contains("H_JailerGirl_1"));//其他人預設開啟 只對獄卒鎖住第一個H關卡
         }
         obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
-        btn_back.onClick.AddListener(() => Destroy(gameObject));
+        btn_back.onClick.AddListener(() =>
+        {
+            Destroy(gameObject);
+            EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
+        });
 
         switch (role)
         {

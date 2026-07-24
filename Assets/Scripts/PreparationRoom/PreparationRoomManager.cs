@@ -24,6 +24,8 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Image img_switch; // 開關的Image，用於顯示開關狀態
     [SerializeField] Sprite[] spSwitch; // 開關打開的Sprite
     [SerializeField] EventTrigger doorEventTrigger; // 用於觸發鐵門開啟的事件
+    [Header("火焰效果")]
+    [SerializeField] GameObject obj_fire; //火焰效果
 
     enum DoorState
     {
@@ -49,11 +51,11 @@ public class PreparationRoomManager : MonoBehaviour
         PreLoadAssets();
         SetUpDoorSwitchEventTrigger();
         ChangeDoorState(DoorState.Closed);
-
         btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {
             Instantiate(powerUpPanelPrefab, transform);
+            obj_fire.SetActive(false);
         });
         btn_shop.onClick.AddListener(async () =>
         {
@@ -61,10 +63,12 @@ public class PreparationRoomManager : MonoBehaviour
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
             shopPanel.SetUp("MajoShop");
+            obj_fire.SetActive(false);
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
+            obj_fire.SetActive(false);
         });
         btn_powerUp.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
         btn_shop.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
@@ -76,11 +80,13 @@ public class PreparationRoomManager : MonoBehaviour
             {
                 AffinityPanel affinityPanel = (await UIManager.ShowCommonPanel("AffinityPanel")).GetComponent<AffinityPanel>();
                 affinityPanel.SetUp(btn.name);
+                obj_fire.SetActive(false);
             });
         }
 
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
-        OpenLevel(GameDataManager.SafeRoomLevel);
+        //OpenLevel(GameDataManager.SafeRoomLevel);
+        OpenLevel(100);
         SceneLoader.HideLoadingScreen();
         Observable.EveryUpdate()
             .Select(_ => GameDataManager.SocialPoint)
@@ -88,6 +94,24 @@ public class PreparationRoomManager : MonoBehaviour
             .StartWith(GameDataManager.SocialPoint)
             .Subscribe(UpdateSocialPointText)
             .AddTo(this);
+        AddEventListeners();
+    }
+    void AddEventListeners()
+    {
+        EventCenter.AddListener(PreparationRoomEvent.OPEN_FIRE, OnOpenFire);
+    }
+    void RemoveEventListeners()
+    {
+        EventCenter.RemoveListener(PreparationRoomEvent.OPEN_FIRE, OnOpenFire);
+    }
+    void Onestroy()
+    {
+        RemoveEventListeners();
+    }
+
+    void OnOpenFire(object[] args)
+    {
+        obj_fire.SetActive(true);
     }
 
     void UpdateSocialPointText(int socialPoint)

@@ -114,5 +114,6 @@ public class ShopPanel : MonoBehaviour
     void CloseShop()
     {
         Destroy(this.gameObject);
+        EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
     }
 }
