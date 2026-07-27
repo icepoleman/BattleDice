@@ -103,15 +103,16 @@ public class MapManager : MonoBehaviour
     async void OnRecoverHealth(object[] param)
     {
         int recoverAmount = (int)param[0];
-        GameDataManager.PlayerData.currentBlood += recoverAmount;
+        GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+       /* GameDataManager.PlayerData.currentBlood += recoverAmount;
         if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
         {
             GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-        }
+        }*/
         UpdateBloodFill();
         txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         await UIManager.ShowHintBubble(
-         LanguageManager.GetFormat("T_RecoverHealth", recoverAmount));
+         LanguageManager.GetFormat("T_RecoverHealth_max"));
     }
 
     void UpdateBloodFill()
@@ -171,12 +172,7 @@ public class MapManager : MonoBehaviour
     async void OnGetSkill(object[] param)
     {
         int skillID = (int)param[0];
-        if (!GameDataManager.HasSkillIDs.Contains(skillID))
-        {
-            GameDataManager.HasSkillIDs.Add(skillID);
-            await UIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
-            Debug.Log($"獲得技能ID: {skillID}");
-        }
+        GameDataManager.AddSkill(skillID);
     }
     async void OnOpenMapShop(object[] param)
     {

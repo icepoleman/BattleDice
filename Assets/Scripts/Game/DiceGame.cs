@@ -49,7 +49,7 @@ public class DiceGame : MonoBehaviour
     {
         if (isOpen) return;
         isOpen = true;
-        AudioManager.Instance.PlayBGM("Bgm_Battle", true, 1.0f);
+        PlayBgm(GameDataManager.TmpEnemyID.ToString());
         gameUiView = GetComponent<GameUiView>();
         manaRoller = GameObject.Find("ManaRoller").GetComponent<ManaRoller>();
         await manaRoller.Init();
@@ -81,6 +81,21 @@ public class DiceGame : MonoBehaviour
         {
             enemyData.currentBlood = 0;
         });
+    }
+
+    void PlayBgm(string enemyId)
+    {
+        string bgmName = "Bgm_Battle"; // 預設BGM
+        switch (enemyId)
+        {
+            case "10":
+                bgmName = "Bgm_witch_fight";
+                break;
+            default:
+                bgmName = "Bgm_Battle"; // 預設BGM
+                break;
+        }
+        AudioManager.Instance.PlayBGM(bgmName, true, 1.0f);
     }
 
     void AddEvent()

@@ -41,6 +41,11 @@ public class MenuManager : MonoBehaviour
 
     private void LoadSavedSettingsIfHasSave()
     {
+        if(GameDataManager.isFirstOpen)
+        {
+            GameDataManager.isFirstOpen = false;
+            return; // 已經是第一次開啟遊戲，不需要再次調整解析度
+        }
         bool hasSave = SaveManager.HasAnySave();
 
         if (!hasSave)

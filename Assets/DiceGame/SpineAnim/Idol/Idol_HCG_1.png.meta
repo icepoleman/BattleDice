@@ -1,0 +1,1053 @@
+fileFormatVersion: 2
+guid: 66af9349d47a0784f856a616fd8a88fb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6816189983840985000
+    second: Idol_HCG_1_0
+  - first:
+      213: 8468963112615641938
+    second: Idol_HCG_1_1
+  - first:
+      213: -2068060362385971523
+    second: Idol_HCG_1_2
+  - first:
+      213: -4527406802147610737
+    second: Idol_HCG_1_3
+  - first:
+      213: -7973450414184852879
+    second: Idol_HCG_1_4
+  - first:
+      213: 8146649681237676941
+    second: Idol_HCG_1_5
+  - first:
+      213: -4690623656500416090
+    second: Idol_HCG_1_6
+  - first:
+      213: -1302436162347704536
+    second: Idol_HCG_1_7
+  - first:
+      213: 8819790982375949117
+    second: Idol_HCG_1_8
+  - first:
+      213: -6602052444728777798
+    second: Idol_HCG_1_9
+  - first:
+      213: -2690215654931249329
+    second: Idol_HCG_1_10
+  - first:
+      213: -7251039472525070765
+    second: Idol_HCG_1_11
+  - first:
+      213: -7811641426902514609
+    second: Idol_HCG_1_12
+  - first:
+      213: 4409741921018760302
+    second: Idol_HCG_1_13
+  - first:
+      213: 5726196127883287990
+    second: Idol_HCG_1_14
+  - first:
+      213: -705902200340275215
+    second: Idol_HCG_1_15
+  - first:
+      213: 920774270722118550
+    second: Idol_HCG_1_16
+  - first:
+      213: -4428302829133249642
+    second: Idol_HCG_1_17
+  - first:
+      213: 2192244707475969625
+    second: Idol_HCG_1_18
+  - first:
+      213: 4155439049601703856
+    second: Idol_HCG_1_19
+  - first:
+      213: 6739304117785997933
+    second: Idol_HCG_1_20
+  - first:
+      213: 231735452900641867
+    second: Idol_HCG_1_21
+  - first:
+      213: -8585955455145926937
+    second: Idol_HCG_1_22
+  - first:
+      213: -8239700039392349678
+    second: Idol_HCG_1_23
+  - first:
+      213: 3830195241328149791
+    second: Idol_HCG_1_24
+  - first:
+      213: 8612529593259869341
+    second: Idol_HCG_1_25
+  - first:
+      213: -8978583148757360276
+    second: Idol_HCG_1_26
+  - first:
+      213: 302984303763852194
+    second: Idol_HCG_1_27
+  - first:
+      213: 6391066605287837134
+    second: Idol_HCG_1_28
+  - first:
+      213: 8344736083501455686
+    second: Idol_HCG_1_29
+  - first:
+      213: 1407440228878028403
+    second: Idol_HCG_1_30
+  - first:
+      213: -8089367525749930264
+    second: Idol_HCG_1_31
+  - first:
+      213: 8243238930718147556
+    second: Idol_HCG_1_32
+  - first:
+      213: -2476016276749746725
+    second: Idol_HCG_1_33
+  - first:
+      213: -6189858499199523103
+    second: Idol_HCG_1_34
+  - first:
+      213: 7881320129388606427
+    second: Idol_HCG_1_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Idol_HCG_1_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4040
+        width: 48
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850259bc2570861a0800000000000000
+      internalID: -6816189983840985000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_1
+      rect:
+        serializedVersion: 2
+        x: 2679
+        y: 3924
+        width: 282
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2538757941dc78570800000000000000
+      internalID: 8468963112615641938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_2
+      rect:
+        serializedVersion: 2
+        x: 2962
+        y: 4044
+        width: 147
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db62be5be06cc43e0800000000000000
+      internalID: -2068060362385971523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_3
+      rect:
+        serializedVersion: 2
+        x: 3109
+        y: 4043
+        width: 58
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8fed4c208b6b21c0800000000000000
+      internalID: -4527406802147610737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_4
+      rect:
+        serializedVersion: 2
+        x: 3462
+        y: 3923
+        width: 229
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 172125ce71d985190800000000000000
+      internalID: -7973450414184852879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_5
+      rect:
+        serializedVersion: 2
+        x: 3692
+        y: 4040
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8398b7e8b6be0170800000000000000
+      internalID: 8146649681237676941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_6
+      rect:
+        serializedVersion: 2
+        x: 3769
+        y: 3754
+        width: 321
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a1bf3be2ae87eeb0800000000000000
+      internalID: -4690623656500416090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2235
+        width: 2667
+        height: 1803
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82f54a00631dcede0800000000000000
+      internalID: -1302436162347704536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_8
+      rect:
+        serializedVersion: 2
+        x: 2962
+        y: 3924
+        width: 252
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3346b15b21366a70800000000000000
+      internalID: 8819790982375949117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_9
+      rect:
+        serializedVersion: 2
+        x: 3214
+        y: 3924
+        width: 247
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab3217bd74cc064a0800000000000000
+      internalID: -6602052444728777798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_10
+      rect:
+        serializedVersion: 2
+        x: 3693
+        y: 3924
+        width: 69
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f47c0ae7d1f6aaad0800000000000000
+      internalID: -2690215654931249329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_11
+      rect:
+        serializedVersion: 2
+        x: 2682
+        y: 3532
+        width: 1083
+        height: 388
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35eaec374022f5b90800000000000000
+      internalID: -7251039472525070765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_12
+      rect:
+        serializedVersion: 2
+        x: 3772
+        y: 3376
+        width: 308
+        height: 370
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4400c49289779390800000000000000
+      internalID: -7811641426902514609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_13
+      rect:
+        serializedVersion: 2
+        x: 2678
+        y: 2230
+        width: 1075
+        height: 1294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6cc871d9ec823d30800000000000000
+      internalID: 4409741921018760302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_14
+      rect:
+        serializedVersion: 2
+        x: 3756
+        y: 2804
+        width: 297
+        height: 568
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd53b42a09877f40800000000000000
+      internalID: 5726196127883287990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_15
+      rect:
+        serializedVersion: 2
+        x: 3355
+        y: 2138
+        width: 136
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ff1d8650b12436f0800000000000000
+      internalID: -705902200340275215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_16
+      rect:
+        serializedVersion: 2
+        x: 3495
+        y: 2191
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69316bc125f37cc00800000000000000
+      internalID: 920774270722118550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_17
+      rect:
+        serializedVersion: 2
+        x: 3498
+        y: 2134
+        width: 122
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 693c7aff9028b82c0800000000000000
+      internalID: -4428302829133249642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_18
+      rect:
+        serializedVersion: 2
+        x: 3622
+        y: 2134
+        width: 104
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 956d5d942fa6c6e10800000000000000
+      internalID: 2192244707475969625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_19
+      rect:
+        serializedVersion: 2
+        x: 3756
+        y: 2153
+        width: 299
+        height: 647
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bfdb459cc51ba930800000000000000
+      internalID: 4155439049601703856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_20
+      rect:
+        serializedVersion: 2
+        x: 3727
+        y: 2134
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6236f58361d68d50800000000000000
+      internalID: 6739304117785997933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_21
+      rect:
+        serializedVersion: 2
+        x: 4056
+        y: 2151
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4cc108aa2a473300800000000000000
+      internalID: 231735452900641867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_22
+      rect:
+        serializedVersion: 2
+        x: 3362
+        y: 1034
+        width: 391
+        height: 1094
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee13bef00f88d880800000000000000
+      internalID: -8585955455145926937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_23
+      rect:
+        serializedVersion: 2
+        x: 3767
+        y: 1726
+        width: 318
+        height: 423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2123f305874b6ad80800000000000000
+      internalID: -8239700039392349678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_24
+      rect:
+        serializedVersion: 2
+        x: 3756
+        y: 1034
+        width: 331
+        height: 682
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1581cb5746972530800000000000000
+      internalID: 3830195241328149791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_25
+      rect:
+        serializedVersion: 2
+        x: 3354
+        y: 1
+        width: 562
+        height: 1031
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d944bcfa80ad58770800000000000000
+      internalID: 8612529593259869341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_26
+      rect:
+        serializedVersion: 2
+        x: 3917
+        y: 973
+        width: 129
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c616200623aa56380800000000000000
+      internalID: -8978583148757360276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_27
+      rect:
+        serializedVersion: 2
+        x: 3920
+        y: 812
+        width: 116
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab0d567e9a643400800000000000000
+      internalID: 302984303763852194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_28
+      rect:
+        serializedVersion: 2
+        x: 3917
+        y: 523
+        width: 133
+        height: 287
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd0b085731a1b850800000000000000
+      internalID: 6391066605287837134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_29
+      rect:
+        serializedVersion: 2
+        x: 4058
+        y: 594
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6491d7171457ec370800000000000000
+      internalID: 8344736083501455686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_30
+      rect:
+        serializedVersion: 2
+        x: 4058
+        y: 569
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37e8ed46e6b388310800000000000000
+      internalID: 1407440228878028403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_31
+      rect:
+        serializedVersion: 2
+        x: 4058
+        y: 544
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e6481a381bccbf80800000000000000
+      internalID: -8089367525749930264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_32
+      rect:
+        serializedVersion: 2
+        x: 4058
+        y: 519
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e34028022ed56270800000000000000
+      internalID: 8243238930718147556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_33
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 390
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bddfe36905c63add0800000000000000
+      internalID: -2476016276749746725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_34
+      rect:
+        serializedVersion: 2
+        x: 3919
+        y: 240
+        width: 155
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e6a7418d74391aa0800000000000000
+      internalID: -6189858499199523103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idol_HCG_1_35
+      rect:
+        serializedVersion: 2
+        x: 3918
+        y: 2
+        width: 176
+        height: 235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3f75196e2106d60800000000000000
+      internalID: 7881320129388606427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Idol_HCG_1_0: -6816189983840985000
+      Idol_HCG_1_1: 8468963112615641938
+      Idol_HCG_1_10: -2690215654931249329
+      Idol_HCG_1_11: -7251039472525070765
+      Idol_HCG_1_12: -7811641426902514609
+      Idol_HCG_1_13: 4409741921018760302
+      Idol_HCG_1_14: 5726196127883287990
+      Idol_HCG_1_15: -705902200340275215
+      Idol_HCG_1_16: 920774270722118550
+      Idol_HCG_1_17: -4428302829133249642
+      Idol_HCG_1_18: 2192244707475969625
+      Idol_HCG_1_19: 4155439049601703856
+      Idol_HCG_1_2: -2068060362385971523
+      Idol_HCG_1_20: 6739304117785997933
+      Idol_HCG_1_21: 231735452900641867
+      Idol_HCG_1_22: -8585955455145926937
+      Idol_HCG_1_23: -8239700039392349678
+      Idol_HCG_1_24: 3830195241328149791
+      Idol_HCG_1_25: 8612529593259869341
+      Idol_HCG_1_26: -8978583148757360276
+      Idol_HCG_1_27: 302984303763852194
+      Idol_HCG_1_28: 6391066605287837134
+      Idol_HCG_1_29: 8344736083501455686
+      Idol_HCG_1_3: -4527406802147610737
+      Idol_HCG_1_30: 1407440228878028403
+      Idol_HCG_1_31: -8089367525749930264
+      Idol_HCG_1_32: 8243238930718147556
+      Idol_HCG_1_33: -2476016276749746725
+      Idol_HCG_1_34: -6189858499199523103
+      Idol_HCG_1_35: 7881320129388606427
+      Idol_HCG_1_4: -7973450414184852879
+      Idol_HCG_1_5: 8146649681237676941
+      Idol_HCG_1_6: -4690623656500416090
+      Idol_HCG_1_7: -1302436162347704536
+      Idol_HCG_1_8: 8819790982375949117
+      Idol_HCG_1_9: -6602052444728777798
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

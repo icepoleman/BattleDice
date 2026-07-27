@@ -206,8 +206,6 @@ public static class PortraitManager
     /// </summary>
     public static void UnloadAll()
     {
-        Debug.Log("[PortraitManager] 卸載所有角色立繪與怪物圖片");
-
         foreach (var kv in roleHandles)
         {
             if (kv.Value.IsValid())

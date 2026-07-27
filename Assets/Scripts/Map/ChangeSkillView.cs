@@ -15,7 +15,6 @@ public class ChangeSkillView : MonoBehaviour
     [SerializeField] Transform chosenSkillCardParent;
     List<int> hasSkillsID = new List<int>();
     List<int> chosenSkillsID = new List<int>();
-    [SerializeField] Button btn_save;
     [SerializeField] Button btn_back;
 
     void OnEnable()
@@ -31,8 +30,7 @@ public class ChangeSkillView : MonoBehaviour
         // 從GameDataManager取得擁有的技能ID
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);
-        btn_save.onClick.AddListener(SaveChosenSkills);
-        btn_back.onClick.AddListener(() => { Destroy(gameObject); EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE); });
+        btn_back.onClick.AddListener(() => SaveChosenSkills());
         GenerateSkillCards();
     }
 
@@ -111,12 +109,12 @@ public class ChangeSkillView : MonoBehaviour
     }
 
     // 儲存已選擇的技能到 PlayerData
-    public async void SaveChosenSkills()
+    public void SaveChosenSkills()
     {
         if (chosenSkillsID.Count == 0)
         {
             // 必須至少選擇一個技能
-            await UIManager.ShowHintBubble(LanguageManager.GetText("T_ChangeSkill_Limit"));
+            UIManager.ShowHintBubble(LanguageManager.GetText("T_ChangeSkill_Limit"));
             return;
         }
         GameDataManager.PlayerData.skillIDs = new List<int>(chosenSkillsID);

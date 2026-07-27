@@ -594,8 +594,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -771,8 +771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -2315,8 +2315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 6
-  stageInfo: 13
+  stageType: 9
+  stageInfo: 5
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -2576,6 +2576,7 @@ MonoBehaviour:
   currentState: 0
   nextStageNodes:
   - {fileID: 7485077625761745970}
+  - {fileID: 8176291332092638068}
 --- !u!114 &8596531985895858288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3497,8 +3498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -3868,7 +3869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 7
+  stageType: 9
   stageInfo: 3
   completedStory: 
   lineRoot: {fileID: 0}
@@ -5103,8 +5104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 1000
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -5474,8 +5475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 6
-  stageInfo: 11
+  stageType: 7
+  stageInfo: 60
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -5650,8 +5651,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 1000
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -6396,8 +6397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 2
-  stageInfo: 
+  stageType: 4
+  stageInfo: 1
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -7806,7 +7807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 7
-  stageInfo: 3
+  stageInfo: 50
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -8855,7 +8856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 7
-  stageInfo: 3
+  stageInfo: 50
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -9059,7 +9060,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9033810278576096184}
   m_HandleRect: {fileID: 6750156624374380208}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 0.000000070350204
   m_Size: 0.39377582
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10200,7 +10201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 7
-  stageInfo: 3
+  stageInfo: 50
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -10671,8 +10672,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994548fedc3c9cc4a816506bd3bb757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
-  stageType: 4
-  stageInfo: 1000
+  stageType: 5
+  stageInfo: 100
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}

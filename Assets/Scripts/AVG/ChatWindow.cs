@@ -217,7 +217,7 @@ public class ChatWindow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // 若 SetPanel 已開啟則不重複開
-            if (transform.Find("SetPanel(Clone)") == null)
+            if (GameObject.Find("SetPanel(Clone)") == null)
                 btn_set.onClick.Invoke();
         }
     }

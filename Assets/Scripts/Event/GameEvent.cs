@@ -38,6 +38,7 @@ public class StateEvent
     public const string EVENT_BACK_PREVIOUS_SCENE = "StateEvent_BackPreviousScene";//返回前一場景
     public const string EVENT_SETTING_CHANGED = "StateEvent_SettingChanged";//設定變更後通知
     public const string EVENT_ENTER_END_SCENE = "StateEvent_EnterEndScene";//進入結算畫面
+    public const string EVENT_ENTER_H_ROOM = "StateEvent_EnterHRoom";//進入H房間
 }
 public class MapEvent
 {

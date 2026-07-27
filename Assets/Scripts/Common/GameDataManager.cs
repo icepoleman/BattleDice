@@ -38,6 +38,7 @@ public static class GameDataManager
     public static int SafeRoomLevel { get; set; } = 0;//整備室等級，0 女獄卒 1 女巫 2 狼少女 3 偶像
 
     public static bool DreamMode { get; set; } = false;//回看模式
+    public static bool isFirstOpen = true; //避免回大廳重複調整解析度
 
     //提升好感度
     public static async void AddAffinity(string role, int affinityIncrease)
@@ -127,5 +128,17 @@ public static class GameDataManager
     public static void SetPowerUpLevel(PowerUpType type, int level)
     {
         powerUpLevels[type] = level;
+    }
+    public static void AddSkill(int skillID)
+    {
+        if (!HasSkillIDs.Contains(skillID))
+        {
+            HasSkillIDs.Add(skillID);
+            if (PlayerData.skillIDs.Count < 4)//技能沒滿會自動加入
+            {
+                PlayerData.skillIDs.Add(skillID);
+            }
+            UIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
+        }
     }
 }

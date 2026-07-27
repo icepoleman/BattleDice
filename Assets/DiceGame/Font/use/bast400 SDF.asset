@@ -420,6 +420,8 @@ MonoBehaviour:
       m_LigatureGlyphID: 2080
     - m_ComponentGlyphIDs: 4d00000059000000
       m_LigatureGlyphID: 2082
+    - m_ComponentGlyphIDs: 7a2d00006b400000
+      m_LigatureGlyphID: 1996
     m_GlyphPairAdjustmentRecords:
     - m_FirstAdjustmentRecord:
         m_GlyphIndex: 14

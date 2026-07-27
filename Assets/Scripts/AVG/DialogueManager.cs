@@ -217,6 +217,7 @@ public class DialogueManager : MonoBehaviour
                 return;
             case "SAVEROOM":
                 isOver = true;
+                GameDataManager.SafeRoomLevel = int.Parse(dialogueDatas[pageIndex].Flag);
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 return;
             case "DIE":
@@ -472,12 +473,9 @@ public class DialogueManager : MonoBehaviour
                 if (TryParseCommandValue(command, "BloodAdd_", out int amount))
                 {
                     float before = GameDataManager.PlayerData.currentBlood;
-                    GameDataManager.PlayerData.currentBlood = Mathf.Min(
-                        GameDataManager.PlayerData.maxBlood,
-                        GameDataManager.PlayerData.currentBlood + amount
-                    );
-                    int diff = Mathf.RoundToInt(GameDataManager.PlayerData.currentBlood - before);
-                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_RecoverHealth", diff));
+                    GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+                    //int diff = Mathf.RoundToInt(GameDataManager.PlayerData.currentBlood - before);
+                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_RecoverHealth_max"));
                 }
                 continue;
             }

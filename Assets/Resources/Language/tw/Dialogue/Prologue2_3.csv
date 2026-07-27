@@ -1,5 +1,5 @@
-﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
-Prologue2_3,Witch,啊啦~到此為止。,normal,Center,,,,,,bg_jail,,
+Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+Prologue2_3,Witch,啊啦~到此為止。,normal,Center,,,,,,bg_jail,,Bgm_Map
 ,Witch,想不到竟然是真的呢！,happy,,,,,,,,,
 ,Witch,但看起來還有點開發空間。,happy,,,,,,,,,
 ,Hero,沒錯！{PlayerName}出品必屬精品。,,,,,,,,,,
@@ -43,5 +43,3 @@ Prologue2_3,Witch,啊啦~到此為止。,normal,Center,,,,,,bg_jail,,
 ,Witch,雫就先在外面練習剛剛的魔法。,happy,,,,,,,,,
 ,JailerGirl,好...好的。,normal,,,,,hide,,,,
 END,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,

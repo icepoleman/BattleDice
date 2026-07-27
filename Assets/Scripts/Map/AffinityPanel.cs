@@ -131,8 +131,8 @@ public class AffinityPanel : MonoBehaviour
         obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
         btn_back.onClick.AddListener(() =>
         {
-            Destroy(gameObject);
             EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
+            Destroy(gameObject);
         });
 
         switch (role)

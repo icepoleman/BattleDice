@@ -66,7 +66,7 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
         EventCenter.AddListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
-
+        EventCenter.AddListener(StateEvent.EVENT_ENTER_H_ROOM, OnEnterHRoom);
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -81,6 +81,7 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_LOADING_SCREEN, OnLoadingScreen);
         EventCenter.RemoveListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
+        EventCenter.RemoveListener(StateEvent.EVENT_ENTER_H_ROOM, OnEnterHRoom);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -129,6 +130,13 @@ public class StateManager : MonoBehaviour
 
         // 使用帶延遲的場景載入
         SceneLoader.LoadSceneWithDelay("EndScene");
+    }
+    void OnEnterHRoom(object[] args)
+    {
+        Debug.Log("StateManager: 進入 H 房間 模式");
+
+        // 使用帶延遲的場景載入
+        SceneLoader.LoadSceneWithDelay("H_Room", () => ChangeState(GameState.H_EVENT));
     }
     void OnEnterMenu(object[] args)
     {

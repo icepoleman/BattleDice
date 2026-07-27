@@ -15,6 +15,7 @@ public class TestManager : MonoBehaviour
     [SerializeField] Button btn_check;
     [SerializeField] Button btn_close;
     [SerializeField] float f1HoldDuration = 3f;
+    [SerializeField] Button btn_hRoom;
 
     private float f1HoldTimer;
     private bool f1HoldTriggered;
@@ -47,6 +48,10 @@ public class TestManager : MonoBehaviour
         btn_close.onClick.AddListener(() =>
         {
             testPanel.SetActive(false);
+        });
+        btn_hRoom.onClick.AddListener(() =>
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_ENTER_H_ROOM);
         });
         //GameDataManager.TmpEnemyID = testEnemyId;
         //GameDataManager.TestMode
