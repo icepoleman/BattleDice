@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29449824001f7fa4f902e89fa04ce928
+    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_witch_fight.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e17530a3ed75ef478743a62dd9b8fab
     m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_Story1.mp3
     m_ReadOnly: 0
@@ -67,6 +72,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c7114f73a6534740baca0887636ea4e
     m_Address: Assets/DiceGame_ab/Music/SFX/Sound_Hit.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95e1a5466149bcb41b6483f0df196816
+    m_Address: Assets/DiceGame_ab/Music/BGM/Bgm_H_Room.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

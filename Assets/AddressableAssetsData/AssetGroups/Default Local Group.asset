@@ -195,12 +195,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ebf453c821979a4c98fd608d9e43d5c
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_2.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63af7bb6ef0b9b74abfc2aec34ea97fd
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy3_0.png
     m_ReadOnly: 0
@@ -401,18 +395,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cf974eac5760c8e468290dca4f42ad4a
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_4.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d1624ddc10cda494d89e4311d5e48a39
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_1.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d192935e0069e10498cccca21f32e990
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy6_0.png
     m_ReadOnly: 0
@@ -427,12 +409,6 @@ MonoBehaviour:
     m_Address: Assets/DiceGame_ab/Game/Prefabs/ShopPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d9a04bf6b1e907f47af3a7b722b3eed2
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_5.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e03b798704b472c44bfb7111c33463bc
     m_Address: Assets/DiceGame_ab/Prefab/Game/gamePanel.prefab
@@ -453,18 +429,6 @@ MonoBehaviour:
     m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_idol_H.png
     m_ReadOnly: 0
     m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e429384ff75c29a438ca66e94b5dad8f
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_3.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e8a6ec261accfc34e91a1b7d4d76e14b
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_6.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9c42a86672f89c4bbf3db1ccd676856
     m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/cookduck.png
@@ -495,12 +459,6 @@ MonoBehaviour:
     m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Arcade_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fee1dbcbcc11c3b41b6974e58bc0df3a
-    m_Address: Assets/DiceGame_ab/Game/Sprites/dice_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Dice
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: feec79971fb23c2439765aeacd81ab79
     m_Address: Assets/DiceGame_ab/AVG/Prefabs/btn_choose.prefab

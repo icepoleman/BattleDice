@@ -15,17 +15,35 @@ MonoBehaviour:
   m_GroupName: RolePic
   m_GUID: a695e6b0119d7a644bb7c7460e4db3b6
   m_SerializeEntries:
+  - m_GUID: 02993c56f867d124ab1641474a935768
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/angry.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 09f367a03c316d04e9eaa71eff8c88c7
     m_Address: Assets/DiceGame_ab/AVG/Characters/Witch/happy.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ee389fd9b81fae44b849f8cede561d7
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/sad.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 23f1e48219be3de4fb42aae5dff8aa72
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/angry.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - WolfGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30079cb6e29a4ed4c8842088ddbb9d05
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/sm.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 385fdce7dd652ee44ae1b9351c2ffda3
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/shy.png
@@ -38,6 +56,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4449e3d10ff32784383c1c9225cf0807
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5798d45eb3a55e64cb86df1d7f754ed7
     m_Address: Assets/DiceGame_ab/Avg/RolePic/JailerGirl/normal.png
@@ -87,6 +111,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8aa17a10f2d316344a23d1ef07f9c79a
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/scare.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d6e13f5a6a55844c927257233d9119a
     m_Address: Assets/DiceGame_ab/AVG/Characters/Idol/scare.png
     m_ReadOnly: 0
@@ -135,6 +165,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Witch
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb315b7654c8c3646a1ecbcaca24b61c
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/happy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f09200b0626f68a4d815238bc2bb0d1d
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/normal.png
     m_ReadOnly: 0
@@ -158,6 +194,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe28b12d84d10f94fbc86a8151a4a728
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/shy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Idol_Sp
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 009b21b848039a849be015d85c4741f7, type: 2}

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using TMPro;
+using Spine;
 
 public class SkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
 {
@@ -10,18 +11,22 @@ public class SkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
     [SerializeField] TextMeshProUGUI text_infoTitle;
     [SerializeField] TextMeshProUGUI text_skillEffect;
     [SerializeField] GameObject skillInfoPanel; // 用於顯示技能詳細資訊的面板
-    [SerializeField] Toggle tog_choose;
+    [SerializeField] Toggle tog_skillChoose;
     ISkillData skillData;
 
     [SerializeField] GameObject obj_buffTip;
     [SerializeField] TextMeshProUGUI text_buffTip;
+
+    [Header("選中效果")]
+    [SerializeField] BaseMouseEffect baseMouseEffect;
+
+    [Header("技能icon")]
+    [SerializeField] Image img_skillIcon;
     private int currentLinkIndex = -1;
-    void Awake()
-    {
-        tog_choose.gameObject.SetActive(false);
-    }
+
     public async void SetData(ISkillData _skillData, ToggleGroup _toggleGroup = null)
     {
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
         text_infoTitle.text = skillData.skillName;
@@ -29,8 +34,8 @@ public class SkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
         text_skillEffect.text += "\n" + skillData.conditionText;
         text_skillEffect.text += "\n" + LanguageManager.GetText("T_skill_effect_title");
         text_skillEffect.text += "\n" + skillData.effectText;
-        tog_choose.group = _toggleGroup;
-        tog_choose.onValueChanged.AddListener((isOn) =>
+        tog_skillChoose.group = _toggleGroup;
+        tog_skillChoose.onValueChanged.AddListener((isOn) =>
         {
             if (!isOn)
             {
@@ -40,12 +45,12 @@ public class SkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
             skillInfoPanel.SetActive(true);
             EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, _skillData);
         });
-        tog_choose.gameObject.SetActive(true);
     }
     //開關卡片使用interactable
     public void SetInteractable(bool _isInteractable)
     {
-        tog_choose.interactable = _isInteractable;
+        tog_skillChoose.interactable = _isInteractable;
+        baseMouseEffect.EffectEnabled = _isInteractable;
     }
     // 滑鼠進入按鈕時觸發
     public void OnMouseEnter()
@@ -119,7 +124,6 @@ public class SkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
 
     void HideTooltip()
     {
-        Debug.Log("Hide Tooltip");
         obj_buffTip.SetActive(false);
     }
     #endregion

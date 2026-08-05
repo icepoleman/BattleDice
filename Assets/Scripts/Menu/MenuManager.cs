@@ -37,6 +37,7 @@ public class MenuManager : MonoBehaviour
         LoadSavedSettingsIfHasSave();
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SaveLoadPanel" + ".prefab");
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
+        AtlasLoader.Instance.Init();
     }
 
     private void LoadSavedSettingsIfHasSave()

@@ -216,8 +216,7 @@ public class CSVReader
                 generateDices: v.Length > 11 ? ParseIntArrayStatic(v[11]) : null,
                 tag: v.Length > 12 ? v[12] : "",
                 price: v.Length > 13 && !string.IsNullOrWhiteSpace(v[13]) ? int.Parse(v[13]) : 0,
-                modifierConditions: v.Length > 14 ? v[14] : "",
-                modifierEffects: v.Length > 15 ? v[15] : ""
+                iconPath: v.Length > 14 ? v[14] : ""
             );
 
             skills[data.skillID] = data;

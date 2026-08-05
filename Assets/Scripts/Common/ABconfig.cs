@@ -4,7 +4,6 @@ public static class ABconfig
     public const string BASE_PATH = "Assets/DiceGame_ab/";
     //AVG
     public const string AVG_BG = BASE_PATH + "AVG/Backgrounds/";
-    public const string AVG_CHAR = BASE_PATH + "AVG/Characters/";
     public const string AVG_CHAR_Enemy = BASE_PATH + "AVG/Characters/Enemy/";
     public const string AVG_PREFABS = BASE_PATH + "AVG/Prefabs/";
     //通用

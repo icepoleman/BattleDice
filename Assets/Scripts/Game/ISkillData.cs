@@ -45,8 +45,7 @@ public struct SkillConfigData
     public BuffSeed[] selfBuffs;     // 對自己施加的 Buff 列表
     public BuffSeed[] targetBuffs;   // 對目標施加的 Buff 列表
     public int price;                  // 技能價格（購買或升級用）
-    public string modifierConditions;  // 技能額外效果條件（用於升級後）
-    public string modifierEffects;     // 技能額外效果說明（用於升級後）
+    public string iconPath;           // 技能圖示路徑
 
     /// <summary>
     /// 計算需要的骰子數量 (根據 requirementType 和 needDicesData)
@@ -89,6 +88,7 @@ public enum SkillRequirementType
 public interface ISkillData
 {
     int skillID { get; set; }
+    string iconPath { get; set; } // 新增：技能圖示路徑
     SkillType skillType { get; } // 新增：技能類型
     string skillName { get; set; }
     string conditionText { get; set; }// 技能條件描述
@@ -122,6 +122,7 @@ public class BaseSkill : ISkillData
     public int skillID { get; set; } = 0;
     public string skillName { get; set; } = "";
     public SkillType skillType { get; set; } = SkillType.Attack;
+    public string iconPath { get; set; } = "";
     public string conditionText { get; set; } = "";
     public string effectText { get; set; } = "";
     public int skillValue { get; set; } = 0;
@@ -171,6 +172,7 @@ public class BaseSkill : ISkillData
     {
         config = configData;
         skillID = configData.skillID;
+        iconPath = configData.iconPath;
         skillName = configData.skillName;
         conditionText = configData.conditionText;
         effectText = configData.effectText;

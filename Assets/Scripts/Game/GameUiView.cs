@@ -40,7 +40,6 @@ public class GameUiView : MonoBehaviour
     Sprite[] playerSprites;
     Sprite[] enemySprites;
 
-    Sprite[] diceSprites;
     GameObject prefab_manaDice;
 
     GameObject prefab_buffVFX, prefab_deBuffVFX, prefab_bloodVfx, prefab_buffCard;
@@ -50,15 +49,6 @@ public class GameUiView : MonoBehaviour
     {
         trans_enemyPos = img_enemy.transform.parent;
         trans_playerPos = img_player.transform.parent;
-        var spriteList = await AddressableManager.LoadLabelAsync<Sprite>("Dice");
-        // 依照名稱排序 (dice_0, dice_1, dice_2...)
-        spriteList.Sort((a, b) =>
-        {
-            int aNum = int.Parse(a.name.Replace("dice_", ""));
-            int bNum = int.Parse(b.name.Replace("dice_", ""));
-            return aNum.CompareTo(bNum);
-        });
-        diceSprites = spriteList.ToArray();
         prefab_manaDice = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "manaDice.prefab");
         prefab_buffVFX = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_VFX + "vfx_buff.prefab");
         prefab_deBuffVFX = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_VFX + "vfx_debuff.prefab");
@@ -242,7 +232,7 @@ public class GameUiView : MonoBehaviour
         dice.transform.localScale = Vector3.one;
         dice.transform.localPosition = Vector3.zero;
         manaDice diceView = dice.GetComponent<manaDice>();
-        diceView.SetDiceFace(sideNum, diceSprites[sideNum]);
+        diceView.SetDiceFace(sideNum);
     }
     //生成飛行文字
     public async void CreateFlyBloodText(int damage, bool isPlayer, bool isbig)

@@ -14,6 +14,7 @@ public class littleSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitH
     [SerializeField] TextMeshProUGUI text_buffTip;
     private int currentLinkIndex = -1;
     [SerializeField] GameObject obj_chooseVfx;
+    [SerializeField] Image img_skillIcon;
     public void SetData(ISkillData _skillData)
     {
         skillData = _skillData;
@@ -22,6 +23,7 @@ public class littleSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitH
         text_skillEffect.text += "\n" + skillData.conditionText;
         text_skillEffect.text += "\n" + LanguageManager.GetText("T_skill_effect_title");
         text_skillEffect.text += "\n" + skillData.effectText;
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
     }
     public int GetSkillID()
     {

@@ -19,10 +19,10 @@ public class manaDice : MonoBehaviour
         seq.Append(rect_dice.DOAnchorPosY(70f, 0.2f).SetEase(Ease.OutQuad));
         seq.Append(rect_dice.DOAnchorPosY(0f, 0.4f).SetEase(Ease.OutBounce));
     }
-    public void SetDiceFace(int _sideNum,Sprite diceSp)
+    public void SetDiceFace(int _sideNum)
     {
         sideNum = _sideNum;
-        img_dice.sprite = diceSp;
+        img_dice.sprite = AtlasLoader.Instance.GetDiceSprite(_sideNum);
     }
     public void OnChoose()
     {

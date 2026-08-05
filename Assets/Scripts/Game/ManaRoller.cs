@@ -19,36 +19,29 @@ public class ManaRoller : MonoBehaviour
     manaRollerMode currentMode = manaRollerMode.Off;
     [SerializeField] Button btn_roll = null;//擲骰子按鈕
     [SerializeField] GameObject obj_vfx_roll = null;//擲骰子特效
-    float rollAnimationDuration = 1f; // 擲骰子動畫總時長
+    float rollAnimationDuration = 0.5f; // 擲骰子動畫總時長
     Button btn_turnEnd = null;//結束回合按鈕
+    [Header("鎖骰數量")]
     [SerializeField] Text text_freezeCount;
     Transform rollDiceParent;    //骰子生成位置
     int maxFreezeCount; //最大凍結數量
     int rollCount = 0; //最大擲骰次數
     int freezeCount = 0; //凍結數量
+    [Header("骰子")]
     [SerializeField] GameObject dicePrefab = null;
     [SerializeField] Image img_rollCount = null;//擲骰次數顯示
     RectTransform rect_rollCount;
     bool isOpen = false;
     List<ManaRollerDice> manaDiceList = new List<ManaRollerDice>();
     int maxDiceCount = 8;//最大存放骰子數量
+    [Header("技能按鈕")]
     [SerializeField] ToggleGroup skillToggleGroup;
-    List<SkillCard> skillCardList = new List<SkillCard>();
-    [SerializeField] Transform skillCardParent;
-    [SerializeField] GameObject skillCardPrefab;
+    [SerializeField] List<SkillCard> skillCardList = new List<SkillCard>();
     [SerializeField] SkillCard chooseSkillCard;
-    [SerializeField] Text text_skillHint;
-    [SerializeField] Button btn_changeSkill;
-    [SerializeField] Animator anim_skillBox;
-    [SerializeField] RectTransform rect_skillStar;
-    Sprite[] diceSprites; // 骰子圖集
+    //[SerializeField] Text text_skillHint;
+    List<Sprite> diceSprites = new List<Sprite>();
     [SerializeField] Material diceMtl;
 
-    // 技能星星旋轉相關
-    float skillStarBaseSpeed = 30f; // 定速旋轉速度（度/秒）
-    float skillStarCurrentSpeed; // 當前旋轉速度
-    Tweener skillStarSpeedTween; // 速度變化的 Tween
-    int skillBoxOpenFrame = -1; // 記錄技能面板打開的幀數
     void Awake()
     {
         //監聽技能選取事件
@@ -58,39 +51,18 @@ public class ManaRoller : MonoBehaviour
     {
         if (isOpen) return;
 
-        for (int i = 0; i < 4; i++)
+        diceSprites.Clear();
+        for (int i = 0; i <= 6; i++)
         {
-            GameObject cardObj = Instantiate(skillCardPrefab, skillCardParent);
-            SkillCard card = cardObj.GetComponent<SkillCard>();
-            skillCardList.Add(card);
+            diceSprites.Add(AtlasLoader.Instance.GetDiceSprite(i));
         }
-        skillCardList.Reverse(); // 反轉排序
-        var spriteList = await AddressableManager.LoadLabelAsync<Sprite>("Dice");
-        // 依照名稱排序 (dice_0, dice_1, dice_2...)
-        spriteList.Sort((a, b) =>
-        {
-            int aNum = int.Parse(a.name.Replace("dice_", ""));
-            int bNum = int.Parse(b.name.Replace("dice_", ""));
-            return aNum.CompareTo(bNum);
-        });
-        diceSprites = spriteList.ToArray();
+
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;
         btn_turnEnd = GameObject.Find("btn_turnEnd").GetComponent<Button>();
         rect_rollCount = img_rollCount.GetComponent<RectTransform>();
         rect_rollCount.anchoredPosition = new Vector2(rect_rollCount.anchoredPosition.x, -200f);
 
-        // 初始化技能星星旋轉速度
-        skillStarCurrentSpeed = skillStarBaseSpeed;
-
-        //按鈕事件
-        btn_changeSkill.onClick.AddListener(() =>
-        {
-            bool isActive = anim_skillBox.GetBool("isOpen");
-            anim_skillBox.SetBool("isOpen", !isActive);
-            if (!isActive) skillBoxOpenFrame = Time.frameCount; // 記錄打開的幀數
-            TriggerSkillStarBoost();
-        });
         btn_roll.onClick.AddListener(() => { RollDices(); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
 
@@ -101,38 +73,7 @@ public class ManaRoller : MonoBehaviour
     void OnDestroy()
     {
         rect_rollCount?.DOKill();
-        skillStarSpeedTween?.Kill();
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
-    }
-
-    void Update()
-    {
-        // 技能星星持續旋轉（順時鐘為負值）
-        if (rect_skillStar != null)
-        {
-            rect_skillStar.Rotate(0, 0, -skillStarCurrentSpeed * Time.deltaTime);
-        }
-
-        // 滑鼠左鍵放開時關閉技能面板
-        if (anim_skillBox.GetBool("isOpen") && Time.frameCount > skillBoxOpenFrame)
-        {
-            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                anim_skillBox.SetBool("isOpen", false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 觸發技能星星加速旋轉（從最高速降到定速）
-    /// </summary>
-    void TriggerSkillStarBoost()
-    {
-        skillStarSpeedTween?.Kill();
-        float boostSpeed = 360f; // 最高速（度/秒）
-        skillStarCurrentSpeed = boostSpeed;
-        skillStarSpeedTween = DOTween.To(() => skillStarCurrentSpeed, x => skillStarCurrentSpeed = x, skillStarBaseSpeed, 1f)
-            .SetEase(Ease.OutQuad);
     }
 
     /// <summary>
@@ -164,11 +105,9 @@ public class ManaRoller : MonoBehaviour
 
     void OnSkillSelected(object[] args)
     {
-        TriggerSkillStarBoost();
-        anim_skillBox.SetBool("isOpen", false);
         ISkillData selectedSkill = args[0] as ISkillData;
-        chooseSkillCard.SetData(selectedSkill);
-        text_skillHint.text = selectedSkill.conditionText;
+        //chooseSkillCard.SetData(selectedSkill);
+        //text_skillHint.text = selectedSkill.conditionText;
         // 切換技能時清除所有骰子選取狀態
         ClearAllSelections();
     }
@@ -226,13 +165,20 @@ public class ManaRoller : MonoBehaviour
     //生成技能卡
     public void SetAllSkill(List<ISkillData> iskList)
     {
-        for (int i = 0; i < iskList.Count; i++)
+        for (int i = 0; i < skillCardList.Count; i++)
         {
-            skillCardList[i].SetData(iskList[i], skillToggleGroup);
-            if (!firstSetSkill)
+            if (i < iskList.Count)
             {
-                EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, iskList[i]);
-                firstSetSkill = true;
+                skillCardList[i].SetData(iskList[i], skillToggleGroup);
+                if (!firstSetSkill)
+                {
+                    EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, iskList[i]);
+                    firstSetSkill = true;
+                }
+            }
+            else
+            {
+                skillCardList[i].SetInteractable(false);
             }
         }
     }
@@ -251,7 +197,7 @@ public class ManaRoller : MonoBehaviour
         }
 
         // 等待動畫結束
-        await System.Threading.Tasks.Task.Delay((int)(rollAnimationDuration * 1000));
+        await Task.Delay((int)(rollAnimationDuration * 1000));
 
         // 動畫結束後，如果還有次數且在 Idle 模式才重新啟用
         if (rollCount > 0 && currentMode == manaRollerMode.Idle && manaDiceList.Count > 0)
@@ -297,8 +243,6 @@ public class ManaRoller : MonoBehaviour
     /// </summary>
     public List<int> GetSelectedDiceValues()
     {
-        TriggerSkillStarBoost();
-        anim_skillBox.SetBool("isOpen", false);
         List<int> values = new List<int>();
         foreach (var dice in manaDiceList)
         {
@@ -391,7 +335,7 @@ public class ManaRoller : MonoBehaviour
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
             }
-            , diceSprites
+            , diceSprites.ToArray()
             , diceMtl
         );
         manaDiceList.Add(diceScript);

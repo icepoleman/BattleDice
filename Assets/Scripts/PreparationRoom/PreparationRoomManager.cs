@@ -54,6 +54,11 @@ public class PreparationRoomManager : MonoBehaviour
         btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {
+            if (isLevel_0)
+            {
+                UIManager.ShowHintBubble(LanguageManager.GetText("T_Level0_Hint"));
+                return;
+            }
             Instantiate(powerUpPanelPrefab, transform);
             obj_fire.SetActive(false);
         });
@@ -67,6 +72,11 @@ public class PreparationRoomManager : MonoBehaviour
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
+            if (isLevel_0)
+            {
+                UIManager.ShowHintBubble(LanguageManager.GetText("T_Level0_Hint"));
+                return;
+            }
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
             obj_fire.SetActive(false);
         });
@@ -182,12 +192,14 @@ public class PreparationRoomManager : MonoBehaviour
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ChangeSkillPanel" + ".prefab");
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "AffinityPanel" + ".prefab");
     }
+    bool isLevel_0 = false;
     void OpenLevel(int level)
     {
         switch (level)
         {
             case 0:
-                // 初始狀態，僅顯示第一個角色模型
+                // 初始狀態
+                isLevel_0 = true;
                 break;
             case 1:
                 // 第一關，增加一些裝飾或特效

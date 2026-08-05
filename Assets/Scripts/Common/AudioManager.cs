@@ -163,11 +163,11 @@ public class AudioManager : MonoBehaviour
         }
 
         // 如果是同一首 BGM，不重複播放
-        if (_currentBGMAddress == address && _bgmSource.isPlaying)
+      /*  if (_currentBGMAddress == address && _bgmSource.isPlaying)
         {
             Debug.Log($"[AudioManager] BGM 已在播放中: {address}");
             return;
-        }
+        }*/
 
         AudioClip clip = await LoadAudioClipBGM(address);
         if (clip == null)
@@ -177,10 +177,10 @@ public class AudioManager : MonoBehaviour
         }
 
         // 停止當前 BGM
-        if (_bgmSource.isPlaying)
+        /*if (_bgmSource.isPlaying)
         {
             _bgmSource.Stop();
-        }
+        }*/
 
         _currentBGMAddress = address;
         _bgmSource.clip = clip;
