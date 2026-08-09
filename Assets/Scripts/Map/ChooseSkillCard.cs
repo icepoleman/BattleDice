@@ -7,6 +7,7 @@ public class ChooseSkillCard : MonoBehaviour
     public int SkillID => skillData.skillID;
     [SerializeField] Button btn_card;
     [SerializeField] Text text_skillTitle;
+    [SerializeField] Image img_skillIcon;
     SkillConfigData skillData;
 
     public async void SetData(SkillConfigData _skillData)
@@ -18,6 +19,7 @@ public class ChooseSkillCard : MonoBehaviour
         });
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(skillData.iconPath);
     }
     void OnEnable()
     {

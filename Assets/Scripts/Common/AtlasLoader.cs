@@ -53,4 +53,5 @@ public class AtlasLoader
         EnsureInitialized();
         return atlas_Dice != null ? atlas_Dice.GetSprite(spriteName) : null;
     }
+    
 }

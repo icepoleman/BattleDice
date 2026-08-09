@@ -97,7 +97,6 @@ public class PreparationRoomManager : MonoBehaviour
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
         OpenLevel(GameDataManager.SafeRoomLevel);
         //OpenLevel(1);
-        SceneLoader.HideLoadingScreen();
         Observable.EveryUpdate()
             .Select(_ => GameDataManager.SocialPoint)
             .DistinctUntilChanged()
@@ -105,6 +104,7 @@ public class PreparationRoomManager : MonoBehaviour
             .Subscribe(UpdateSocialPointText)
             .AddTo(this);
         AddEventListeners();
+        SceneLoader.HideLoadingScreen();
     }
     void AddEventListeners()
     {

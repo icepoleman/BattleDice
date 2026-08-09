@@ -82,6 +82,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
         diceButton.onClick.RemoveAllListeners();
         diceButton.onClick.AddListener(() => clickCallback?.Invoke(this));
         diceImage.material = new Material(_diceMtl); // 使用新的材質實例
+        diceImage.material.SetFloat("_OutlineEnabled", 0f);
     }
 
     // 右鍵點擊處理

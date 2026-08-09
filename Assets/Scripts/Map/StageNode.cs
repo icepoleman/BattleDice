@@ -52,6 +52,7 @@ public class StageNode : MonoBehaviour
     {
         EventCenter.AddListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_ALL_STAGE_NODE, OnOpenAllStageNodes);
     }
     public void SetStageInfo(string _info)//測試用
     {
@@ -165,13 +166,11 @@ public class StageNode : MonoBehaviour
     {
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
         EventCenter.RemoveListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_ALL_STAGE_NODE, OnOpenAllStageNodes);
     }
     void OnHideStage(object[] param)
     {
-        if (GameDataManager.TestMode)
-            SetState(StageState.Unlocked);
-        else
-            SetState(StageState.Locked);
+        SetState(StageState.Locked);
     }
     public async void OnOpenTargetStageNode(object[] param)
     {
@@ -182,6 +181,11 @@ public class StageNode : MonoBehaviour
             await Task.Delay(500);
             SetState(StageState.Completed);
         }
+    }
+
+    public void OnOpenAllStageNodes(object[] param)
+    {
+        SetState(StageState.Unlocked);
     }
 
     public void SetState(StageState newState)
@@ -224,8 +228,7 @@ public class StageNode : MonoBehaviour
         if (currentState != StageState.Locked)
         {
             GameDataManager.TmpCompletedStory = completedStory;
-            if (!GameDataManager.TestMode)
-                GameDataManager.CurrentStage = stageID;
+            GameDataManager.CurrentStage = stageID;
             switch (stageType)
             {
                 case StageType.Story:

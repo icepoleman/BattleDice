@@ -100,10 +100,11 @@ public class DialogueManager : MonoBehaviour
          }*/
 
         // 檢測 CTRL 鍵或 Skip 按鈕快轉
+        if (!canSkip) return;
         ctrlPressed = Input.GetKey(KeyCode.LeftControl);
         shouldFastForward = (ctrlPressed || chatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
-        if (shouldFastForward && canSkip)
+        if (shouldFastForward)
         {
             if (!isFastForwarding)
             {

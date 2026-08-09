@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Threading.Tasks;
 public enum manaRollerMode
@@ -14,7 +15,7 @@ public enum manaRollerMode
     Idle,
     UseDice
 }
-public class ManaRoller : MonoBehaviour
+public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
 {
     manaRollerMode currentMode = manaRollerMode.Off;
     [SerializeField] Button btn_roll = null;//擲骰子按鈕
@@ -37,8 +38,10 @@ public class ManaRoller : MonoBehaviour
     [Header("技能按鈕")]
     [SerializeField] ToggleGroup skillToggleGroup;
     [SerializeField] List<SkillCard> skillCardList = new List<SkillCard>();
-    [SerializeField] SkillCard chooseSkillCard;
-    //[SerializeField] Text text_skillHint;
+    [Header("技能提示")]
+    [SerializeField] TextMeshProUGUI text_skillHint;
+    [SerializeField] GameObject obj_buffTip;
+    [SerializeField] TextMeshProUGUI text_buffTip;
     List<Sprite> diceSprites = new List<Sprite>();
     [SerializeField] Material diceMtl;
 
@@ -76,6 +79,42 @@ public class ManaRoller : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_SELECT_SKILL, OnSkillSelected);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TrySelectSkillCard(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            TrySelectSkillCard(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            TrySelectSkillCard(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            TrySelectSkillCard(3);
+        }
+    }
+
+    void TrySelectSkillCard(int index)
+    {
+        if (index < 0 || index >= skillCardList.Count)
+        {
+            return;
+        }
+
+        SkillCard card = skillCardList[index];
+        if (card == null || !card.CanBeSelected)
+        {
+            return;
+        }
+
+        card.SelectByShortcut();
+    }
+
     /// <summary>
     /// 開啟擲骰次數顯示（從-200移動到0，完成後漂浮）
     /// </summary>
@@ -107,7 +146,7 @@ public class ManaRoller : MonoBehaviour
     {
         ISkillData selectedSkill = args[0] as ISkillData;
         //chooseSkillCard.SetData(selectedSkill);
-        //text_skillHint.text = selectedSkill.conditionText;
+        text_skillHint.text = selectedSkill.conditionText + "\n" + selectedSkill.effectText;
         // 切換技能時清除所有骰子選取狀態
         ClearAllSelections();
     }
@@ -192,8 +231,9 @@ public class ManaRoller : MonoBehaviour
 
         for (int i = 0; i < manaDiceList.Count; i++)
         {
+            float rollAnimTime = rollAnimationDuration + UnityEngine.Random.Range(-0.2f, 0.2f); // 隨機化動畫時間，增加自然感
             int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
-            manaDiceList[i].RollDice(side, rollAnimationDuration);
+            manaDiceList[i].RollDice(side, rollAnimTime);
         }
 
         // 等待動畫結束
@@ -339,5 +379,54 @@ public class ManaRoller : MonoBehaviour
             , diceMtl
         );
         manaDiceList.Add(diceScript);
+    }
+    #region BUFF說明的Tooltip
+    private int currentLinkIndex = -1;
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(
+            text_skillHint,
+            eventData.position,
+            eventData.enterEventCamera
+        );
+
+        if (linkIndex != -1)
+        {
+            if (linkIndex != currentLinkIndex)
+            {
+                currentLinkIndex = linkIndex;
+                TMP_LinkInfo linkInfo = text_skillHint.textInfo.linkInfo[linkIndex];
+                string linkId = linkInfo.GetLinkID();
+
+                // 取得 link 在文字中的位置（使用第一個字符的位置）
+                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
+                TMP_CharacterInfo charInfo = text_skillHint.textInfo.characterInfo[firstCharIndex];
+                Vector3 charWorldPos = text_skillHint.transform.TransformPoint(charInfo.topLeft);
+
+                obj_buffTip.SetActive(true);
+                BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
+                text_buffTip.text = buffData.describe;
+            }
+        }
+        else
+        {
+            if (currentLinkIndex != -1)
+            {
+                currentLinkIndex = -1;
+                obj_buffTip.SetActive(false);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        currentLinkIndex = -1;
+        obj_buffTip.SetActive(false);
+    }
+    #endregion
+
+    public bool CheckHasDice()
+    {
+        return manaDiceList.Count > 0;
     }
 }

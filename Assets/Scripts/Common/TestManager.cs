@@ -42,6 +42,7 @@ public class TestManager : MonoBehaviour
         tog_testMode.onValueChanged.AddListener((isOn) =>
         {
             GameDataManager.TestMode = isOn;
+            EventCenter.Dispatch(MapEvent.EVENT_OPEN_ALL_STAGE_NODE);
             Debug.Log($"測試模式已設置為: {isOn}");
         });
         GameDataManager.TestMode = tog_testMode.isOn;
@@ -91,6 +92,8 @@ public class TestManager : MonoBehaviour
             Debug.Log($"已更新最大血量為: {bloodValue}");
         }
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
+        GameDataManager.PlayerData.diceCount = 6;
+        GameDataManager.PlayerData.maxRollCount = 5;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
     }
     private void EnterHEvent(int index)
