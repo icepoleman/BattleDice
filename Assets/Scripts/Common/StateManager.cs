@@ -67,6 +67,11 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
         EventCenter.AddListener(StateEvent.EVENT_ENTER_H_ROOM, OnEnterHRoom);
+        EventCenter.AddListener(StateEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.AddListener(StateEvent.EVENT_SPEND_GOLD, OnSpendGold);
+        EventCenter.AddListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
+        EventCenter.AddListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
+        EventCenter.AddListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -82,6 +87,11 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_BACK_PREVIOUS_SCENE, OnBackPreviousScene);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_END_SCENE, OnEnterEndScene);
         EventCenter.RemoveListener(StateEvent.EVENT_ENTER_H_ROOM, OnEnterHRoom);
+        EventCenter.RemoveListener(StateEvent.EVENT_GET_GOLD, OnGetGold);
+        EventCenter.RemoveListener(StateEvent.EVENT_SPEND_GOLD, OnSpendGold);
+        EventCenter.RemoveListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
+        EventCenter.RemoveListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
+        EventCenter.RemoveListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -217,9 +227,62 @@ public class StateManager : MonoBehaviour
             Invoke("DisableFadeImage", 0.5f);
         }
     }
+
+    async void OnGetGold(object[] args)
+    {
+        int goldAmount = (int)args[0];
+        GameDataManager.Gold += goldAmount;
+        RefreshMapResourceDisplay();
+        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGold", goldAmount));
+        Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
+    }
+
+    void OnSpendGold(object[] args)
+    {
+        int goldAmount = (int)args[0];
+        GameDataManager.Gold -= goldAmount;
+        if (GameDataManager.Gold < 0)
+        {
+            GameDataManager.Gold = 0;
+        }
+
+        RefreshMapResourceDisplay();
+        Debug.Log($"花費金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
+    }
+
+    async void OnGetGear(object[] args)
+    {
+        int gearAmount = (int)args[0];
+        GameDataManager.Gear += gearAmount;
+        RefreshMapResourceDisplay();
+        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGear", gearAmount));
+        Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
+    }
+
+    void OnGetSkill(object[] args)
+    {
+        int skillID = (int)args[0];
+        GameDataManager.AddSkill(skillID);
+    }
+
+    void OnGetItem(object[] args)
+    {
+        string itemName = (string)args[0];
+        Debug.Log($"取得道具: {itemName}");
+    }
+
     void DisableFadeImage()
     {
         fadeImage.gameObject.SetActive(false);
+    }
+
+    private void RefreshMapResourceDisplay()
+    {
+        MapManager mapManager = FindAnyObjectByType<MapManager>();
+        if (mapManager != null)
+        {
+            mapManager.RefreshResourceDisplay();
+        }
     }
 
     void OnBackPreviousScene(object[] args)

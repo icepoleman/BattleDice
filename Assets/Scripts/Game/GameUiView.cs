@@ -154,7 +154,7 @@ public class GameUiView : MonoBehaviour
     public async Task BornEnemySkillCards(List<ISkillData> skills)
     {
         ClearEnemySkillCards();
-        GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "enemySkillItem" + ".prefab");
+        GameObject skillCardPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "littleSkillItem" + ".prefab");
         foreach (ISkillData skill in skills)
         {
             GameObject skillCard = Instantiate(skillCardPrefab, trans_enemySkillBoxs);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class SkillDatabase
 {
-    public static HashSet<int> SpSkillIDs = new HashSet<int> { 38, 33, 113, 116,128 }; // 特殊技能ID列表，供遊戲邏輯判斷使用
+    public static HashSet<int> SpSkillIDs = new HashSet<int> { 38, 33, 113, 116, 128 }; // 特殊技能ID列表，供遊戲邏輯判斷使用
     public static HashSet<int> SpEnemySkillIDs = new HashSet<int> { 101, 102, 103 }; // 特殊怪物技能ID列表，供特效判斷
     private static Dictionary<int, SkillConfigData> _skills;
 
@@ -29,6 +29,20 @@ public static class SkillDatabase
 
         // 統一處理本地化文本
         SkillLocalizationHelper.LocalizeAllSkills(_skills);
+    }
+
+    public static List<SkillConfigData> GetAllPlayerNotGetSkills()
+    {
+        List<SkillConfigData> playerSkills = new List<SkillConfigData>();
+        foreach (var skill in Skills.Values)
+        {
+            // 排除怪物技能 已持有技能
+            if (skill.skillID > 100 && !GameDataManager.HasSkillIDs.Contains(skill.skillID)) 
+            {
+                playerSkills.Add(skill);
+            }
+        }
+        return playerSkills;
     }
 
     // 載入額外的 CSV 並合併到技能庫

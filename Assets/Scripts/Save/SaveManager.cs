@@ -251,6 +251,7 @@ public static class SaveManager
         currentSave.hasSkillIDs = GameDataManager.HasSkillIDs.ToList();
         currentSave.gold = GameDataManager.Gold;
         currentSave.gear = GameDataManager.Gear;
+        currentSave.backUpKey = GameDataManager.BackUpKey;
         
         // 存儲升級等級
         currentSave.powerUpLevel_MaxBlood = GameDataManager.GetPowerUpLevel(PowerUpType.MaxBlood);
@@ -292,6 +293,7 @@ public static class SaveManager
                 GameDataManager.HasSkillIDs = new HashSet<int>(currentSave.hasSkillIDs);
                 GameDataManager.Gold = currentSave.gold;
                 GameDataManager.Gear = currentSave.gear;
+                GameDataManager.BackUpKey = currentSave.backUpKey;
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
                 
                 // 讀取升級等級

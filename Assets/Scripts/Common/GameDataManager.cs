@@ -28,6 +28,7 @@ public static class GameDataManager
     public static string PreparationRoomStage { get; set; } = "PreparationRoom"; //打輸回到的準備室關卡
     public static int Gold { get; set; } = 0;          // 當前金幣數量
     public static int Gear { get; set; } = 0;    // 當前齒輪數量(強化素材)
+    public static int BackUpKey { get; set; } = 0;
     public static int TmpEnemyID { get; set; } = 0;
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空

@@ -253,11 +253,11 @@ public class StageNode : MonoBehaviour
                     break;
                 /* case StageType.Item:
                      Debug.Log($"取得道具: {stageID}{stageInfo}");
-                     EventCenter.Dispatch(MapEvent.EVENT_GET_ITEM, stageInfo); //取得道具
+                     EventCenter.Dispatch(StateEvent.EVENT_GET_ITEM, stageInfo); //取得道具
                      GoNextStage();
                      break;*/
                 case StageType.Gear:
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
                     EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
                     Debug.Log($"齒輪: {stageInfo}");
                     GoNextStage();
@@ -270,13 +270,13 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Gold:
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
                                                                                          //  EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
                     Debug.Log($"金幣: {stageInfo}");
                     GoNextStage();
                     break;
                 case StageType.Skill:
-                    EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, int.Parse(stageInfo)); //取得技能 
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(stageInfo)); //取得技能
                     Debug.Log($"技能: {stageInfo}");
                     GoNextStage();
                     break;

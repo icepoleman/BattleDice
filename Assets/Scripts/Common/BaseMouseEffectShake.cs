@@ -42,7 +42,7 @@ public class BaseMouseEffectShake : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerUp(PointerEventData eventData) { }
 
-    void StartShake()
+    public void StartShake()
     {
         if (shakeRoutine != null)
         {

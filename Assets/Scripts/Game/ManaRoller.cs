@@ -55,10 +55,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
         if (isOpen) return;
 
         diceSprites.Clear();
-        for (int i = 0; i <= 6; i++)
-        {
-            diceSprites.Add(AtlasLoader.Instance.GetDiceSprite(i));
-        }
+        diceSprites = AtlasLoader.Instance.GetAllDiceSprites();
 
         //尋找物件
         rollDiceParent = GameObject.Find("diceBox/dices").transform;

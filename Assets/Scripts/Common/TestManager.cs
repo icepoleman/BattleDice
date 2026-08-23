@@ -62,7 +62,7 @@ public class TestManager : MonoBehaviour
     {
         if (tog_testMode.isOn)
         {
-            for (int i = 3; i <= 45; i++)
+            for (int i = 1; i <= 45; i++)
             {
                 GameDataManager.HasSkillIDs.Add(i);
             }

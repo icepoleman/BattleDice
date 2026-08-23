@@ -50,11 +50,6 @@ public class MapManager : MonoBehaviour
     {
         EventCenter.AddListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.AddListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
-        EventCenter.AddListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
-        EventCenter.AddListener(MapEvent.EVENT_SPEND_GOLD, OnSpendGold);
-        EventCenter.AddListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
-        EventCenter.AddListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
-        EventCenter.AddListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
@@ -65,11 +60,6 @@ public class MapManager : MonoBehaviour
     {
         EventCenter.RemoveListener(MapEvent.EVENT_COMPLETE_MAP, OnCompleteMap);
         EventCenter.RemoveListener(MapEvent.EVENT_RECOVER_HEALTH, OnRecoverHealth);
-        EventCenter.RemoveListener(MapEvent.EVENT_GET_GOLD, OnGetGold);
-        EventCenter.RemoveListener(MapEvent.EVENT_SPEND_GOLD, OnSpendGold);
-        EventCenter.RemoveListener(MapEvent.EVENT_GET_ITEM, OnGetItem);
-        EventCenter.RemoveListener(MapEvent.EVENT_GET_GEAR, OnGetGear);
-        EventCenter.RemoveListener(MapEvent.EVENT_GET_SKILL, OnGetSkill);
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_MAP_SHOP, OnOpenMapShop);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
@@ -131,48 +121,11 @@ public class MapManager : MonoBehaviour
 
     void OnOpenTreasureBox(object[] param)
     {
-        TreasureBoxRewardType rewardType = (TreasureBoxRewardType)param[0];
+        //寶箱大改
+       /* TreasureBoxRewardType rewardType = (TreasureBoxRewardType)param[0];
         int rewardValue = (int)param[1];
         treasureBox.Setup(3, rewardType, rewardValue * 5);
-        treasureBox.gameObject.SetActive(true);
-    }
-    async void OnGetGold(object[] param)
-    {
-        int goldAmount = (int)param[0];
-        GameDataManager.Gold += goldAmount;
-        text_gold.text = GameDataManager.Gold.ToString();
-        await UIManager.ShowHintBubble(
-         LanguageManager.GetFormat("T_GetGold", goldAmount)
-        );
-        Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
-    }
-    //花費金幣
-    void OnSpendGold(object[] param)
-    {
-        int goldAmount = (int)param[0];
-        GameDataManager.Gold -= goldAmount;
-        if (GameDataManager.Gold < 0)
-        {
-            GameDataManager.Gold = 0;
-        }
-        text_gold.text = GameDataManager.Gold.ToString();
-        Debug.Log($"花費金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
-    }
-
-    async void OnGetGear(object[] param)
-    {
-        int gearAmount = (int)param[0];
-        GameDataManager.Gear += gearAmount;
-        text_gear.text = GameDataManager.Gear.ToString();
-        await UIManager.ShowHintBubble(
-          LanguageManager.GetFormat("T_GetGear", gearAmount)
-        );
-        Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
-    }
-    async void OnGetSkill(object[] param)
-    {
-        int skillID = (int)param[0];
-        GameDataManager.AddSkill(skillID);
+        treasureBox.gameObject.SetActive(true);*/
     }
     async void OnOpenMapShop(object[] param)
     {
@@ -197,11 +150,10 @@ public class MapManager : MonoBehaviour
         GameDataManager.MapScrollValue = scrollbar_map.value;//記錄當前地圖滾動位置
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
     }
-    //特殊道具用
-    void OnGetItem(object[] param)
+    public void RefreshResourceDisplay()
     {
-        string itemName = (string)param[0];
-        // 道具處理邏輯
+        text_gold.text = GameDataManager.Gold.ToString();
+        text_gear.text = GameDataManager.Gear.ToString();
     }
 
     // 載入地圖 Prefab

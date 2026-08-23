@@ -26,8 +26,8 @@ public class MapShopItem : MonoBehaviour
     {
         if (GameDataManager.Gold >= skillData.price)
         {
-            EventCenter.Dispatch(MapEvent.EVENT_SPEND_GOLD, skillData.price); // 消耗金幣事件
-            EventCenter.Dispatch(MapEvent.EVENT_GET_SKILL, skillData.skillID); //取得技能
+            EventCenter.Dispatch(StateEvent.EVENT_SPEND_GOLD, skillData.price); // 消耗金幣事件
+            EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, skillData.skillID); //取得技能
             obj_soldOut.SetActive(true);
             btn_buy.interactable = false;
         }

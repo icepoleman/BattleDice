@@ -170,3 +170,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HintBubble
   text_hint: {fileID: 1775048609548419326}
   bg_image: {fileID: 4471679869774840944}
+  fadeMoveUpDistance: 70

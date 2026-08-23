@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D;
+using System.Collections.Generic;
 
 public class AtlasLoader
 {
@@ -7,7 +8,7 @@ public class AtlasLoader
 
     public static AtlasLoader Instance => instance ??= new AtlasLoader();
 
-    private SpriteAtlas atlas_skill; 
+    private SpriteAtlas atlas_skill;
     private SpriteAtlas atlas_buff;
     private SpriteAtlas atlas_Dice;
     private bool isInitialized;
@@ -43,8 +44,9 @@ public class AtlasLoader
 
     public Sprite GetBuffSprite(string spriteName)
     {
+        string buffspName = $"buff_{spriteName}";
         EnsureInitialized();
-        return atlas_buff != null ? atlas_buff.GetSprite(spriteName) : null;
+        return atlas_buff != null ? atlas_buff.GetSprite(buffspName) : null;
     }
 
     public Sprite GetDiceSprite(int diceNum)
@@ -53,5 +55,16 @@ public class AtlasLoader
         EnsureInitialized();
         return atlas_Dice != null ? atlas_Dice.GetSprite(spriteName) : null;
     }
-    
+
+    public List<Sprite> GetAllDiceSprites()
+    {
+        EnsureInitialized();
+        List<Sprite> diceSprites = new List<Sprite>();
+        for (int i = 0; i <= 6; i++)
+        {
+            diceSprites.Add(atlas_Dice.GetSprite($"dice_{i}"));
+        }
+        return diceSprites;
+    }
+
 }

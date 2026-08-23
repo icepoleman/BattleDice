@@ -24,6 +24,8 @@ public class GameEvent
 
     //UI
     public const string EVENT_UPDATE_BLOOD_UI = "GameEvent_UpdateBloodUI";//更新血量UI
+    public const string EVENT_SHOW_SKILL_DETAIL = "GameEvent_ShowSkillDetail";//顯示技能詳情
+    public const string EVENT_HIDE_SKILL_DETAIL = "GameEvent_HideSkillDetail";//隱藏技能詳情
 }
 public class StateEvent
 {
@@ -39,6 +41,13 @@ public class StateEvent
     public const string EVENT_SETTING_CHANGED = "StateEvent_SettingChanged";//設定變更後通知
     public const string EVENT_ENTER_END_SCENE = "StateEvent_EnterEndScene";//進入結算畫面
     public const string EVENT_ENTER_H_ROOM = "StateEvent_EnterHRoom";//進入H房間
+
+    // 全域資源事件
+    public const string EVENT_GET_GOLD = "StateEvent_GetGold"; //取得金幣通知
+    public const string EVENT_SPEND_GOLD = "StateEvent_SpendGold"; //花費金幣通知
+    public const string EVENT_GET_GEAR = "StateEvent_GetGear"; //取得齒輪通知
+    public const string EVENT_GET_ITEM = "StateEvent_GetItem"; //取得道具通知(特殊道具)
+    public const string EVENT_GET_SKILL = "StateEvent_GetSkill"; //取得技能通知
 }
 public class MapEvent
 {
@@ -47,11 +56,6 @@ public class MapEvent
     public const string EVENT_OPEN_ALL_STAGE_NODE = "MapEvent_OpenAllStageNode"; //開啟所有關卡節點事件
     public const string EVENT_HIDE_ALL_STAGE = "MapEvent_HideALLStage"; //隱藏其他關卡事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
-    public const string EVENT_GET_GOLD = "MapEvent_GetGold"; //取得金幣通知
-    public const string EVENT_SPEND_GOLD = "MapEvent_SpendGold"; //花費金幣通知
-    public const string EVENT_GET_GEAR = "MapEvent_GetGear"; //取得齒輪通知
-    public const string EVENT_GET_ITEM = "MapEvent_GetItem";//取得道具通知(特殊道具)
-    public const string EVENT_GET_SKILL = "MapEvent_GetSkill";//取得技能通知
     public const string EVENT_OPEN_MAP_SHOP = "MapEvent_OpenMapShop";//開啟地圖商店
     public const string EVENT_UNCHOOSE_SKILL = "MapEvent_UnchooseSkill";//取消選取技能
     public const string EVENT_ENTER_STAGE_STORY = "MapEvent_EnterStageStory";//進入劇情關卡

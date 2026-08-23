@@ -8,7 +8,7 @@ public class littleSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitH
 {
     [SerializeField] TextMeshProUGUI text_infoTitle;
     [SerializeField] TextMeshProUGUI text_skillEffect;
-    ISkillData skillData;
+    public ISkillData skillData;
 
     [SerializeField] GameObject obj_buffTip;
     [SerializeField] TextMeshProUGUI text_buffTip;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +12,7 @@ public class ChangeSkillView : MonoBehaviour
     [SerializeField] GameObject chosenSkillCardPrefab;
     [SerializeField] Transform hasSkillCardParent;
     [SerializeField] Transform chosenSkillCardParent;
+    [SerializeField] BaseMouseEffectShake mouseEffectShake;
     List<int> hasSkillsID = new List<int>();
     List<int> chosenSkillsID = new List<int>();
     [SerializeField] Button btn_back;
@@ -54,8 +54,9 @@ public class ChangeSkillView : MonoBehaviour
             CreateHasSkillCard(config, isChosen);
         }
     }
-    async void CreateChosenSkillCard(SkillConfigData config)
+    void CreateChosenSkillCard(SkillConfigData config)
     {
+        mouseEffectShake.StartShake();
         GameObject cardObj = Instantiate(chosenSkillCardPrefab, chosenSkillCardParent);
         cardObj.SetActive(true);
         ChooseSkillCard card = cardObj.GetComponent<ChooseSkillCard>();
@@ -88,7 +89,7 @@ public class ChangeSkillView : MonoBehaviour
         else
         {
             // 選擇技能：檢查是否已滿
-            if (chosenSkillsID.Count > MAX_CHOSEN_SKILLS)
+            if (chosenSkillsID.Count >= MAX_CHOSEN_SKILLS)
             {
                 await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_ChangeSkill_SkillMax", MAX_CHOSEN_SKILLS));
                 return;

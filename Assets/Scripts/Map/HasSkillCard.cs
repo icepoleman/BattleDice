@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
-public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
+public class HasSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private bool _isChosen;
     public bool isChosen
@@ -13,44 +14,30 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
         set
         {
             _isChosen = value;
-            img_choose.enabled = value;
+            img_choose.gameObject.SetActive(value);
         }
     }
 
     public int SkillID => skillData.skillID;
 
     [SerializeField] Button btn_card;
+    [SerializeField] Image img_skillIcon;
     [SerializeField] Image img_choose;
-    [SerializeField] TextMeshProUGUI text_skillTitle;
-    [SerializeField] TextMeshProUGUI text_skillCondition_title;
-    [SerializeField] TextMeshProUGUI text_skillCondition;
-    [SerializeField] TextMeshProUGUI text_skillCondition_dice;
-    [SerializeField] TextMeshProUGUI text_skillEffect;
-    [SerializeField] GameObject obj_buffTip;
-    [SerializeField] TextMeshProUGUI text_buffTip;
-    SkillConfigData skillData;
-    private int currentLinkIndex = -1;
+    private SkillConfigData skillData;
+    private const float HOVER_SHOW_DELAY = 0.3f;
+    private Coroutine hoverShowCoroutine;
+    private bool hasDispatchedThisHover;
+    private Canvas rootCanvas;
+
     public void SetData(SkillConfigData _skillData, Action<HasSkillCard> onCardClicked)
     {
-        btn_card.onClick.AddListener(() => onCardClicked?.Invoke(this));
-        text_skillCondition_title.text = LanguageManager.GetText("T_skill_condition_title");
-        text_skillCondition_dice.text = "";
-        // text_skillEffect_title.text = LanguageManager.GetText("T_skill_effect_title");
-        skillData = _skillData;
-        text_skillTitle.text = skillData.skillName;
-        text_skillCondition.text = skillData.conditionText;
-        text_skillEffect.text = skillData.effectText;
-        if (skillData.conditionText == "")
-            BurnConditionDices();
-    }
-    void BurnConditionDices()
-    {
-        text_skillCondition.gameObject.SetActive(false);
-        text_skillCondition_dice.text = "";
-        for (int i = 0; i < skillData.needDicesData.Length; i++)
+        if(onCardClicked == null)
         {
-            text_skillCondition_dice.text += LanguageManager.GetFormat("Shop_Skill_Condition_Dice", skillData.needDicesData[i]);
+            btn_card.gameObject.SetActive(false);
         }
+        btn_card.onClick.AddListener(() => onCardClicked?.Invoke(this));
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        skillData = _skillData;
     }
 
     void OnEnable()
@@ -61,79 +48,75 @@ public class HasSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHand
     {
         EventCenter.RemoveListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
     }
+    void OnDisable()
+    {
+        CancelHoverShow();
+    }
     void OnUnchooseSkill(object[] args)
     {
         int skillID = (int)args[0];
         if (skillID == this.SkillID)
         {
             isChosen = false;
-            img_choose.enabled = false;
+            img_choose.gameObject.SetActive(false);
             Debug.Log("Unchoose skill: " + skillID);
         }
     }
 
-    public void OnPointerMove(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(
-            text_skillEffect,
-            eventData.position,
-            eventData.enterEventCamera
-        );
-
-        if (linkIndex != -1)
-        {
-            if (linkIndex != currentLinkIndex)
-            {
-                currentLinkIndex = linkIndex;
-                TMP_LinkInfo linkInfo = text_skillEffect.textInfo.linkInfo[linkIndex];
-                string linkId = linkInfo.GetLinkID();
-
-                // 取得 link 在文字中的位置（使用第一個字符的位置）
-                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
-                TMP_CharacterInfo charInfo = text_skillEffect.textInfo.characterInfo[firstCharIndex];
-                Vector3 charWorldPos = text_skillEffect.transform.TransformPoint(charInfo.topLeft);
-
-                ShowTooltip(linkId, charWorldPos);
-            }
-        }
-        else
-        {
-            if (currentLinkIndex != -1)
-            {
-                currentLinkIndex = -1;
-                HideTooltip();
-            }
-        }
+        CancelHoverShow();
+        hasDispatchedThisHover = false;
+        hoverShowCoroutine = StartCoroutine(ShowSkillDetailAfterDelay());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        currentLinkIndex = -1;
-        HideTooltip();
+        CancelHoverShow();
+        EventCenter.Dispatch(GameEvent.EVENT_HIDE_SKILL_DETAIL);
     }
 
-    /// <summary>
-    /// 顯示彈窗
-    /// </summary>
-    /// <param name="linkId">link 標籤的 ID，可用於識別要顯示的內容</param>
-    /// <param name="position">link 的世界座標位置</param>
-    void ShowTooltip(string linkId, Vector3 _position)
+    private IEnumerator ShowSkillDetailAfterDelay()
     {
-        obj_buffTip.SetActive(true);
-        BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
-        text_buffTip.text = buffData.describe;
+        yield return new WaitForSeconds(HOVER_SHOW_DELAY);
 
-        // 在 link 上方顯示
-        Vector3 tipPosition = _position + new Vector3(1.25F, 0.25f, 0);
-        obj_buffTip.transform.position = tipPosition;
+        if (hasDispatchedThisHover)
+        {
+            yield break;
+        }
 
-        Debug.Log($"Show Tooltip: {linkId} at {tipPosition}");
+        hasDispatchedThisHover = true;
+        Vector2 screenPos = GetCardScreenPosition();
+        EventCenter.Dispatch(GameEvent.EVENT_SHOW_SKILL_DETAIL, SkillID, screenPos);
     }
 
-    void HideTooltip()
+    private Vector2 GetCardScreenPosition()
     {
-        Debug.Log("Hide Tooltip");
-        obj_buffTip.SetActive(false);
-        // TODO: 實作彈窗隱藏
+        RectTransform cardRect = transform as RectTransform;
+
+        if (rootCanvas == null)
+        {
+            rootCanvas = GetComponentInParent<Canvas>();
+        }
+
+        Camera uiCamera = null;
+        if (rootCanvas != null && rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            uiCamera = rootCanvas.worldCamera != null ? rootCanvas.worldCamera : Camera.main;
+        }
+
+        Vector3 worldPos = cardRect != null ? cardRect.TransformPoint(cardRect.rect.center) : transform.position;
+        return RectTransformUtility.WorldToScreenPoint(uiCamera, worldPos);
+    }
+
+    private void CancelHoverShow()
+    {
+        if (hoverShowCoroutine != null)
+        {
+            StopCoroutine(hoverShowCoroutine);
+            hoverShowCoroutine = null;
+        }
+
+        hasDispatchedThisHover = false;
     }
 }

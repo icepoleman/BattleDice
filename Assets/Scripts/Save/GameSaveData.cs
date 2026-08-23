@@ -22,6 +22,7 @@ public class GameSaveData
     public List<int> hasSkillIDs = new List<int>();    // 擁有的技能ID
     public int gold;                     // 當前金幣數量
     public int gear;                  // 當前齒輪數量(強化素材)
+    public int backUpKey;                // 備用鑰匙數量
     
     // 升級等級存儲
     public int powerUpLevel_MaxBlood;
