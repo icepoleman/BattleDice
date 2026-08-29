@@ -7,7 +7,10 @@ public class EnemyData : BaseCharacterData
     public string enemyName = "敵人";
     public int goldReward = 0;
     public int gearReward = 0;
-    
+    public string enemyType = "Zako";
+    public string imgId = "";
+    public int openStage = 0;
+
     // 技能施放間隔（毫秒）
     public int skillCastInterval = 800;
 
@@ -48,8 +51,11 @@ public class EnemyData : BaseCharacterData
         gearReward = config.gearReward;
         maxBlood = config.maxBlood;
         currentBlood = config.maxBlood; // currentBlood 預設等於 maxBlood
-        diceSides = EnemyConfigData.DefaultDiceSides; // 使用預設骰子面
+        diceSides = config.diceSides; // 使用配置中的骰子面
         diceCount = config.diceCount;
+        enemyType = config.enemyType;
+        imgId = config.imgId;
+        openStage = config.openStage;
 
         // 載入怪物技能
         skillData = new List<ISkillData>();

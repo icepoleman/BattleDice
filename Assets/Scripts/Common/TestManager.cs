@@ -10,8 +10,6 @@ public class TestManager : MonoBehaviour
     [SerializeField] TMP_InputField inputField_Money;
     [SerializeField] TMP_InputField inputField_Gear;
     [SerializeField] TMP_InputField inputField_Blood;
-    [SerializeField] GameObject treasureBoxGamePanel;
-    [SerializeField] Button btn_treasureBox;
 
     [SerializeField] Button[] btn_H_eventList;
     [SerializeField] Button btn_check;
@@ -29,11 +27,6 @@ public class TestManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        btn_treasureBox.onClick.AddListener(() =>
-        {
-            treasureBoxGamePanel.SetActive(true);
-            treasureBoxGamePanel.GetComponent<TreasureBoxGame>().ResetGame();
-        });
         inputField_map.text = GameDataManager.CurrentMap.ToString();
         inputField_Money.text = GameDataManager.Gold.ToString();
         inputField_Gear.text = GameDataManager.Gear.ToString();
@@ -69,7 +62,7 @@ public class TestManager : MonoBehaviour
     {
         if (tog_testMode.isOn)
         {
-            for (int i = 1; i <= 32; i++)
+            for (int i = 1; i <= 34; i++)
             {
                 GameDataManager.HasSkillIDs.Add(i);
             }

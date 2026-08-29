@@ -19,11 +19,13 @@ public struct EnemyConfigData
     // 技能與 Buff 配置
     public int[] skillIDs;           // 技能 ID 列表
     public BuffSeed[] initialBuffs;  // 初始 Buff 列表
+    public string enemyType;          // 敵人類型 (例如: "Boss", "Zako" Erito)
+    public int[] diceSides;
+    public string imgId;            // 圖片 ID (對應資源)
+    public int openStage;          // 開放關卡 (0 表示無限制) 用於隨機敵人格
+        // 預設骰子面 (1-6)
+
     
-    // 預設骰子面 (1-6)
-    public static readonly int[] DefaultDiceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-    
-    public int[] GetDiceSides() => DefaultDiceSides;
     public float GetCurrentBlood() => maxBlood;
 }
 

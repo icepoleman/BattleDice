@@ -28,7 +28,7 @@ public class SkillCard : MonoBehaviour
         hasSkillData = _skillData != null;
         if (!hasSkillData)
         {
-            img_skillIcon.gameObject.SetActive(false);
+            img_skillIcon.transform.parent.gameObject.SetActive(false);
             text_skillTitle.text = string.Empty;
             tog_skillChoose.group = _toggleGroup;
             tog_skillChoose.isOn = false;
@@ -37,7 +37,8 @@ public class SkillCard : MonoBehaviour
         }
 
         img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
-        img_skillIcon.gameObject.SetActive(true);
+        img_skillIcon.transform.parent.gameObject.SetActive(true);
+        img_skillIcon.SetNativeSize();
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
         tog_skillChoose.group = _toggleGroup;

@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
-using DG.Tweening;
 using System.Threading.Tasks;
+using TMPro;
+using System.Linq;
 public enum TurnState
 {
     gameStart,
@@ -552,7 +553,7 @@ public class DiceGame : MonoBehaviour
         int skillID = (int)args[0];
         string skillname = (string)args[1];
         SkillType skillType = (SkillType)args[2];
-        List<int> values = (List<int>)args[3];
+        List<float> values = (List<float>)args[3];
         bool isPlayer = (bool)args[4];
 
         // 加入排隊
@@ -590,13 +591,14 @@ public class DiceGame : MonoBehaviour
             BaseCharacterData attacker = skillOrder.isPlayerUse ? playerData : enemyData;
 
             // 處理特殊技能效果 
-            if (SkillDatabase.SpSkillIDs.Contains(skillOrder.skillID))
+            if (skillOrder.skillType == SkillType.SpSkill)
                 SpSkillEffect(ref skillOrder);
 
             //角色喊技能
             //gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
             switch (skillOrder.skillType)
             {
+                case SkillType.SpSkill:
                 case SkillType.Attack:
                     gameUiView.PlayFightAnim(skillOrder.isPlayerUse);
                     //先做攻擊buff計算 實際用OnAttackCharacter給予傷害
@@ -612,9 +614,6 @@ public class DiceGame : MonoBehaviour
                 case SkillType.Buff:
                     gameUiView.PlayBuffVfx(skillOrder.isPlayerUse);
                     //之後依照buff做對應特效
-                    break;
-                case SkillType.DeBuff://補上deuff特效
-                    gameUiView.PlayDebuffVfx(!skillOrder.isPlayerUse);
                     break;
                 default:
                     Debug.LogWarning("未知的技能類型");
@@ -634,27 +633,39 @@ public class DiceGame : MonoBehaviour
         BaseCharacterData defender = _skillOrder.isPlayerUse ? enemyData : playerData;
         switch (_skillOrder.skillID)
         {
-            case 113:
-            case 38: // 毒爆術 消耗敵方中毒狀態增加傷害
-                //中毒狀態的buff ID為 1，每個中毒回合增加x倍傷害
-                IBuffData poisonBuff = defender.buffData.Find(buff => buff.buffID == 1);
+            case 30: // 刺槍術：隨機給予敵方一個 Buff
+                int[] enemyBuffPool = { 1, 2, 4, 5, 6, 7, 8, 10, 14, 15, 16 };
+                int randomBuffID = enemyBuffPool[UnityEngine.Random.Range(0, enemyBuffPool.Length)];
+                BaseBuff randomEnemyBuff = new BaseBuff(randomBuffID, 0, UnityEngine.Random.Range(1, 4)); // 隨機持續回合數 1~3
 
-                if (poisonBuff != null)
+                EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, randomEnemyBuff, !_skillOrder.isPlayerUse);
+                Debug.Log($"{(_skillOrder.isPlayerUse ? "Player" : "Enemy")} 使用 刺槍術，隨機給予 {(_skillOrder.isPlayerUse ? "敵方" : "玩家")} {randomEnemyBuff.buffName} Buff");
+                break;
+            case 31: // 毒爆術 消耗敵方中毒狀態增加傷害
+                // 中毒狀態的 buff ID 為 1，允許多層中毒同時存在，
+                // 需要把所有同類中毒堆疊的剩餘回合數加總後一起爆發。
+                List<IBuffData> poisonBuffs = defender.buffData.Where(buff => buff.buffID == 1).ToList();
+
+                if (poisonBuffs.Count > 0)
                 {
-                    _skillOrder.values[0] = _skillOrder.values[0] * poisonBuff.duration; // 增加額外傷害
-                    poisonBuff.duration = 0;//移除中毒狀態
+                    int totalPoisonDuration = poisonBuffs.Sum(buff => buff.duration);
+                    _skillOrder.values[0] = _skillOrder.values[0] * totalPoisonDuration;
+
+                    foreach (var poisonBuff in poisonBuffs)
+                    {
+                        poisonBuff.duration = 0;
+                    }
                 }
                 break;
-            case 116:
-            case 33: // 弱點破壞 敵方撕裂(id 3)時傷害加倍
-                IBuffData tearBuff = defender.buffData.Find(buff => buff.buffID == 3);
-                if (tearBuff != null)
+            case 25: // 弱點破壞 敵方撕裂時傷害加倍
+                var tearBuffs = defender.buffData.Where(buff => buff.buffID == 3).ToList();
+                if (tearBuffs.Count > 0)
                 {
                     int attackDiceCount = attacker.rollDiceResult.Count; // 假設攻擊骰子數量等於當前擲出的骰子數量
-                    _skillOrder.values[0] = _skillOrder.values[0] * 2; // 增加額外傷害
+                    _skillOrder.values[0] = _skillOrder.values[0] * 2.5f; // 增加額外傷害
                 }
                 break;
-            case 128: // 吞噬
+            case 34: // 吞噬
                 enemyEatBuff = true;//標記敵人正在吞噬，結束回合時會有額外等待
                 break;
 

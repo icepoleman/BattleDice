@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-[RequireComponent(typeof(Image))]
 public class RainbowPulseImageEffect : MonoBehaviour
 {
     [SerializeField] private bool isActive = true;
@@ -11,20 +11,53 @@ public class RainbowPulseImageEffect : MonoBehaviour
     [SerializeField] private float whiteBlend = 0.35f;
 
     private Image targetImage;
+    private Text targetText;
+    private TMP_Text targetTmpText;
     private Color baseColor = Color.white;
 
     private void Awake()
     {
         targetImage = GetComponent<Image>();
+        targetText = GetComponent<Text>();
+        targetTmpText = GetComponent<TMP_Text>();
+
         if (targetImage != null)
         {
             baseColor = targetImage.color;
+        }
+        else if (targetText != null)
+        {
+            baseColor = targetText.color;
+        }
+        else if (targetTmpText != null)
+        {
+            baseColor = targetTmpText.color;
         }
     }
 
     private void Update()
     {
-        if (!isActive || targetImage == null || !targetImage.enabled)
+        if (!isActive)
+        {
+            return;
+        }
+
+        if (targetImage == null && targetText == null && targetTmpText == null)
+        {
+            return;
+        }
+
+        if (targetImage != null && !targetImage.enabled)
+        {
+            return;
+        }
+
+        if (targetText != null && !targetText.enabled)
+        {
+            return;
+        }
+
+        if (targetTmpText != null && !targetTmpText.enabled)
         {
             return;
         }
@@ -35,24 +68,54 @@ public class RainbowPulseImageEffect : MonoBehaviour
         Color animatedColor = Color.Lerp(rainbow, Color.white, whiteBlend);
         animatedColor.a = baseColor.a;
 
-        targetImage.color = animatedColor * pulse;
+        Color appliedColor = animatedColor * pulse;
+
+        if (targetImage != null)
+        {
+            targetImage.color = appliedColor;
+        }
+
+        if (targetText != null)
+        {
+            targetText.color = appliedColor;
+        }
+
+        if (targetTmpText != null)
+        {
+            targetTmpText.color = appliedColor;
+        }
     }
 
     public void SetActive(bool active)
     {
         isActive = active;
-        if (!isActive && targetImage != null)
+        if (!isActive)
         {
-            targetImage.color = baseColor;
+            RestoreBaseColor();
         }
     }
 
     public void SetBaseColor(Color color)
     {
         baseColor = color;
+        RestoreBaseColor();
+    }
+
+    private void RestoreBaseColor()
+    {
         if (targetImage != null)
         {
-            targetImage.color = color;
+            targetImage.color = baseColor;
+        }
+
+        if (targetText != null)
+        {
+            targetText.color = baseColor;
+        }
+
+        if (targetTmpText != null)
+        {
+            targetTmpText.color = baseColor;
         }
     }
 }

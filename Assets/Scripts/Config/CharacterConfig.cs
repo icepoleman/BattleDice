@@ -149,14 +149,9 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void AddBuff(IBuffData buff)
     {
-        //如果已經有相同的 Buff ID，則堆疊回合數
-        var existingBuff = buffData.FirstOrDefault(b => b.buffID == buff.buffID);
-        if (existingBuff != null)
-        {
-            if (!BuffDatabase.SpBuffIDs.Contains(buff.buffID))//炸彈 狂暴的特殊處理：不堆疊回合數
-                existingBuff.duration += buff.duration;
-            return;
-        }
+        // 同一個 Buff 類型可重複套用，且每個實例都是獨立存在，
+        // 不再把不同的同類 Buff 合併成一個 duration 累加的單一物件。
+        // 這樣重複中毒 3 / 3 會變成兩個獨立的中毒狀態，都會在各自回合觸發。
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this);
         buffData.Add(buff);
     }

@@ -32,7 +32,7 @@ public static class SkillFactory
         SkillType skillType,
         SkillRequirementType requirementType,
         int[] needDices = null,
-        int skillValue = 0,
+        float skillValue = 0f,
         string conditionText = "",
         string effectText = "",
         BuffSeed[] selfBuffs = null,

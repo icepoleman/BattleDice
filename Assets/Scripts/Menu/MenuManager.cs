@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TMPro;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +27,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button btn_exitGame;
 
     [SerializeField] Button btn_test;
+    [Header("開發人員名單")]
+    [SerializeField] creatorPanelPopup creatorPanelPopup;
     [Header("表演用")]
     [SerializeField] Animator anim_menu;
     void Awake()
@@ -39,10 +38,9 @@ public class MenuManager : MonoBehaviour
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
         AtlasLoader.Instance.Init();
     }
-
     private void LoadSavedSettingsIfHasSave()
     {
-        if(GameDataManager.isFirstOpen)
+        if (GameDataManager.isFirstOpen)
         {
             GameDataManager.isFirstOpen = false;
             return; // 已經是第一次開啟遊戲，不需要再次調整解析度
@@ -112,10 +110,14 @@ public class MenuManager : MonoBehaviour
         ChatWindow.TypingSpeed = textSpeedValues[savedIndex];
     }
 
-    async void Start()
+    private void Start()
     {
         btn_newGame.onClick.AddListener(OnNewGameClicked);
-        btn_exitGame.onClick.AddListener(() => { AudioManager.Instance.PlaySFX("Sound_Click1"); Application.Quit(); });
+        btn_exitGame.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+            Application.Quit();
+        });
         btn_continue.onClick.AddListener(async () =>
         {
             GameObject loadPanel = await UIManager.ShowCommonPanel("SaveLoadPanel");
@@ -127,17 +129,20 @@ public class MenuManager : MonoBehaviour
             AudioManager.Instance.PlaySFX("Sound_Click1");
             await UIManager.ShowCommonPanel("SetPanel");
         });
+        btn_creator.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+            creatorPanelPopup.OpenPanel();
+        });
 
         btn_continue.interactable = SaveManager.HasAnySave();
 
-        //TEST
+        // TEST
         BuffDatabase.LoadFromCSV();
         btn_test.onClick.AddListener(OnTestClicked);
 
         AudioManager.Instance.PlayBGM("Bgm_Menu");
         SceneLoader.HideLoadingScreen();
-
-        // Assets/DiceGame_ab/Music/BGM/
     }
 
     void OnTestClicked()

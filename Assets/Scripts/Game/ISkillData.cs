@@ -7,9 +7,9 @@ public struct SkillOrderData
     public int skillID;
     public string skillName;
     public SkillType skillType;
-    public List<int> values;
+    public List<float> values;
     public bool isPlayerUse;
-    public SkillOrderData(int id, string name, SkillType type, List<int> val, bool isPlayer)
+    public SkillOrderData(int id, string name, SkillType type, List<float> val, bool isPlayer)
     {
         skillID = id;
         skillName = name;
@@ -28,7 +28,7 @@ public struct SkillConfigData
     public SkillType skillType;      // 技能類型 (攻擊/治療/Buff)
     public string conditionText;     // 技能條件描述文字
     public string effectText;        // 技能效果描述文字
-    public int skillValue;           // 技能基礎數值 (傷害/治療量)
+    public float skillValue;         // 技能基礎數值 (傷害/治療量)
     public int[] needDicesData;      // 需要的骰子資料 (格式依 requirementType 不同)
     // SpecificDices: 特定骰子 (1,2,3)
     // SameDices: [0]=需要數量
@@ -73,7 +73,8 @@ public enum SkillType
     Attack,
     Heal,
     Buff,
-    DeBuff
+    SpSkill,
+    EnemyRollDice
 }
 // 技能需求類型枚舉
 public enum SkillRequirementType
@@ -96,7 +97,7 @@ public interface ISkillData
     int[] needDicesData { get; set; } // 需求骰子資料
     int needDiceNum { get; } // 需要的骰子數量
     int breakDiceCount { get; set; } // 破壞骰子數量
-    int skillValue { get; set; }
+    float skillValue { get; set; }
     List<BuffSeed> selfBuffs { get; set; }
     List<BuffSeed> targetBuffs { get; set; }
     List<int> diceBox { get; set; }
@@ -125,7 +126,7 @@ public class BaseSkill : ISkillData
     public string iconPath { get; set; } = "";
     public string conditionText { get; set; } = "";
     public string effectText { get; set; } = "";
-    public int skillValue { get; set; } = 0;
+    public float skillValue { get; set; } = 0f;
     public int breakDiceCount { get; set; } = 0;
     public int[] generateDicesData { get; set; } = new int[] { };
     public List<BuffSeed> selfBuffs { get; set; } = new List<BuffSeed>();
@@ -637,8 +638,8 @@ public class BaseSkill : ISkillData
         if (canUseSkill())
         {
             // 計算傷害值
-            int finalValue = skillValue;
-            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillID, skillName, skillType, new List<int> { finalValue }, _isPlayer);
+            float finalValue = skillValue;
+            EventCenter.Dispatch(GameEvent.EVENT_USE_SKILL, skillID, skillName, skillType, new List<float> { finalValue }, _isPlayer);
             UnityEngine.Debug.Log($"{skillName} used, dealing {finalValue} skillValue!");
             if (selfBuffs.Count > 0)
             {

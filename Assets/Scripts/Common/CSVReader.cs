@@ -207,7 +207,7 @@ public class CSVReader
                 skillType: v.Length > 2 ? ParseSkillType(v[2]) : SkillType.Attack,
                 requirementType: v.Length > 3 ? ParseRequirementType(v[3]) : SkillRequirementType.SpecificDices,
                 needDices: v.Length > 4 ? ParseIntArrayStatic(v[4]) : null,
-                skillValue: v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) ? int.Parse(v[5]) : 0,
+                skillValue: v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) ? float.Parse(v[5]) : 0,
                 conditionText: v.Length > 6 ? v[6] : "",
                 effectText: v.Length > 7 ? v[7] : "",
                 selfBuffs: v.Length > 8 ? ParseBuffSeeds(v[8]) : null,
@@ -315,7 +315,11 @@ public class CSVReader
                 maxBlood = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? float.Parse(v[4]) : 100f,
                 diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) ? int.Parse(v[5]) : 2,
                 skillIDs = v.Length > 6 ? ParseIntArrayStatic(v[6]) : new int[] { },
-                initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null
+                initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null,
+                enemyType = v.Length > 8 ? v[8] : "Zako",
+                diceSides = v.Length > 9 ? ParseIntArrayStatic(v[9]) : new int[] { 1, 2, 3, 4, 5, 6 },
+                imgId = v.Length > 10 ? v[10] : "",
+                openStage = v.Length > 11 && !string.IsNullOrWhiteSpace(v[11]) ? int.Parse(v[11]) : 0,
             };
 
             if (data.enemyId > 0)
