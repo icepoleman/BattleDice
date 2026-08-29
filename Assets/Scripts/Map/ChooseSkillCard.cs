@@ -20,6 +20,7 @@ public class ChooseSkillCard : MonoBehaviour
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
         img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(skillData.iconPath);
+        img_skillIcon.SetNativeSize();
     }
     void OnEnable()
     {

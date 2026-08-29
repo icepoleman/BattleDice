@@ -53,6 +53,17 @@ public class TreasureBoxGame : MonoBehaviour
 
     bool isDone;
 
+    public void ResetGame()
+    {
+        isDone = false;
+        currentLevel = 1;
+        lastPoint = 6;
+        txt_lastPoint.text = lastPoint.ToString();
+        SetRewardItemsForCurrentLevel();
+        RefreshRewardItemScale();
+        UpdateLevelKeyPosition();
+        btn_getReward.interactable = true;
+    }
     void Start()
     {
         GameDataManager.BackUpKey++;//增加備用鑰匙數量

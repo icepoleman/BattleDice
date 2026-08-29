@@ -38,7 +38,7 @@ public class takaraItem : MonoBehaviour
                 return;
             }
 
-            var skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
+            var skillReward = allNotGetSkills[Random.Range(0, 32)];//test
             selectedReward.rewardType = TreasureBoxRewardType.Skill;
             selectedReward.rewardValue = skillReward.skillID;
             obj_gold.SetActive(false);

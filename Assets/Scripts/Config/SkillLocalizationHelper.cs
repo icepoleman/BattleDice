@@ -17,7 +17,7 @@ public static class SkillLocalizationHelper
         {
             var skill = skills[key];
             LocalizeCondition(ref skill);
-            LocalizeEffect(ref skill);
+           // LocalizeEffect(ref skill);
             skills[key] = skill;
         }
     }
@@ -28,7 +28,7 @@ public static class SkillLocalizationHelper
     public static void LocalizeSkill(ref SkillConfigData skill)
     {
         LocalizeCondition(ref skill);
-        LocalizeEffect(ref skill);
+        //LocalizeEffect(ref skill);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public static class SkillLocalizationHelper
     /// <summary>
     /// 技能效果文本本地化
     /// </summary>
-    public static void LocalizeEffect(ref SkillConfigData skill)
+    /*public static void LocalizeEffect(ref SkillConfigData skill)
     {
         if (SkillDatabase.SpSkillIDs.Contains(skill.skillID))
         {
@@ -139,7 +139,7 @@ public static class SkillLocalizationHelper
             if (diceCount == 7)
                 AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_randomDice", burnCount));
         }
-    }
+    }*/
 
     /// <summary>
     /// 附加效果文本，如果 effectText 為空則直接設定，否則換行後附加

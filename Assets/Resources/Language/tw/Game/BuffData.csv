@@ -1,23 +1,19 @@
 ID,Buff名稱,觸發時機,效果,數值,效果文
 1,中毒,OnTurnEnd,HP,-10,回合結束，生命-10
-2,撕裂,OnSkillUse,HP,-10,使用技能時，生命-10
+2,撕裂,OnSkillUse,HP,-20,使用技能時，生命-20
 3,暈眩,OnApply,Stun,,無法行動
 4,睡眠,OnApply,Sleep,,無法行動，受到攻擊或回合開始機率甦醒
 5,魔力增幅,OnApply,BornDice,1,生成骰子+1
 6,魔力衰弱,OnApply,BornDice,-1,生成骰子-1
 7,攻擊強化,OnApply,AttackPower,20,傷害+20
 8,攻擊弱化,OnApply,AttackPower,-20,傷害-20
-9,魔力護盾,OnApply,Defense,20,減傷 20
-10,魔力護盾 (大),OnDamageTaken,Defense,1000,抵擋一次攻擊
-11,治癒,OnTurnEnd,HP,20,回合結束時，生命+20
-12,巨人化,OnApply,MaxHP,100,最大生命+100
-13,狼之怒,OnDamageTaken,SpawnBuff,14|0|1,受傷時，獲得狂暴
-14,狂暴,OnApply,LimitBornDice,8,生成骰變為8
-15,虛脫,OnApply,LimitBornDice,1,生成骰變為1
-16,尖刺,OnDamageTaken,EnemyHP,-20,受傷時，敵方生命-20
-17,定時炸彈,OnRemove,HP,-666,倒數結束時，生命-666
-18,燃燒,OnTurnEnd,HP,-20,回合結束，生命-20
-19,吃飽就睡,OnHealReceived,SpawnBuff,4|1|0,生命+時，進入睡眠
-20,麻痺,OnApply,LimitDiceRollResults,1|2|3|4|5,生成骰子點數上限變為 5
-21,粉絲的應援,OnApply,BornDice,2,生成骰子+2
-22,連擊,OnSkillUse,EnemyReroll,1,再次執行擲骰判定
+9,魔力護盾,OnDamageTaken,Defense,1000,抵擋傷害
+10,治癒再生,OnTurnStart,HP,20,回合開始時，生命+20
+11,巨人化,OnApply,MaxHP,150,最大生命+150
+12,狼之怒,OnDamageTaken,SpawnBuff,13|1|0,受傷時，獲得狂暴
+13,狂暴,OnSkillUse,EnemyReroll,1,再生成一次骰
+14,虛脫,OnApply,LimitBornDice,1,生成骰變為1
+15,荊棘,OnDamageTaken,EnemyHP,-30,受傷時，敵方生命-30
+16,定時炸彈,OnRemove,HP,-888,爆炸就Die
+17,吃飽就睡,OnHealReceived,SpawnBuff,4|1|0,生命+時，進入睡眠
+18,粉絲的應援,OnApply,BornDice,2,生成骰子+2

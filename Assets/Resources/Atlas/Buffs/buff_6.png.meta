@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 1546346781328656776
     second: buff_6_0
+  - first:
+      213: -7460421826607692934
+    second: buff_6_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +51,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,9 +106,9 @@ TextureImporter:
       name: buff_6_0
       rect:
         serializedVersion: 2
-        x: 122
-        y: 110
-        width: 206
+        x: 43
+        y: 27
+        width: 167
         height: 218
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -117,6 +120,28 @@ TextureImporter:
       bones: []
       spriteID: 889c9a8643ab57510800000000000000
       internalID: 1546346781328656776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_6_1
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 91
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a734a7e20e1477890800000000000000
+      internalID: -7460421826607692934
       vertices: []
       indices: 
       edges: []
@@ -136,6 +161,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       buff_6_0: 1546346781328656776
+      buff_6_1: -7460421826607692934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

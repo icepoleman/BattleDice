@@ -150,10 +150,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 93454c791ef49244591ce48c50c5a6fb, type: 3}
   - {fileID: 21300000, guid: 52d7028f00a02974ea82e546af3c6c53, type: 3}
   - {fileID: 21300000, guid: f0e758437cae2ea479be661376689649, type: 3}
+  currentState: 0
   nextStageNodes:
   - {fileID: 0}
-  mouseEffect: {fileID: 8820635468377574645}
-  mouseOutline: {fileID: 6321065937314416248}
 --- !u!114 &2376349972425627210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +212,7 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
 --- !u!114 &6321065937314416248
@@ -227,4 +227,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
+  effectEnabled: 1

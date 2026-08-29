@@ -105,6 +105,7 @@ Material:
     - _DstBlendAlpha: 0
     - _Enabled: 1
     - _EnvironmentReflections: 1
+    - _FillThreshold: 0.397
     - _FireIntensity: 1
     - _FireSpeed: 8
     - _FlickerSpeed: 15
@@ -115,7 +116,8 @@ Material:
     - _OcclusionStrength: 1
     - _OutlineEnabled: 1
     - _OutlinePulseSpeed: 5.41
-    - _OutlineSize: 6.09
+    - _OutlineSize: 3.3
+    - _OutlineSoftness: 0
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

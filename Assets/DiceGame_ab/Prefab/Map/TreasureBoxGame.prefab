@@ -3881,6 +3881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: takaraItem (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2408819234586894614, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3397382826173318113, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3994,6 +3998,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: takaraItem (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2408819234586894614, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3397382826173318113, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4106,6 +4114,10 @@ PrefabInstance:
     - target: {fileID: 970944090035959950, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Name
       value: takaraItem (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408819234586894614, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3397382826173318113, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Pivot.x
@@ -4330,6 +4342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: takaraItem
       objectReference: {fileID: 0}
+    - target: {fileID: 2408819234586894614, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3397382826173318113, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4442,6 +4458,10 @@ PrefabInstance:
     - target: {fileID: 970944090035959950, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Name
       value: takaraItem (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408819234586894614, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3397382826173318113, guid: 6beff00fd89a58d478380b32042134c4, type: 3}
       propertyPath: m_Pivot.x

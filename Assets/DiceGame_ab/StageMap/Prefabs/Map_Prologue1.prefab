@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &1261031080958835068
 MonoBehaviour:
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &8028269492706507993
 MonoBehaviour:
@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &7621646190281639440
 MonoBehaviour:
@@ -1144,8 +1144,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3099997359127566570}
   m_HandleRect: {fileID: 413701454159699427}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9493856
+  m_Value: 0.0000010340534
+  m_Size: 0.94938546
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &1548002433615477952
 MonoBehaviour:
@@ -1668,7 +1668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &4384884349071549188
 MonoBehaviour:
@@ -1919,7 +1919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173e1d093fab3a94986b8ff56dd54b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnMouseOutline
-  outline: {fileID: 2100000, guid: 16602b982d0413e41bfe225cb403b612, type: 2}
+  outline: {fileID: 2100000, guid: 563b14db3afdb8d428eb44d9dd85cf9f, type: 2}
   effectEnabled: 1
 --- !u!114 &8353595287143788445
 MonoBehaviour:

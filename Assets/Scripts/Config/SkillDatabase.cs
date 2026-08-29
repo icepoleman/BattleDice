@@ -37,7 +37,7 @@ public static class SkillDatabase
         foreach (var skill in Skills.Values)
         {
             // 排除怪物技能 已持有技能
-            if (skill.skillID > 100 && !GameDataManager.HasSkillIDs.Contains(skill.skillID)) 
+            if (skill.skillID < 100 && !GameDataManager.HasSkillIDs.Contains(skill.skillID)) 
             {
                 playerSkills.Add(skill);
             }
