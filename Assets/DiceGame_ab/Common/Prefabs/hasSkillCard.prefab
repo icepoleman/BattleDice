@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 4506624180107393214}
   - component: {fileID: 5557799230133326357}
   - component: {fileID: 1932098569215215816}
+  - component: {fileID: 5582882160627678057}
   m_Layer: 5
   m_Name: hasSkillCard
   m_TagString: Untagged
@@ -304,6 +305,24 @@ MonoBehaviour:
   btn_card: {fileID: 2475444240880607657}
   img_skillIcon: {fileID: 4746206934257151566}
   img_choose: {fileID: 3485236708325529006}
+--- !u!114 &5582882160627678057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2904059074114353058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e616edb9215e6b48ac3a75c3d1f57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseMouseEffect
+  hoverScaleMultiplier: 1.08
+  pressedScaleMultiplier: 0.92
+  lerpSpeed: 14
+  effectEnabled: 1
+  bounceDuration: 0.14
+  bounceOvershoot: 0.06
 --- !u!1 &7581495847868596309
 GameObject:
   m_ObjectHideFlags: 0

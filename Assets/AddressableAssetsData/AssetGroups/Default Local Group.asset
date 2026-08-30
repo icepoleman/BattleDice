@@ -20,18 +20,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 04c32f21a506e884eaf66b3a41c48892
-    m_Address: Assets/DiceGame_ab/Prefab/Game/DialogueView.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0bcb9f92547247f49a05c906ec316096
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy10_2.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d923f5b0b8aba54fa30e6e38fbf4bcf
-    m_Address: Assets/DiceGame_ab/Prefab/Game/Canvas_MainUI.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -50,18 +40,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1468eeb0963ddad41909c04ad8af0aee
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/2_Impact_1.1.0/VFX_ImpactToon_1.1.0.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 166311193f9cef849ae04a046d530c3c
     m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/duck1.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 171dda363e9efd94ca9bc63e38ca9658
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Blood_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -105,16 +85,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 435865cc3607e7448a2ff0666b312e3f
-    m_Address: Assets/DiceGame_ab/Prefab/Game/dice.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 43fef7b2e3e477b4599375ba3a69f9b2
-    m_Address: Assets/DiceGame_ab/Prefab/Game/diceTrail.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45647f5df823be642968dbcc8b4a7d0c
     m_Address: Assets/DiceGame_ab/Game/Prefabs/MapShopPanel.prefab
     m_ReadOnly: 0
@@ -145,11 +115,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4b849b3e7e24eff488abfa399d3bd9b1
-    m_Address: Assets/DiceGame_ab/Prefab/Game/saveItem.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4da882132b3bbd147a6725be36a3146e
     m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue3.prefab
     m_ReadOnly: 0
@@ -157,21 +122,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4f869c46762845d43a6a49a90fa5f987
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy1_2.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4fb7dcd1beb4a1748b824d4e1acc0e71
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/FX_DirtSplatter.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 500c1d6ddd48f2c4092af85e4e941eb2
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Classic_04.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 50a810bfd70577b41a2d43ae0241ea2d
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Classic_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -185,28 +135,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5b072824f9660e54c9224f925e1d7c20
-    m_Address: Assets/DiceGame_ab/Prefab/Map/PowerUpPanel.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5b4f9bd7f869abf4a827f1d8e35d7af4
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Poison_01.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5cd5599e01f32bd418f20a3b9eac1c57
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/FX_FlameThrower.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63af7bb6ef0b9b74abfc2aec34ea97fd
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy3_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6e57a3cf9435eb14fb9928fa4ee60c63
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Classic_02.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -230,11 +160,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7c6d9bb9c8994364dbe5ba2e32dd4d13
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Classic_03.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c722a74daad30441b29192106d9397d
     m_Address: Assets/DiceGame_ab/H_Data/Prefabs/Spine_WitchH_01.prefab
     m_ReadOnly: 0
@@ -245,16 +170,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 841004c4c6a39e244abe2257394de913
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/2_Impact_1.1.0/VFX_ImpactClassic01_1.1.0.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 88a66d8d62969c24ea3edcd73a2b5cd5
-    m_Address: Assets/DiceGame_ab/Prefab/Game/buffhint.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a105461741bc5448bd592dccbc941ad
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy0_0.png
     m_ReadOnly: 0
@@ -262,16 +177,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 976bde45525cc694ba7b321b9a95635a
     m_Address: Assets/DiceGame_ab/Game/VFX/vfx_blood.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9c692d73cd82e0d409bec909e987a5b8
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/2_Impact_1.1.0/VFX_ImpactCross_1.1.0.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9e0066df1814a3f49a52ea37e5954bd9
-    m_Address: Assets/DiceGame_ab/Prefab/Game/keepDice.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -287,11 +192,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a47c08a100c53254ba7e11878fb9e80b
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy10_1.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a4e76a0f922f92041afcc2d890f6a4cc
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/1_Critical/VFX_Critical_02.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -315,8 +215,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ace9fc22d4885204fad19db7b31cf379
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Poison_02.prefab
+  - m_GUID: ac5b0f2d7a4b4d8449cb26ac8eb1168d
+    m_Address: Assets/DiceGame_ab/H_Data/Prefabs/Spine_JailgirlH_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -355,11 +255,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bad3cf055489f0e4e9cd51bd9cdb7008
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/1_Critical/VFX_Critical_01.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb56b9466ce83cb4ab4a61d0c5b6ed37
     m_Address: Assets/DiceGame_ab/Game/Prefabs/ClearMapPanel.prefab
     m_ReadOnly: 0
@@ -375,28 +270,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bfd016bff164dfc4aac33a0563922772
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Blood_02.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c236c706af3c5c14b82c8454ead2701b
-    m_Address: Assets/DiceGame_ab/Prefab/Map/shopSkillCard.prefab
+  - m_GUID: c4c5168306413c342beff4e2e08629fc
+    m_Address: Assets/DiceGame_ab/Game/Prefabs/TreasureBoxGame.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c58ab68cb22cb4d4290353df76fd5dbf
     m_Address: Assets/DiceGame_ab/Game/Sprites/player_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c92836c3a8e05ad4494f15363d4534b8
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Arcade_02.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cd3d579a2d65b3241a1812f639db37ec
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Arcade_03.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -412,11 +292,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d921fa49c0823044faaefcf4a8fa5b1c
     m_Address: Assets/DiceGame_ab/Game/Prefabs/ShopPanel.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e03b798704b472c44bfb7111c33463bc
-    m_Address: Assets/DiceGame_ab/Prefab/Game/gamePanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -440,28 +315,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec9688d29e3614248b072966c972241e
-    m_Address: Assets/DiceGame_ab/Prefab/Game/skillCard.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ecb38e0319a6ad44cbca52d7b5add7a6
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/2_Impact_1.1.0/VFX_ImpactCritical_1.1.0_Pink.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8775ba0a65ee1a4e952b328f6635966
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy5_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fa2f13408e0916040a6041414b8d0e32
-    m_Address: Assets/DiceGame_ab/Prefab/Map/powerUpItem.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fe2205740225ab04bb07d3c6308b7c8b
-    m_Address: Assets/DiceGame_ab/Prefab/VFX/00_Prefab/0_Classic/VFX_Arcade_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

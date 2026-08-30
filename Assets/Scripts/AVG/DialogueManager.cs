@@ -498,13 +498,10 @@ public class DialogueManager : MonoBehaviour
             {
                 if (TryParseCommandValue(command, "playerskill_", out int skillId))
                 {
-                    if (!GameDataManager.HasSkillIDs.Contains(skillId))
-                    {
-                        GameDataManager.HasSkillIDs.Add(skillId);
-                        SkillConfigData skill = SkillDatabase.GetSkillConfig(skillId);
-                        string skillName = string.IsNullOrEmpty(skill.skillName) ? skillId.ToString() : skill.skillName;
-                        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetNewSkill", skillName));
-                    }
+                    GameDataManager.HasSkillIDs.Add(skillId);
+                    SkillConfigData skill = SkillDatabase.GetSkillConfig(skillId);
+                    string skillName = string.IsNullOrEmpty(skill.skillName) ? skillId.ToString() : skill.skillName;
+                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetNewSkill", skillName));
                 }
                 continue;
             }
@@ -709,7 +706,7 @@ public class DialogueManager : MonoBehaviour
     private void SkipDialogue()
     {
         isOver = true;
-        chatWindow.HideWindow();
+        //chatWindow.HideWindow();
 
         // 檢查是否有戰鬥章節，如果有則跳轉到戰鬥
         for (int i = pageIndex; i < dialogueDatas.Count; i++)

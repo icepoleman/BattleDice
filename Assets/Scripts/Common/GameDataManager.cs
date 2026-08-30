@@ -7,7 +7,7 @@ public static class GameDataManager
 {
     public static string language = "tw";    // 語言設定 (預設為繁體中文)
     public static bool TestMode = false; // 測試模式開關
-    public static string PlayerName = "陀螺冠軍 阿偉";
+    public static string PlayerName = "阿祥";
     public static PlayerData PlayerData { get; set; } = new PlayerData();    // 玩家資料
     public static HashSet<int> HasSkillIDs { get; set; } = new HashSet<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖

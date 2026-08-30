@@ -121,11 +121,7 @@ public class MapManager : MonoBehaviour
 
     void OnOpenTreasureBox(object[] param)
     {
-        //寶箱大改
-       /* TreasureBoxRewardType rewardType = (TreasureBoxRewardType)param[0];
-        int rewardValue = (int)param[1];
-        treasureBox.Setup(3, rewardType, rewardValue * 5);
-        treasureBox.gameObject.SetActive(true);*/
+        UIManager.ShowPanel(ABconfig.GAME_PREFABS + "TreasureBoxGame");
     }
     async void OnOpenMapShop(object[] param)
     {

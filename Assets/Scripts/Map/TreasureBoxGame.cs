@@ -11,7 +11,7 @@ public class TreasureBoxGame : MonoBehaviour
     Dictionary<int, List<TreasureBoxReward>> levelRewardDict = new Dictionary<int, List<TreasureBoxReward>>();
     [SerializeField] private Button btn_up;
     [SerializeField] private Button btn_down;
-    [SerializeField] private TextMeshProUGUI txt_lastPoint;
+    [SerializeField] private GameObject[] lastPointList;
 
     [Header("獎勵")]
     [SerializeField] private takaraItem[] takaraItems;
@@ -25,6 +25,7 @@ public class TreasureBoxGame : MonoBehaviour
     [SerializeField] private RectTransform trans_levelKey;
     [SerializeField] private Transform backupKeyRoot;
     [SerializeField] private GameObject backupKeyPrefab;
+    [SerializeField] private ParticleSystem brokenKeyParticle;
     [Header("Anim")]
     [SerializeField] private Animator anim_takara;
     private int backupKey = 0;
@@ -53,12 +54,28 @@ public class TreasureBoxGame : MonoBehaviour
 
     bool isDone;
 
+    private void RefreshLastPointDisplay()
+    {
+        if (lastPointList == null || lastPointList.Length == 0)
+            return;
+
+        int targetIndex = Mathf.Clamp(lastPoint - 1, 0, lastPointList.Length - 1);
+
+        for (int i = 0; i < lastPointList.Length; i++)
+        {
+            if (lastPointList[i] != null)
+            {
+                lastPointList[i].SetActive(i == targetIndex);
+            }
+        }
+    }
+
     public void ResetGame()
     {
         isDone = false;
         currentLevel = 1;
         lastPoint = 6;
-        txt_lastPoint.text = lastPoint.ToString();
+        RefreshLastPointDisplay();
         SetRewardItemsForCurrentLevel();
         RefreshRewardItemScale();
         UpdateLevelKeyPosition();
@@ -74,7 +91,7 @@ public class TreasureBoxGame : MonoBehaviour
             dices[i].sprite = diceSprites[0];
             diceRigidbodies.Add(dices[i].GetComponent<Rigidbody2D>());
         }
-        txt_lastPoint.text = lastPoint.ToString();
+        RefreshLastPointDisplay();
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
         btn_getReward.onClick.AddListener(ClaimReward);
@@ -89,6 +106,7 @@ public class TreasureBoxGame : MonoBehaviour
     }
     void UpdateBackupKeyDisplay()
     {
+        brokenKeyParticle.Play();
         // 清除現有的備用鑰匙顯示
         foreach (Transform child in backupKeyRoot)
         {
@@ -272,9 +290,11 @@ public class TreasureBoxGame : MonoBehaviour
             }
         }
 
-        txt_lastPoint.text = rollResult.ToString();
+        int previousPoint = lastPoint;
+        lastPoint = rollResult;
+        RefreshLastPointDisplay();
 
-        bool isWin = (isUp && rollResult >= lastPoint) || (!isUp && rollResult <= lastPoint);
+        bool isWin = (isUp && rollResult >= previousPoint) || (!isUp && rollResult <= previousPoint);
 
         if (isWin)
         {
@@ -285,7 +305,6 @@ public class TreasureBoxGame : MonoBehaviour
             OnLose();
         }
 
-        lastPoint = rollResult;
         isRolling = false;
         btn_up.interactable = true;
         btn_down.interactable = true;

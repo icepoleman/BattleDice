@@ -183,8 +183,8 @@ public class MenuManager : MonoBehaviour
         GameDataManager.Gold = 0;
         GameDataManager.Gear = 0;
         GameDataManager.PlayerData.keepDiceCount = 1;
-        GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
-        GameDataManager.HasSkillIDs = new HashSet<int> { 1, 2 }; //預設擁有技能ID
+        GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 5 }; //預設技能
+        GameDataManager.HasSkillIDs = new HashSet<int> { 1, 5 }; //預設擁有技能ID
         GameDataManager.PlayerData.diceCount = 3;
         GameDataManager.PlayerData.maxRollCount = 1;
         GameDataManager.charactersAffinity = new int[] { 0, 0, 0, 0 };//角色親密度歸零
