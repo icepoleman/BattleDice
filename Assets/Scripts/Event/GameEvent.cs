@@ -53,7 +53,6 @@ public class MapEvent
 {
     public const string EVENT_COMPLETE_MAP = "MapEvent_CompleteMap"; //完成當前地圖事件
     public const string EVENT_OPEN_TARGET_STAGE_NODE = "MapEvent_OpenTargetStageNode"; //開啟關卡節點事件
-    public const string EVENT_OPEN_ALL_STAGE_NODE = "MapEvent_OpenAllStageNode"; //開啟所有關卡節點事件
     public const string EVENT_HIDE_ALL_STAGE = "MapEvent_HideALLStage"; //隱藏其他關卡事件
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_OPEN_MAP_SHOP = "MapEvent_OpenMapShop";//開啟地圖商店

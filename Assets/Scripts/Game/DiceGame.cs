@@ -691,6 +691,7 @@ public class DiceGame : MonoBehaviour
             enemyData.TakeDamage(value);
             gameUiView.CreateFlyBloodText((int)(value), false, false);
         }
+        UpdateBuffUIEvent(null);
         UpdateBloodUI(null);
         Debug.Log($"Buff效果造成 {(value > 0 ? "傷害" : "治療")} {Math.Abs(value)} 點");
     }
@@ -710,6 +711,7 @@ public class DiceGame : MonoBehaviour
             gameUiView.CreateFlyBloodText((int)damage, false, true);
         }
         await Task.Yield(); // 確保傷害計算先執行
+        UpdateBuffUIEvent(null);
         UpdateBloodUI(null);
         //todo 結算回合
         //if (playerData.IsDead() || enemyData.IsDead())

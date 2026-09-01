@@ -7,6 +7,7 @@ public class BuffCard : MonoBehaviour
     [SerializeField] GameObject obj_infoPanel;
     [SerializeField] Text txt_duration;
     [SerializeField] Text txt_effect;
+    [SerializeField] Image img_buffIcon;
     EventTrigger eventTrigger;
     void Start()
     {
@@ -25,18 +26,12 @@ public class BuffCard : MonoBehaviour
     }
     public void SetBuffInfo(IBuffData buffData)
     {
-       /* RectTransform rect = GetComponent<RectTransform>();
-        if (rect.anchoredPosition.x > 0)
-            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(20, -12, 1);
-        else
-            obj_infoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(-20, -12, 1);*/
+        img_buffIcon.sprite = AtlasLoader.Instance.GetBuffSprite(buffData.buffID.ToString());
 
         if (buffData.duration > 0)
             txt_duration.text = buffData.duration.ToString();
 
         txt_effect.text = LanguageManager.GetFormat("T_Buff_Effect_Describe", buffData.buffName, buffData.describe);
-        //if (buffData.usageCount > 0)
-            //txt_effect.text += "\n" + LanguageManager.GetFormat("T_Buff_Effect_UsageCount", buffData.usageCount);
     }
     void OnMouseEnter()
     {

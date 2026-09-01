@@ -52,7 +52,6 @@ public class StageNode : MonoBehaviour
     {
         EventCenter.AddListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
         EventCenter.AddListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_ALL_STAGE_NODE, OnOpenAllStageNodes);
     }
     public void SetStageInfo(string _info)//測試用
     {
@@ -61,7 +60,7 @@ public class StageNode : MonoBehaviour
     async void GoNextStage()
     {
         EventCenter.Dispatch(MapEvent.EVENT_HIDE_ALL_STAGE);
-        await Task.Delay(500); // 等待動畫或過場效果
+        await Task.Delay(100); // 等待動畫或過場效果
         if (nextStageNodes.Count > 0)
         {
             foreach (var node in nextStageNodes)
@@ -166,11 +165,11 @@ public class StageNode : MonoBehaviour
     {
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, OnOpenTargetStageNode);
         EventCenter.RemoveListener(MapEvent.EVENT_HIDE_ALL_STAGE, OnHideStage);
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_ALL_STAGE_NODE, OnOpenAllStageNodes);
     }
     void OnHideStage(object[] param)
     {
-        SetState(StageState.Locked);
+        if (!GameDataManager.TestMode)
+            SetState(StageState.Locked);
     }
     public async void OnOpenTargetStageNode(object[] param)
     {
@@ -182,12 +181,6 @@ public class StageNode : MonoBehaviour
             SetState(StageState.Completed);
         }
     }
-
-    public void OnOpenAllStageNodes(object[] param)
-    {
-        SetState(StageState.Unlocked);
-    }
-
     public void SetState(StageState newState)
     {
         currentState = newState;
@@ -225,7 +218,7 @@ public class StageNode : MonoBehaviour
 
     void OnNodeClick()
     {
-        if (currentState != StageState.Locked)
+        if (currentState != StageState.Locked ||GameDataManager.TestMode)
         {
             GameDataManager.TmpCompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
@@ -271,7 +264,7 @@ public class StageNode : MonoBehaviour
                     break;
                 case StageType.Gold:
                     EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
-                                                                                         //  EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
+                                                                                           //  EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
                     Debug.Log($"金幣: {stageInfo}");
                     GoNextStage();
                     break;

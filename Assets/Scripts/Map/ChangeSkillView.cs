@@ -27,6 +27,13 @@ public class ChangeSkillView : MonoBehaviour
     }
     async void Start()
     {
+        if(GameDataManager.TestMode)
+        {
+            for (int i = 1; i <= 34; i++)
+            {
+                GameDataManager.HasSkillIDs.Add(i);
+            }
+        }
         // 從GameDataManager取得擁有的技能ID
         hasSkillsID = new List<int>(GameDataManager.HasSkillIDs);
         chosenSkillsID = new List<int>(GameDataManager.PlayerData.skillIDs);

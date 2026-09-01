@@ -70,7 +70,12 @@ public abstract class BaseCharacterData : ICharacterData
     public List<IBuffData> buffData { get; set; } = new List<IBuffData>();
     public int maxRollCount { get; set; }
     public List<int> rollDiceResult { get; set; } = new List<int>();
-    public float buffDamage { get; set; } = 0f;
+    private float _buffDamage = 0f;
+    public float buffDamage
+    {
+        get => _buffDamage;
+        set => _buffDamage = Mathf.Max(0f, value);
+    }
     public float buffDefense { get; set; } = 0f;
     public virtual List<int> RollDice()
     {
@@ -113,7 +118,12 @@ public abstract class BaseCharacterData : ICharacterData
     public virtual void Attack(float damage)
     {
         TriggerBuffs(BuffTrigger.OnAttactk);
-        EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, damage + buffDamage, !isPlayer);
+        float finalDamage = damage + buffDamage;
+        if (finalDamage < 0f)
+        {
+            finalDamage = 0f;
+        }
+        EventCenter.Dispatch(GameEvent.EVENT_ATTACK_CHARACTER, finalDamage, !isPlayer);
     }
     public virtual async void TakeDamage(float damage)
     {
@@ -122,6 +132,31 @@ public abstract class BaseCharacterData : ICharacterData
         {
             RemoveSleepBuff();
         }
+
+        if (damage > 0)
+        {
+            var shieldBuff = buffData.FirstOrDefault(b => b.buffEffectType == BuffEffectType.Shield && b.CanUseBuff());
+            if (shieldBuff != null)
+            {
+                if (shieldBuff.buffTrigger == BuffTrigger.OnDamageTaken)
+                {
+                    shieldBuff.CheckBuffTrigger(BuffTrigger.OnDamageTaken, this);
+                }
+                else
+                {
+                    shieldBuff.usageCount--;
+                    if (!shieldBuff.CanUseBuff())
+                    {
+                        RemoveBuff(shieldBuff);
+                    }
+                }
+
+                Debug.Log($"{(isPlayer ? "玩家" : "敵人")} 觸發盾牌，完全抵擋一次攻擊！");
+                UpdateBuffUI();
+                return;
+            }
+        }
+
         if (damage > 0)
             TriggerBuffs(BuffTrigger.OnDamageTaken);
         await Task.Yield(); // 確保Buff觸發效果先執行

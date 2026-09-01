@@ -368,7 +368,7 @@ public class TreasureBoxGame : MonoBehaviour
                 break;
         }
         await Task.Delay(1000);
-        gameObject.SetActive(false);//換成轉場
+        Destroy(gameObject);
     }
 
     private async void OnLose()
@@ -382,9 +382,8 @@ public class TreasureBoxGame : MonoBehaviour
         UIManager.ShowHintBubble(LanguageManager.GetText("T_UnLock_Fail"));
         isDone = true;
         await Task.Delay(1000);
-        EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, 100); //取得金幣
-        await Task.Delay(1000);
-        gameObject.SetActive(false);//換成轉場
+       // EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, 100); //取得金幣
+        Destroy(gameObject);
     }
 }
 public class TreasureBoxReward

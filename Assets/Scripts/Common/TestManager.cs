@@ -42,10 +42,9 @@ public class TestManager : MonoBehaviour
         tog_testMode.onValueChanged.AddListener((isOn) =>
         {
             GameDataManager.TestMode = isOn;
-            EventCenter.Dispatch(MapEvent.EVENT_OPEN_ALL_STAGE_NODE);
             Debug.Log($"測試模式已設置為: {isOn}");
         });
-        GameDataManager.TestMode = tog_testMode.isOn;
+        tog_testMode.isOn = GameDataManager.TestMode;
         btn_close.onClick.AddListener(() =>
         {
             testPanel.SetActive(false);
@@ -54,9 +53,6 @@ public class TestManager : MonoBehaviour
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_H_ROOM);
         });
-        //GameDataManager.TmpEnemyID = testEnemyId;
-        //GameDataManager.TestMode
-
     }
     private void OnCheckButtonClicked()
     {

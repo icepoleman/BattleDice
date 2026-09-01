@@ -3,8 +3,11 @@ guid: 63af7bb6ef0b9b74abfc2aec34ea97fd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8131539979999134943
-    second: duck king1_0
+      213: 2171784286097465625
+    second: enemy3_0_0
+  - first:
+      213: -3423556577625880846
+    second: enemy3_0_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +51,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -72,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: duck king1_0
+      name: enemy3_0_0
       rect:
         serializedVersion: 2
-        x: 560
-        y: 9
-        width: 915
-        height: 1282
+        x: 1091
+        y: 70
+        width: 1935
+        height: 1628
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fd44cb0778809d070800000000000000
-      internalID: 8131539979999134943
+      spriteID: 9116d953d4ab32e10800000000000000
+      internalID: 2171784286097465625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy3_0_1
+      rect:
+        serializedVersion: 2
+        x: 2530
+        y: 1632
+        width: 60
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f648227e651d70d0800000000000000
+      internalID: -3423556577625880846
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      duck king1_0: 8131539979999134943
+      enemy3_0_0: 2171784286097465625
+      enemy3_0_1: -3423556577625880846
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

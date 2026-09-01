@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 5
+  stageInfo: 4
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -2140,7 +2140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 6
+  stageInfo: 4
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -2568,7 +2568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 6
+  stageInfo: 3
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -3289,7 +3289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000028908253, y: 0}
+  m_AnchoredPosition: {x: -0.025630955, y: 0}
   m_SizeDelta: {x: 5724.551, y: 933.5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2440257107186247037
@@ -6918,7 +6918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 3
+  stageInfo: 2
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -9060,8 +9060,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9033810278576096184}
   m_HandleRect: {fileID: 6750156624374380208}
   m_Direction: 0
-  m_Value: 0.000000070350204
-  m_Size: 0.39377582
+  m_Value: 0.0000039396186
+  m_Size: 0.39377558
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9578,7 +9578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 1
-  stageInfo: 5
+  stageInfo: 3
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}

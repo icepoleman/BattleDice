@@ -7,7 +7,7 @@ ID,Buff名稱,觸發時機,效果,數值,效果文
 6,魔力衰弱,OnApply,BornDice,-1,生成骰子-1
 7,攻擊強化,OnApply,AttackPower,20,傷害+20
 8,攻擊弱化,OnApply,AttackPower,-20,傷害-20
-9,魔力護盾,OnDamageTaken,Defense,1000,抵擋傷害
+9,魔力護盾,OnDamageTaken,Shield,1000,抵擋傷害
 10,治癒再生,OnTurnStart,HP,20,回合開始時，生命+20
 11,巨人化,OnApply,MaxHP,150,最大生命+150
 12,狼之怒,OnDamageTaken,SpawnBuff,13|1|0,受傷時，獲得狂暴

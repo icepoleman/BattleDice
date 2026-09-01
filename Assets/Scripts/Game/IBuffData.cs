@@ -35,6 +35,7 @@ public enum BuffEffectType
     SpawnBuff,
     EnemyReroll,  // 敵人重新擲骰並再次攻擊
     ClearBuffs, // 清除所有負面 Buff
+    Shield
 }
 public interface IBuffData
 {
@@ -170,6 +171,10 @@ public class BaseBuff : IBuffData
                 Debug.Log($"{buffName} 減少了 {damageReduction} 點傷害！");
                 break;
 
+            case BuffEffectType.Shield:
+                Debug.Log($"{buffName} 已準備抵擋下一次攻擊！");
+                break;
+
             case BuffEffectType.BornDice:
                 // 額外生成骰子
                 int extraDice = (int)effectValues[0];
@@ -261,6 +266,9 @@ public class BaseBuff : IBuffData
             case BuffEffectType.Defense:
                 character.buffDefense -= effectValues[0];
                 Debug.Log($"{buffName} 移除了防禦力加成！");
+                break;
+            case BuffEffectType.Shield:
+                Debug.Log($"{buffName} 抵擋效果已消耗");
                 break;
             case BuffEffectType.LimitBornDice:
                 character.limitDiceCount = 0;
