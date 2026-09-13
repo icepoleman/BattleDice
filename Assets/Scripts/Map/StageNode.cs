@@ -33,6 +33,9 @@ public class StageNode : MonoBehaviour
     [SerializeField] string stageInfo;       //關卡資訊
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
+   // [Header("完成後獎勵(可選)")]
+   // [SerializeField] StageType rewardType;
+    //[SerializeField] string rewardInfo;       //完成後獎勵(可選) 用完清空
 
     [Header("連線設定")]
     [SerializeField] private Transform lineRoot; // 用於存放連線的父物件
@@ -198,6 +201,21 @@ public class StageNode : MonoBehaviour
                 // 自動存檔
                 SaveManager.AutoSave();
                 stageImage.color = Color.green;
+               /* switch (rewardType)
+                {
+                    case StageType.Gold:
+                        EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(rewardInfo)); //取得金幣
+                        break;
+                    case StageType.Gear:
+                        EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(rewardInfo)); //取得齒輪
+                        break;
+                    case StageType.Skill:
+                        EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(rewardInfo)); //取得技能
+                        break;
+                    case StageType.Takara:
+                        EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
+                        break;
+                }*/
                 break;
         }
         if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
@@ -250,7 +268,7 @@ public class StageNode : MonoBehaviour
                      GoNextStage();
                      break;*/
                 case StageType.Gear:
-                    EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
+                    //EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
                     EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
                     Debug.Log($"齒輪: {stageInfo}");
                     GoNextStage();
@@ -263,8 +281,8 @@ public class StageNode : MonoBehaviour
                     GoNextStage();
                     break;
                 case StageType.Gold:
-                    EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
-                                                                                           //  EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
+                    //EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
+                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
                     Debug.Log($"金幣: {stageInfo}");
                     GoNextStage();
                     break;

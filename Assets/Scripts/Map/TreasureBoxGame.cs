@@ -45,7 +45,7 @@ public class TreasureBoxGame : MonoBehaviour
     private List<Rigidbody2D> diceRigidbodies = new List<Rigidbody2D>();
     private List<Sprite> diceSprites = new List<Sprite>();
 
-    private int lastPoint = 6;
+    private int lastPoint;
     private bool isRolling = false;
     private int currentLevel = 1;
     private Vector3[] originalItemScales;
@@ -70,11 +70,17 @@ public class TreasureBoxGame : MonoBehaviour
         }
     }
 
+    private void RandomizeLastPoint()
+    {
+        int pointCount = lastPointList == null ? 0 : lastPointList.Length;
+        lastPoint = pointCount > 0 ? Random.Range(1, pointCount + 1) : 1;
+    }
+
     public void ResetGame()
     {
         isDone = false;
         currentLevel = 1;
-        lastPoint = 6;
+        RandomizeLastPoint();
         RefreshLastPointDisplay();
         SetRewardItemsForCurrentLevel();
         RefreshRewardItemScale();
@@ -83,7 +89,8 @@ public class TreasureBoxGame : MonoBehaviour
     }
     void Start()
     {
-        GameDataManager.BackUpKey++;//增加備用鑰匙數量
+        SceneLoader.HideLoadingScreen();
+        //GameDataManager.BackUpKey++;//增加備用鑰匙數量
         UpdateBackupKeyDisplay();
         diceSprites = AtlasLoader.Instance.GetAllDiceSprites();
         for (int i = 0; i < dices.Length; i++)
@@ -91,6 +98,7 @@ public class TreasureBoxGame : MonoBehaviour
             dices[i].sprite = diceSprites[0];
             diceRigidbodies.Add(dices[i].GetComponent<Rigidbody2D>());
         }
+        RandomizeLastPoint();
         RefreshLastPointDisplay();
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
@@ -175,42 +183,33 @@ public class TreasureBoxGame : MonoBehaviour
     {
         levelRewardDict[1] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 40 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 60 },
         };
         levelRewardDict[2] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 150 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 50 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 6 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5 },
         };
         levelRewardDict[3] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 150 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 50 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 6 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 9 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 120 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 9 },
         };
         levelRewardDict[4] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 150 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 6 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 9 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 9 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 8 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 10 },
         };
         levelRewardDict[5] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 300 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 12 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 200 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 15 },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1 },
         };
     }
@@ -368,7 +367,7 @@ public class TreasureBoxGame : MonoBehaviour
                 break;
         }
         await Task.Delay(1000);
-        Destroy(gameObject);
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
     }
 
     private async void OnLose()
@@ -379,11 +378,11 @@ public class TreasureBoxGame : MonoBehaviour
             UpdateBackupKeyDisplay();
             return;
         }
+        btn_getReward.interactable = false;
         UIManager.ShowHintBubble(LanguageManager.GetText("T_UnLock_Fail"));
         isDone = true;
         await Task.Delay(1000);
-       // EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, 100); //取得金幣
-        Destroy(gameObject);
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
     }
 }
 public class TreasureBoxReward

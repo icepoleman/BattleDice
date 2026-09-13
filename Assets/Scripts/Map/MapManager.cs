@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading.Tasks;
 using TMPro;
+using UniRx;
 
 public class MapManager : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
-    [SerializeField] TreasureBoxGame treasureBox;
 
     private Scrollbar scrollbar_map;
 
@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
     {
         AudioManager.Instance.PlayBGM("Bgm_Map", true, 1.0f);
         UpdateBloodFill();
+        if (GameDataManager.PlayerData.currentBlood <= 0) GameDataManager.PlayerData.currentBlood = 1;
         txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         text_gold.text = GameDataManager.Gold.ToString();
         text_gear.text = GameDataManager.Gear.ToString();
@@ -54,7 +55,6 @@ public class MapManager : MonoBehaviour
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
         EventCenter.AddListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
-        EventCenter.AddListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
     }
     void OnDestroy()
     {
@@ -64,7 +64,6 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
-        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
         // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
@@ -94,11 +93,11 @@ public class MapManager : MonoBehaviour
     {
         int recoverAmount = (int)param[0];
         GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-       /* GameDataManager.PlayerData.currentBlood += recoverAmount;
-        if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
-        {
-            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-        }*/
+        /* GameDataManager.PlayerData.currentBlood += recoverAmount;
+         if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
+         {
+             GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+         }*/
         UpdateBloodFill();
         txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         await UIManager.ShowHintBubble(
@@ -117,11 +116,6 @@ public class MapManager : MonoBehaviour
         float targetHeight = Mathf.Lerp(220f, 800f, bloodRatio);
         RectTransform rectTransform = img_bloodFill.rectTransform;
         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, targetHeight);
-    }
-
-    void OnOpenTreasureBox(object[] param)
-    {
-        UIManager.ShowPanel(ABconfig.GAME_PREFABS + "TreasureBoxGame");
     }
     async void OnOpenMapShop(object[] param)
     {

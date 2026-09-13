@@ -55,7 +55,7 @@ T_Skill_SkillType_atk|造成<color=#FF1700> {0} </color>點傷害
 T_Skill_selfBuff|自身<link="{0}"><sprite name="Buff_{1}"></link>{2}回合
 T_Skill_targetBuff|對方<link="{0}"><sprite name="Buff_{1}"></link>{2}回合
 T_Skill_SkillType_heal|恢復<color=#00FF00> {0} </color>點生命
-T_Skill_SameDices|<color=#FF8000>重複骰子</color>×{0}
+T_Skill_SameDices|<color=#FF8000>相同骰子</color>×{0}
 T_Skill_SpecificDicesWithRepeat_low|低點數骰子×{0}
 T_Skill_SpecificDicesWithRepeat_high|高點數骰子×{0}
 T_Skill_ConsecutiveDices|<color=#00FF0E>連續骰子</color>×{0}
@@ -90,8 +90,8 @@ T_TextSpeed_Fast|快
 T_Setting_backMenu|返回菜單
 T_Setting_ExitGame|退出遊戲
 T_Setting_TextSpeed|文字速度
-T_Check|確認
-T_Escape|逃回整備室
+T_Check|離開
+T_Escape|逃回整備室...
 T_Restart|重新挑戰
 T_Menu_Production|製作名單
 T_SocialPoint|社交力:{0}
@@ -107,4 +107,5 @@ T_UnLock_Fail|破箱子打不開，拿去回收
 T_RecoverHealth_max|傷勢痊癒了
 T_GetGold|獲得 {0} 金幣
 T_Level0_Hint|先出去看看吧
-T_Lock_Hint|右鍵能鎖定骰子避免刷新
+T_Lock_Hint|右鍵能鎖定骰子避免重骰
+T_Result|統計

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 public class CSVReader
 {
@@ -104,16 +105,16 @@ public class CSVReader
     {
         Dictionary<int, BuffConfigData> buffs = new Dictionary<int, BuffConfigData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/BuffData";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+        string streamingPath = Path.Combine(Application.streamingAssetsPath, "Game", "BuffData.csv");
+        string csvText = File.Exists(streamingPath) ? File.ReadAllText(streamingPath) : null;
 
-        if (textAsset == null)
+        if (string.IsNullOrEmpty(csvText))
         {
-            Debug.LogError("❌ 找不到 Buff CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到 Buff CSV 檔案: " + streamingPath);
             return null;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -125,17 +126,20 @@ public class CSVReader
 
             // CSV 欄位: ID	Buff名稱	觸發時機	效果	數值	效果文
             BuffConfigData data = new BuffConfigData();
-            data.buffID = values.Length > 0 ? int.Parse(values[0]) : 0;
+            data.buffID = values.Length > 0 && int.TryParse(values[0], out int id) ? id : 0;
             data.buffName = values.Length > 1 ? values[1] : "";
             data.buffTrigger = values.Length > 2 ? ParseBuffTrigger(values[2]) : BuffTrigger.OnApply;
             data.buffEffectType = values.Length > 3 ? ParseBuffEffectType(values[3]) : BuffEffectType.HP;
             data.effectValues = values.Length > 4 ? ParseIntArray(values[4]) : new int[] { };
             data.describe = values.Length > 5 ? values[5] : "";
 
-            buffs[data.buffID] = data;
+            if (data.buffID > 0)
+            {
+                buffs[data.buffID] = data;
+            }
         }
 
-        Debug.Log($"✅ 從 Resources 載入 Buff 資料完成，共 {buffs.Count} 筆: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets/Game 載入 Buff 資料完成，共 {buffs.Count} 筆: {streamingPath}");
         return buffs;
     }
 
@@ -182,16 +186,17 @@ public class CSVReader
     {
         Dictionary<int, SkillConfigData> skills = new Dictionary<int, SkillConfigData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/{fileName}";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+        string cleanFileName = fileName.EndsWith(".csv", System.StringComparison.OrdinalIgnoreCase) ? fileName : fileName + ".csv";
+        string streamingPath = Path.Combine(Application.streamingAssetsPath, "Game", cleanFileName);
+        string csvText = File.Exists(streamingPath) ? File.ReadAllText(streamingPath) : null;
 
-        if (textAsset == null)
+        if (string.IsNullOrEmpty(csvText))
         {
-            Debug.LogError("❌ 找不到技能 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到技能 CSV 檔案: " + streamingPath);
             return skills;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -202,7 +207,7 @@ public class CSVReader
             string[] v = line.Split(',');
 
             var data = SkillFactory.Create(
-                skillID: v.Length > 0 ? int.Parse(v[0]) : 0,
+                skillID: v.Length > 0 && int.TryParse(v[0], out int skillId) ? skillId : 0,
                 skillName: v.Length > 1 ? v[1] : "",
                 skillType: v.Length > 2 ? ParseSkillType(v[2]) : SkillType.Attack,
                 requirementType: v.Length > 3 ? ParseRequirementType(v[3]) : SkillRequirementType.SpecificDices,
@@ -219,10 +224,13 @@ public class CSVReader
                 iconPath: v.Length > 14 ? v[14] : ""
             );
 
-            skills[data.skillID] = data;
+            if (data.skillID > 0)
+            {
+                skills[data.skillID] = data;
+            }
         }
 
-        Debug.Log($"✅ 從 Resources 載入技能資料完成，共 {skills.Count} 筆: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets/Game 載入技能資料完成，共 {skills.Count} 筆: {streamingPath}");
         return skills;
     }
 
@@ -287,16 +295,17 @@ public class CSVReader
     {
         Dictionary<int, EnemyConfigData> enemies = new Dictionary<int, EnemyConfigData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Game/{fileName}";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+        string cleanFileName = fileName.EndsWith(".csv", System.StringComparison.OrdinalIgnoreCase) ? fileName : fileName + ".csv";
+        string streamingPath = Path.Combine(Application.streamingAssetsPath, "Game", cleanFileName);
+        string csvText = File.Exists(streamingPath) ? File.ReadAllText(streamingPath) : null;
 
-        if (textAsset == null)
+        if (string.IsNullOrEmpty(csvText))
         {
-            Debug.LogError("❌ 找不到敵人 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到敵人 CSV 檔案: " + streamingPath);
             return enemies;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -308,18 +317,18 @@ public class CSVReader
 
             var data = new EnemyConfigData
             {
-                enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) ? int.Parse(v[0]) : 0,
+                enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) && int.TryParse(v[0], out int enemyId) ? enemyId : 0,
                 enemyName = v.Length > 1 ? v[1] : "",
-                goldReward = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) ? int.Parse(v[2]) : 0,
-                gearReward = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) ? int.Parse(v[3]) : 0,
+                goldReward = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) && int.TryParse(v[2], out int gold) ? gold : 0,
+                gearReward = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) && int.TryParse(v[3], out int gear) ? gear : 0,
                 maxBlood = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? float.Parse(v[4]) : 100f,
-                diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) ? int.Parse(v[5]) : 2,
+                diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) && int.TryParse(v[5], out int diceCount) ? diceCount : 2,
                 skillIDs = v.Length > 6 ? ParseIntArrayStatic(v[6]) : new int[] { },
                 initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null,
                 enemyType = v.Length > 8 ? v[8] : "Zako",
                 diceSides = v.Length > 9 ? ParseIntArrayStatic(v[9]) : new int[] { 1, 2, 3, 4, 5, 6 },
                 imgId = v.Length > 10 ? v[10] : "",
-                openStage = v.Length > 11 && !string.IsNullOrWhiteSpace(v[11]) ? int.Parse(v[11]) : 0,
+                openStage = v.Length > 11 && !string.IsNullOrWhiteSpace(v[11]) && int.TryParse(v[11], out int openStage) ? openStage : 0,
             };
 
             if (data.enemyId > 0)
@@ -328,7 +337,7 @@ public class CSVReader
             }
         }
 
-        Debug.Log($"✅ 從 Resources 載入敵人資料完成，共 {enemies.Count} 筆: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets/Game 載入敵人資料完成，共 {enemies.Count} 筆: {streamingPath}");
         return enemies;
     }
 

@@ -17,8 +17,8 @@ public class WinLoseView : MonoBehaviour
         txt_gear.text = isWin ? gearReward : "";
         txt_title.text = isWin ? "Win!!!" : "You Lose!";
         
-        btn_escape.gameObject.SetActive(!isWin);
-        btn_restart.gameObject.SetActive(!isWin);
+        //btn_escape.gameObject.SetActive(!isWin);
+        //btn_restart.gameObject.SetActive(!isWin);
         btn_check.gameObject.SetActive(isWin);
 
         btn_check.onClick.AddListener(() =>

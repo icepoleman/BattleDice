@@ -82,10 +82,6 @@ MeshRenderer:
   - {fileID: 2100000, guid: 9277b1cdb8a07a9489a82ac699263b10, type: 2}
   - {fileID: 2100000, guid: cf970e22e8191d6469668f1acf51dc8a, type: 2}
   - {fileID: 2100000, guid: 9277b1cdb8a07a9489a82ac699263b10, type: 2}
-  - {fileID: 2100000, guid: cf970e22e8191d6469668f1acf51dc8a, type: 2}
-  - {fileID: 2100000, guid: 9277b1cdb8a07a9489a82ac699263b10, type: 2}
-  - {fileID: 2100000, guid: cf970e22e8191d6469668f1acf51dc8a, type: 2}
-  - {fileID: 2100000, guid: 9277b1cdb8a07a9489a82ac699263b10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,6 +103,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5525074196717475399
 MonoBehaviour:

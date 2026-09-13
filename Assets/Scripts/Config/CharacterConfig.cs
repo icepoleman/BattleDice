@@ -70,12 +70,7 @@ public abstract class BaseCharacterData : ICharacterData
     public List<IBuffData> buffData { get; set; } = new List<IBuffData>();
     public int maxRollCount { get; set; }
     public List<int> rollDiceResult { get; set; } = new List<int>();
-    private float _buffDamage = 0f;
-    public float buffDamage
-    {
-        get => _buffDamage;
-        set => _buffDamage = Mathf.Max(0f, value);
-    }
+    public float buffDamage { get; set; } = 0f;
     public float buffDefense { get; set; } = 0f;
     public virtual List<int> RollDice()
     {

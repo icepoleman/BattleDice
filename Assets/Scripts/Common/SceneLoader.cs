@@ -73,7 +73,7 @@ public static class SceneLoader
         };
     }
 
-    static void ShowLoadingScreen()
+    public static void ShowLoadingScreen()
     {
         Debug.Log("顯示載入畫面");
         EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, true);

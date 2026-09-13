@@ -231,6 +231,10 @@ public class DialogueManager : MonoBehaviour
                 SaveManager.AutoSave();//快速存檔
                 //EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 return;
+            case "TREASURE":
+                isOver = true;
+                EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
+                return;
         }
 
         //處理跳轉邏輯

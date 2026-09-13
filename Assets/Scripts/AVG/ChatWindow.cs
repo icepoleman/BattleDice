@@ -96,6 +96,7 @@ public class ChatWindow : MonoBehaviour
                 tog_skip.image.color = new Color(1f, 1f, 1f, 1f); // 關閉時全亮
             }
         });
+        ShowWindow();
 
         // img_done 上下飄動動畫
         RectTransform doneRect = img_done.GetComponent<RectTransform>();
@@ -162,11 +163,11 @@ public class ChatWindow : MonoBehaviour
 
     public void ShowWindow()
     {
-        animator.Play("show");
+        animator.SetBool("show", true);
     }
     public void HideWindow()
     {
-        animator.Play("hide");
+        animator.SetBool("show", false);
     }
 
     IEnumerator TypeLine()

@@ -22,9 +22,6 @@ public static class SkillDatabase
         // 載入玩家技能
         LoadAdditionalCSV("skill");
 
-        // 載入怪物技能
-        LoadAdditionalCSV("enemySkill");
-
         // 統一處理本地化文本
         SkillLocalizationHelper.LocalizeAllSkills(_skills);
     }

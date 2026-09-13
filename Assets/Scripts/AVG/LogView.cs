@@ -7,6 +7,7 @@ public class LogView : MonoBehaviour
     [SerializeField] GameObject logItemPrefab;
     [SerializeField] Transform trans_logContent;
     [SerializeField] private Button btn_close;
+    [SerializeField] private ScrollRect scrollRect;
     private List<ChatLog> chatDatas = new List<ChatLog>();
     public void SetData(List<ChatLog> _data)
     {
@@ -31,5 +32,8 @@ public class LogView : MonoBehaviour
             logItem.SetData(data.name, data.dialogue);
             logItemObj.SetActive(true);
         }
+
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 }

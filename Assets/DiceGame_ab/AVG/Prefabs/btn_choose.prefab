@@ -235,7 +235,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -297,5 +297,6 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.08
   pressedScaleMultiplier: 0.92
   lerpSpeed: 14
+  effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06

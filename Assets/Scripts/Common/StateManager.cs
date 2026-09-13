@@ -1,7 +1,8 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UniRx;
+using System;
 public class StateManager : MonoBehaviour
 {
     public static StateManager Instance { get; private set; }
@@ -18,7 +19,8 @@ public class StateManager : MonoBehaviour
         Map,
         PreparationRoom,
         H_EVENT,
-        Shop
+        Shop,
+        TakaraGame
     }
 
     [Header("當前遊戲狀態")]
@@ -72,6 +74,7 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
+        EventCenter.AddListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -92,6 +95,12 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
+        EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
+    }
+
+    void OnOpenTreasureBox(object[] param)
+    {
+        SceneLoader.LoadSceneWithDelay("TakaraGame", () => ChangeState(GameState.AVG));
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -311,6 +320,7 @@ public class StateManager : MonoBehaviour
             GameState.PreparationRoom => "PreparationRoom",
             GameState.Shop => "ShopScene",
             GameState.H_EVENT => "H_EventScene",
+            GameState.TakaraGame => "TakaraGame",
             _ => "StartMenu"
         };
     }

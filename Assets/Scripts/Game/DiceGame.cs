@@ -36,6 +36,8 @@ public class DiceGame : MonoBehaviour
 
     //buff提示泡泡(因該放給UI管理比較好)
     [SerializeField] GameObject buffBubblePrefab = null;    //Buff使用提示泡泡
+
+    [SerializeField] GameObject obj_lose = null;
     Transform playerBuffBubblePos = null;    //玩家使用技能提示泡泡生成位置
     Transform enemyBuffBubblePos = null;    //敵人使用技能提示泡泡生成位置
 
@@ -195,12 +197,30 @@ public class DiceGame : MonoBehaviour
         turnAnim.Play("turnStart");
         await Task.Delay(1000);
 
+        List<int> enemyDiceResult = new List<int>();
         List<int> playerDiceResult = new List<int>();
+
         if (playerData.state == CharacterState.Idle)
         {
             playerDiceResult = playerData.RollDice();
         }
-        await gameUiView.ShowDice(playerDiceResult, true);
+
+        if (enemyData.state == CharacterState.Idle)
+        {
+            enemyDiceResult = enemyData.RollDice();
+        }
+
+        // 兩邊同時擲骰並播放動畫，等雙方都完成後再繼續
+        await Task.WhenAll(
+            gameUiView.ShowDice(playerDiceResult, true),
+            gameUiView.ShowDice(enemyDiceResult, false)
+        );
+
+        if (enemyData.state == CharacterState.Idle)
+        {
+            List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
+            gameUiView.UpdateEnemySkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
+        }
 
         manaRoller.ClearAllSelections();
         ChangeState(TurnState.playerTurn);
@@ -229,7 +249,7 @@ public class DiceGame : MonoBehaviour
                 await HandleSleepState(playerData, isPlayer: true);
                 break;
             default:
-                gameUiView.ClearDiceBox();
+                gameUiView.ClearPlayerDiceBox();
                 break;
         }
     }
@@ -245,7 +265,6 @@ public class DiceGame : MonoBehaviour
         manaRoller.BtnMode(manaRollerMode.Off);
         Debug.Log("Enemy's Turn");
         enemyData.TurnStartBuffEffect();
-        gameUiView.ClearDiceBox();
 
         switch (enemyData.state)
         {
@@ -269,6 +288,8 @@ public class DiceGame : MonoBehaviour
     async Task HandleRoundEnd()
     {
         if (gameOver) return;
+
+        gameUiView.ClearDiceBox();
 
         if (playerData.IsDead() || enemyData.IsDead())
         {
@@ -328,12 +349,17 @@ public class DiceGame : MonoBehaviour
         gameOver = true;
         playerData.RemoveAllBuff();
         await Task.Delay(500);
-        Debug.Log("Game Over");
+        bool playerWon = enemyData.IsDead();
+        if (!playerWon)
+        {
+            obj_lose.SetActive(true);
+            await Task.Delay(2000);
+            EventCenter.Dispatch(GameEvent.EVENT_ESCAPE_BATTLE);
+            return;
+        }
 
         GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "winLosePanel" + ".prefab");
         GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
-
-        bool playerWon = enemyData.IsDead();
         GameDataManager.Gold += playerWon ? enemyData.goldReward : 0;
         GameDataManager.Gear += playerWon ? enemyData.gearReward : 0;
 
@@ -345,20 +371,25 @@ public class DiceGame : MonoBehaviour
     #region Enemy Action
     async Task EnemyAction()
     {
-        // 敵人擲骰
-        List<int> enemyDiceResult = new List<int>();
-        if (enemyData.state == CharacterState.Idle)
-        {
-            enemyDiceResult = enemyData.RollDice();
-        }
-        await gameUiView.ShowDice(enemyDiceResult, false);
+        // 使用回合開始時已經擲好的敵人骰子，不再重複擲骰
+        List<int> enemyDiceResult = enemyData.rollDiceResult;
+        gameUiView.ClearEnemyDiceBox();
 
         // 取得可發動的技能列表
         List<SkillUseInfo> usableSkills = enemyData.GetUsableSkills(enemyDiceResult);
         gameUiView.UpdateEnemySkillCards(usableSkills.ConvertAll(skillInfo => skillInfo.skill));
+
+        if (usableSkills.Count == 0)
+        {
+            enemyData.TurnEndBuffDecrease();
+            gameUiView.ClearUsedEnemySkillCards();
+            ChangeState(TurnState.roundEnd);
+            return;
+        }
+
         await Task.Delay(1000);
-        gameUiView.ClearDiceBox();
-        // 敵人使用技能
+
+        // 保留敵人骰子顯示到攻擊完成後再清除
         enemyRerollPending = 0; // 重置重骰計數
         enemyData.UseSkill();
         await Task.Delay(300);
@@ -372,7 +403,6 @@ public class DiceGame : MonoBehaviour
         enemyData.TurnEndBuffDecrease();
         await Task.Delay(200);
         gameUiView.ClearUsedEnemySkillCards();
-        gameUiView.ClearDiceBox();
         ChangeState(TurnState.roundEnd);
     }
     #endregion
@@ -506,7 +536,7 @@ public class DiceGame : MonoBehaviour
         playerData.UseSkill();
         // gameUiView.PlayFightAnim("playerAtk");
         manaRoller.BtnMode(manaRollerMode.Idle);
-        gameUiView.ClearDiceBox();
+        gameUiView.ClearPlayerDiceBox();
 
         // 清空技能的 diceBox
         playerData.wantUseSkill.diceBox.Clear();
@@ -515,11 +545,8 @@ public class DiceGame : MonoBehaviour
     {
         playerData.TurnEndBuffDecrease();
         Debug.Log("Turn End button clicked");
-        // 在這裡處理結束回合的邏輯
-        ChangeState(TurnState.enemyTurn);
-        // 這裡可以加入切換到敵人回合的邏輯
-        //manaRoller.ClearAllRollDices();
         manaRoller.BtnMode(manaRollerMode.Off);
+        ChangeState(TurnState.enemyTurn);
     }
     void SkillCardClick(object[] args)
     {

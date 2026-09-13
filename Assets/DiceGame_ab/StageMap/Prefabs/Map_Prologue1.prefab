@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 5885673066860881640}
   - component: {fileID: 8028269492706507993}
   m_Layer: 5
-  m_Name: gear
+  m_Name: takara
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66b48022ff0e92b4e9f80c3241927adf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f0e758437cae2ea479be661376689649, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1144,8 +1144,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3099997359127566570}
   m_HandleRect: {fileID: 413701454159699427}
   m_Direction: 0
-  m_Value: 0.0000010340534
-  m_Size: 0.94938546
+  m_Value: 0.0000010340556
+  m_Size: 0.9493856
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1651,7 +1651,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 8916132801183127907}
   m_OnClick:
     m_PersistentCalls:

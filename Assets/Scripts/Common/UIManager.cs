@@ -117,13 +117,13 @@ public static class UIManager
     }
 
     /// <summary>
-    /// 為彈窗添加右鍵關閉功能
+    /// 為彈窗添加右鍵關閉功能 //停用
     /// </summary>
     private static void AddRightClickCloser(GameObject obj)
     {
         if (obj.GetComponent<RightClickCloser>() == null)
         {
-            obj.AddComponent<RightClickCloser>();
+          //  obj.AddComponent<RightClickCloser>();
         }
     }
 }

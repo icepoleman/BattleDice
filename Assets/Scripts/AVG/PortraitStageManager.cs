@@ -10,9 +10,6 @@ public class PortraitStageManager : MonoBehaviour
 
     public async Task SetCharacter(string characterName, Sprite _newPortrait, string _animationName, string portraitPos)
     {
-        if (portraitPos == "")
-            portraitPos = "Center";
-
         string oldPosition = null;
 
         if (roleViews.ContainsKey(characterName))
@@ -24,6 +21,8 @@ public class PortraitStageManager : MonoBehaviour
         }
         else
         {
+            if (portraitPos == "")
+                portraitPos = "Center";
             //沒有這個角色 創建一個新的
             GameObject roleViewObj = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "RolePrefab" + ".prefab");
 
@@ -35,23 +34,23 @@ public class PortraitStageManager : MonoBehaviour
             }
             else
             {
-            GameObject roleObj = Instantiate(roleViewObj, transform);
-            roleObj.name = characterName;
-            roleObj.transform.localScale = Vector3.one;
-            roleObj.transform.localPosition = Vector3.zero;
-            RoleView roleView = roleObj.GetComponent<RoleView>();
-            roleViews[characterName] = roleView;
+                GameObject roleObj = Instantiate(roleViewObj, transform);
+                roleObj.name = characterName;
+                roleObj.transform.localScale = Vector3.one;
+                roleObj.transform.localPosition = Vector3.zero;
+                RoleView roleView = roleObj.GetComponent<RoleView>();
+                roleViews[characterName] = roleView;
 
-            // 先設置角色信息，但不執行位置動畫
-            roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
+                // 先設置角色信息，但不執行位置動畫
+                roleView.ShowCharacter(_newPortrait, _animationName, portraitPos);
 
-            // 立即計算並設置正確的初始位置（無動畫）
-            Vector2 initialPos = CalculateInitialPosition(characterName, portraitPos);
-            roleView.SetPosition(initialPos);
-            // 根據角色名稱設置大小
-            roleView.SetSize(CalculateInitialSize(characterName));
+                // 立即計算並設置正確的初始位置（無動畫）
+                Vector2 initialPos = CalculateInitialPosition(characterName, portraitPos);
+                roleView.SetPosition(initialPos);
+                // 根據角色名稱設置大小
+                roleView.SetSize(CalculateInitialSize(characterName));
 
-            Debug.Log($"新角色 {characterName} 初始位置設置為: {initialPos}");
+                Debug.Log($"新角色 {characterName} 初始位置設置為: {initialPos}");
             }
         }
 

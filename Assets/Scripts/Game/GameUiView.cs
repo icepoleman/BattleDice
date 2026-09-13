@@ -202,7 +202,14 @@ public class GameUiView : MonoBehaviour
             return;
         }
         Debug.Log("顯示擲骰子動畫");
-        ClearDiceBox();
+        if (isPlayer)
+        {
+            ClearPlayerDiceBox();
+        }
+        else
+        {
+            ClearEnemyDiceBox();
+        }
 
         await Task.Delay(500);// 等待0.5秒後開始顯示動畫
 
@@ -216,10 +223,18 @@ public class GameUiView : MonoBehaviour
     }
     public void ClearDiceBox()
     {
+        ClearPlayerDiceBox();
+        ClearEnemyDiceBox();
+    }
+    public void ClearPlayerDiceBox()
+    {
         foreach (Transform child in trans_playerDiceBox.transform)
         {
             Destroy(child.gameObject);
         }
+    }
+    public void ClearEnemyDiceBox()
+    {
         foreach (Transform child in trans_enemyDiceBox.transform)
         {
             Destroy(child.gameObject);
@@ -288,6 +303,7 @@ public class GameUiView : MonoBehaviour
 
         if (enemyIsDead)
         {
+            trans_enemySkillBoxs.gameObject.SetActive(false);
             img_enemy.DOKill();
             img_enemy.sprite = enemySprites[HurtSpriteIndex];
             img_enemy.DOFade(0f, 2f).SetEase(Ease.OutQuad);
