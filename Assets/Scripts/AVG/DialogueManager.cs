@@ -168,11 +168,13 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("❌ OnClickChoice: 無效的參數");
         }
     }
+    string CHAPTER;
     public void LoadDialogue(string _chapter_csv)
     {
         dialogueDatas = CSVReader.Instance.LoadDialogueCSV(_chapter_csv);//依照章節讀取CSV
         pageIndex = 0;
         nowChapter = dialogueDatas[pageIndex].Chapter;
+        CHAPTER = nowChapter;
         if (nowChapter == "")
         {
             Debug.LogError("❌ Chapter 欄位不可為空，請檢查 CSV 檔案");
@@ -197,6 +199,14 @@ public class DialogueManager : MonoBehaviour
             string tag = pendingJumpTag;
             pendingJumpTag = null;
             JumpToTag(tag);
+            return;
+        }
+
+        if (nowChapter != CHAPTER && GameDataManager.TestAVGMode)
+        {
+            isOver = true;
+            EventCenter.Dispatch(StateEvent.EVENT_BACK_PREVIOUS_SCENE);
+
             return;
         }
 

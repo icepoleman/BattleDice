@@ -18,21 +18,37 @@ public class CSVReader
         }
     }
 
+    private string GetDialogueFolderPath()
+    {
+        return Path.Combine(Application.streamingAssetsPath, "Language", LanguageManager.CurrentLanguage, "Dialogue");
+    }
+
+    private string GetDialogueCsvPath(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+            return null;
+
+        string cleanFileName = fileName.EndsWith(".csv", System.StringComparison.OrdinalIgnoreCase)
+            ? fileName
+            : fileName + ".csv";
+
+        return Path.Combine(GetDialogueFolderPath(), cleanFileName);
+    }
+
     // 載入對話資料
     public List<DialogueData> LoadDialogueCSV(string fileName)
     {
         List<DialogueData> lines = new List<DialogueData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/{fileName}";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
-
-        if (textAsset == null)
+        string csvPath = GetDialogueCsvPath(fileName);
+        if (string.IsNullOrEmpty(csvPath) || !File.Exists(csvPath))
         {
-            Debug.LogError("❌ 找不到對話 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到對話 CSV 檔案: " + csvPath);
             return null;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -61,8 +77,35 @@ public class CSVReader
             lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 Resources 載入對話資料完成，共 {lines.Count} 行: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets 載入對話資料完成，共 {lines.Count} 行: {csvPath}");
         return lines;
+    }
+
+    // 取得當前語言下所有對話 CSV 名稱
+    public List<string> GetAllDialogueCSVNames()
+    {
+        string folderPath = GetDialogueFolderPath();
+        if (!Directory.Exists(folderPath))
+        {
+            Debug.LogError("❌ 找不到對話資料夾: " + folderPath);
+            return new List<string>();
+        }
+
+        string[] csvFiles = Directory.GetFiles(folderPath, "*.csv");
+        List<string> names = new List<string>();
+
+        foreach (string csvPath in csvFiles)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(csvPath);
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                names.Add(fileName);
+            }
+        }
+
+        names.Sort();
+        Debug.Log($"✅ 從 StreamingAssets/Language/{LanguageManager.CurrentLanguage}/Dialogue 取得對話 CSV 名稱，共 {names.Count} 個");
+        return names;
     }
 
     // 載入地圖資料
@@ -347,16 +390,15 @@ public class CSVReader
     {
         List<AffinityStoryData> stories = new List<AffinityStoryData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/AffinityStoryData";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
-
-        if (textAsset == null)
+        string csvPath = Path.Combine(GetDialogueFolderPath(), "AffinityStoryData.csv");
+        if (!File.Exists(csvPath))
         {
-            Debug.LogError("❌ 找不到好感度故事 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到好感度故事 CSV 檔案: " + csvPath);
             return stories;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -376,7 +418,7 @@ public class CSVReader
             }
         }
 
-        Debug.Log($"✅ 從 Resources 載入好感度故事資料完成，共 {stories.Count} 筆: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets 載入好感度故事資料完成，共 {stories.Count} 筆: {csvPath}");
         return stories;
     }
 
@@ -386,16 +428,15 @@ public class CSVReader
     {
         List<PreparationRoomShortData> shortDataList = new List<PreparationRoomShortData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Dialogue/PreparationRoomShort";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
-
-        if (textAsset == null)
+        string csvPath = Path.Combine(GetDialogueFolderPath(), "PreparationRoomShort.csv");
+        if (!File.Exists(csvPath))
         {
-            Debug.LogError("❌ 找不到整備室短劇情 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到整備室短劇情 CSV 檔案: " + csvPath);
             return shortDataList;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -415,7 +456,7 @@ public class CSVReader
             }
         }
 
-        Debug.Log($"✅ 從 Resources 載入整備室短劇情資料完成，共 {shortDataList.Count} 筆: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets 載入整備室短劇情資料完成，共 {shortDataList.Count} 筆: {csvPath}");
         return shortDataList;
     }
 
@@ -424,18 +465,17 @@ public class CSVReader
     {
         List<T> lines = new List<T>();
 
-        // 移除 .csv 副檔名（Resources.Load 不需要）
         string fileNameWithoutExt = fileName.EndsWith(".csv") ? fileName.Substring(0, fileName.Length - 4) : fileName;
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/{subFolder}/{fileNameWithoutExt}";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+        string csvPath = Path.Combine(Application.streamingAssetsPath, "Language", LanguageManager.CurrentLanguage, subFolder, fileNameWithoutExt + ".csv");
 
-        if (textAsset == null)
+        if (!File.Exists(csvPath))
         {
-            Debug.LogError($"❌ 找不到 CSV 檔案: {resourcePath}");
+            Debug.LogError($"❌ 找不到 CSV 檔案: {csvPath}");
             return null;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -450,7 +490,7 @@ public class CSVReader
                 lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 Resources/{subFolder} 載入完成，共 {lines.Count} 行: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets/Language/{LanguageManager.CurrentLanguage}/{subFolder} 載入完成，共 {lines.Count} 行: {csvPath}");
         return lines;
     }
 }

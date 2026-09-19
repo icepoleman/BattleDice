@@ -39,11 +39,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - WolfGirl
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e2c743308c351b4d98f0e863fc00340
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/sad.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30079cb6e29a4ed4c8842088ddbb9d05
     m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/sm.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Idol_Sp
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36f7d092ef4879448bde043844a0f222
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/angry.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 385fdce7dd652ee44ae1b9351c2ffda3
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/shy.png
@@ -74,6 +86,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Idol
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b4615b14dcf05f4e81cf9800df80ea0
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/scare.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d2f4608de572bd44a34670ee6f14249
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/happy.png
@@ -135,11 +153,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - Idol
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99396742afa82f64f90b5ba567272e61
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/shy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a180b15f68e9134e8547c5a048315f6
     m_Address: Assets/DiceGame_ab/Avg/RolePic/JailerGirl/angry.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - JailerGirl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9aae899e50ca9054d922c369255e1fbb
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a109ccd917048d54c9c7873b3387d0bb
     m_Address: Assets/DiceGame_ab/AVG/Characters/WolfGirl/scare.png
@@ -164,6 +194,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Witch
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e07819a44b7e9dd4ab247e9bbfbed5a9
+    m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Warden/happy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Warden
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb315b7654c8c3646a1ecbcaca24b61c
     m_Address: Assets/DiceGame_ab/AVG/AVG_Characters/Idol_Sp/happy.png

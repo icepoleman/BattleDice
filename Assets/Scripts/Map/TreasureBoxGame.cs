@@ -95,7 +95,6 @@ public class TreasureBoxGame : MonoBehaviour
         diceSprites = AtlasLoader.Instance.GetAllDiceSprites();
         for (int i = 0; i < dices.Length; i++)
         {
-            dices[i].sprite = diceSprites[0];
             diceRigidbodies.Add(dices[i].GetComponent<Rigidbody2D>());
         }
         RandomizeLastPoint();

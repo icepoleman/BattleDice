@@ -172,6 +172,10 @@ public class PortraitStageManager : MonoBehaviour
                 return -600;
             case "JailerGirl":
                 return -432;
+            case "Idol":
+                return -566;
+                    case "Warden":
+                return -440;
             default:
                 return 0;
         }

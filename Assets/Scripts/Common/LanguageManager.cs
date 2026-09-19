@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 /// <summary>
 /// 語言管理器 - 讀取多語言文字
@@ -74,17 +75,15 @@ public static class LanguageManager
     private static void LoadLanguageFile()
     {
         languageData.Clear();
-        
-        string path = $"Language/{currentLanguage}/{currentLanguage}";
-        TextAsset textAsset = Resources.Load<TextAsset>(path);
-        
-        if (textAsset == null)
+
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Language", currentLanguage, currentLanguage + ".txt");
+        if (!File.Exists(filePath))
         {
-            Debug.LogError($"[LanguageManager] 找不到語言檔案: {path}");
+            Debug.LogError($"[LanguageManager] 找不到語言檔案: {filePath}");
             return;
         }
-        
-        string[] lines = textAsset.text.Split('\n');
+
+        string[] lines = File.ReadAllLines(filePath);
         
         foreach (string line in lines)
         {
