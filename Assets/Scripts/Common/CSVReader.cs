@@ -362,8 +362,6 @@ public class CSVReader
             {
                 enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) && int.TryParse(v[0], out int enemyId) ? enemyId : 0,
                 enemyName = v.Length > 1 ? v[1] : "",
-                goldReward = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) && int.TryParse(v[2], out int gold) ? gold : 0,
-                gearReward = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) && int.TryParse(v[3], out int gear) ? gear : 0,
                 maxBlood = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? float.Parse(v[4]) : 100f,
                 diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) && int.TryParse(v[5], out int diceCount) ? diceCount : 2,
                 skillIDs = v.Length > 6 ? ParseIntArrayStatic(v[6]) : new int[] { },

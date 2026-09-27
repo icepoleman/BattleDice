@@ -39,6 +39,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
     [SerializeField] ToggleGroup skillToggleGroup;
     [SerializeField] List<SkillCard> skillCardList = new List<SkillCard>();
     [Header("技能提示")]
+    [SerializeField] TextMeshProUGUI text_skillTitle;
     [SerializeField] TextMeshProUGUI text_skillHint;
     [SerializeField] GameObject obj_buffTip;
     [SerializeField] TextMeshProUGUI text_buffTip;
@@ -142,7 +143,8 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
     void OnSkillSelected(object[] args)
     {
         ISkillData selectedSkill = args[0] as ISkillData;
-        //chooseSkillCard.SetData(selectedSkill);
+
+        text_skillTitle.text = selectedSkill.skillName;
         text_skillHint.text = selectedSkill.conditionText + "\n" + selectedSkill.effectText;
         // 切換技能時清除所有骰子選取狀態
         ClearAllSelections();

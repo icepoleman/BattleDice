@@ -94,6 +94,13 @@ public class PortraitStageManager : MonoBehaviour
             }
         }
     }
+    public void BlackAllCharacters()
+    {
+        foreach (var kv in roleViews)
+        {
+            kv.Value.SetHighlight(false);
+        }
+    }
     // 隱藏角色
     public void HideCharacter(string characterName)
     {
@@ -174,7 +181,7 @@ public class PortraitStageManager : MonoBehaviour
                 return -432;
             case "Idol":
                 return -566;
-                    case "Warden":
+            case "Warden":
                 return -440;
             default:
                 return 0;

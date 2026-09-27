@@ -76,12 +76,28 @@ public class TreasureBoxGame : MonoBehaviour
         lastPoint = pointCount > 0 ? Random.Range(1, pointCount + 1) : 1;
     }
 
+    private void SetInitialRollPoint()
+    {
+        int rollResult = 0;
+        for (int i = 0; i < dices.Length; i++)
+        {
+            if (diceSprites == null || diceSprites.Count == 0)
+                continue;
+
+            int diceValue = Random.Range(1, 7);
+            rollResult += diceValue;
+            dices[i].sprite = diceSprites[diceValue];
+        }
+
+        lastPoint = rollResult;
+        RefreshLastPointDisplay();
+    }
+
     public void ResetGame()
     {
         isDone = false;
         currentLevel = 1;
-        RandomizeLastPoint();
-        RefreshLastPointDisplay();
+        SetInitialRollPoint();
         SetRewardItemsForCurrentLevel();
         RefreshRewardItemScale();
         UpdateLevelKeyPosition();
@@ -90,15 +106,14 @@ public class TreasureBoxGame : MonoBehaviour
     void Start()
     {
         SceneLoader.HideLoadingScreen();
-        //GameDataManager.BackUpKey++;//增加備用鑰匙數量
+        GameDataManager.BackUpKey = 1;//增加備用鑰匙數量
         UpdateBackupKeyDisplay();
         diceSprites = AtlasLoader.Instance.GetAllDiceSprites();
         for (int i = 0; i < dices.Length; i++)
         {
             diceRigidbodies.Add(dices[i].GetComponent<Rigidbody2D>());
         }
-        RandomizeLastPoint();
-        RefreshLastPointDisplay();
+        SetInitialRollPoint();
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
         btn_getReward.onClick.AddListener(ClaimReward);
@@ -182,35 +197,76 @@ public class TreasureBoxGame : MonoBehaviour
     {
         levelRewardDict[1] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 40 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 60 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 4.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 1.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.5f },
         };
         levelRewardDict[2] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 4.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 50, probability = 1.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 4, probability = 1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5, probability = 0.5f },
         };
         levelRewardDict[3] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 120 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 9 },
+           new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80, probability = 4.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 90, probability = 1.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5, probability = 2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 7, probability = 1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.5f },
         };
         levelRewardDict[4] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 6 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 8 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 10 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100, probability = 4.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 120, probability = 1.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 150, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 7, probability = 2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 10, probability = 1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.5f },
         };
         levelRewardDict[5] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 200 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 15 },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1 },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 15, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 9.5f },
         };
+    }
+
+    private TreasureBoxReward SelectRewardByProbability(List<TreasureBoxReward> rewards)
+    {
+        if (rewards == null || rewards.Count == 0)
+            return null;
+
+        float totalProbability = 0f;
+        for (int i = 0; i < rewards.Count; i++)
+        {
+            totalProbability += Mathf.Max(0f, rewards[i].probability);
+        }
+
+        if (totalProbability <= 0f)
+        {
+            return rewards[Random.Range(0, rewards.Count)];
+        }
+
+        float randomPoint = Random.value * totalProbability;
+        float cumulative = 0f;
+
+        for (int i = 0; i < rewards.Count; i++)
+        {
+            cumulative += Mathf.Max(0f, rewards[i].probability);
+            if (randomPoint <= cumulative)
+            {
+                return rewards[i];
+            }
+        }
+
+        return rewards[rewards.Count - 1];
     }
 
     private void SetRewardItemsForCurrentLevel()
@@ -228,8 +284,8 @@ public class TreasureBoxGame : MonoBehaviour
             }
 
             var rewardPool = new List<TreasureBoxReward>(rewards);
-            int randomIndex = Random.Range(0, rewardPool.Count);
-            takaraItems[i].SetData(rewardPool[randomIndex]);
+            TreasureBoxReward selectedReward = SelectRewardByProbability(rewardPool);
+            takaraItems[i].SetData(selectedReward);
             takaraItems[i].gameObject.SetActive(true);
         }
 
@@ -388,6 +444,7 @@ public class TreasureBoxReward
 {
     public TreasureBoxRewardType rewardType;
     public int rewardValue;
+    public float probability = 1f;
 }
 public enum TreasureBoxRewardType
 {

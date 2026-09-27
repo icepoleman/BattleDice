@@ -360,11 +360,9 @@ public class DiceGame : MonoBehaviour
 
         GameObject winlosePanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "winLosePanel" + ".prefab");
         GameObject winlosePanel = Instantiate(winlosePanelPrefab, transform);
-        GameDataManager.Gold += playerWon ? enemyData.goldReward : 0;
-        GameDataManager.Gear += playerWon ? enemyData.gearReward : 0;
 
         //string winText = LanguageManager.GetFormat("T_WinReward", enemyData.goldReward, enemyData.gearReward);
-        winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, " x  " + enemyData.goldReward, " x  " + enemyData.gearReward);
+        winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, enemyData.GetTreasureBoxReward());
     }
     #endregion
 

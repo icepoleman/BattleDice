@@ -5,8 +5,6 @@ public class EnemyData : BaseCharacterData
 {
     public int enemyId = 0;
     public string enemyName = "敵人";
-    public int goldReward = 0;
-    public int gearReward = 0;
     public string enemyType = "Zako";
     public string imgId = "";
     public int openStage = 0;
@@ -47,8 +45,6 @@ public class EnemyData : BaseCharacterData
     {
         enemyId = config.enemyId;
         enemyName = config.enemyName;
-        goldReward = config.goldReward;
-        gearReward = config.gearReward;
         maxBlood = config.maxBlood;
         currentBlood = config.maxBlood; // currentBlood 預設等於 maxBlood
         diceSides = config.diceSides; // 使用配置中的骰子面
@@ -128,6 +124,10 @@ public class EnemyData : BaseCharacterData
         }
         
         return usableSkills;
+    }
+    public List<TreasureBoxReward> GetTreasureBoxReward()
+    {
+        return RewardRateConfig.GetEnemyReward(enemyType);
     }
 }
 

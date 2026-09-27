@@ -26,6 +26,7 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] EventTrigger doorEventTrigger; // 用於觸發鐵門開啟的事件
     [Header("火焰效果")]
     [SerializeField] GameObject obj_fire; //火焰效果
+    [SerializeField] Transform trans_fire;
 
     enum DoorState
     {
@@ -60,7 +61,7 @@ public class PreparationRoomManager : MonoBehaviour
                 return;
             }
             Instantiate(powerUpPanelPrefab, transform);
-            obj_fire.SetActive(false);
+            CloseFire();
         });
         btn_shop.onClick.AddListener(async () =>
         {
@@ -68,7 +69,7 @@ public class PreparationRoomManager : MonoBehaviour
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
             shopPanel.SetUp("MajoShop");
-            obj_fire.SetActive(false);
+            CloseFire();
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
@@ -78,7 +79,7 @@ public class PreparationRoomManager : MonoBehaviour
                 return;
             }
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
-            obj_fire.SetActive(false);
+            CloseFire();
         });
         btn_powerUp.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
         btn_shop.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
@@ -90,7 +91,7 @@ public class PreparationRoomManager : MonoBehaviour
             {
                 AffinityPanel affinityPanel = (await UIManager.ShowCommonPanel("AffinityPanel")).GetComponent<AffinityPanel>();
                 affinityPanel.SetUp(btn.name);
-                obj_fire.SetActive(false);
+                CloseFire();
             });
         }
 
@@ -121,7 +122,13 @@ public class PreparationRoomManager : MonoBehaviour
 
     void OnOpenFire(object[] args)
     {
-        obj_fire.SetActive(true);
+        trans_fire.transform.localPosition = new Vector3(13, -257, 0);
+        //obj_fire.SetActive(true);
+    }
+    void CloseFire()
+    {
+        trans_fire.transform.localPosition = new Vector3(13, 3000, 0);
+        //CloseFire();
     }
 
     void UpdateSocialPointText(int socialPoint)

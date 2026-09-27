@@ -52,6 +52,7 @@ public class ChatWindow : MonoBehaviour
         });
         btn_next.onClick.AddListener(() =>
         {
+            ShowWindow();
             dialogueManager.OnNextClick();
             tog_skip.isOn = false;// 點擊下一句時取消跳過模式
         });

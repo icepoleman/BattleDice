@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System;
 using TMPro;
 using Spine;
+using DG.Tweening;
 
 public class SkillCard : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class SkillCard : MonoBehaviour
             tog_skillChoose.group = _toggleGroup;
             tog_skillChoose.isOn = false;
             img_skillIcon.material = null;
+            ApplyToggleScale(0.6f);
             return;
         }
 
@@ -48,15 +50,30 @@ public class SkillCard : MonoBehaviour
             if (!isOn)
             {
                 img_skillIcon.material = null;
+                ApplyToggleScale(0.6f);
                 return;
             }
             img_skillIcon.material = selectMaterial;
+            ApplyToggleScale(1f);
             EventCenter.Dispatch(GameEvent.EVENT_SELECT_SKILL, _skillData);
         });
+
         if (tog_skillChoose.isOn)
         {
             img_skillIcon.material = selectMaterial;
+            ApplyToggleScale(1f);
         }
+        else
+        {
+            img_skillIcon.material = null;
+            ApplyToggleScale(0.6f);
+        }
+    }
+
+    private void ApplyToggleScale(float targetScale)
+    {
+
+        transform.DOScale(Vector3.one * targetScale, 0.12f).SetEase(Ease.OutCubic);
     }
 
     public void SelectByShortcut()

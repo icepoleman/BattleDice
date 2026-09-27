@@ -20,7 +20,7 @@ public struct PowerUpLevelData
 {
     public int gearCost;        // 升級所需齒輪
     public float increaseValue; // 升級增加的數值
-    
+
     public PowerUpLevelData(int cost, float value)
     {
         gearCost = cost;
@@ -47,12 +47,12 @@ public struct PowerUpConfigData
 public static class PowerUpDatabase
 {
     private static Dictionary<PowerUpType, PowerUpConfigData> configs;
-    
+
     static PowerUpDatabase()
     {
         InitializeConfigs();
     }
-    
+
     private static void InitializeConfigs()
     {
         configs = new Dictionary<PowerUpType, PowerUpConfigData>
@@ -68,11 +68,11 @@ public static class PowerUpDatabase
                     maxLevel = 5,
                     levels = new PowerUpLevelData[]
                     {
-                        new PowerUpLevelData(2, 20),   // Lv1: 花費2齒輪，+20血量
+                        new PowerUpLevelData(1, 20),   // Lv1: 花費2齒輪，+20血量
                         new PowerUpLevelData(3, 20),   // Lv2: 花費3齒輪，+20血量
                         new PowerUpLevelData(5, 30),   // Lv3: 花費5齒輪，+30血量
                         new PowerUpLevelData(8, 30),   // Lv4: 花費8齒輪，+30血量
-                        new PowerUpLevelData(12, 50),  // Lv5: 花費12齒輪，+50血量
+                        new PowerUpLevelData(10, 50),  // Lv5: 花費12齒輪，+50血量
                     }
                 }
             },
@@ -84,12 +84,14 @@ public static class PowerUpDatabase
                     type = PowerUpType.DiceCount,
                     displayName = "T_PowerUp_DiceCount",
                     description = "T_PowerUp_DiceCount_Desc",
-                    maxLevel = 3,
+                    maxLevel = 5,
                     levels = new PowerUpLevelData[]
                     {
                         new PowerUpLevelData(5, 1),    // Lv1: 花費5齒輪，+1骰子
-                        new PowerUpLevelData(10, 1),   // Lv2: 花費10齒輪，+1骰子
-                        new PowerUpLevelData(15, 1),   // Lv3: 花費15齒輪，+1骰子
+                        new PowerUpLevelData(8, 1),   // Lv2: 花費8齒輪，+1骰子
+                        new PowerUpLevelData(10, 1),   // Lv3: 花費10齒輪，+1骰子
+                         new PowerUpLevelData(15, 1),   // Lv3: 花費10齒輪，+1骰子
+                          new PowerUpLevelData(20, 1),   // Lv3: 花費10齒輪，+1骰子
                     }
                 }
             },
@@ -104,11 +106,11 @@ public static class PowerUpDatabase
                     maxLevel = 5,
                     levels = new PowerUpLevelData[]
                     {
-                        new PowerUpLevelData(2, 1),    // Lv1: 花費2齒輪，+1保留
-                        new PowerUpLevelData(4, 1),    // Lv2: 花費4齒輪，+1保留
-                        new PowerUpLevelData(6, 1),   // Lv3: 花費6齒輪，+1保留
-                        new PowerUpLevelData(8, 1),   // Lv4: 花費8齒輪，+1保留
-                        new PowerUpLevelData(10, 1),   // Lv5: 花費10齒輪，+1保留
+                        new PowerUpLevelData(5, 1),    // Lv1: 花費5齒輪，+1保留
+                        new PowerUpLevelData(8, 1),    // Lv2: 花費8齒輪，+1保留
+                        new PowerUpLevelData(10, 1),   // Lv3: 花費10齒輪，+1保留
+                        new PowerUpLevelData(12, 1),   // Lv4: 花費12齒輪，+1保留
+                        new PowerUpLevelData(15, 1),   // Lv5: 花費15齒輪，+1保留
                     }
                 }
             },
@@ -120,19 +122,20 @@ public static class PowerUpDatabase
                     type = PowerUpType.MaxRollCount,
                     displayName = "T_PowerUp_MaxRollCount",
                     description = "T_PowerUp_MaxRollCount_Desc",
-                    maxLevel = 4,
+                    maxLevel = 5,
                     levels = new PowerUpLevelData[]
                     {
                         new PowerUpLevelData(3, 1),    // Lv1: 花費3齒輪，+1次重骰
-                        new PowerUpLevelData(6, 1),    // Lv2: 花費6齒輪，+1次重骰
-                        new PowerUpLevelData(9, 1),   // Lv3: 花費9齒輪，+1次重骰
-                        new PowerUpLevelData(12, 1),   // Lv4: 花費12齒輪，+1次重骰
+                        new PowerUpLevelData(5, 1),    // Lv2: 花費6齒輪，+1次重骰
+                        new PowerUpLevelData(8, 1),   // Lv3: 花費9齒輪，+1次重骰
+                        new PowerUpLevelData(10, 1),   // Lv4: 花費12齒輪，+1次重骰
+                        new PowerUpLevelData(15, 1),   // Lv5: 花費15齒輪，+1次重骰
                     }
                 }
             }
         };
     }
-    
+
     /// <summary>
     /// 取得指定類型的升級配置
     /// </summary>
@@ -144,7 +147,7 @@ public static class PowerUpDatabase
         }
         return default;
     }
-    
+
     /// <summary>
     /// 取得所有升級配置
     /// </summary>
@@ -166,7 +169,7 @@ public static class PowerUpManager
     {
         return GameDataManager.GetPowerUpLevel(type);
     }
-    
+
     /// <summary>
     /// 取得玩家目前的屬性值
     /// </summary>
@@ -182,7 +185,7 @@ public static class PowerUpManager
             _ => 0
         };
     }
-    
+
     /// <summary>
     /// 取得下一級升級所需的齒輪數量
     /// </summary>
@@ -191,13 +194,13 @@ public static class PowerUpManager
     {
         var config = PowerUpDatabase.GetConfig(type);
         int currentLevel = GetCurrentLevel(type);
-        
+
         if (currentLevel >= config.maxLevel)
             return -1; // 已滿級
-            
+
         return config.levels[currentLevel].gearCost;
     }
-    
+
     /// <summary>
     /// 取得下一級升級增加的數值
     /// </summary>
@@ -206,13 +209,13 @@ public static class PowerUpManager
     {
         var config = PowerUpDatabase.GetConfig(type);
         int currentLevel = GetCurrentLevel(type);
-        
+
         if (currentLevel >= config.maxLevel)
             return -1; // 已滿級
-            
+
         return config.levels[currentLevel].increaseValue;
     }
-    
+
     /// <summary>
     /// 檢查是否可以升級
     /// </summary>
@@ -220,10 +223,10 @@ public static class PowerUpManager
     {
         int cost = GetNextLevelCost(type);
         if (cost < 0) return false; // 已滿級
-        
+
         return GameDataManager.Gear >= cost;
     }
-    
+
     /// <summary>
     /// 檢查是否已達最大等級
     /// </summary>
@@ -232,7 +235,7 @@ public static class PowerUpManager
         var config = PowerUpDatabase.GetConfig(type);
         return GetCurrentLevel(type) >= config.maxLevel;
     }
-    
+
     /// <summary>
     /// 執行升級
     /// </summary>
@@ -241,36 +244,36 @@ public static class PowerUpManager
     {
         if (!CanUpgrade(type))
             return false;
-            
+
         var config = PowerUpDatabase.GetConfig(type);
         int currentLevel = GetCurrentLevel(type);
         int cost = config.levels[currentLevel].gearCost;
         float increase = config.levels[currentLevel].increaseValue;
-        
+
         // 扣除齒輪
         GameDataManager.Gear -= cost;
-        
+
         // 增加等級
         GameDataManager.SetPowerUpLevel(type, currentLevel + 1);
-        
+
         // 套用屬性提升
         ApplyStatIncrease(type, increase);
-        
+
         // 自動存檔
         SaveManager.AutoSave();
-        
+
         UnityEngine.Debug.Log($"升級成功: {type} Lv{currentLevel + 1}，消耗 {cost} 齒輪，增加 {increase}");
-        
+
         return true;
     }
-    
+
     /// <summary>
     /// 套用屬性提升
     /// </summary>
     private static void ApplyStatIncrease(PowerUpType type, float increase)
     {
         var player = GameDataManager.PlayerData;
-        
+
         switch (type)
         {
             case PowerUpType.MaxBlood:

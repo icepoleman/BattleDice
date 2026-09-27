@@ -40,6 +40,7 @@ public class DialogueManager : MonoBehaviour
 
     private List<string> jumpTo = new List<string>();
     private string pendingJumpTag = null; // 等待跳轉的標籤（選項文字顯示後跳轉）
+    private string pendingBackgroundAfterSpine = null; // 等 Spine 黑幕展開後再換背景
 
     public PortraitStageManager stageManager;
 
@@ -292,16 +293,23 @@ public class DialogueManager : MonoBehaviour
             nowChapter = dialogueDatas[_page].Chapter;
             Debug.Log("切換章節:" + nowChapter);
         }
-        //紀錄跳轉
-        if (dialogueDatas[_page].JumpTo.Length > 0)
-        {
-            jumpTo = new List<string>(dialogueDatas[_page].JumpTo);
-        }
         //更換背景
         if (dialogueDatas[_page].Background != "")
         {
             Debug.Log("更換背景:" + dialogueDatas[_page].Background);
-            await CrossFadeBackground(dialogueDatas[_page].Background);
+            if (dialogueDatas[_page].Flag.StartsWith("Spine_"))
+            {
+                pendingBackgroundAfterSpine = dialogueDatas[_page].Background;
+            }
+            else
+            {
+                await CrossFadeBackground(dialogueDatas[_page].Background);
+            }
+        }
+        //紀錄跳轉
+        if (dialogueDatas[_page].JumpTo.Length > 0)
+        {
+            jumpTo = new List<string>(dialogueDatas[_page].JumpTo);
         }
         //更換女角色立繪
         if (girlNames.Contains(dialogueDatas[_page].Character))
@@ -312,6 +320,10 @@ public class DialogueManager : MonoBehaviour
             Sprite _sprite = PortraitManager.Show(dialogueDatas[_page].Character, dialogueDatas[_page].Portrait);
             stageManager.SetCharacter(dialogueDatas[_page].Character, _sprite, dialogueDatas[_page].Anim, dialogueDatas[_page].Pos);
             Debug.Log("更換立繪:" + dialogueDatas[_page].Portrait);
+        }
+        if (dialogueDatas[_page].Character == "Hero")
+        {
+            stageManager.BlackAllCharacters();
         }
         //更換敵人立繪
         if (enemyNames.Contains(dialogueDatas[_page].Character))
@@ -333,8 +345,14 @@ public class DialogueManager : MonoBehaviour
         }
         if (dialogueDatas[_page].CameraAnim != "")
         {
-            Debug.Log("相機flag:" + dialogueDatas[_page].CameraAnim);
-            animator.Play(dialogueDatas[_page].CameraAnim);
+            if (dialogueDatas[_page].CameraAnim == "shake")
+            {
+                EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_SCREEN, 1.5f, 20f);
+            }
+            else
+            {
+                animator.Play(dialogueDatas[_page].CameraAnim);
+            }
         }
         if (!string.IsNullOrEmpty(dialogueDatas[_page].Sound))
         {
@@ -578,7 +596,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // 交叉淡入淡出換背景
-    private async System.Threading.Tasks.Task CrossFadeBackground(string backgroundAddress)
+    private async Task CrossFadeBackground(string backgroundAddress)
     {
         // 記錄舊背景地址（用於卸載）
         string oldBgAddress = ABconfig.AVG_BG + currentBgAddress + ".png";
@@ -652,6 +670,12 @@ public class DialogueManager : MonoBehaviour
     {
         EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, true); // 顯示加載中黑幕
         await Task.Delay(500); // 等待黑幕完全顯示
+
+        if (!string.IsNullOrEmpty(pendingBackgroundAfterSpine))
+        {
+            await FlushPendingBackgroundAfterSpine();
+        }
+
         // 已存在則淡出刪除（toggle off）
         if (spineCharacter != null)
         {
@@ -694,7 +718,21 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.LogError("❌ 無法載入Spine模型:" + spineAddress);
             currentState = DialogueState.Story;
+            EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
+            await Task.Delay(500);
         }
+    }
+
+    private async Task FlushPendingBackgroundAfterSpine()
+    {
+        if (string.IsNullOrEmpty(pendingBackgroundAfterSpine))
+        {
+            return;
+        }
+
+        string backgroundAddress = pendingBackgroundAfterSpine;
+        pendingBackgroundAfterSpine = null;
+        await CrossFadeBackground(backgroundAddress);
     }
     //spine事件回調
     void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
@@ -761,7 +799,8 @@ public class DialogueManager : MonoBehaviour
     public void AnimShootEnd()
     {
         //閃白光換模型
-        spineCharacter.AnimationState.SetAnimation(0, "End", true);
+        if (spineCharacter != null)
+            spineCharacter.AnimationState.SetAnimation(0, "End", true);
     }
 
     #region 選項按鈕

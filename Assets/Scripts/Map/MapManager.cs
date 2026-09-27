@@ -165,6 +165,7 @@ public class MapManager : MonoBehaviour
                 currentMapInstance.transform.localPosition = Vector3.zero;
                 currentMapInstance.transform.localScale = Vector3.one;
                 scrollbar_map = currentMapInstance.GetComponentInChildren<Scrollbar>();
+                currentMapInstance.GetComponentInChildren<ScrollRect>().scrollSensitivity = 20f;
                 scrollbar_map.value = GameDataManager.MapScrollValue;
                 await Task.Delay(100);
                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);

@@ -64,6 +64,7 @@ public class MapEvent
 }
 public class AdvEvent
 {
+    public const string EVENT_SHAKE_SCREEN = "AdvEvent_ShakeScreen";//畫面震動
     public const string EVENT_CLICK_CHOICE = "AdvEvent_ClickChoice";//點擊選項
 }
 public class PreparationRoomEvent
