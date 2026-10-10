@@ -19,12 +19,12 @@ public class HasSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             img_choose.gameObject.SetActive(value);
             if (value)
             {
-                StartChoosePulse();
+                //StartChoosePulse();
             }
             else
             {
-                StopChoosePulse();
-                img_choose.transform.localScale = Vector3.one;
+               // StopChoosePulse();
+                //img_choose.transform.localScale = Vector3.one;
             }
         }
     }

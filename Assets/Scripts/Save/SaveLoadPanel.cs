@@ -49,18 +49,18 @@ public class SaveLoadPanel : MonoBehaviour
         {
             if (panelType == PanelType.Save)
             {
+                info.inPreparationRoom = GameDataManager.CurrentStage == GameDataManager.PreparationRoomStage;
+
                 if (!info.isEmpty)
                 {
                     Instantiate(confirmPanel, transform).GetComponent<ConfirmPanel>().SetUp(
                         LanguageManager.GetText("T_Save_OverWrite_Hint"), () =>
                         {
-                            Debug.Log($"存檔到槽 {info.slotIndex + 1}");
                             SaveManager.SaveToSlot(info.slotIndex);
                             saveItem.SetData(SaveManager.GetSlotInfo(info.slotIndex));
                         });
                     return;
                 }
-                Debug.Log($"存檔到槽 {info.slotIndex + 1}");
                 SaveManager.SaveToSlot(info.slotIndex);
                 saveItem.SetData(SaveManager.GetSlotInfo(info.slotIndex));
             }
@@ -77,7 +77,14 @@ public class SaveLoadPanel : MonoBehaviour
                     SaveManager.LoadFromSlot(info.slotIndex);
                 }
                 Destroy(gameObject);
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
+                if(GameDataManager.CurrentStage == GameDataManager.PreparationRoomStage)
+                {
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
+                }
+                else
+                {
+                    EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
+                }
             }
         });
 

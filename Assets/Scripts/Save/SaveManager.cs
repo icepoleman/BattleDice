@@ -11,6 +11,7 @@ public class SaveSlotInfo
     public string playerName;       // 玩家名称
     public string currentStage;     // 当前关卡
     public string preparationRoomStage; // 整备室关卡
+    public bool inPreparationRoom; // 是否在整备室
     public int currentMap;          // 当前地图
     public System.DateTime saveTime; // 存档时间
     public int gold;                // 金币数量

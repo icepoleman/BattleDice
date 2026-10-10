@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using TMPro;
 public class ChatWindow : MonoBehaviour
 {
     DialogueManager dialogueManager;
     private List<ChatLog> showedDialogues = new List<ChatLog>();//已顯示過的對話（用於記錄日誌）
-    [SerializeField] private Text dialogueText; // 對話框文字
-    [SerializeField] private Text nameText; // 角色名稱文字
+    [SerializeField] private TextMeshProUGUI dialogueText; // 對話框文字
+    [SerializeField] private TextMeshProUGUI nameText; // 角色名稱文字
     [SerializeField] private GameObject img_done; // 對話結束圖示
 
     [Header("控制按鈕")]
@@ -97,7 +97,14 @@ public class ChatWindow : MonoBehaviour
                 tog_skip.image.color = new Color(1f, 1f, 1f, 1f); // 關閉時全亮
             }
         });
-        ShowWindow();
+        if (dialogueManager != null)
+        {
+            dialogueManager.ConfigureChatWindow(this);
+        }
+        else
+        {
+            ShowWindow();
+        }
 
         // img_done 上下飄動動畫
         RectTransform doneRect = img_done.GetComponent<RectTransform>();

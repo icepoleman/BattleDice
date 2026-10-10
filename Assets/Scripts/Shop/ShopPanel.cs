@@ -13,11 +13,15 @@ public class ShopPanel : MonoBehaviour
 
     List<ShopSkillCard> skillCards = new List<ShopSkillCard>();
 
-    public void SetUp(string _shopTag)
+    void Start()
     {
-        shopTag = _shopTag;
         btn_close.onClick.AddListener(CloseShop);
         RefreshGoldDisplay();
+        GenerateShopItems();
+    }
+    public void SetUp(string _shopTag = "MajoShop")
+    {
+        shopTag = _shopTag;
         GenerateShopItems();
     }
 

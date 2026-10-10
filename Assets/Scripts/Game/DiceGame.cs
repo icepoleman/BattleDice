@@ -60,6 +60,7 @@ public class DiceGame : MonoBehaviour
         //  enemyBuffBubblePos = GameObject.Find("BuffBubbles/enemy").transform;
         playerData = GameDataManager.PlayerData;
         enemyData = new EnemyData(GameDataManager.TmpEnemyID);
+        Debug.LogError("敵人ID:" + GameDataManager.TmpEnemyID);
 
         playerEnterBlood = playerData.currentBlood;//記錄進入時血量
 

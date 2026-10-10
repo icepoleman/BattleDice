@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
         Story,
         SpineShow,//之後可能會換聊天框
     }
-    DialogueState currentState = DialogueState.Story;
+    DialogueState dialogueState = DialogueState.Story;
     [SerializeField] private string nowChapter = "";
     [SerializeField] private List<DialogueData> dialogueDatas = new List<DialogueData>();
     [Header("背景 CG")]
@@ -35,6 +35,8 @@ public class DialogueManager : MonoBehaviour
 
     private int pageIndex = 0;
     [SerializeField] private ChatWindow chatWindow;
+    [SerializeField] private ChatWindow chatWindow_H;
+    private ChatWindow CurrentChatWindow => dialogueState == DialogueState.SpineShow ? chatWindow_H : chatWindow;
     [Header("選項按鈕")]
     [SerializeField] Transform trans_chooseBoxParent;
 
@@ -51,7 +53,7 @@ public class DialogueManager : MonoBehaviour
 
     Animator animator;
     bool isOpen = false;
-
+    
     SkeletonAnimation spineCharacter;
 
     //字典 紀錄常用名稱
@@ -63,7 +65,10 @@ public class DialogueManager : MonoBehaviour
         if (isOpen) return;
         isOpen = true;
         chatWindow.SetDatalogueManager(this);
+        chatWindow_H.SetDatalogueManager(this);
         await AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
+        chatWindow.ShowWindow();
+        chatWindow_H.HideWindow();
         animator = GetComponent<Animator>();
         AddEvent();
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
@@ -102,15 +107,16 @@ public class DialogueManager : MonoBehaviour
 
         // 檢測 CTRL 鍵或 Skip 按鈕快轉
         if (!canSkip) return;
+        ChatWindow activeChatWindow = CurrentChatWindow;
         ctrlPressed = Input.GetKey(KeyCode.LeftControl);
-        shouldFastForward = (ctrlPressed || chatWindow.tog_skip.isOn) && !onChoose && !isOver;
+        shouldFastForward = (ctrlPressed || activeChatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
         if (shouldFastForward)
         {
             if (!isFastForwarding)
             {
                 isFastForwarding = true;
-                chatWindow.SetFastForwardMode(true);
+                activeChatWindow.SetFastForwardMode(true);
                 Debug.Log("⏩ 開始快轉");
             }
 
@@ -125,7 +131,7 @@ public class DialogueManager : MonoBehaviour
         else if (isFastForwarding)
         {
             isFastForwarding = false;
-            chatWindow.SetFastForwardMode(false);
+            activeChatWindow.SetFastForwardMode(false);
             Debug.Log("⏸️ 停止快轉");
         }
     }
@@ -158,7 +164,7 @@ public class DialogueManager : MonoBehaviour
         if (args.Length >= 2 && args[0] is string targetTag && args[1] is string choiceText)
         {
             // 先顯示選項文字
-            chatWindow.ShowDialogue(GetPlayerName(), choiceText);
+            CurrentChatWindow.ShowDialogue(GetPlayerName(), choiceText);
             // 記錄待跳轉標籤，等下一次點擊時跳轉
             pendingJumpTag = targetTag;
             jumpTo.Clear();
@@ -192,9 +198,10 @@ public class DialogueManager : MonoBehaviour
         // 處理選項文字顯示後的跳轉
         if (pendingJumpTag != null)
         {
-            if (chatWindow.isTyping)
+            ChatWindow activeChatWindow = CurrentChatWindow;
+            if (activeChatWindow.isTyping)
             {
-                chatWindow.CompleteDialogue();
+                activeChatWindow.CompleteDialogue();
                 return;
             }
             string tag = pendingJumpTag;
@@ -222,7 +229,7 @@ public class DialogueManager : MonoBehaviour
             case "BATTLE":
                 // 在這些章節中不處理下一步
                 isOver = true;
-                chatWindow.HideWindow();
+                CurrentChatWindow.HideWindow();
                 float flagValue = float.Parse(dialogueDatas[pageIndex].Flag);
                 Debug.Log("劇情結束 進入戰鬥" + flagValue);
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, (int)flagValue);
@@ -269,10 +276,11 @@ public class DialogueManager : MonoBehaviour
 
         if (pageIndex < dialogueDatas.Count - 1)
         {
-            if (chatWindow.isTyping)
+            ChatWindow activeChatWindow = CurrentChatWindow;
+            if (activeChatWindow.isTyping)
             {
                 //如果正在打字則直接顯示完整文本
-                chatWindow.CompleteDialogue();
+                activeChatWindow.CompleteDialogue();
                 return;
             }
             pageIndex++;
@@ -281,7 +289,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("沒文本了!");
-            chatWindow.HideWindow();
+            CurrentChatWindow.HideWindow();
         }
     }
     HashSet<string> girlNames = new HashSet<string>() { "JailerGirl", "WolfGirl", "Witch", "Idol", "Warden" };
@@ -347,7 +355,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogueDatas[_page].CameraAnim == "shake")
             {
-                EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_SCREEN, 1.5f, 20f);
+                EventCenter.Dispatch(AdvEvent.EVENT_SHAKE_SCREEN, 1.5f, 8f);
             }
             else
             {
@@ -387,7 +395,7 @@ public class DialogueManager : MonoBehaviour
                 characterName = LanguageManager.GetText("T_" + dialogueDatas[pageIndex].Character);
             else
                 characterName = "";
-            chatWindow.ShowDialogue(characterName, processedDialogue);
+            CurrentChatWindow.ShowDialogue(characterName, processedDialogue);
         }
         else
         {
@@ -687,7 +695,7 @@ public class DialogueManager : MonoBehaviour
                     Destroy(fadeOutTarget.gameObject);
                 });
             spineCharacter = null;
-            currentState = DialogueState.Story;
+            SetDialogueState(DialogueState.Story);
             stageManager.gameObject.SetActive(true);
             Debug.Log("淡出刪除Spine模型");
             await Task.Delay(500);
@@ -697,10 +705,10 @@ public class DialogueManager : MonoBehaviour
         }
         stageManager.gameObject.SetActive(false);
         // 不存在則生成並淡入（toggle on）
-        currentState = DialogueState.SpineShow;
         GameObject spinePrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.H_DATA_PREFABS + spineAddress);
         if (spinePrefab != null)
         {
+            SetDialogueState(DialogueState.SpineShow);
             GameObject spineObj = Instantiate(spinePrefab);
             spineCharacter = spineObj.GetComponent<SkeletonAnimation>();
             spineCharacter.skeleton.A = 1f;
@@ -717,9 +725,36 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.LogError("❌ 無法載入Spine模型:" + spineAddress);
-            currentState = DialogueState.Story;
+            stageManager.gameObject.SetActive(true);
             EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, false); // 隱藏加載中黑幕
             await Task.Delay(500);
+        }
+    }
+
+    private void SetDialogueState(DialogueState state)
+    {
+        if (dialogueState == state)
+        {
+            return;
+        }
+
+        ChatWindow previousChatWindow = CurrentChatWindow;
+        previousChatWindow.SetFastForwardMode(false);
+        previousChatWindow.HideWindow();
+        dialogueState = state;
+        CurrentChatWindow.SetFastForwardMode(isFastForwarding);
+        CurrentChatWindow.ShowWindow();
+    }
+
+    public void ConfigureChatWindow(ChatWindow window)
+    {
+        if (window == CurrentChatWindow)
+        {
+            window.ShowWindow();
+        }
+        else
+        {
+            window.HideWindow();
         }
     }
 

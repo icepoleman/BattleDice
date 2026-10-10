@@ -173,7 +173,7 @@ public class MenuManager : MonoBehaviour
         anim_menu.Play("fadeOut");
         AudioManager.Instance.PlaySFX("Sound_Click1");
         //等一秒
-        await Task.Delay(1000);
+        await Task.Delay(1500);
         //Todo 加入載入存檔
         GameDataManager.PreparationRoomStage = "StartPoint";//初始整備室
         GameDataManager.CurrentMap = 1;
@@ -190,7 +190,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.charactersAffinity = new int[] { 0, 0, 0, 0 };//角色親密度歸零
         GameDataManager.SocialPoint = 0;//社交點數歸零
         GameDataManager.unlockedAffinityStages.Clear();//解鎖的親密度關卡
-        EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "Prologue1_1");
-        Debug.Log("Start Game Clicked");
+
+        await UIManager.ShowCommonPanel("ChangeNamePanel");
     }
 }

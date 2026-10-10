@@ -119,8 +119,9 @@ public class MapManager : MonoBehaviour
     }
     async void OnOpenMapShop(object[] param)
     {
+        GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
         //開啟三選一事件
-        GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
+       // GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
         Instantiate(mapShopPanel, transform);
     }
     void OnEnterStageStory(object[] param)
@@ -166,7 +167,12 @@ public class MapManager : MonoBehaviour
                 currentMapInstance.transform.localScale = Vector3.one;
                 scrollbar_map = currentMapInstance.GetComponentInChildren<Scrollbar>();
                 currentMapInstance.GetComponentInChildren<ScrollRect>().scrollSensitivity = 20f;
-                scrollbar_map.value = GameDataManager.MapScrollValue;
+                if (GameDataManager.MapScrollValue > 0)
+                {
+                    float scrollValue = Mathf.Clamp01(GameDataManager.MapScrollValue + 0.06f);
+                    scrollbar_map.value = scrollValue;
+                }
+
                 await Task.Delay(100);
                 EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);
                 await Task.Delay(100);

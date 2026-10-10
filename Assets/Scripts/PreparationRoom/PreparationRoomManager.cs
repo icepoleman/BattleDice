@@ -13,6 +13,7 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] GameObject powerUpPanelPrefab;
     [SerializeField] Button btn_shop;
     [SerializeField] Button btn_changeSkill;
+    [SerializeField] Button btn_edit;
     [SerializeField] List<Button> btn_girls; // 角色模型列表，根據角色顯示對應模型
     [Header("社交點數顯示")]
     [SerializeField] TextMeshProUGUI txt_socialPoint;
@@ -81,9 +82,13 @@ public class PreparationRoomManager : MonoBehaviour
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
             CloseFire();
         });
-        btn_powerUp.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
-        btn_shop.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
-        btn_changeSkill.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        btn_edit.onClick.AddListener(async () =>
+        {
+            await UIManager.ShowCommonPanel("EditPanel");
+        });
+        //btn_powerUp.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        // btn_shop.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        //btn_changeSkill.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
         foreach (var btn in btn_girls)
         {
             btn.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
@@ -122,13 +127,14 @@ public class PreparationRoomManager : MonoBehaviour
 
     void OnOpenFire(object[] args)
     {
-        trans_fire.transform.localPosition = new Vector3(13, -257, 0);
-        //obj_fire.SetActive(true);
+       // Debug.LogError("打開火焰效果");
+        //trans_fire.transform.localPosition = new Vector3(13, -257, 0);
+        obj_fire.SetActive(true);
     }
     void CloseFire()
     {
-        trans_fire.transform.localPosition = new Vector3(13, 3000, 0);
-        //CloseFire();
+        //trans_fire.transform.localPosition = new Vector3(13, 3000, 0);
+        obj_fire.SetActive(false);
     }
 
     void UpdateSocialPointText(int socialPoint)

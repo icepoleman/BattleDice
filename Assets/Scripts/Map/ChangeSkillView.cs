@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class ChangeSkillView : MonoBehaviour
     [SerializeField] GameObject chosenSkillCardPrefab;
     [SerializeField] Transform hasSkillCardParent;
     [SerializeField] Transform chosenSkillCardParent;
-    [SerializeField] BaseMouseEffectShake mouseEffectShake;
+    [SerializeField] SkeletonGraphic penShake;
     List<int> hasSkillsID = new List<int>();
     List<int> chosenSkillsID = new List<int>();
     [SerializeField] Button btn_back;
@@ -63,7 +64,7 @@ public class ChangeSkillView : MonoBehaviour
     }
     void CreateChosenSkillCard(SkillConfigData config)
     {
-        mouseEffectShake.StartShake();
+        penShake.AnimationState.SetAnimation(0, "pen", false);
         GameObject cardObj = Instantiate(chosenSkillCardPrefab, chosenSkillCardParent);
         cardObj.SetActive(true);
         ChooseSkillCard card = cardObj.GetComponent<ChooseSkillCard>();
@@ -71,6 +72,7 @@ public class ChangeSkillView : MonoBehaviour
     }
     void OnUnchooseSkill(object[] args)
     {
+        penShake.AnimationState.SetAnimation(0, "pen", false);
         int skillID = (int)args[0];
         chosenSkillsID.Remove(skillID);
     }

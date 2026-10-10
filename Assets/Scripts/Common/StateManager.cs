@@ -9,6 +9,7 @@ public class StateManager : MonoBehaviour
     public static CharacterSaveData playerData;
 
     [SerializeField] Image fadeImage;
+    [SerializeField] Animator battlefadeAnim;
 
     public enum GameState
     {
@@ -26,6 +27,9 @@ public class StateManager : MonoBehaviour
     [Header("當前遊戲狀態")]
     public GameState currentState = GameState.MainMenu;
     private GameState previousState = GameState.MainMenu;
+
+    //[SerializeField] ShaderDataCtrl shaderDataCtrl;//戰鬥用轉場Shader控制器
+    //private bool isBattleTransition = false;
     void Awake()
     {
         if (Instance == null)
@@ -165,8 +169,11 @@ public class StateManager : MonoBehaviour
         SceneLoader.LoadSceneWithDelay("StartMenu", () => ChangeState(GameState.MainMenu));
     }
     // 事件響應方法 - 只處理狀態切換邏輯
+    bool goDiceGame = false;
     void EnterDiceGame(object[] args)
     {
+        goDiceGame = true;
+        // isBattleTransition = true;
         //args不是int抱錯
         if (args.Length == 0 || !(args[0] is int))
         {
@@ -223,6 +230,21 @@ public class StateManager : MonoBehaviour
     void OnLoadingScreen(object[] args)
     {
         bool showLoading = (bool)args[0];
+        if (goDiceGame)
+        {
+            fadeImage.gameObject.SetActive(false);
+            //戰鬥場景使用Shader淡入淡出
+            if (showLoading)
+            {
+                battlefadeAnim.Play("close");
+            }
+            else
+            {
+                battlefadeAnim.Play("open");
+                goDiceGame = false;
+            }
+            return;
+        }
         if (showLoading)
         {
             //顯示黑幕
@@ -278,11 +300,6 @@ public class StateManager : MonoBehaviour
     {
         string itemName = (string)args[0];
         Debug.Log($"取得道具: {itemName}");
-    }
-
-    void DisableFadeImage()
-    {
-        fadeImage.gameObject.SetActive(false);
     }
 
     private void RefreshMapResourceDisplay()

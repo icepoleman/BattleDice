@@ -33,7 +33,7 @@ public static class SceneLoader
         ShowLoadingScreen();
 
         // 等待淡入動畫播完 (0.5秒)
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
 
         // 異步載入場景
         Debug.Log($"開始載入場景: {sceneName}");

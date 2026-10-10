@@ -33,9 +33,9 @@ public class StageNode : MonoBehaviour
     [SerializeField] string stageInfo;       //關卡資訊
     [Header("完成後劇情(可選)")]
     [SerializeField] string completedStory;       //完成後劇情(可選) 用完清空
-   // [Header("完成後獎勵(可選)")]
-   // [SerializeField] StageType rewardType;
-    //[SerializeField] string rewardInfo;       //完成後獎勵(可選) 用完清空
+                                                  // [Header("完成後獎勵(可選)")]
+                                                  // [SerializeField] StageType rewardType;
+                                                  //[SerializeField] string rewardInfo;       //完成後獎勵(可選) 用完清空
 
     [Header("連線設定")]
     [SerializeField] private Transform lineRoot; // 用於存放連線的父物件
@@ -201,21 +201,21 @@ public class StageNode : MonoBehaviour
                 // 自動存檔
                 SaveManager.AutoSave();
                 stageImage.color = Color.green;
-               /* switch (rewardType)
-                {
-                    case StageType.Gold:
-                        EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(rewardInfo)); //取得金幣
-                        break;
-                    case StageType.Gear:
-                        EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(rewardInfo)); //取得齒輪
-                        break;
-                    case StageType.Skill:
-                        EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(rewardInfo)); //取得技能
-                        break;
-                    case StageType.Takara:
-                        EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
-                        break;
-                }*/
+                /* switch (rewardType)
+                 {
+                     case StageType.Gold:
+                         EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(rewardInfo)); //取得金幣
+                         break;
+                     case StageType.Gear:
+                         EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(rewardInfo)); //取得齒輪
+                         break;
+                     case StageType.Skill:
+                         EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(rewardInfo)); //取得技能
+                         break;
+                     case StageType.Takara:
+                         EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
+                         break;
+                 }*/
                 break;
         }
         if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
@@ -236,7 +236,7 @@ public class StageNode : MonoBehaviour
 
     void OnNodeClick()
     {
-        if (currentState != StageState.Locked ||GameDataManager.TestMode)
+        if (currentState != StageState.Locked || GameDataManager.TestMode)
         {
             GameDataManager.TmpCompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
@@ -246,11 +246,17 @@ public class StageNode : MonoBehaviour
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, stageInfo);
                     break;
                 case StageType.Battle_Boss:
-                case StageType.Battle_Hard:
-                case StageType.Battle:
-                    //string to int
-                    Debug.Log($"進入戰鬥關卡: {stageID}{stageInfo}");
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, int.Parse(stageInfo));
+                    break;
+                case StageType.Battle_Hard:
+                    List<int> enemyIds_Erito = EnemyConfig.Instance.GetEnemyIDs("Erito", MapConfig.MapChapter[GameDataManager.CurrentMap]);
+                    int randomEritoId = enemyIds_Erito[UnityEngine.Random.Range(0, enemyIds_Erito.Count)];
+                    EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomEritoId);
+                    break;
+                case StageType.Battle:
+                    List<int> enemyIds_Zako = EnemyConfig.Instance.GetEnemyIDs("Zako", MapConfig.MapChapter[GameDataManager.CurrentMap]);
+                    int randomZakoId = enemyIds_Zako[UnityEngine.Random.Range(0, enemyIds_Zako.Count)];
+                    EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomZakoId);
                     break;
                 case StageType.SavePoint:
                     GameDataManager.SocialPoint += 1;//每次進入整備室增加社交點數
