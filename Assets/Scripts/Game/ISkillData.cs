@@ -74,7 +74,9 @@ public enum SkillType
     Heal,
     Buff,
     SpSkill,
-    EnemyRollDice
+    EnemyRollDice,
+    BurnDice,
+    DeBuff
 }
 // 技能需求類型枚舉
 public enum SkillRequirementType

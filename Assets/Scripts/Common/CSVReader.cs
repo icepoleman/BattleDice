@@ -186,6 +186,53 @@ public class CSVReader
         return buffs;
     }
 
+    // 載入支援者資料；欄位索引依 SupData 標註，名稱與效果文字目前不存入 SupData
+    public Dictionary<string, SupData> LoadSupporterCSV()
+    {
+        Dictionary<string, SupData> supporters = new Dictionary<string, SupData>();
+
+        string streamingPath = Path.Combine(Application.streamingAssetsPath, "Game", "Supporter.csv");
+        string csvText = File.Exists(streamingPath) ? File.ReadAllText(streamingPath) : null;
+
+        if (string.IsNullOrEmpty(csvText))
+        {
+            Debug.LogError("❌ 找不到 Supporter CSV 檔案: " + streamingPath);
+            return supporters;
+        }
+
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+
+        bool isFirstLine = true;
+        foreach (string line in allLines)
+        {
+            if (isFirstLine) { isFirstLine = false; continue; }
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] values = line.Split(',');
+            string supID = values.Length > 0 ? values[0].Trim() : "";
+            if (string.IsNullOrEmpty(supID)) continue;
+
+            SupData data = new SupData
+            {
+                supID = supID,
+                skillType = values.Length > 2 ? ParseSkillType(values[2]) : SkillType.Attack,
+                needDicesData = values.Length > 3 ? ParseIntArrayStatic(values[3]) : new int[] { },
+                skillValue = values.Length > 4 && !string.IsNullOrWhiteSpace(values[4]) && float.TryParse(values[4], out float skillValue)
+                    ? skillValue
+                    : 0,
+                skillPoint = values.Length > 5 && int.TryParse(values[5], out int skillPoint) ? skillPoint : 0,
+                selfBuffs = values.Length > 7 ? ParseBuffSeeds(values[7]) : null,
+                targetBuffs = values.Length > 8 ? ParseBuffSeeds(values[8]) : null,
+                generateDices = values.Length > 9 ? ParseIntArrayStatic(values[9]) : new int[] { }
+            };
+
+            supporters[supID] = data;
+        }
+
+        Debug.Log($"✅ 從 StreamingAssets/Game 載入支援者資料完成，共 {supporters.Count} 筆: {streamingPath}");
+        return supporters;
+    }
+
     // 解析 BuffTrigger 字串
     private BuffTrigger ParseBuffTrigger(string value)
     {
