@@ -262,6 +262,10 @@ public static class SaveManager
         currentSave.unlockedAffinityStages = GameDataManager.unlockedAffinityStages.ToList();
         currentSave.charactersAffinity = GetSafeAffinityArray(GameDataManager.charactersAffinity);
         currentSave.safeRoomLevel = GameDataManager.SafeRoomLevel;
+        currentSave.supChargeList = GameDataManager.supChargeList
+            .Select(entry => new SupporterChargeSaveData { key = entry.Key, value = entry.Value })
+            .ToList();
+        currentSave.unLockedSupList = new List<string>(GameDataManager.unLockedSupList);
         try
         {
             currentSave.SaveTime = System.DateTime.Now;
@@ -305,6 +309,15 @@ public static class SaveManager
                 GameDataManager.unlockedAffinityStages = new HashSet<string>(currentSave.unlockedAffinityStages ?? new List<string>());
                 GameDataManager.charactersAffinity = GetSafeAffinityArray(currentSave.charactersAffinity);
                 GameDataManager.SafeRoomLevel = currentSave.safeRoomLevel; 
+                GameDataManager.supChargeList = new Dictionary<string, int>();
+                foreach (SupporterChargeSaveData entry in currentSave.supChargeList ?? new List<SupporterChargeSaveData>())
+                {
+                    if (entry != null && entry.key != null)
+                    {
+                        GameDataManager.supChargeList[entry.key] = entry.value;
+                    }
+                }
+                GameDataManager.unLockedSupList = new HashSet<string>(currentSave.unLockedSupList ?? new List<string>());
                 
                 Debug.Log($"{saveType}讀檔成功");
                 return true;
@@ -386,4 +399,3 @@ public static class SaveManager
         }
     }
 }
-

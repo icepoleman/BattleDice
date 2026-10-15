@@ -38,6 +38,8 @@ public static class GameDataManager
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
     public static int SafeRoomLevel { get; set; } = 0;//整備室等級，0 女獄卒 1 女巫 2 狼少女 3 偶像
+    public static Dictionary<string, int> supChargeList = new Dictionary<string, int>();//支援者充能紀錄
+    public static HashSet<string> unLockedSupList = new HashSet<string>();//已解鎖支援者ID
 
     public static bool DreamMode { get; set; } = false;//回看模式
     public static bool isFirstOpen = true; //避免回大廳重複調整解析度

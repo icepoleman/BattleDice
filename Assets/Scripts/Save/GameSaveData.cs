@@ -33,8 +33,17 @@ public class GameSaveData
     public List<string> unlockedAffinityStages; // 已解鎖親密度關卡ID列表
     public int[] charactersAffinity; // 角色親密度數值陣列 
     public int safeRoomLevel; // 整備室等級
+    public List<SupporterChargeSaveData> supChargeList = new List<SupporterChargeSaveData>(); // 支援者充能紀錄
+    public List<string> unLockedSupList = new List<string>(); // 已解鎖支援者ID
     //public SettingsSaveData settings;      // 遊戲設定
     //TODO: 取得的關鍵道具 個角色好感度
+}
+
+[System.Serializable]
+public class SupporterChargeSaveData
+{
+    public string key;
+    public int value;
 }
 [System.Serializable]
 public class SettingsSaveData

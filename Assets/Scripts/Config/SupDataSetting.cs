@@ -18,14 +18,21 @@ public class SupDataSetting
     }
     public Dictionary<string, SupData> supDataDic;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetUp()
     {
-
+        supDataDic = CSVReader.Instance.LoadSupporterCSV();
     }
 
-    // Update is called once per frame
-    void Update()
+    public SupData GetSupDataByID(string supID)
     {
-
+        if (supDataDic != null && supDataDic.ContainsKey(supID))
+        {
+            return supDataDic[supID];
+        }
+        else
+        {
+            Debug.LogWarning($"SupData with ID {supID} not found.");
+            return null;
+        }
     }
 }

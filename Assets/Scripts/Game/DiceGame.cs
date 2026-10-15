@@ -44,6 +44,9 @@ public class DiceGame : MonoBehaviour
     bool enemyEatBuff = false;
 
     [SerializeField] Button btn_skip;//測試用工具
+
+    [Header("支援者按鈕")]
+    [SerializeField] SupBtn[] supBtnList;
     void Awake()
     {
         AddEvent();
@@ -85,6 +88,14 @@ public class DiceGame : MonoBehaviour
         {
             enemyData.currentBlood = 0;
         });
+
+        int supBtnIndex = 0;
+        foreach (var supData in GameDataManager.unLockedSupList)
+        {
+            supBtnList[supBtnIndex].gameObject.SetActive(true);
+            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
+            supBtnIndex++;
+        }
     }
 
     void PlayBgm(string enemyId)
@@ -232,6 +243,7 @@ public class DiceGame : MonoBehaviour
     /// </summary>
     async Task HandlePlayerTurn()
     {
+        SupBtnCtr(true); // 啟用支援者按鈕
         turnAnim.Play("playerTurn");
         UpdateBloodUI(null);
         await Task.Delay(1000);
@@ -260,6 +272,7 @@ public class DiceGame : MonoBehaviour
     /// </summary>
     async Task HandleEnemyTurn()
     {
+        SupBtnCtr(false); // 禁用支援者按鈕
         turnAnim.Play("enemyTurn");
         await Task.Delay(1000);
         UpdateBloodUI(null);
@@ -348,6 +361,7 @@ public class DiceGame : MonoBehaviour
     async Task HandleGameOver()
     {
         gameOver = true;
+        SupBtnCtr(false); // 禁用支援者按鈕
         playerData.RemoveAllBuff();
         await Task.Delay(500);
         bool playerWon = enemyData.IsDead();
@@ -366,6 +380,13 @@ public class DiceGame : MonoBehaviour
         winlosePanel.GetComponent<WinLoseView>().SetData(playerWon, enemyData.GetTreasureBoxReward());
     }
     #endregion
+    private void SupBtnCtr(bool canUse)
+    {
+        for (int i = 0; i < supBtnList.Length; i++)
+        {
+            supBtnList[i].CanUseBtn(canUse);
+        }
+    }
 
     #region Enemy Action
     async Task EnemyAction()
@@ -511,7 +532,10 @@ public class DiceGame : MonoBehaviour
             foreach (int sideNum in selectedDices)
             {
                 gameUiView.BurnDice(sideNum, true);
+                Debug.LogError("使用技能消耗骰子: " + sideNum);
+                Debug.Log("發送支援者充電事件");
             }
+            EventCenter.Dispatch(GameEvent.EVENT_SUPPORTER_CHARGE, selectedDices);
             manaRoller.ConsumeSelectedDices();
 
             manaRoller.BtnMode(manaRollerMode.UseDice);
