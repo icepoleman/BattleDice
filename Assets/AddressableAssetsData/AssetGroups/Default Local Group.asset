@@ -80,6 +80,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 393854cecda4c6448bee2f905372c17b
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy9_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 39434f74928b60b4dbbf253a31ade2fe
     m_Address: Assets/DiceGame_ab/Game/Prefabs/img_bufflhint.prefab
     m_ReadOnly: 0
@@ -107,6 +112,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48765d94502b9964fa07d51db567af2c
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy3_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 488fbbc53a5aed54ca16bc940ec52228
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy9_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -322,6 +332,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9c42a86672f89c4bbf3db1ccd676856
     m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/cookduck.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7421a55d7f8c5543935e537a63b3294
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy9_0.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

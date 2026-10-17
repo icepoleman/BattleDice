@@ -134,6 +134,9 @@ public class DiceGame : MonoBehaviour
 
         EventCenter.AddListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);//使用技能通知
         EventCenter.AddListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);//使用buff通知
+
+        //支援者
+        EventCenter.AddListener(GameEvent.EVENT_USE_SUPPORTER, OnUseSupporter);//使用支援者
     }
     void OnDestroy()
     {
@@ -155,6 +158,8 @@ public class DiceGame : MonoBehaviour
         EventCenter.RemoveListener(GameEvent.EVENT_CLEAR_NEGATIVE_BUFFS, OnClearNegativeBuffs);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_SKILL, OnSkillUse);
         EventCenter.RemoveListener(GameEvent.EVENT_USE_BUFF, OnBuffUse);
+
+        EventCenter.RemoveListener(GameEvent.EVENT_USE_SUPPORTER, OnUseSupporter);
 
         AddressableManager.ReleaseAll();
     }
@@ -781,6 +786,74 @@ public class DiceGame : MonoBehaviour
             ChangeState(TurnState.roundEnd);
         }
     }
+    async void OnUseSupporter(object[] args)
+    {
+        if (args == null || args.Length == 0 || !(args[0] is SupData supData))
+        {
+            Debug.LogError("Invalid supporter data.");
+            return;
+        }
+
+        Debug.Log($"Supporter used with ID: {supData.supID}");
+        switch (supData.supID)
+        {
+            case "Witch":
+                gameUiView.PlaySupSkillAnim(0);
+                break;
+            case "WolfGirl":
+                gameUiView.PlaySupSkillAnim(1);
+                break;
+            case "Idol":
+                gameUiView.PlaySupSkillAnim(2);
+                break;
+            default:
+                Debug.LogWarning($"No effect defined for supporter ID: {supData.supID}");
+                break;
+        }
+        await Task.Delay(1000);
+
+        switch (supData.skillType)
+        {
+            case SkillType.Attack:
+                playerData.Attack(supData.skillValue);
+                break;
+            case SkillType.Buff:
+                gameUiView.PlayBuffVfx(true);
+                ApplySupporterBuffs(supData.selfBuffs, true, supData.supID);
+                break;
+            case SkillType.DeBuff:
+                gameUiView.PlayDebuffVfx(false);
+                ApplySupporterBuffs(supData.targetBuffs, false, supData.supID);
+                break;
+            case SkillType.BurnDice:
+                int generateCount = supData.generateDices[supData.generateDices.Length - 1];
+                int[] allowedDices = supData.generateDices
+                    .Take(supData.generateDices.Length - 1)
+                    .ToArray();
+
+                EventCenter.Dispatch(GameEvent.EVENT_GENERATE_MANA_DICE, allowedDices, generateCount);
+                break;
+            default:
+                Debug.LogWarning($"No logic defined for supporter {supData.supID} with skill type {supData.skillType}.");
+                break;
+        }
+    }
+
+    void ApplySupporterBuffs(BuffSeed[] buffs, bool isPlayer, string supporterID)
+    {
+        if (buffs == null || buffs.Length == 0)
+        {
+            Debug.LogWarning($"Supporter {supporterID} has no buff data.");
+            return;
+        }
+
+        foreach (BuffSeed buffSeed in buffs)
+        {
+            BaseBuff buff = new BaseBuff(buffSeed.buffID, buffSeed.usageCount, buffSeed.duration);
+            EventCenter.Dispatch(GameEvent.EVENT_ADD_BUFF, buff, isPlayer);
+        }
+    }
+
     void UpdateBloodUI(object[] args)
     {
         gameUiView.UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);

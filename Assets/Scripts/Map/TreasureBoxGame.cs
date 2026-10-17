@@ -430,6 +430,7 @@ public class TreasureBoxGame : MonoBehaviour
         if (GameDataManager.BackUpKey > 0)
         {
             GameDataManager.BackUpKey--;
+            UIManager.ShowHintBubble(LanguageManager.GetText("T_BrokenKey"));
             UpdateBackupKeyDisplay();
             return;
         }

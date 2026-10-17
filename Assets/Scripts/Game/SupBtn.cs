@@ -63,10 +63,11 @@ public class SupBtn : MonoBehaviour
     }
     void OnUseButtonClick()
     {
+        EventCenter.Dispatch(GameEvent.EVENT_USE_SUPPORTER, supData);
         GameDataManager.supChargeList[supData.supID] = 0;
         btn_use.interactable = false;
         chargeSlider.value = 0;
-        Debug.LogError($"支援者 {supData.supID} 技能使用，充能重置為 0");
+        chargeTxt.text = $"0/{supData.skillPoint}";
     }
     public void CanUseBtn(bool canUse)
     {

@@ -31,10 +31,10 @@ public class GameUiView : MonoBehaviour
     [Header("攻擊表演相關")]
     [SerializeField] Image img_player;
     [SerializeField] Image img_enemy;
-    [SerializeField] Image img_spSkill_player;
-   // [SerializeField] Image img_spSkill_enemy;
-    [SerializeField] Animator spSkillAnim_player;
-  //  [SerializeField] Animator spSkillAnim_enemy;
+    [Header("支援者")]
+    [SerializeField] Image img_supporter;
+    [SerializeField] Sprite[] supSpList;
+    [SerializeField] Animator supSkillAnim_player;
     Transform trans_enemyPos;
     Transform trans_playerPos;
     Sprite[] playerSprites;
@@ -69,7 +69,6 @@ public class GameUiView : MonoBehaviour
         img_enemy.transform.localPosition = new Vector3(img_enemy.transform.localPosition.x, GetEnemyYPosition(enemyData.enemyId), 1);
         playerSprites = await LoadPlayerSprites();
         img_player.sprite = playerSprites[IdleSpriteIndex];
-        img_spSkill_player.sprite = playerSprites[AttackSpriteIndex];
         img_player.SetNativeSize();
 
         UpdateBlood(true, playerData.currentBlood, playerData.maxBlood);
@@ -363,5 +362,11 @@ public class GameUiView : MonoBehaviour
         await Task.Delay(1000);
         img_player.sprite = playerSprites[IdleSpriteIndex];
         img_enemy.sprite = enemySprites[IdleSpriteIndex];
+    }
+    public void PlaySupSkillAnim(int supIndex)
+    {
+        img_supporter.sprite = supSpList[supIndex];
+        img_supporter.SetNativeSize();
+        supSkillAnim_player.Play("supSkill");
     }
 }

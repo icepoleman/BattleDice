@@ -352,7 +352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 230}
+  m_AnchoredPosition: {x: 0, y: 1351}
   m_SizeDelta: {x: 910, y: 1076}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2377159409766193945
@@ -642,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChangeNamePanel
   inputField: {fileID: 3117966812951178728}
   btn_confirm: {fileID: 2188828594087803665}
+  namePanel: {fileID: 1033109505367732721}
 --- !u!1 &5383784155125901461
 GameObject:
   m_ObjectHideFlags: 0
