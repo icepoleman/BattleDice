@@ -369,7 +369,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
                     else
                     {
 
-                        UIManager.ShowHintBubble(LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));
+                        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_ManaRoller_FreezeLimitReached"));
                     }
                 }
                 text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();

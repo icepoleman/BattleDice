@@ -43,12 +43,12 @@ public class AffinityPanel : MonoBehaviour
                 }
                 else
                 {
-                    UIManager.ShowHintBubble(LanguageManager.GetText("T_SpEvent_ReedALL"));
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SpEvent_ReedALL"));
                 }
             }
             else
             {
-                UIManager.ShowHintBubble(LanguageManager.GetText("T_SocialPoint_notEnough"));
+                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SocialPoint_notEnough"));
             }
         });
     }

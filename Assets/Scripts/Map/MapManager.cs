@@ -100,7 +100,7 @@ public class MapManager : MonoBehaviour
          }*/
         UpdateBloodFill();
         txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
-        await UIManager.ShowHintBubble(
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE,
          LanguageManager.GetFormat("T_RecoverHealth_max"));
     }
 

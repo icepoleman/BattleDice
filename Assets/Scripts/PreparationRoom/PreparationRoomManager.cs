@@ -58,7 +58,7 @@ public class PreparationRoomManager : MonoBehaviour
         {
             if (isLevel_0)
             {
-                UIManager.ShowHintBubble(LanguageManager.GetText("T_Level0_Hint"));
+                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Level0_Hint"));
                 return;
             }
             Instantiate(powerUpPanelPrefab, transform);
@@ -76,7 +76,7 @@ public class PreparationRoomManager : MonoBehaviour
         {
             if (isLevel_0)
             {
-                UIManager.ShowHintBubble(LanguageManager.GetText("T_Level0_Hint"));
+                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Level0_Hint"));
                 return;
             }
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");

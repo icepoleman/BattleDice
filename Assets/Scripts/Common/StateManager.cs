@@ -10,7 +10,9 @@ public class StateManager : MonoBehaviour
 
     [SerializeField] Image fadeImage;
     [SerializeField] Animator battlefadeAnim;
-
+    [Header("提示氣泡")]
+    [SerializeField] RectTransform hintRoot;
+    [SerializeField] GameObject hintBubblePrefab;
     public enum GameState
     {
         MainMenu,
@@ -79,7 +81,9 @@ public class StateManager : MonoBehaviour
         EventCenter.AddListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.AddListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.AddListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
+        EventCenter.AddListener(StateEvent.EVENT_GET_KEY, OnGetKey);
         EventCenter.AddListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
+        EventCenter.AddListener(StateEvent.EVENT_SHOW_HINT_BUBBLE, OnShowHintBubble);
         // 添加其他事件監聽...
     }
     void RemoveEventListeners()
@@ -100,12 +104,24 @@ public class StateManager : MonoBehaviour
         EventCenter.RemoveListener(StateEvent.EVENT_GET_ITEM, OnGetItem);
         EventCenter.RemoveListener(StateEvent.EVENT_GET_GEAR, OnGetGear);
         EventCenter.RemoveListener(StateEvent.EVENT_GET_SKILL, OnGetSkill);
+        EventCenter.RemoveListener(StateEvent.EVENT_GET_KEY, OnGetKey);
         EventCenter.RemoveListener(MapEvent.EVENT_OPEN_TREASURE_BOX, OnOpenTreasureBox);
+        EventCenter.RemoveListener(StateEvent.EVENT_SHOW_HINT_BUBBLE, OnShowHintBubble);
     }
 
     void OnOpenTreasureBox(object[] param)
     {
         SceneLoader.LoadSceneWithDelay("TakaraGame", () => ChangeState(GameState.AVG));
+    }
+    void OnShowHintBubble(object[] param)
+    {
+        GameObject hintBubble = Instantiate(hintBubblePrefab, hintRoot);
+        HintBubble hintBubbleComponent = hintBubble.GetComponent<HintBubble>();
+        if (hintBubbleComponent != null)
+        {
+            string hintText = param.Length > 0 ? param[0].ToString() : "提示訊息";
+            hintBubbleComponent.SetUp(hintText);
+        }
     }
     // 切換遊戲狀態
     void ChangeState(GameState newState)
@@ -265,7 +281,7 @@ public class StateManager : MonoBehaviour
         int goldAmount = (int)args[0];
         GameDataManager.Gold += goldAmount;
         RefreshMapResourceDisplay();
-        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGold", goldAmount));
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetGold", goldAmount));
         Debug.Log($"獲得金幣: {goldAmount}，目前金幣總數: {GameDataManager.Gold}");
     }
 
@@ -287,7 +303,7 @@ public class StateManager : MonoBehaviour
         int gearAmount = (int)args[0];
         GameDataManager.Gear += gearAmount;
         RefreshMapResourceDisplay();
-        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGear", gearAmount));
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetGear", gearAmount));
         Debug.Log($"獲得齒輪: {gearAmount}，目前齒輪總數: {GameDataManager.Gear}");
     }
 
@@ -295,6 +311,14 @@ public class StateManager : MonoBehaviour
     {
         int skillID = (int)args[0];
         GameDataManager.AddSkill(skillID);
+    }
+
+    void OnGetKey(object[] args)
+    {
+        int keyAmount = (int)args[0];
+        GameDataManager.BackUpKey += keyAmount;
+        RefreshMapResourceDisplay();
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetKey", keyAmount));
     }
 
     void OnGetItem(object[] args)

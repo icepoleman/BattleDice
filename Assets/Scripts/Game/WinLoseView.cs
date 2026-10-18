@@ -12,7 +12,7 @@ public class WinLoseView : MonoBehaviour
     [SerializeField] TextMeshProUGUI txt_gold;
     [SerializeField] TextMeshProUGUI txt_gear;
     [SerializeField] HasSkillCard skillCard;
-
+    [SerializeField] GameObject img_key;
     public void SetData(bool isWin, List<TreasureBoxReward> rewards = null)
     {
         txt_gold.gameObject.SetActive(false);
@@ -60,6 +60,9 @@ public class WinLoseView : MonoBehaviour
                     var skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
                     skillCard.SetData(skillReward, null);
                     skillCard.gameObject.SetActive(true);
+                    break;
+                case TreasureBoxRewardType.Key:
+                    img_key.SetActive(true);
                     break;
             }
         }
@@ -112,6 +115,9 @@ public class WinLoseView : MonoBehaviour
                     break;
                 case TreasureBoxRewardType.Skill:
                     EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, reward.rewardValue);
+                    break;
+                case TreasureBoxRewardType.Key:
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_KEY, reward.rewardValue);
                     break;
             }
         }

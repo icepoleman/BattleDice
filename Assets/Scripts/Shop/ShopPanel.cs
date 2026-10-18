@@ -63,7 +63,7 @@ public class ShopPanel : MonoBehaviour
     {
         if (card.IsOwned)
         {
-            await UIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_AlreadyOwned"));
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Shop_AlreadyOwned"));
             return;
         }
 
@@ -72,7 +72,7 @@ public class ShopPanel : MonoBehaviour
         // 檢查金幣是否足夠
         if (GameDataManager.Gold < price)
         {
-            await UIManager.ShowHintBubble(LanguageManager.GetText("T_Shop_NotEnoughGold"));
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Shop_NotEnoughGold"));
             return;
         }
 
@@ -97,7 +97,7 @@ public class ShopPanel : MonoBehaviour
         // 添加技能到玩家擁有列表
         GameDataManager.HasSkillIDs.Add(skillID);
 
-        UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetNewSkill", SkillDatabase.GetSkillConfig(skillID).skillName));
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetNewSkill", SkillDatabase.GetSkillConfig(skillID).skillName));
 
         // 自動存檔
         SaveManager.AutoSave();

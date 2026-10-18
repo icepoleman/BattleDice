@@ -99,6 +99,7 @@ public class TreasureBoxGame : MonoBehaviour
         currentLevel = 1;
         SetInitialRollPoint();
         SetRewardItemsForCurrentLevel();
+        ResetRewardItemScales();
         RefreshRewardItemScale();
         UpdateLevelKeyPosition();
         btn_getReward.interactable = true;
@@ -169,20 +170,8 @@ public class TreasureBoxGame : MonoBehaviour
 
     private void RefreshRewardItemScale()
     {
-        if (takaraItems == null)
+        if (takaraItems == null || originalItemScales == null)
             return;
-
-        for (int i = 0; i < takaraItems.Length; i++)
-        {
-            if (takaraItems[i] == null)
-                continue;
-
-            Vector3 resetScale = i < originalItemScales.Length && originalItemScales[i] != Vector3.zero
-                ? originalItemScales[i]
-                : Vector3.one;
-
-            takaraItems[i].transform.localScale = resetScale;
-        }
 
         if (currentLevel > 0 && currentLevel <= takaraItems.Length && takaraItems[currentLevel - 1] != null)
         {
@@ -191,6 +180,22 @@ public class TreasureBoxGame : MonoBehaviour
                 : Vector3.one;
 
             takaraItems[currentLevel - 1].transform.DOScale(targetScale * 1.5f, 0.2f).SetEase(Ease.OutQuad);
+        }
+    }
+
+    private void ResetRewardItemScales()
+    {
+        if (takaraItems == null || originalItemScales == null)
+            return;
+
+        for (int i = 0; i < takaraItems.Length; i++)
+        {
+            if (takaraItems[i] != null)
+            {
+                takaraItems[i].transform.localScale = i < originalItemScales.Length && originalItemScales[i] != Vector3.zero
+                    ? originalItemScales[i]
+                    : Vector3.one;
+            }
         }
     }
     void SetLevelRewardDict()
@@ -405,21 +410,29 @@ public class TreasureBoxGame : MonoBehaviour
     {
         btn_getReward.interactable = false;
         anim_takara.Play("GetReward");
-        var reward = takaraItems[currentLevel - 1].GetReward();
+        var rewards = new List<TreasureBoxReward>();
+        int rewardCount = Mathf.Min(currentLevel, takaraItems.Length);
+        for (int i = 0; i < rewardCount; i++)
+        {
+            rewards.Add(takaraItems[i].GetReward());
+        }
 
         await Task.Delay(1000); // 等待動畫播放完成
 
-        switch (reward.rewardType)
+        foreach (var reward in rewards)
         {
-            case TreasureBoxRewardType.Gold:
-                EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, reward.rewardValue);
-                break;
-            case TreasureBoxRewardType.Gear:
-                EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, reward.rewardValue);
-                break;
-            case TreasureBoxRewardType.Skill:
-                EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, reward.rewardValue);
-                break;
+            switch (reward.rewardType)
+            {
+                case TreasureBoxRewardType.Gold:
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, reward.rewardValue);
+                    break;
+                case TreasureBoxRewardType.Gear:
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, reward.rewardValue);
+                    break;
+                case TreasureBoxRewardType.Skill:
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, reward.rewardValue);
+                    break;
+            }
         }
         await Task.Delay(1000);
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
@@ -430,12 +443,12 @@ public class TreasureBoxGame : MonoBehaviour
         if (GameDataManager.BackUpKey > 0)
         {
             GameDataManager.BackUpKey--;
-            UIManager.ShowHintBubble(LanguageManager.GetText("T_BrokenKey"));
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_BrokenKey"));
             UpdateBackupKeyDisplay();
             return;
         }
         btn_getReward.interactable = false;
-        UIManager.ShowHintBubble(LanguageManager.GetText("T_UnLock_Fail"));
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_UnLock_Fail"));
         isDone = true;
         await Task.Delay(1000);
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP);
@@ -451,5 +464,6 @@ public enum TreasureBoxRewardType
 {
     Gold,
     Gear,
-    Skill
+    Skill,
+    Key
 }

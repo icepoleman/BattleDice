@@ -470,7 +470,7 @@ public class DialogueManager : MonoBehaviour
                 if (TryParseCommandValue(command, "MoneyAdd_", out int amount))
                 {
                     GameDataManager.Gold += amount;
-                    await UIManager.ShowHintBubble($"獲得 {amount} 金幣");
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"獲得 {amount} 金幣");
                 }
                 continue;
             }
@@ -482,7 +482,7 @@ public class DialogueManager : MonoBehaviour
                     int before = GameDataManager.Gold;
                     GameDataManager.Gold = Mathf.Max(0, GameDataManager.Gold - amount);
                     int diff = before - GameDataManager.Gold;
-                    await UIManager.ShowHintBubble($"失去 {diff} 金幣");
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"失去 {diff} 金幣");
                 }
                 continue;
             }
@@ -492,7 +492,7 @@ public class DialogueManager : MonoBehaviour
                 if (TryParseCommandValue(command, "GearAdd_", out int amount))
                 {
                     GameDataManager.Gear += amount;
-                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetGear", amount));
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetGear", amount));
                 }
                 continue;
             }
@@ -504,7 +504,7 @@ public class DialogueManager : MonoBehaviour
                     int before = GameDataManager.Gear;
                     GameDataManager.Gear = Mathf.Max(0, GameDataManager.Gear - amount);
                     int diff = before - GameDataManager.Gear;
-                    await UIManager.ShowHintBubble($"失去 {diff} 個齒輪");
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"失去 {diff} 個齒輪");
                 }
                 continue;
             }
@@ -516,7 +516,7 @@ public class DialogueManager : MonoBehaviour
                     float before = GameDataManager.PlayerData.currentBlood;
                     GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
                     //int diff = Mathf.RoundToInt(GameDataManager.PlayerData.currentBlood - before);
-                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_RecoverHealth_max"));
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_RecoverHealth_max"));
                 }
                 continue;
             }
@@ -529,7 +529,7 @@ public class DialogueManager : MonoBehaviour
                     // 劇情 flag 扣血保底 1 滴，避免直接死亡
                     GameDataManager.PlayerData.currentBlood = Mathf.Max(1f, GameDataManager.PlayerData.currentBlood - amount);
                     int diff = Mathf.RoundToInt(before - GameDataManager.PlayerData.currentBlood);
-                    await UIManager.ShowHintBubble($"失去 {diff} 點生命");
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"失去 {diff} 點生命");
                 }
                 continue;
             }
@@ -541,7 +541,7 @@ public class DialogueManager : MonoBehaviour
                     GameDataManager.HasSkillIDs.Add(skillId);
                     SkillConfigData skill = SkillDatabase.GetSkillConfig(skillId);
                     string skillName = string.IsNullOrEmpty(skill.skillName) ? skillId.ToString() : skill.skillName;
-                    await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_GetNewSkill", skillName));
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_GetNewSkill", skillName));
                 }
                 continue;
             }
@@ -551,7 +551,7 @@ public class DialogueManager : MonoBehaviour
                 string bubbleMessage = command.Substring(HINT_BUBBLE_PREFIX.Length).TrimStart(':', ' ');
                 if (!string.IsNullOrEmpty(bubbleMessage))
                 {
-                    await UIManager.ShowHintBubble(bubbleMessage);
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, bubbleMessage);
                 }
                 continue;
             }

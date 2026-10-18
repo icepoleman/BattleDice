@@ -71,13 +71,17 @@ public class SupBtn : MonoBehaviour
     }
     public void CanUseBtn(bool canUse)
     {
-        if(canUse)
+        if (btn_use == null)
         {
-            btn_use.interactable = currentCharge >= supData.skillPoint;
+            return;
         }
-        else
+
+        if (!canUse || supData == null)
         {
             btn_use.interactable = false;
+            return;
         }
+
+        btn_use.interactable = currentCharge >= supData.skillPoint;
     }
 }

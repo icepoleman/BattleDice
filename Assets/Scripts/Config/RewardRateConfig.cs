@@ -25,6 +25,7 @@ public class RewardRateConfig
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.1f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5, probability = 0.05f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Key, rewardValue = 1, probability = 1f },
         },
         ["Boss"] = new List<TreasureBoxReward>
         {

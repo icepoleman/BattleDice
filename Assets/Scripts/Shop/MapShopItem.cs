@@ -33,7 +33,7 @@ public class MapShopItem : MonoBehaviour
         }
         else
         {
-            UIManager.ShowHintBubble(LanguageManager.GetText("T_NotEnoughGold"));
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_NotEnoughGold"));
         }
     }
 }

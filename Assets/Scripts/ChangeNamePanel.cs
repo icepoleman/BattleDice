@@ -27,7 +27,7 @@ public class ChangeNamePanel : MonoBehaviour
         string newName = inputField.text.Trim();
         if (string.IsNullOrEmpty(newName))
         {
-            UIManager.ShowHintBubble(LanguageManager.GetFormat("T_SetNameNo"));
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_SetNameNo"));
             return;
         }
 

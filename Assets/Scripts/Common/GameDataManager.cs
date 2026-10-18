@@ -71,7 +71,7 @@ public static class GameDataManager
                 Console.WriteLine($"未知的角色ID: {role}");
                 break;
         }
-        await UIManager.ShowHintBubble(LanguageManager.GetFormat("T_AffinityIncrease", affinityIncrease));
+        EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_AffinityIncrease", affinityIncrease));
     }
     public static int GetRoleAffinity(string role)
     {
@@ -142,7 +142,7 @@ public static class GameDataManager
             {
                 PlayerData.skillIDs.Add(skillID);
             }
-            UIManager.ShowHintBubble($"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
         }
     }
 }

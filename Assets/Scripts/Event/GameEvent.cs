@@ -51,6 +51,10 @@ public class StateEvent
     public const string EVENT_GET_GEAR = "StateEvent_GetGear"; //取得齒輪通知
     public const string EVENT_GET_ITEM = "StateEvent_GetItem"; //取得道具通知(特殊道具)
     public const string EVENT_GET_SKILL = "StateEvent_GetSkill"; //取得技能通知
+    public const string EVENT_GET_KEY = "StateEvent_GetKey"; //取得鑰匙通知
+
+    //提示泡泡
+    public const string EVENT_SHOW_HINT_BUBBLE = "StateEvent_ShowHintBubble"; //顯示提示泡泡
 }
 public class MapEvent
 {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,6 +10,21 @@ using Object = UnityEngine.Object;
 public static class UIManager
 {
     private static Transform canvasTransform;
+    private static readonly Queue<HintBubbleRequest> hintBubbleQueue = new Queue<HintBubbleRequest>();
+    private static bool isProcessingHintBubbles;
+
+    private sealed class HintBubbleRequest
+    {
+        public string Message { get; }
+        public Transform Parent { get; }
+        public TaskCompletionSource<HintBubble> Completion { get; } = new TaskCompletionSource<HintBubble>();
+
+        public HintBubbleRequest(string message, Transform parent)
+        {
+            Message = message;
+            Parent = parent;
+        }
+    }
 
     /// <summary>
     /// 設定Canvas（可選，若不設定會自動找Canvas）
@@ -49,20 +65,52 @@ public static class UIManager
     /// </summary>
     /// <param name="message">提示文字</param>
     /// <param name="parent">父物件（可選，預設為Canvas）</param>
-    public static async Task<HintBubble> ShowHintBubble(string message, Transform parent = null)
+    public static Task<HintBubble> ShowHintBubble(string message, Transform parent = null)
     {
-        GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "HintBubble" + ".prefab");
-        if (prefab == null)
+        HintBubbleRequest request = new HintBubbleRequest(message, parent);
+        hintBubbleQueue.Enqueue(request);
+
+        if (!isProcessingHintBubbles)
         {
-            Debug.LogError("無法載入 HintBubble prefab");
-            return null;
+            _ = ProcessHintBubbleQueue();
         }
 
-        Transform targetParent = parent ?? GetCanvas();
-        GameObject hintObj = Object.Instantiate(prefab, targetParent);
-        HintBubble hint = hintObj.GetComponent<HintBubble>();
-        hint.SetUp(message);
-        return hint;
+        return request.Completion.Task;
+    }
+
+    private static async Task ProcessHintBubbleQueue()
+    {
+        isProcessingHintBubbles = true;
+
+        while (hintBubbleQueue.Count > 0)
+        {
+            HintBubbleRequest request = hintBubbleQueue.Dequeue();
+            try
+            {
+                GameObject prefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "HintBubble" + ".prefab");
+                if (prefab == null)
+                {
+                    Debug.LogError("無法載入 HintBubble prefab");
+                    request.Completion.TrySetResult(null);
+                    continue;
+                }
+
+                Transform targetParent = request.Parent ?? GetCanvas();
+                GameObject hintObj = Object.Instantiate(prefab, targetParent);
+                HintBubble hint = hintObj.GetComponent<HintBubble>();
+                TaskCompletionSource<bool> playbackCompletion = new TaskCompletionSource<bool>();
+                hint.SetUp(request.Message, () => playbackCompletion.TrySetResult(true));
+                request.Completion.TrySetResult(hint);
+                await playbackCompletion.Task;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+                request.Completion.TrySetResult(null);
+            }
+        }
+
+        isProcessingHintBubbles = false;
     }
 
     /// <summary>
