@@ -148,7 +148,8 @@ public class ChatWindow : MonoBehaviour
         // 直接顯示完整文字
         StopAllCoroutines();
         dialogueText.text = str_dialogue;
-        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        if (fitter != null)
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         if (!isFastForwardMode)
             img_done.SetActive(true);
         isTyping = false;
@@ -200,7 +201,10 @@ public class ChatWindow : MonoBehaviour
         float targetWidth = dialogueText.rectTransform.rect.width;
 
         // 固定寬度，禁用 horizontal fit
-        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        if (fitter != null)
+        {
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        }
         dialogueText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
 
         // 清空並開始逐字顯示
@@ -213,7 +217,10 @@ public class ChatWindow : MonoBehaviour
         }
 
         // 恢復 Content Size Fitter
-        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        if (fitter != null)
+        {
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
 
         yield return new WaitForSeconds(0.1f);
         img_done.SetActive(true);
@@ -230,7 +237,7 @@ public class ChatWindow : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKeyDown && isWindowVisible)
+        if (Input.anyKeyDown && !isWindowVisible && tog_hide.isOn)
         {
             tog_hide.isOn = false;
         }
