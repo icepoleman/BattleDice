@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2168.645, y: -63.80005}
+  m_AnchoredPosition: {x: 1956.0449, y: -1080.7999}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3588883338432896531
@@ -299,8 +299,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5773307462025158582}
-  - component: {fileID: 7498782009990647792}
   - component: {fileID: 2767705814483829778}
+  - component: {fileID: 8123456789012345001}
   m_Layer: 0
   m_Name: ChatUI
   m_TagString: Untagged
@@ -338,28 +338,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &7498782009990647792
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257522451334902025}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 008b1ac27579d61459c2e44f1f17b9f8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2767705814483829778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,9 +359,21 @@ MonoBehaviour:
   btn_log: {fileID: 1164023610080680351}
   btn_next: {fileID: 871076586778846342}
   btn_set: {fileID: 6483980163430978453}
-  animator: {fileID: 7498782009990647792}
+  canvasGroup: {fileID: 8123456789012345001}
   fastTypingSpeed: 0.005
   isTyping: 0
+--- !u!225 &8123456789012345001
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257522451334902025}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2050163707150311471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,7 +1653,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280822015
+    rgba: 4264044799
   m_fontColor: {r: 1, g: 0.15566039, b: 0.15566039, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2088,15 +2078,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5553426201715380200}
-  - component: {fileID: 9052716176569322535}
   - component: {fileID: 8382348011330026679}
+  - component: {fileID: 8123456789012345002}
   m_Layer: 0
   m_Name: ChatUI_H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5553426201715380200
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2127,28 +2117,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &9052716176569322535
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4609617333600767523}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 008b1ac27579d61459c2e44f1f17b9f8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8382348011330026679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,9 +2138,21 @@ MonoBehaviour:
   btn_log: {fileID: 295368053161187910}
   btn_next: {fileID: 171923210705832803}
   btn_set: {fileID: 3862680035150881443}
-  animator: {fileID: 9052716176569322535}
+  canvasGroup: {fileID: 8123456789012345002}
   fastTypingSpeed: 0.005
   isTyping: 0
+--- !u!225 &8123456789012345002
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609617333600767523}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4611029287019405464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,7 +2518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2507.645, y: -61.899902}
+  m_AnchoredPosition: {x: 2295.045, y: -1078.8998}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3414017020001538761
@@ -3148,7 +3128,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2405.645, y: -61.899902}
+  m_AnchoredPosition: {x: 2193.045, y: -1078.8998}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8305331244344593911
@@ -3252,7 +3232,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 32.099976}
-  m_SizeDelta: {x: 2485.88, y: 365}
+  m_SizeDelta: {x: 2144, y: 403.08743}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6619408665315534528
 CanvasRenderer:
@@ -3275,14 +3255,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -4919119252135608363, guid: 7148ccccabf216a48a6edd60f885606c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3614,7 +3594,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2297.6, y: -60}
+  m_AnchoredPosition: {x: 2085, y: -1077}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6275210513441174235
