@@ -47,6 +47,7 @@ public abstract class BaseCharacterData : ICharacterData
     public float maxBlood { get; set; }
     public float currentBlood { get; set; }
     public int[] diceSides { get; set; }
+    public float wildDiceRate { get; set; } = 0f;
     public List<int> limitDiceSides { get; set; } = new List<int>();
     public int diceCount { get; set; }
     public int limitDiceCount { get; set; }//限制生成骰子數量
@@ -79,14 +80,22 @@ public abstract class BaseCharacterData : ICharacterData
         {
             useDice = limitDiceCount;
         }
-        Debug.Log($"限制骰子數量: {limitDiceCount}");
         rollDiceResult.Clear(); // 清空之前的結果
         for (int i = 0; i < useDice; i++)
         {
-            int side = diceSides[UnityEngine.Random.Range(0, diceSides.Length)];
-            if (limitDiceSides.Count > 0)//有設定限制點數時使用
+            int side;
+            // wildDiceRate 為 1 時必中，side 直接為 0；沒中才抽骰面
+            if (UnityEngine.Random.Range(0f, 1f) < wildDiceRate)
             {
-                side = limitDiceSides[UnityEngine.Random.Range(0, limitDiceSides.Count)];
+                side = 0;
+            }
+            else
+            {
+                side = diceSides[UnityEngine.Random.Range(0, diceSides.Length)];
+                if (limitDiceSides.Count > 0)//有設定限制點數時使用
+                {
+                    side = limitDiceSides[UnityEngine.Random.Range(0, limitDiceSides.Count)];
+                }
             }
             rollDiceResult.Add(side);
         }

@@ -21,7 +21,7 @@ public class ChatWindow : MonoBehaviour
     [SerializeField] private Button btn_next;
     [SerializeField] private Button btn_set;
 
-    [SerializeField] private Animator animator;
+    [SerializeField] private CanvasGroup canvasGroup;
     private float typingSpeed = 0.05f; // 逐字顯示速度
     [SerializeField] private float fastTypingSpeed = 0.005f; // 快轉時的打字速度
     private bool isFastForwardMode = false;
@@ -30,6 +30,8 @@ public class ChatWindow : MonoBehaviour
     private const float DEFAULT_TYPING_SPEED = 0.05f;
     private ContentSizeFitter fitter;
     private Tween autoRotateTween;
+    private Tween windowTween;
+    private const float windowFadeDuration = 0.33f;
 
     private void Start()
     {
@@ -168,14 +170,23 @@ public class ChatWindow : MonoBehaviour
             StartCoroutine(TypeLine());
         }
     }
-
+    bool isWindowVisible = false;
     public void ShowWindow()
     {
-        animator.SetBool("show", true);
+        windowTween?.Kill();
+        isWindowVisible = false;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+        windowTween = canvasGroup.DOFade(1f, windowFadeDuration).SetEase(Ease.InOutQuad).SetLink(gameObject)
+            .OnComplete(() => isWindowVisible = true);
     }
     public void HideWindow()
     {
-        animator.SetBool("show", false);
+        windowTween?.Kill();
+        isWindowVisible = false;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+        windowTween = canvasGroup.DOFade(0f, windowFadeDuration).SetEase(Ease.InOutQuad).SetLink(gameObject);
     }
 
     IEnumerator TypeLine()
@@ -219,7 +230,7 @@ public class ChatWindow : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && isWindowVisible)
         {
             tog_hide.isOn = false;
         }
