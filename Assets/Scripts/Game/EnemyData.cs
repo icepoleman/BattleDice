@@ -6,7 +6,6 @@ public class EnemyData : BaseCharacterData
     public int enemyId = 0;
     public string enemyName = "敵人";
     public string enemyType = "Zako";
-    public string imgId = "";
     public int openStage = 0;
 
     // 技能施放間隔（毫秒）
@@ -50,7 +49,7 @@ public class EnemyData : BaseCharacterData
         diceSides = config.diceSides; // 使用配置中的骰子面
         diceCount = config.diceCount;
         enemyType = config.enemyType;
-        imgId = config.imgId;
+        wildDiceRate = config.wildDiceRate;
         openStage = config.openStage;
 
         // 載入怪物技能

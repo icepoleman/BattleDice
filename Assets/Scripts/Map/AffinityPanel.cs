@@ -86,6 +86,11 @@ public class AffinityPanel : MonoBehaviour
     public async void SetUp(string role)
     {
         roleStr = role;
+        btn_back.onClick.AddListener(() =>
+        {
+            EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
+            Destroy(gameObject);
+        });
         await PortraitManager.LoadRoleIfNeeded(role);
         int roleAffinity = GameDataManager.GetRoleAffinity(role);
         float targetFill = Mathf.Clamp01(roleAffinity / 100f);
@@ -129,11 +134,6 @@ public class AffinityPanel : MonoBehaviour
             obj_h_lock[0].SetActive(!GameDataManager.unlocked_H_Stages.Contains("H_JailerGirl_1"));//其他人預設開啟 只對獄卒鎖住第一個H關卡
         }
         obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
-        btn_back.onClick.AddListener(() =>
-        {
-            EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
-            Destroy(gameObject);
-        });
 
         switch (role)
         {

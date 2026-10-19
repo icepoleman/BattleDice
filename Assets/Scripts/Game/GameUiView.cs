@@ -239,7 +239,7 @@ public class GameUiView : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    public void BurnDice(int sideNum, bool isPlayer)//之後改用ab
+    public void BurnDice(int sideNum, bool isPlayer)
     {
         Transform diceBox = isPlayer ? trans_playerDiceBox : trans_enemyDiceBox;
         GameObject dice = Instantiate(prefab_manaDice, diceBox);

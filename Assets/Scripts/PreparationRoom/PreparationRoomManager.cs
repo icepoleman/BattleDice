@@ -102,7 +102,6 @@ public class PreparationRoomManager : MonoBehaviour
 
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
         OpenLevel(GameDataManager.SafeRoomLevel);
-        //OpenLevel(1);
         Observable.EveryUpdate()
             .Select(_ => GameDataManager.SocialPoint)
             .DistinctUntilChanged()

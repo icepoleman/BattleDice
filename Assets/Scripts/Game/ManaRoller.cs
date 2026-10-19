@@ -231,7 +231,22 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
         for (int i = 0; i < manaDiceList.Count; i++)
         {
             float rollAnimTime = rollAnimationDuration + UnityEngine.Random.Range(-0.2f, 0.2f); // 隨機化動畫時間，增加自然感
-            int side = UnityEngine.Random.Range(1, 7); //假設骰子面數為6
+            PlayerData playerData = GameDataManager.PlayerData;
+            int side;
+            // wildDiceRate 為 1 時必中，side 直接為 0；沒中才抽骰面
+            if (UnityEngine.Random.Range(0f, 1f) < playerData.wildDiceRate)
+            {
+                side = 0;
+            }
+            else
+            {
+                int[] diceSides = playerData.diceSides;
+                side = diceSides[UnityEngine.Random.Range(0, diceSides.Length)];
+                if (playerData.limitDiceSides.Count > 0)//有設定限制點數時使用
+                {
+                    side = playerData.limitDiceSides[UnityEngine.Random.Range(0, playerData.limitDiceSides.Count)];
+                }
+            }
             manaDiceList[i].RollDice(side, rollAnimTime);
         }
 

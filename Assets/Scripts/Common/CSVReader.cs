@@ -415,7 +415,7 @@ public class CSVReader
                 initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null,
                 enemyType = v.Length > 8 ? v[8] : "Zako",
                 diceSides = v.Length > 9 ? ParseIntArrayStatic(v[9]) : new int[] { 1, 2, 3, 4, 5, 6 },
-                imgId = v.Length > 10 ? v[10] : "",
+                wildDiceRate = v.Length > 10 ? float.Parse(v[10]) : 0f,
                 openStage = v.Length > 11 && !string.IsNullOrWhiteSpace(v[11]) && int.TryParse(v[11], out int openStage) ? openStage : 0,
             };
 

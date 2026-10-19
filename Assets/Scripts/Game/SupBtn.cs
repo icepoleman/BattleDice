@@ -46,7 +46,8 @@ public class SupBtn : MonoBehaviour
 
         foreach (int value in chargeValues)
         {
-            if (Array.IndexOf(supData.needDicesData, value) >= 0)
+            // 萬用骰 0 直接充能，其他點數需符合需求
+            if (value == BaseSkill.WILD_DICE || Array.IndexOf(supData.needDicesData, value) >= 0)
             {
                 if (!GameDataManager.supChargeList.TryGetValue(supData.supID, out currentCharge))
                 {

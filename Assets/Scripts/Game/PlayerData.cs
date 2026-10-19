@@ -8,8 +8,9 @@ public class PlayerData : BaseCharacterData
     public PlayerData()
     {
         isPlayer = true;
-        diceSides = new int[] { 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
+        diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
         manaRollerMaxDiceCount = 8;
+        wildDiceRate = 0.05f;//通用骰子機率5%
 
         //test用
         /*skillIDs = new List<int> {14,17, 7 };
