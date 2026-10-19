@@ -67,8 +67,8 @@ public class DialogueManager : MonoBehaviour
         chatWindow.SetDatalogueManager(this);
         chatWindow_H.SetDatalogueManager(this);
         await AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.AVG_PREFABS + "btn_choose" + ".prefab");
-        chatWindow.ShowWindow();
-        chatWindow_H.HideWindow();
+        ConfigureChatWindow(chatWindow);
+        ConfigureChatWindow(chatWindow_H);
         animator = GetComponent<Animator>();
         AddEvent();
         LoadDialogue(GameDataManager.TmpAvgChapter);//讀取劇情
@@ -740,9 +740,10 @@ public class DialogueManager : MonoBehaviour
 
         ChatWindow previousChatWindow = CurrentChatWindow;
         previousChatWindow.SetFastForwardMode(false);
-        previousChatWindow.HideWindow();
+        previousChatWindow.gameObject.SetActive(false);
         dialogueState = state;
         CurrentChatWindow.SetFastForwardMode(isFastForwarding);
+        CurrentChatWindow.gameObject.SetActive(true);
         CurrentChatWindow.ShowWindow();
     }
 
@@ -750,11 +751,12 @@ public class DialogueManager : MonoBehaviour
     {
         if (window == CurrentChatWindow)
         {
+            window.gameObject.SetActive(true);
             window.ShowWindow();
         }
         else
         {
-            window.HideWindow();
+            window.gameObject.SetActive(false);
         }
     }
 
