@@ -90,11 +90,14 @@ public class DiceGame : MonoBehaviour
         });
 
         int supBtnIndex = 0;
-        foreach (var supData in GameDataManager.unLockedSupList)
+        foreach (var supData in GameDataManager.SupList)
         {
-            supBtnList[supBtnIndex].gameObject.SetActive(true);
-            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
-            supBtnIndex++;
+            if(SupDataSetting.Instance.IsSupUnlocked(supData))
+            {
+                supBtnList[supBtnIndex].gameObject.SetActive(true);
+                supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
+                supBtnIndex++;
+            }
         }
     }
 

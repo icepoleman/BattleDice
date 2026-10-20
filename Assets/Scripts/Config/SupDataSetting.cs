@@ -35,4 +35,22 @@ public class SupDataSetting
             return null;
         }
     }
+    public bool IsSupUnlocked(string supID)
+    {
+        int nowChapter = MapConfig.MapChapter[GameDataManager.CurrentMap];//依照章節進度解鎖
+        int unlockLimit = 0;
+        switch(supID)
+        {
+            case "Witch":
+                unlockLimit = 3;
+                break;
+            case "WolfGirl":
+                unlockLimit = 4;
+                break;
+            case "Idol":
+                unlockLimit = 5;
+                break;
+        }
+        return nowChapter >= unlockLimit;
+    }
 }
