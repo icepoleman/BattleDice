@@ -90,11 +90,16 @@ public class DiceGame : MonoBehaviour
         });
 
         int supBtnIndex = 0;
-        foreach (var supData in GameDataManager.unLockedSupList)
+
+        foreach (var supName in GameDataManager.SupList)
         {
-            supBtnList[supBtnIndex].gameObject.SetActive(true);
-            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
-            supBtnIndex++;
+            if (SupDataSetting.Instance.IsSupUnlocked(supName))
+            {
+                string supID = supName + "_" + GameDataManager.GetRoleAffinityLevel(supName);
+                supBtnList[supBtnIndex].gameObject.SetActive(true);
+                supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supID));
+                supBtnIndex++;
+            }
         }
     }
 
@@ -818,14 +823,6 @@ public class DiceGame : MonoBehaviour
             case SkillType.Attack:
                 playerData.Attack(supData.skillValue);
                 break;
-            case SkillType.Buff:
-                gameUiView.PlayBuffVfx(true);
-                ApplySupporterBuffs(supData.selfBuffs, true, supData.supID);
-                break;
-            case SkillType.DeBuff:
-                gameUiView.PlayDebuffVfx(false);
-                ApplySupporterBuffs(supData.targetBuffs, false, supData.supID);
-                break;
             case SkillType.BurnDice:
                 int generateCount = supData.generateDices[supData.generateDices.Length - 1];
                 int[] allowedDices = supData.generateDices
@@ -837,6 +834,17 @@ public class DiceGame : MonoBehaviour
             default:
                 Debug.LogWarning($"No logic defined for supporter {supData.supID} with skill type {supData.skillType}.");
                 break;
+        }
+
+        if (supData.selfBuffs != null && supData.selfBuffs.Length > 0)
+        {
+            gameUiView.PlayBuffVfx(true);
+            ApplySupporterBuffs(supData.selfBuffs, true, supData.supID);
+        }
+        if (supData.targetBuffs != null && supData.targetBuffs.Length > 0)
+        {
+            gameUiView.PlayDebuffVfx(false);
+            ApplySupporterBuffs(supData.targetBuffs, false, supData.supID);
         }
     }
 

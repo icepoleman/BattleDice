@@ -265,7 +265,6 @@ public static class SaveManager
         currentSave.supChargeList = GameDataManager.supChargeList
             .Select(entry => new SupporterChargeSaveData { key = entry.Key, value = entry.Value })
             .ToList();
-        currentSave.unLockedSupList = new List<string>(GameDataManager.unLockedSupList);
         try
         {
             currentSave.SaveTime = System.DateTime.Now;
@@ -317,7 +316,6 @@ public static class SaveManager
                         GameDataManager.supChargeList[entry.key] = entry.value;
                     }
                 }
-                GameDataManager.unLockedSupList = new HashSet<string>(currentSave.unLockedSupList ?? new List<string>());
                 
                 Debug.Log($"{saveType}讀檔成功");
                 return true;

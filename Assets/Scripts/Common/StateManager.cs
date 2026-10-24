@@ -374,29 +374,4 @@ public class StateManager : MonoBehaviour
     }
 
     public static GameState CurrentState => Instance?.currentState ?? GameState.MainMenu;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.LogError("解鎖支援者: 狼女");
-            GameDataManager.unLockedSupList.Add("WolfGirl");
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.LogError("解鎖支援者: 巫女");
-            GameDataManager.unLockedSupList.Add("Witch");
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.LogError("解鎖支援者: 偶像");
-            GameDataManager.unLockedSupList.Add("Idol");
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GameDataManager.unLockedSupList.Clear();
-            Debug.LogError("清除所有解鎖支援者");
-        }
-        // 這裡可以放置每幀需要檢查的邏輯，例如按鍵監聽等
-    }
 }
