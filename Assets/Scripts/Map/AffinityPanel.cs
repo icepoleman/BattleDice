@@ -5,14 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class AffinityPanel : MonoBehaviour
+public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
 {
+    [Header("好感度")]
     [SerializeField] TextMeshProUGUI txt_loveValue;
     [SerializeField] Image img_loveFill;
+    [SerializeField] TextMeshProUGUI txt_loveLevel;
+    [SerializeField] TextMeshProUGUI txt_supPowerUp;
+    [Header("其他")]
     [SerializeField] TextMeshProUGUI txt_roleName;
-    [SerializeField] private Transform affinityEventParent;
-    [SerializeField] private GameObject affinityEventPrefab;
+    /* [SerializeField] private Transform affinityEventParent;
+     [SerializeField] private GameObject affinityEventPrefab;*/
     [SerializeField] private TextMeshProUGUI txt_chat;
     [SerializeField] private Button btn_role;//點擊角色頭像顯示對話
     [SerializeField] private Image img_role;
@@ -22,6 +27,10 @@ public class AffinityPanel : MonoBehaviour
     [SerializeField] private Button btn_h_b;
     [SerializeField] private GameObject[] obj_h_lock;
     [SerializeField] private Button btn_loveEvent;
+
+    [Header("buff提示")]
+    [SerializeField] GameObject obj_buffTip;
+    [SerializeField] TextMeshProUGUI text_buffTip;
 
     string roleStr;
     int lastChatIndex = -1;
@@ -75,7 +84,7 @@ public class AffinityPanel : MonoBehaviour
     {
         GameDataManager.SocialPoint -= 1;
         GameDataManager.UnlockAffinityStage(_roleEventName);
-        EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, _roleEventName);//解鎖好感度事件
+        EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, _roleEventName);
         Destroy(gameObject);
     }
     void OnDestroy()
@@ -92,13 +101,8 @@ public class AffinityPanel : MonoBehaviour
             Destroy(gameObject);
         });
         await PortraitManager.LoadRoleIfNeeded(role);
-        int roleAffinity = GameDataManager.GetRoleAffinity(role);
-        float targetFill = Mathf.Clamp01(roleAffinity / 100f);
-        txt_loveValue.text = roleAffinity.ToString() + "/100";
-        img_loveFill.fillAmount = 0f;
-        img_loveFill.DOFillAmount(targetFill, 0.6f).SetEase(Ease.OutCubic);
-        txt_roleName.text = LanguageManager.GetText("T_" + role);
-        List<AffinityStoryData> storyDataList = CSVReader.Instance.LoadAffinityStoryCSV(role);
+        UpdateLoveUI(role);
+        /*List<AffinityStoryData> storyDataList = CSVReader.Instance.LoadAffinityStoryCSV(role);
         for (int i = 0; i < storyDataList.Count; i++)
         {
             GameObject affinityObj = Instantiate(affinityEventPrefab, affinityEventParent);
@@ -107,7 +111,7 @@ public class AffinityPanel : MonoBehaviour
             affinityObj.SetActive(true);
             Debug.Log("故事名稱: " + storyDataList[i].storyName);
             Debug.Log("解鎖提示: " + storyDataList[i].unlockHint);
-        }
+        }*/
         shortChatData = CSVReader.Instance.LoadPreparationRoomShortCSV(role);
         btn_role.onClick.AddListener(() =>
         {
@@ -154,6 +158,20 @@ public class AffinityPanel : MonoBehaviour
                 break;
         }
     }
+    void UpdateLoveUI(string role)
+    {
+        int roleAffinity = GameDataManager.GetRoleAffinity(role);
+        int affinityLevel = GameDataManager.GetRoleAffinityLevel(role);
+        bool isMaxAffinityLevel = affinityLevel >= 5;
+        int affinityProgress = roleAffinity % 100;
+        float targetFill = isMaxAffinityLevel ? 1f : Mathf.Clamp01(affinityProgress / 100f);
+        txt_loveValue.text = isMaxAffinityLevel ? string.Empty : affinityProgress + "/100";
+        img_loveFill.fillAmount = 0f;
+        img_loveFill.DOFillAmount(targetFill, 0.6f).SetEase(Ease.OutCubic);
+        txt_roleName.text = LanguageManager.GetText("T_" + role);
+        txt_loveLevel.text = affinityLevel >= 5 ? "Lv.Max" : "Lv." + affinityLevel;
+        txt_supPowerUp.text = LanguageManager.GetText("T_SupPowerUp_" + role + "_" + affinityLevel);
+    }
     /// <summary>
     /// 逐字顯示範例文字
     /// </summary>
@@ -184,4 +202,49 @@ public class AffinityPanel : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    #region BUFF說明的Tooltip
+    private int currentLinkIndex = -1;
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(
+            txt_supPowerUp,
+            eventData.position,
+            eventData.enterEventCamera
+        );
+
+        if (linkIndex != -1)
+        {
+            if (linkIndex != currentLinkIndex)
+            {
+                currentLinkIndex = linkIndex;
+                TMP_LinkInfo linkInfo = txt_supPowerUp.textInfo.linkInfo[linkIndex];
+                string linkId = linkInfo.GetLinkID();
+
+                // 取得 link 在文字中的位置（使用第一個字符的位置）
+                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
+                TMP_CharacterInfo charInfo = txt_supPowerUp.textInfo.characterInfo[firstCharIndex];
+                Vector3 charWorldPos = txt_supPowerUp.transform.TransformPoint(charInfo.topLeft);
+
+                obj_buffTip.SetActive(true);
+                BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
+                text_buffTip.text = buffData.describe;
+            }
+        }
+        else
+        {
+            if (currentLinkIndex != -1)
+            {
+                currentLinkIndex = -1;
+                obj_buffTip.SetActive(false);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        currentLinkIndex = -1;
+        obj_buffTip.SetActive(false);
+    }
+    #endregion
 }

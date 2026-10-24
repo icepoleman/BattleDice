@@ -90,10 +90,11 @@ public class DiceGame : MonoBehaviour
         });
 
         int supBtnIndex = 0;
-        foreach (var supData in GameDataManager.unLockedSupList)
+        foreach (var supName in GameDataManager.unLockedSupList)
         {
+            string supID = supName + "_" + GameDataManager.GetRoleAffinityLevel(supName);
             supBtnList[supBtnIndex].gameObject.SetActive(true);
-            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
+            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supID));
             supBtnIndex++;
         }
     }
@@ -794,8 +795,9 @@ public class DiceGame : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Supporter used with ID: {supData.supID}");
-        switch (supData.supID)
+        Debug.LogError($"Supporter used with ID: {supData.supID}");
+        string supName = supData.supID.Substring(0, supData.supID.Length - 2);
+        switch (supName)
         {
             case "Witch":
                 gameUiView.PlaySupSkillAnim(0);

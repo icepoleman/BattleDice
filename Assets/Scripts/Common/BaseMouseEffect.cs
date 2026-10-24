@@ -15,9 +15,19 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private float bounceDuration = 0.14f;
     [SerializeField] private float bounceOvershoot = 0.06f;
 
+    [Header("Floating Settings")]
+    [SerializeField] private bool floatingEnabled;
+    [SerializeField] private float floatingAmplitude = 8f;
+    [SerializeField] private float floatingSpeed = 1f;
+
     private Transform scaleTarget;
+    private RectTransform rectTransform;
     private Vector3 originalScale;
     private Vector3 targetScale;
+    private Vector2 originalAnchoredPosition;
+    private float floatingTime;
+    private bool isPointerOver;
+    private bool hasAppliedFloatingOffset;
     private bool isPressed;
     private bool isBouncing;
     private Coroutine bounceRoutine;
@@ -30,7 +40,7 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void Awake()
     {
-        RectTransform rectTransform = transform as RectTransform;
+        rectTransform = transform as RectTransform;
         if (rectTransform == null)
         {
             Debug.LogWarning($"{nameof(BaseMouseEffect)} should be used on UI objects with RectTransform.", this);
@@ -39,6 +49,7 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         scaleTarget = rectTransform != null ? rectTransform : transform;
         originalScale = scaleTarget.localScale;
         targetScale = originalScale;
+        originalAnchoredPosition = rectTransform != null ? rectTransform.anchoredPosition : Vector2.zero;
     }
 
     private void OnEnable()
@@ -47,12 +58,22 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         targetScale = originalScale;
         isPressed = false;
         isBouncing = false;
+        isPointerOver = false;
+        floatingTime = 0f;
+        if (hasAppliedFloatingOffset && rectTransform != null)
+        {
+            Vector2 position = rectTransform.anchoredPosition;
+            position.y = originalAnchoredPosition.y;
+            rectTransform.anchoredPosition = position;
+            hasAppliedFloatingOffset = false;
+        }
     }
 
     private void Update()
     {
         if (!effectEnabled)
         {
+            UpdateFloating();
             return;
         }
 
@@ -65,10 +86,13 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             scaleTarget.localScale = Vector3.Lerp(scaleTarget.localScale, targetScale, Time.deltaTime * lerpSpeed);
         }
+
+        UpdateFloating();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        isPointerOver = true;
         if (!effectEnabled)
         {
             return;
@@ -84,6 +108,7 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isPointerOver = false;
         if (!effectEnabled)
         {
             return;
@@ -206,5 +231,36 @@ public class BaseMouseEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void SetTargetScale(float multiplier)
     {
         targetScale = originalScale * multiplier;
+    }
+
+    private void UpdateFloating()
+    {
+        if (rectTransform == null)
+        {
+            return;
+        }
+
+        if (!floatingEnabled)
+        {
+            if (hasAppliedFloatingOffset)
+            {
+                Vector2 pos = rectTransform.anchoredPosition;
+                pos.y = originalAnchoredPosition.y;
+                rectTransform.anchoredPosition = pos;
+                hasAppliedFloatingOffset = false;
+            }
+
+            return;
+        }
+
+        if (!isPointerOver)
+        {
+            floatingTime += Time.deltaTime;
+        }
+
+        Vector2 position = rectTransform.anchoredPosition;
+        position.y = originalAnchoredPosition.y + Mathf.Sin(floatingTime * floatingSpeed) * floatingAmplitude;
+        rectTransform.anchoredPosition = position;
+        hasAppliedFloatingOffset = true;
     }
 }

@@ -17,7 +17,7 @@ public static class SkillLocalizationHelper
         {
             var skill = skills[key];
             LocalizeCondition(ref skill);
-           // LocalizeEffect(ref skill);
+            LocalizeEffect(ref skill);
             skills[key] = skill;
         }
     }
@@ -28,7 +28,7 @@ public static class SkillLocalizationHelper
     public static void LocalizeSkill(ref SkillConfigData skill)
     {
         LocalizeCondition(ref skill);
-        //LocalizeEffect(ref skill);
+        LocalizeEffect(ref skill);
     }
 
     /// <summary>
@@ -65,26 +65,27 @@ public static class SkillLocalizationHelper
     /// <summary>
     /// 技能效果文本本地化
     /// </summary>
-    /*public static void LocalizeEffect(ref SkillConfigData skill)
+    public static void LocalizeEffect(ref SkillConfigData skill)
     {
-        if (SkillDatabase.SpSkillIDs.Contains(skill.skillID))
-        {
-            switch (skill.skillID)
-            {
-                case 113:
-                case 38: // 毒爆術
-                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
-                    break;
-                case 116:
-                case 33: // 弱點破壞 
-                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
-                    break;
-                case 128: // 吞噬
-                    skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
-                    break;
-            }
-            return;
-        }
+        /* if (SkillDatabase.SpSkillIDs.Contains(skill.skillID))
+         {
+             switch (skill.skillID)
+             {
+                 case 113:
+                 case 38: // 毒爆術
+                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                     break;
+                 case 116:
+                 case 33: // 弱點破壞 
+                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                     break;
+                 case 128: // 吞噬
+                     skill.effectText = LanguageManager.GetFormat($"T_Skill_Effect_Sp_{skill.skillID}", skill.skillValue);
+                     break;
+             }
+             return;
+         }*/
+
         switch (skill.skillType)
         {
             case SkillType.Attack:
@@ -97,30 +98,29 @@ public static class SkillLocalizationHelper
             case SkillType.DeBuff:
                 skill.effectText = "";
                 break;
+            case SkillType.SpSkill:
+                skill.effectText = LanguageManager.GetText("T_Skill_Effect_Sp_" + skill.skillID);
+                break;
         }
+        if (skill.skillType == SkillType.SpSkill) return;// 特殊技能不處理後續效果文本
 
         if (skill.selfBuffs != null && skill.selfBuffs.Length > 0)
         {
             foreach (var buff in skill.selfBuffs)
             {
-                // icon 還沒畫完，先都用 0 的圖
-                int buffIconID = 1; // buff.buffID
-                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_selfBuff", buff.buffID, buffIconID, buff.duration));
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_selfBuff", buff.buffID, buff.buffID, buff.duration));
             }
         }
-
         if (skill.targetBuffs != null && skill.targetBuffs.Length > 0)
         {
             foreach (var buff in skill.targetBuffs)
             {
-                // icon 還沒畫完，先都用 0 的圖
-                int buffIconID = 1; // buff.buffID
-                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_targetBuff", buff.buffID, buffIconID, buff.duration));
+                AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_targetBuff", buff.buffID, buff.buffID, buff.duration));
             }
         }
-        if (skill.breakDiceCount > 0)//怪物combo
+        if (skill.breakDiceCount > 0)
         {
-            AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_enemyCombo", skill.breakDiceCount));
+            AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_BreakDice", skill.breakDiceCount));
         }
         if (skill.generateDicesData.Length > 0)//生成骰子
         {
@@ -129,17 +129,10 @@ public static class SkillLocalizationHelper
             Console.WriteLine(LanguageManager.GetFormat("T_Skill_generateDices_spDice", burnCount));
             if (skill.generateDicesData[0] == 0)
                 AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_spDice", burnCount));
-            if (diceCount == 4)
-            {
-                if (skill.generateDicesData[0] == 1)
-                    AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_lowDice", burnCount));
-                if (skill.generateDicesData[0] == 4)
-                    AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_highDice", burnCount));
-            }
             if (diceCount == 7)
                 AppendEffectText(ref skill, LanguageManager.GetFormat("T_Skill_generateDices_randomDice", burnCount));
         }
-    }*/
+    }
 
     /// <summary>
     /// 附加效果文本，如果 effectText 為空則直接設定，否則換行後附加

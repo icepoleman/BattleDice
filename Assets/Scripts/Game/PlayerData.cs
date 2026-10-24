@@ -5,11 +5,17 @@ public class PlayerData : BaseCharacterData
 {
     public ISkillData wantUseSkill;
     public int manaRollerMaxDiceCount;
+    public override float wildDiceRate
+    {
+        get => base.wildDiceRate + GameDataManager.GetRoleAffinityLevel("JailerGirl") * 0.01f;
+        set => base.wildDiceRate = value;
+    }
+
     public PlayerData()
     {
         isPlayer = true;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        manaRollerMaxDiceCount = 8;
+        manaRollerMaxDiceCount = 6;
         wildDiceRate = 0.05f;//通用骰子機率5%
 
         //test用

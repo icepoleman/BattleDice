@@ -8,7 +8,6 @@ using TMPro;
 using UniRx;
 public class PreparationRoomManager : MonoBehaviour
 {
-    [SerializeField] Button btn_back;
     [SerializeField] Button btn_powerUp;
     [SerializeField] GameObject powerUpPanelPrefab;
     [SerializeField] Button btn_shop;
@@ -53,7 +52,6 @@ public class PreparationRoomManager : MonoBehaviour
         PreLoadAssets();
         SetUpDoorSwitchEventTrigger();
         ChangeDoorState(DoorState.Closed);
-        btn_back.onClick.AddListener(OnBackButtonClick);
         btn_powerUp.onClick.AddListener(() =>
         {
             if (isLevel_0)
@@ -144,7 +142,8 @@ public class PreparationRoomManager : MonoBehaviour
         }
         for (int i = 0; i < socialPoint; i++)
         {
-            Instantiate(lovePointPrefab, lovePointRoot);
+            GameObject lovePoint = Instantiate(lovePointPrefab, lovePointRoot);
+            lovePoint.SetActive(true);
         }
         txt_socialPoint.text = LanguageManager.GetFormat("T_SocialPoint", socialPoint);
     }

@@ -90,6 +90,17 @@ public static class GameDataManager
                 return -1;
         }
     }
+    public static int GetRoleAffinityLevel(string role)
+    {
+        int affinity = GetRoleAffinity(role);
+        if (affinity < 0)
+        {
+            return -1;
+        }
+
+        return Math.Min(affinity / 100, 5);
+    }
+
     //記錄解鎖好感度關卡 H關卡共用
     public static void UnlockAffinityStage(string stageId)
     {

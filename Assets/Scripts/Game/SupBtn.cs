@@ -72,6 +72,8 @@ public class SupBtn : MonoBehaviour
     }
     public void CanUseBtn(bool canUse)
     {
+        btn_use.interactable = true;
+        return;
         if (btn_use == null)
         {
             return;

@@ -47,7 +47,7 @@ public abstract class BaseCharacterData : ICharacterData
     public float maxBlood { get; set; }
     public float currentBlood { get; set; }
     public int[] diceSides { get; set; }
-    public float wildDiceRate { get; set; } = 0f;
+    public virtual float wildDiceRate { get; set; } = 0f;
     public List<int> limitDiceSides { get; set; } = new List<int>();
     public int diceCount { get; set; }
     public int limitDiceCount { get; set; }//限制生成骰子數量
