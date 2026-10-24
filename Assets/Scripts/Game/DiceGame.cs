@@ -90,11 +90,10 @@ public class DiceGame : MonoBehaviour
         });
 
         int supBtnIndex = 0;
-        foreach (var supName in GameDataManager.unLockedSupList)
+        foreach (var supData in GameDataManager.unLockedSupList)
         {
-            string supID = supName + "_" + GameDataManager.GetRoleAffinityLevel(supName);
             supBtnList[supBtnIndex].gameObject.SetActive(true);
-            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supID));
+            supBtnList[supBtnIndex].SetSupData(SupDataSetting.Instance.GetSupDataByID(supData));
             supBtnIndex++;
         }
     }
