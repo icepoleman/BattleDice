@@ -108,7 +108,8 @@ T_UnLock_Fail|破箱子打不開，拿去回收
 T_RecoverHealth_max|傷勢痊癒了
 T_GetGold|獲得 {0} 金幣
 T_Level0_Hint|先出去看看吧
-T_Lock_Hint|右鍵能鎖定骰子避免重骰
+T_Lock_Hint|右鍵鎖定骰子
+T_Refresh_Hint|刷新骰子
 T_Result|統計
 T_PowerUp|強化
 T_ChangeSkill|技能
@@ -141,3 +142,7 @@ T_SupPowerUp_Idol_2|消耗-10，<link="3"><sprite name="Buff_3"></link>x1回合
 T_SupPowerUp_Idol_3|消耗-15，<link="3"><sprite name="Buff_3"></link>x1回合
 T_SupPowerUp_Idol_4|消耗-20，<link="3"><sprite name="Buff_3"></link>x1回合
 T_SupPowerUp_Idol_5|消耗-25，<link="3"><sprite name="Buff_3"></link>x1回合
+T_Teach_Hint1|點擊可以重骰\n點數代表剩餘次數\n(每回合刷新)
+T_Teach_Hint2|右鍵骰子可以鎖定\n鎖定的骰子不會刷新\n回合結束也不會消失
+T_Teach_Hint3|剩餘鎖定骰子次數
+T_LockDice_Hint|右鍵骰子可以鎖定

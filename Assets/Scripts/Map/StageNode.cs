@@ -108,6 +108,7 @@ public class StageNode : MonoBehaviour
                 stageImage.sprite = stageSpList[(int)stageType];
                 break;
         }
+        stageImage.SetNativeSize();
 
         await Task.Yield();
         Canvas.ForceUpdateCanvases();

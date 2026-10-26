@@ -1,0 +1,2067 @@
+fileFormatVersion: 2
+guid: 0ad4b716f3d11274a9677fa001cad5c2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7104076026364160125
+    second: female_lead_hcg_0_2_0
+  - first:
+      213: 5353841161487712615
+    second: female_lead_hcg_0_2_1
+  - first:
+      213: 3910446325715967480
+    second: female_lead_hcg_0_2_2
+  - first:
+      213: 4760796152532101670
+    second: female_lead_hcg_0_2_3
+  - first:
+      213: -7957875143564488568
+    second: female_lead_hcg_0_2_4
+  - first:
+      213: -7888968258040847671
+    second: female_lead_hcg_0_2_5
+  - first:
+      213: 3782993249562153513
+    second: female_lead_hcg_0_2_6
+  - first:
+      213: 7474654057218143903
+    second: female_lead_hcg_0_2_7
+  - first:
+      213: -1917319176799171963
+    second: female_lead_hcg_0_2_8
+  - first:
+      213: 5995649780705712211
+    second: female_lead_hcg_0_2_9
+  - first:
+      213: -5580720511061956894
+    second: female_lead_hcg_0_2_10
+  - first:
+      213: 2643262475299582807
+    second: female_lead_hcg_0_2_11
+  - first:
+      213: 4079036938451808692
+    second: female_lead_hcg_0_2_12
+  - first:
+      213: -4310559606838389666
+    second: female_lead_hcg_0_2_13
+  - first:
+      213: 8930020600345329720
+    second: female_lead_hcg_0_2_14
+  - first:
+      213: -785210935902884932
+    second: female_lead_hcg_0_2_15
+  - first:
+      213: -64775683183165853
+    second: female_lead_hcg_0_2_16
+  - first:
+      213: -1859677378765437381
+    second: female_lead_hcg_0_2_17
+  - first:
+      213: -1833857695691583131
+    second: female_lead_hcg_0_2_18
+  - first:
+      213: 3589253238928522941
+    second: female_lead_hcg_0_2_19
+  - first:
+      213: 6603558668536826716
+    second: female_lead_hcg_0_2_20
+  - first:
+      213: -3887227265790856737
+    second: female_lead_hcg_0_2_21
+  - first:
+      213: 2838867699161719536
+    second: female_lead_hcg_0_2_22
+  - first:
+      213: 4170164314190541604
+    second: female_lead_hcg_0_2_23
+  - first:
+      213: 8543767618934519316
+    second: female_lead_hcg_0_2_24
+  - first:
+      213: -7648420360082247584
+    second: female_lead_hcg_0_2_25
+  - first:
+      213: -1377603760234686605
+    second: female_lead_hcg_0_2_26
+  - first:
+      213: -1838952577502632418
+    second: female_lead_hcg_0_2_27
+  - first:
+      213: -3198597833866849414
+    second: female_lead_hcg_0_2_28
+  - first:
+      213: -426712873161853748
+    second: female_lead_hcg_0_2_29
+  - first:
+      213: -5891691226635604452
+    second: female_lead_hcg_0_2_30
+  - first:
+      213: -2294595808988594277
+    second: female_lead_hcg_0_2_31
+  - first:
+      213: 4392972700774072066
+    second: female_lead_hcg_0_2_32
+  - first:
+      213: -5223549978355367327
+    second: female_lead_hcg_0_2_33
+  - first:
+      213: -3979785029801362921
+    second: female_lead_hcg_0_2_34
+  - first:
+      213: 6229023751505141511
+    second: female_lead_hcg_0_2_35
+  - first:
+      213: 8848886761175113
+    second: female_lead_hcg_0_2_36
+  - first:
+      213: -928086815830919805
+    second: female_lead_hcg_0_2_37
+  - first:
+      213: -8052805612633619013
+    second: female_lead_hcg_0_2_38
+  - first:
+      213: -897795903793869235
+    second: female_lead_hcg_0_2_39
+  - first:
+      213: -6364483248357005133
+    second: female_lead_hcg_0_2_40
+  - first:
+      213: 3942416253489526474
+    second: female_lead_hcg_0_2_41
+  - first:
+      213: -4312587525022684351
+    second: female_lead_hcg_0_2_42
+  - first:
+      213: -2412337832210280806
+    second: female_lead_hcg_0_2_43
+  - first:
+      213: -7221600935914566101
+    second: female_lead_hcg_0_2_44
+  - first:
+      213: 2968505251494197302
+    second: female_lead_hcg_0_2_45
+  - first:
+      213: 8195317106134435184
+    second: female_lead_hcg_0_2_46
+  - first:
+      213: 4129640771983336072
+    second: female_lead_hcg_0_2_47
+  - first:
+      213: 1130657284557767258
+    second: female_lead_hcg_0_2_48
+  - first:
+      213: -3895485644056376016
+    second: female_lead_hcg_0_2_49
+  - first:
+      213: 8406370939281319673
+    second: female_lead_hcg_0_2_50
+  - first:
+      213: -3160813868783647261
+    second: female_lead_hcg_0_2_51
+  - first:
+      213: 8285621146808141895
+    second: female_lead_hcg_0_2_52
+  - first:
+      213: -8315406142128479963
+    second: female_lead_hcg_0_2_53
+  - first:
+      213: -6688642991515682564
+    second: female_lead_hcg_0_2_54
+  - first:
+      213: 3412413687871938404
+    second: female_lead_hcg_0_2_55
+  - first:
+      213: 8221457864691097255
+    second: female_lead_hcg_0_2_56
+  - first:
+      213: 7922071902714031394
+    second: female_lead_hcg_0_2_57
+  - first:
+      213: -6002784217471137425
+    second: female_lead_hcg_0_2_58
+  - first:
+      213: 814774726400987509
+    second: female_lead_hcg_0_2_59
+  - first:
+      213: -539726938971975616
+    second: female_lead_hcg_0_2_60
+  - first:
+      213: -3991721948321956091
+    second: female_lead_hcg_0_2_61
+  - first:
+      213: -7173331498387008992
+    second: female_lead_hcg_0_2_62
+  - first:
+      213: 8073475713056455097
+    second: female_lead_hcg_0_2_63
+  - first:
+      213: 4075053183728042249
+    second: female_lead_hcg_0_2_64
+  - first:
+      213: -371253816755591898
+    second: female_lead_hcg_0_2_65
+  - first:
+      213: -4809351016186346780
+    second: female_lead_hcg_0_2_66
+  - first:
+      213: -3064577535837470339
+    second: female_lead_hcg_0_2_67
+  - first:
+      213: -2080998078807627909
+    second: female_lead_hcg_0_2_68
+  - first:
+      213: 4754206508586093011
+    second: female_lead_hcg_0_2_69
+  - first:
+      213: -8106636422953175012
+    second: female_lead_hcg_0_2_70
+  - first:
+      213: -4222328299045374393
+    second: female_lead_hcg_0_2_71
+  - first:
+      213: 4932417711342863955
+    second: female_lead_hcg_0_2_72
+  - first:
+      213: -9106396500508288646
+    second: female_lead_hcg_0_2_73
+  - first:
+      213: -8346282387824724856
+    second: female_lead_hcg_0_2_74
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3555
+        width: 483
+        height: 540
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38712373e70496d90800000000000000
+      internalID: -7104076026364160125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_1
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 3835
+        width: 439
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7610756ab2aac4a40800000000000000
+      internalID: 5353841161487712615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2977
+        width: 478
+        height: 576
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fd188df632b44630800000000000000
+      internalID: 3910446325715967480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_3
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 3352
+        width: 410
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ae8bf70eeb11240800000000000000
+      internalID: 4760796152532101670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_4
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 3353
+        width: 137
+        height: 399
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8809de438b2ff8190800000000000000
+      internalID: -7957875143564488568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_5
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2349
+        width: 466
+        height: 625
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c2a427ba21c48290800000000000000
+      internalID: -7888968258040847671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_6
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 2350
+        width: 189
+        height: 515
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9225adb3154ef7430800000000000000
+      internalID: 3782993249562153513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_7
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 2865
+        width: 441
+        height: 487
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f967b6b334e4bb760800000000000000
+      internalID: 7474654057218143903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_8
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 2720
+        width: 117
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a47d9fd505465e0800000000000000
+      internalID: -1917319176799171963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_9
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 2480
+        width: 207
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 358dc9095b3d43350800000000000000
+      internalID: 5995649780705712211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_10
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 2308
+        width: 55
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e66a6b534c4d82b0800000000000000
+      internalID: -5580720511061956894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_11
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 2379
+        width: 52
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 753f9587731cea420800000000000000
+      internalID: 2643262475299582807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_12
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 2402
+        width: 77
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b1fd1edb76ab9830800000000000000
+      internalID: 4079036938451808692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_13
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 2168
+        width: 175
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e54104b30e0dd24c0800000000000000
+      internalID: -4310559606838389666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1746
+        width: 566
+        height: 603
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83001883c6ecdeb70800000000000000
+      internalID: 8930020600345329720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_15
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 2241
+        width: 60
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbba1c360de5a15f0800000000000000
+      internalID: -785210935902884932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_16
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 2310
+        width: 48
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36eb8cdfbded91ff0800000000000000
+      internalID: -64775683183165853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_17
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 2190
+        width: 166
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b364bd9e6491136e0800000000000000
+      internalID: -1859677378765437381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_18
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 1877
+        width: 281
+        height: 363
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 561dfa75424dc86e0800000000000000
+      internalID: -1833857695691583131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_19
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 2188
+        width: 130
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbe314bddc69fc130800000000000000
+      internalID: 3589253238928522941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_20
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 1876
+        width: 184
+        height: 291
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5bc6933f9d84ab50800000000000000
+      internalID: 6603558668536826716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_21
+      rect:
+        serializedVersion: 2
+        x: 1034
+        y: 1879
+        width: 323
+        height: 308
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1b25da56bcd0ac0800000000000000
+      internalID: -3887227265790856737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_22
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 1879
+        width: 266
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f26dd4a12fa56720800000000000000
+      internalID: 2838867699161719536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_23
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1041
+        width: 501
+        height: 704
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 423765a69566fd930800000000000000
+      internalID: 4170164314190541604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_24
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 1599
+        width: 167
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 416b312f16f819670800000000000000
+      internalID: 8543767618934519316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_25
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 1549
+        width: 369
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060be60a43a5bd590800000000000000
+      internalID: -7648420360082247584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_26
+      rect:
+        serializedVersion: 2
+        x: 1113
+        y: 1582
+        width: 355
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37718fdcda4c1ece0800000000000000
+      internalID: -1377603760234686605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_27
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 1581
+        width: 115
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e16aa2bbf5aba76e0800000000000000
+      internalID: -1838952577502632418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_28
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1448
+        width: 131
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a73580d873c4c93d0800000000000000
+      internalID: -3198597833866849414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_29
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 1529
+        width: 157
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc4f91617e2041af0800000000000000
+      internalID: -426712873161853748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_30
+      rect:
+        serializedVersion: 2
+        x: 1937
+        y: 1589
+        width: 66
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1e691e7b028c3ea0800000000000000
+      internalID: -5891691226635604452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_31
+      rect:
+        serializedVersion: 2
+        x: 2007
+        y: 1487
+        width: 485
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9f722ed445f720e0800000000000000
+      internalID: -2294595808988594277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_32
+      rect:
+        serializedVersion: 2
+        x: 2493
+        y: 1517
+        width: 426
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f70a97569f6fc30800000000000000
+      internalID: 4392972700774072066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_33
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 1039
+        width: 240
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16201a168f83287b0800000000000000
+      internalID: -5223549978355367327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_34
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 1016
+        width: 385
+        height: 530
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71ab548e996f4c8c0800000000000000
+      internalID: -3979785029801362921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_35
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 1432
+        width: 500
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f5fe56910f17650800000000000000
+      internalID: 6229023751505141511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_36
+      rect:
+        serializedVersion: 2
+        x: 1806
+        y: 1318
+        width: 196
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 948be0004007f1000800000000000000
+      internalID: 8848886761175113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_37
+      rect:
+        serializedVersion: 2
+        x: 2023
+        y: 1127
+        width: 488
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 385bcad45f5ce13f0800000000000000
+      internalID: -928086815830919805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_38
+      rect:
+        serializedVersion: 2
+        x: 2513
+        y: 1282
+        width: 104
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb583bdf5ffae3090800000000000000
+      internalID: -8052805612633619013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_39
+      rect:
+        serializedVersion: 2
+        x: 2538
+        y: 1366
+        width: 158
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ec099d1636a83f0800000000000000
+      internalID: -897795903793869235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_40
+      rect:
+        serializedVersion: 2
+        x: 2647
+        y: 1444
+        width: 50
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b8a1c2c430dca7a0800000000000000
+      internalID: -6364483248357005133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_41
+      rect:
+        serializedVersion: 2
+        x: 2653
+        y: 1452
+        width: 45
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac638f9d1b646b630800000000000000
+      internalID: 3942416253489526474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_42
+      rect:
+        serializedVersion: 2
+        x: 2810
+        y: 1428
+        width: 68
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14bed3cbe7c9624c0800000000000000
+      internalID: -4312587525022684351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_43
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 928
+        width: 463
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9eced0d587a58ed0800000000000000
+      internalID: -2412337832210280806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_44
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 812
+        width: 429
+        height: 499
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2e0f21e538b7cb90800000000000000
+      internalID: -7221600935914566101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_45
+      rect:
+        serializedVersion: 2
+        x: 2672
+        y: 1161
+        width: 188
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63871356ccf323920800000000000000
+      internalID: 2968505251494197302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_46
+      rect:
+        serializedVersion: 2
+        x: 2744
+        y: 1171
+        width: 130
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07543d4cc7d9bb170800000000000000
+      internalID: 8195317106134435184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_47
+      rect:
+        serializedVersion: 2
+        x: 3831
+        y: 809
+        width: 244
+        height: 397
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8826900076e6f4930800000000000000
+      internalID: 4129640771983336072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_48
+      rect:
+        serializedVersion: 2
+        x: 2077
+        y: 734
+        width: 497
+        height: 392
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5206c05fc6e0bf00800000000000000
+      internalID: 1130657284557767258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_49
+      rect:
+        serializedVersion: 2
+        x: 2576
+        y: 734
+        width: 314
+        height: 423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03dc266227470f9c0800000000000000
+      internalID: -3895485644056376016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_50
+      rect:
+        serializedVersion: 2
+        x: 2894
+        y: 930
+        width: 126
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6a70694dd69a470800000000000000
+      internalID: 8406370939281319673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_51
+      rect:
+        serializedVersion: 2
+        x: 2923
+        y: 1006
+        width: 158
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5c50678888224d0800000000000000
+      internalID: -3160813868783647261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_52
+      rect:
+        serializedVersion: 2
+        x: 3194
+        y: 1065
+        width: 65
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 748c6fea8807cf270800000000000000
+      internalID: 8285621146808141895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_53
+      rect:
+        serializedVersion: 2
+        x: 3268
+        y: 794
+        width: 195
+        height: 355
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 521a45fab2eb99c80800000000000000
+      internalID: -8315406142128479963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_54
+      rect:
+        serializedVersion: 2
+        x: 3469
+        y: 936
+        width: 104
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf83d4d13aa2d23a0800000000000000
+      internalID: -6688642991515682564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_55
+      rect:
+        serializedVersion: 2
+        x: 3495
+        y: 1021
+        width: 156
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46f994c5b245b5f20800000000000000
+      internalID: 3412413687871938404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_56
+      rect:
+        serializedVersion: 2
+        x: 3607
+        y: 1104
+        width: 45
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ae11c86e5c781270800000000000000
+      internalID: 8221457864691097255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_57
+      rect:
+        serializedVersion: 2
+        x: 3780
+        y: 1096
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22d6f5e2c6ad0fd60800000000000000
+      internalID: 7922071902714031394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_58
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 427
+        width: 621
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f69cf4eee83d1bca0800000000000000
+      internalID: -6002784217471137425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_59
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 429
+        width: 421
+        height: 587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 571d81bfb49ae4b00800000000000000
+      internalID: 814774726400987509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_60
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 369
+        width: 528
+        height: 556
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 040ddd665318288f0800000000000000
+      internalID: -539726938971975616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_61
+      rect:
+        serializedVersion: 2
+        x: 3065
+        y: 795
+        width: 195
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50fb32c790e8a98c0800000000000000
+      internalID: -3991721948321956091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_62
+      rect:
+        serializedVersion: 2
+        x: 3628
+        y: 815
+        width: 188
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02295861205337c90800000000000000
+      internalID: -7173331498387008992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_63
+      rect:
+        serializedVersion: 2
+        x: 3701
+        y: 825
+        width: 130
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b9397bc26fba0070800000000000000
+      internalID: 8073475713056455097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_64
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 6
+        width: 839
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9014fe0b74f7d8830800000000000000
+      internalID: 4075053183728042249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_65
+      rect:
+        serializedVersion: 2
+        x: 1576
+        y: 266
+        width: 500
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62566c2ee9a09daf0800000000000000
+      internalID: -371253816755591898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_66
+      rect:
+        serializedVersion: 2
+        x: 2077
+        y: 287
+        width: 567
+        height: 446
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e28c085bb0c14db0800000000000000
+      internalID: -4809351016186346780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_67
+      rect:
+        serializedVersion: 2
+        x: 2644
+        y: 287
+        width: 280
+        height: 359
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7104cdc7fe6875d0800000000000000
+      internalID: -3064577535837470339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_68
+      rect:
+        serializedVersion: 2
+        x: 2925
+        y: 384
+        width: 567
+        height: 407
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b77a66ed54fce13e0800000000000000
+      internalID: -2080998078807627909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_69
+      rect:
+        serializedVersion: 2
+        x: 3493
+        y: 413
+        width: 554
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d9cf1571a55af140800000000000000
+      internalID: 4754206508586093011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_70
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 7
+        width: 670
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c18f1a6cf117f7f80800000000000000
+      internalID: -8106636422953175012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_71
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 6
+        width: 753
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 746325a68c64765c0800000000000000
+      internalID: -4222328299045374393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_72
+      rect:
+        serializedVersion: 2
+        x: 2265
+        y: 7
+        width: 659
+        height: 279
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 356cf6086c7737440800000000000000
+      internalID: 4932417711342863955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_73
+      rect:
+        serializedVersion: 2
+        x: 2925
+        y: 6
+        width: 619
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79d75b61a49f9180800000000000000
+      internalID: -9106396500508288646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: female_lead_hcg_0_2_74
+      rect:
+        serializedVersion: 2
+        x: 3546
+        y: 7
+        width: 543
+        height: 405
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 884bb96836c0c2c80800000000000000
+      internalID: -8346282387824724856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      female_lead_hcg_0_2_0: -7104076026364160125
+      female_lead_hcg_0_2_1: 5353841161487712615
+      female_lead_hcg_0_2_10: -5580720511061956894
+      female_lead_hcg_0_2_11: 2643262475299582807
+      female_lead_hcg_0_2_12: 4079036938451808692
+      female_lead_hcg_0_2_13: -4310559606838389666
+      female_lead_hcg_0_2_14: 8930020600345329720
+      female_lead_hcg_0_2_15: -785210935902884932
+      female_lead_hcg_0_2_16: -64775683183165853
+      female_lead_hcg_0_2_17: -1859677378765437381
+      female_lead_hcg_0_2_18: -1833857695691583131
+      female_lead_hcg_0_2_19: 3589253238928522941
+      female_lead_hcg_0_2_2: 3910446325715967480
+      female_lead_hcg_0_2_20: 6603558668536826716
+      female_lead_hcg_0_2_21: -3887227265790856737
+      female_lead_hcg_0_2_22: 2838867699161719536
+      female_lead_hcg_0_2_23: 4170164314190541604
+      female_lead_hcg_0_2_24: 8543767618934519316
+      female_lead_hcg_0_2_25: -7648420360082247584
+      female_lead_hcg_0_2_26: -1377603760234686605
+      female_lead_hcg_0_2_27: -1838952577502632418
+      female_lead_hcg_0_2_28: -3198597833866849414
+      female_lead_hcg_0_2_29: -426712873161853748
+      female_lead_hcg_0_2_3: 4760796152532101670
+      female_lead_hcg_0_2_30: -5891691226635604452
+      female_lead_hcg_0_2_31: -2294595808988594277
+      female_lead_hcg_0_2_32: 4392972700774072066
+      female_lead_hcg_0_2_33: -5223549978355367327
+      female_lead_hcg_0_2_34: -3979785029801362921
+      female_lead_hcg_0_2_35: 6229023751505141511
+      female_lead_hcg_0_2_36: 8848886761175113
+      female_lead_hcg_0_2_37: -928086815830919805
+      female_lead_hcg_0_2_38: -8052805612633619013
+      female_lead_hcg_0_2_39: -897795903793869235
+      female_lead_hcg_0_2_4: -7957875143564488568
+      female_lead_hcg_0_2_40: -6364483248357005133
+      female_lead_hcg_0_2_41: 3942416253489526474
+      female_lead_hcg_0_2_42: -4312587525022684351
+      female_lead_hcg_0_2_43: -2412337832210280806
+      female_lead_hcg_0_2_44: -7221600935914566101
+      female_lead_hcg_0_2_45: 2968505251494197302
+      female_lead_hcg_0_2_46: 8195317106134435184
+      female_lead_hcg_0_2_47: 4129640771983336072
+      female_lead_hcg_0_2_48: 1130657284557767258
+      female_lead_hcg_0_2_49: -3895485644056376016
+      female_lead_hcg_0_2_5: -7888968258040847671
+      female_lead_hcg_0_2_50: 8406370939281319673
+      female_lead_hcg_0_2_51: -3160813868783647261
+      female_lead_hcg_0_2_52: 8285621146808141895
+      female_lead_hcg_0_2_53: -8315406142128479963
+      female_lead_hcg_0_2_54: -6688642991515682564
+      female_lead_hcg_0_2_55: 3412413687871938404
+      female_lead_hcg_0_2_56: 8221457864691097255
+      female_lead_hcg_0_2_57: 7922071902714031394
+      female_lead_hcg_0_2_58: -6002784217471137425
+      female_lead_hcg_0_2_59: 814774726400987509
+      female_lead_hcg_0_2_6: 3782993249562153513
+      female_lead_hcg_0_2_60: -539726938971975616
+      female_lead_hcg_0_2_61: -3991721948321956091
+      female_lead_hcg_0_2_62: -7173331498387008992
+      female_lead_hcg_0_2_63: 8073475713056455097
+      female_lead_hcg_0_2_64: 4075053183728042249
+      female_lead_hcg_0_2_65: -371253816755591898
+      female_lead_hcg_0_2_66: -4809351016186346780
+      female_lead_hcg_0_2_67: -3064577535837470339
+      female_lead_hcg_0_2_68: -2080998078807627909
+      female_lead_hcg_0_2_69: 4754206508586093011
+      female_lead_hcg_0_2_7: 7474654057218143903
+      female_lead_hcg_0_2_70: -8106636422953175012
+      female_lead_hcg_0_2_71: -4222328299045374393
+      female_lead_hcg_0_2_72: 4932417711342863955
+      female_lead_hcg_0_2_73: -9106396500508288646
+      female_lead_hcg_0_2_74: -8346282387824724856
+      female_lead_hcg_0_2_8: -1917319176799171963
+      female_lead_hcg_0_2_9: 5995649780705712211
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

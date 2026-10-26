@@ -121,7 +121,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8041193392339213026}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.21000208
+  m_Size: 0.2100021
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6861,7 +6861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4736134182784802893, guid: d21a3312e0967a244903cce0a0d84da7, type: 3}
       propertyPath: stageInfo
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4736134182784802893, guid: d21a3312e0967a244903cce0a0d84da7, type: 3}
       propertyPath: stageType

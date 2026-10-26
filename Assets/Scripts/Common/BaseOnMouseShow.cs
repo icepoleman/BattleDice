@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,10 +6,12 @@ using UnityEngine.EventSystems;
 public class BaseOnMouseShow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected GameObject showObj;
+    [SerializeField] protected float showDelay = 0.5f;
     [SerializeField] protected float showDuration = 0.2f;
     [SerializeField] protected float hideDuration = 0.15f;
     [SerializeField] protected Ease showEase = Ease.OutBack;
     [SerializeField] protected Ease hideEase = Ease.InBack;
+    private Coroutine showCoroutine;
 
     protected virtual void Awake()
     {
@@ -25,16 +28,45 @@ public class BaseOnMouseShow : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        Show();
+        CancelPendingShow();
+
+        if (showDelay <= 0f)
+        {
+            Show();
+            return;
+        }
+
+        showCoroutine = StartCoroutine(ShowAfterDelay());
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
+        CancelPendingShow();
         Hide();
+    }
+
+    private IEnumerator ShowAfterDelay()
+    {
+        yield return new WaitForSeconds(showDelay);
+        showCoroutine = null;
+        Show();
+    }
+
+    private void CancelPendingShow()
+    {
+        if (showCoroutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(showCoroutine);
+        showCoroutine = null;
     }
 
     public virtual void Show()
     {
+        CancelPendingShow();
+
         if (showObj == null)
         {
             return;
@@ -57,6 +89,8 @@ public class BaseOnMouseShow : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     protected virtual void OnDisable()
     {
+        CancelPendingShow();
+
         if (showObj != null)
         {
             showObj.transform.DOKill();

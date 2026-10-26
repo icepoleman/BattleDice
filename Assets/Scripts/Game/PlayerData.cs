@@ -15,7 +15,7 @@ public class PlayerData : BaseCharacterData
     {
         isPlayer = true;
         diceSides = new int[] { 1, 2, 3, 4, 5, 6 };
-        manaRollerMaxDiceCount = 6;
+        manaRollerMaxDiceCount = 8;
         wildDiceRate = 0.05f;//通用骰子機率5%
 
         //test用

@@ -35,6 +35,8 @@ public class GameUiView : MonoBehaviour
     [SerializeField] Image img_supporter;
     [SerializeField] Sprite[] supSpList;
     [SerializeField] Animator supSkillAnim_player;
+    [Header("教學")]
+    [SerializeField] Button btn_teach;
     Transform trans_enemyPos;
     Transform trans_playerPos;
     Sprite[] playerSprites;
@@ -57,6 +59,11 @@ public class GameUiView : MonoBehaviour
         btn_set.onClick.AddListener(async () =>
         {
             await UIManager.ShowCommonPanel("SetPanel");
+        });
+
+        btn_teach.onClick.AddListener(async() =>
+        {
+            await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "TeachPanel");
         });
     }
     public async Task UpdatePlayerInfo(PlayerData playerData, EnemyData enemyData)

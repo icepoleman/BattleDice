@@ -401,6 +401,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &2979159917881082167
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +690,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &3474879996326044807
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNode
   stageType: 0
-  stageInfo: Prologue1_5
+  stageInfo: H_JailerGirl_0
   completedStory: 
   lineRoot: {fileID: 0}
   linePrefab: {fileID: 0}
@@ -937,6 +943,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &4671731122489737589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1562,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &5454483172508577754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,6 +1852,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &8465130831845916323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,3 +2106,6 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
