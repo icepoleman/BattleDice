@@ -1,8 +1,8 @@
-T_JailerGirl|<color=#7A6DBD>雫</color>
-T_WolfGirl|<color=#8881B0>真琴</color>
-T_Witch|<color=#A262B5>賽蕾絲</color>
-T_Idol|<color=#DE708C>里莎</color>
-T_Warden|<color=#7597EF>史黛拉</color>
+T_JailerGirl|<color=#7E6DBA>雫</color>
+T_WolfGirl|<color=#8981B0>真琴</color>
+T_Witch|<color=#C9BDFF>賽蕾絲</color>
+T_Idol|<color=#E2718D>里莎</color>
+T_Warden|<color=#7698ED>史黛拉</color>
 T_JailerGirl_title|女獄卒
 T_WolfGirl_title|狼女
 T_Witch_title|魔女
@@ -146,3 +146,6 @@ T_Teach_Hint1|點擊可以重骰\n點數代表剩餘次數\n(每回合刷新)
 T_Teach_Hint2|右鍵骰子可以鎖定\n鎖定的骰子不會刷新\n回合結束也不會消失
 T_Teach_Hint3|剩餘鎖定骰子次數
 T_LockDice_Hint|右鍵骰子可以鎖定
+T_Affinity_EventHint|剩餘女角互動次數
+T_UnLockMax_H_Hint|好感度Lv5解鎖
+T_UnLockOther_H_Hint|??????

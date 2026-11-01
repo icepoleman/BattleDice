@@ -596,7 +596,8 @@ public class DialogueManager : MonoBehaviour
         // 從存檔獲取玩家名字
         if (GameDataManager.PlayerName != null)
         {
-            return GameDataManager.PlayerName;
+            string colorName = $"<color=#4EA3A1>{GameDataManager.PlayerName}</color>";
+            return colorName;
         }
 
         // 預設名字

@@ -139,6 +139,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &886130816252875956
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +365,6 @@ MonoBehaviour:
   btn_set: {fileID: 6483980163430978453}
   canvasGroup: {fileID: 8123456789012345001}
   fastTypingSpeed: 0.005
-  h_event: 0
   isTyping: 0
 --- !u!225 &8123456789012345001
 CanvasGroup:
@@ -692,6 +694,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &3004396459562738733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1420,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &4312280731025695995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,6 +1739,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &4563878905008679252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,7 +2061,6 @@ MonoBehaviour:
   btn_set: {fileID: 3862680035150881443}
   canvasGroup: {fileID: 8123456789012345002}
   fastTypingSpeed: 0.005
-  h_event: 0
   isTyping: 0
 --- !u!225 &8123456789012345002
 CanvasGroup:
@@ -2243,6 +2253,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &4959808777154048029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,6 +2511,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &5444623286515570028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,6 +2653,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &5538137936854211298
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,6 +2871,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &6250412549878050559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3108,6 +3130,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &6449118985880417566
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,6 +3674,9 @@ MonoBehaviour:
   effectEnabled: 1
   bounceDuration: 0.14
   bounceOvershoot: 0.06
+  floatingEnabled: 0
+  floatingAmplitude: 8
+  floatingSpeed: 1
 --- !u!1 &7706668527780369945
 GameObject:
   m_ObjectHideFlags: 0
@@ -4152,8 +4180,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279308561
-  m_fontColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -126,12 +126,14 @@ public class PreparationRoomManager : MonoBehaviour
     {
        // Debug.LogError("打開火焰效果");
         //trans_fire.transform.localPosition = new Vector3(13, -257, 0);
-        obj_fire.SetActive(true);
+        //obj_fire.SetActive(true);
+        obj_fire.transform.localScale = new Vector3(100, 100, 1);
     }
     void CloseFire()
     {
         //trans_fire.transform.localPosition = new Vector3(13, 3000, 0);
-        obj_fire.SetActive(false);
+        //obj_fire.SetActive(false);
+        obj_fire.transform.localScale = Vector3.zero;
     }
 
     void UpdateSocialPointText(int socialPoint)

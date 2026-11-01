@@ -19,7 +19,7 @@ public class EnemyConfig
         ZakoStageEnemyMap.Clear();
         EritoStageEnemyMap.Clear();
 
-        // 假資料：Zako 類型
+        // Zako 類型
         ZakoStageEnemyMap[1] = new List<int> { 1, 4 };
         ZakoStageEnemyMap[2] = new List<int> { };
         ZakoStageEnemyMap[3] = new List<int> { };
@@ -27,7 +27,7 @@ public class EnemyConfig
         ZakoStageEnemyMap[5] = new List<int> { 15, 16 };
         ZakoStageEnemyMap[6] = new List<int> { 12 };
 
-        // 假資料：Erito 類型
+        // Erito 類型
         EritoStageEnemyMap[1] = new List<int> { 3 };
         EritoStageEnemyMap[2] = new List<int> { 5 };
         EritoStageEnemyMap[3] = new List<int> { 7 };

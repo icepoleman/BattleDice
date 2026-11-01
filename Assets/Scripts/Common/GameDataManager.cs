@@ -33,7 +33,16 @@ public static class GameDataManager
     public static int TmpEnemyID { get; set; } = 0;
     public static string TmpAvgChapter { get; set; } = "Chapter1";
     public static string TmpCompletedStory { get; set; } = "";//打贏劇情(用於打完怪物後) 使用後清空
+    //遊戲進度
     public static HashSet<string> unlocked_H_Stages { get; set; } = new HashSet<string>();//已解鎖 H 關卡ID
+    public static Dictionary<string, string[]> H_Stages_Affinity { get; set; } = new Dictionary<string, string[]>
+    {
+        { "JailerGirl", new string[] { "H_JailerGirl_0","H_JailerGirl_1","H_JailerGirl_2" } },
+        { "Witch", new string[] { "H_Witch_1","H_Witch_2" } },
+        { "WolfGirl", new string[] { "H_WolfGirl_1","H_WolfGirl_2" } },
+        { "Idol", new string[] { "H_Idol_1","H_Idol_2" } },
+        { "Warden", new string[] { "H_Warden_1","H_Warden_2" } }
+    };
     public static int SocialPoint { get; set; } = 0;//社交點數 用於解鎖好感度關卡
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
@@ -156,4 +165,12 @@ public static class GameDataManager
             EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
         }
     }
+}
+public enum RoleType
+{
+    JailerGirl,
+    Witch,
+    WolfGirl,
+    Idol,
+    Warden
 }

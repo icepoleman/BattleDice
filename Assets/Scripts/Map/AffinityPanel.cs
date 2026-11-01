@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 
 public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
 {
+    [SerializeField] CanvasGroup canvasGroup;
     [Header("好感度")]
     [SerializeField] TextMeshProUGUI txt_loveValue;
     [SerializeField] Image img_loveFill;
@@ -23,14 +24,16 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
     [SerializeField] private Image img_role;
 
     [SerializeField] private Button btn_back;
-    [SerializeField] private Button btn_h_a;
-    [SerializeField] private Button btn_h_b;
-    [SerializeField] private GameObject[] obj_h_lock;
     [SerializeField] private Button btn_loveEvent;
 
     [Header("buff提示")]
     [SerializeField] GameObject obj_buffTip;
     [SerializeField] TextMeshProUGUI text_buffTip;
+
+    [Header("H回想")]
+    [SerializeField] private GameObject hEventRoot;
+    [SerializeField] private GameObject sexEventItemPrefab;
+
 
     string roleStr;
     int lastChatIndex = -1;
@@ -39,27 +42,34 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.OutCubic);
+
         GameDataManager.DreamMode = true; // 開啟回看模式測試
         btn_loveEvent.onClick.AddListener(() =>
         {
-            if (GameDataManager.SocialPoint > 0)
+            OpenSpEvent();
+        });
+    }
+
+    void OpenSpEvent()
+    {
+        if (GameDataManager.SocialPoint > 0)
+        {
+            RoleEventData eventDataList = AffinityEventConfig.GetRoleEventData(roleStr);
+            string nextSpEvent = GetNextUnseenSpEvent(eventDataList);
+            if (!string.IsNullOrEmpty(nextSpEvent))
             {
-                RoleEventData eventDataList = AffinityEventConfig.GetRoleEventData(roleStr);
-                string nextSpEvent = GetNextUnseenSpEvent(eventDataList);
-                if (!string.IsNullOrEmpty(nextSpEvent))
-                {
-                    ShowSpAffinityEvent(nextSpEvent);
-                }
-                else
-                {
-                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SpEvent_ReedALL"));
-                }
+                ShowSpAffinityEvent(nextSpEvent);
             }
             else
             {
-                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SocialPoint_notEnough"));
+                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SpEvent_ReedALL"));
             }
-        });
+        }
+        else
+        {
+            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_SocialPoint_notEnough"));
+        }
     }
 
     string GetNextUnseenSpEvent(RoleEventData eventDataList)
@@ -102,6 +112,7 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         });
         await PortraitManager.LoadRoleIfNeeded(role);
         UpdateLoveUI(role);
+        GenerateSexEventItems(role);
         /*List<AffinityStoryData> storyDataList = CSVReader.Instance.LoadAffinityStoryCSV(role);
         for (int i = 0; i < storyDataList.Count; i++)
         {
@@ -122,23 +133,6 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         });
         StartCoroutine(ShowChat());
 
-        //H固定
-        btn_h_a.onClick.AddListener(() =>
-        {
-            // 進入H關卡的事件
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "H_" + roleStr + "_1");
-        });
-        btn_h_b.onClick.AddListener(() =>
-        {
-            // 進入H關卡的事件
-            EventCenter.Dispatch(StateEvent.EVENT_ENTER_AVG, "H_" + roleStr + "_2");
-        });
-        if (roleStr == "JailerGirl")
-        {
-            obj_h_lock[0].SetActive(!GameDataManager.unlocked_H_Stages.Contains("H_JailerGirl_1"));//其他人預設開啟 只對獄卒鎖住第一個H關卡
-        }
-        obj_h_lock[1].SetActive(GameDataManager.GetRoleAffinity(role) < 100);//第二個H關卡需要滿好感才開啟
-
         switch (role)
         {
             case "JailerGirl":
@@ -158,6 +152,38 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
                 break;
         }
     }
+
+    private void GenerateSexEventItems(string role)
+    {
+        if (hEventRoot == null || sexEventItemPrefab == null ||
+            !GameDataManager.H_Stages_Affinity.TryGetValue(role, out string[] stageIds) ||
+            !System.Enum.TryParse(role, out RoleType roleType))
+        {
+            return;
+        }
+
+        foreach (string stageId in stageIds)
+        {
+            int separatorIndex = stageId.LastIndexOf('_');
+            if (separatorIndex < 0 || !int.TryParse(stageId.Substring(separatorIndex + 1), out int unlockIndex))
+            {
+                continue;
+            }
+
+            GameObject itemObject = Instantiate(sexEventItemPrefab, hEventRoot.transform);
+            SexEventItem item = itemObject.GetComponent<SexEventItem>();
+            if (item == null)
+            {
+                Destroy(itemObject);
+                continue;
+            }
+
+            bool isLocked = !GameDataManager.unlocked_H_Stages.Contains(stageId);
+            item.SetUp(isLocked, roleType, unlockIndex);
+            itemObject.SetActive(true);
+        }
+    }
+
     void UpdateLoveUI(string role)
     {
         int roleAffinity = GameDataManager.GetRoleAffinity(role);

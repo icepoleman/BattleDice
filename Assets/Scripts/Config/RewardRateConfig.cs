@@ -7,13 +7,14 @@ public class RewardRateConfig
     {
         ["Zako"] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 1f },
+            /*new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 1f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 0.15f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 0.05f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 0.6f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 0.1f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.05f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.05f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.05f },*/
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 1f },
         },
         ["Erito"] = new List<TreasureBoxReward>
         {

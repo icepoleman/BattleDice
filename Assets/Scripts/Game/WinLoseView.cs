@@ -15,8 +15,6 @@ public class WinLoseView : MonoBehaviour
     [SerializeField] GameObject img_key;
     public void SetData(bool isWin, List<TreasureBoxReward> rewards = null)
     {
-        txt_gold.gameObject.SetActive(false);
-        txt_gear.gameObject.SetActive(false);
         skillCard.gameObject.SetActive(false);
 
         if (!isWin)
@@ -43,11 +41,9 @@ public class WinLoseView : MonoBehaviour
             {
                 case TreasureBoxRewardType.Gold:
                     txt_gold.text = reward.rewardValue.ToString();
-                    txt_gold.gameObject.SetActive(true);
                     break;
                 case TreasureBoxRewardType.Gear:
                     txt_gear.text = reward.rewardValue.ToString();
-                    txt_gear.gameObject.SetActive(true);
                     break;
                 case TreasureBoxRewardType.Skill:
                     var allNotGetSkills = SkillDatabase.GetAllPlayerNotGetSkills();
@@ -57,9 +53,10 @@ public class WinLoseView : MonoBehaviour
                         break;
                     }
 
-                    var skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
+                    SkillConfigData skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
                     skillCard.SetData(skillReward, null);
                     skillCard.gameObject.SetActive(true);
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, skillReward.skillID);
                     break;
                 case TreasureBoxRewardType.Key:
                     img_key.SetActive(true);
@@ -114,7 +111,7 @@ public class WinLoseView : MonoBehaviour
                     EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, reward.rewardValue);
                     break;
                 case TreasureBoxRewardType.Skill:
-                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, reward.rewardValue);
+                    //EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, reward.rewardValue);
                     break;
                 case TreasureBoxRewardType.Key:
                     EventCenter.Dispatch(StateEvent.EVENT_GET_KEY, reward.rewardValue);

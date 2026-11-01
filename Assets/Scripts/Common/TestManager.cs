@@ -58,10 +58,12 @@ public class TestManager : MonoBehaviour
     {
         if (tog_testMode.isOn)
         {
-            for (int i = 1; i <= 34; i++)
+            int wantSkillCount = 10; // 共有 34 個技能
+            for (int i = 1; i <= wantSkillCount; i++)
             {
                 GameDataManager.HasSkillIDs.Add(i);
             }
+            GameDataManager.UnlockAffinityStage(GameDataManager.H_Stages_Affinity["JailerGirl"][0]);
         }
         // 讀取輸入框的值並更新 GameDataManager
         if (int.TryParse(inputField_map.text, out int mapValue))
