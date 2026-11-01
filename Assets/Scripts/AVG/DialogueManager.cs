@@ -28,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     [Header("快轉設定")]
     [SerializeField] private float fastForwardInterval = 0.05f; // 快轉時每行間隔時間
     private bool isFastForwarding = false;
+    private bool isHandlingSpineModel = false;
     private float fastForwardTimer = 0f;
 
     // 跳過確認彈窗
@@ -109,7 +110,8 @@ public class DialogueManager : MonoBehaviour
         if (!canSkip) return;
         ChatWindow activeChatWindow = CurrentChatWindow;
         ctrlPressed = Input.GetKey(KeyCode.LeftControl);
-        shouldFastForward = (ctrlPressed || activeChatWindow.tog_skip.isOn) && !onChoose && !isOver;
+        shouldFastForward = !isHandlingSpineModel &&
+            (ctrlPressed || activeChatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
         if (shouldFastForward)
         {
@@ -676,6 +678,23 @@ public class DialogueManager : MonoBehaviour
     /// 處理 Spine 模型的生成與刪除（toggle 模式）
     /// </summary>
     private async Task HandleSpineModel(string spineAddress)
+    {
+        isHandlingSpineModel = true;
+        isFastForwarding = false;
+        fastForwardTimer = 0f;
+        CurrentChatWindow.SetFastForwardMode(false);
+
+        try
+        {
+            await HandleSpineModelCore(spineAddress);
+        }
+        finally
+        {
+            isHandlingSpineModel = false;
+        }
+    }
+
+    private async Task HandleSpineModelCore(string spineAddress)
     {
         EventCenter.Dispatch(StateEvent.EVENT_LOADING_SCREEN, true); // 顯示加載中黑幕
         await Task.Delay(500); // 等待黑幕完全顯示

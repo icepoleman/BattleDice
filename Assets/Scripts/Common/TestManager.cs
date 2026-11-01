@@ -63,7 +63,7 @@ public class TestManager : MonoBehaviour
             {
                 GameDataManager.HasSkillIDs.Add(i);
             }
-            GameDataManager.UnlockAffinityStage(GameDataManager.H_Stages_Affinity["JailerGirl"][0]);
+            //GameDataManager.UnlockAffinityStage(GameDataManager.H_Stages_Affinity["JailerGirl"][0]);
         }
         // 讀取輸入框的值並更新 GameDataManager
         if (int.TryParse(inputField_map.text, out int mapValue))

@@ -309,7 +309,7 @@ public class GameUiView : MonoBehaviour
 
         if (enemyIsDead)
         {
-            trans_enemySkillBoxs.gameObject.SetActive(false);
+            Destroy(trans_enemySkillBoxs.gameObject);
             img_enemy.DOKill();
             img_enemy.sprite = enemySprites[HurtSpriteIndex];
             img_enemy.DOFade(0f, 2f).SetEase(Ease.OutQuad);
