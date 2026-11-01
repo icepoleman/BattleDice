@@ -156,6 +156,17 @@ public class ChatWindow : MonoBehaviour
         if (tog_auto.isOn)
             dialogueManager.AutoNextCoroutine();
     }
+    public void ClearDialogue()
+    {
+        StopAllCoroutines();
+        str_dialogue = string.Empty;
+        dialogueText.text = string.Empty;
+        nameText.text = string.Empty;
+        if (fitter != null)
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        img_done.SetActive(false);
+        isTyping = false;
+    }
     public void ShowDialogue(string speaker, string text)
     {
         // 記錄已顯示的對話（用於日誌）

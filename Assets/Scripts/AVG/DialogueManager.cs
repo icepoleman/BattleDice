@@ -760,6 +760,10 @@ public class DialogueManager : MonoBehaviour
 
         ChatWindow previousChatWindow = CurrentChatWindow;
         previousChatWindow.SetFastForwardMode(false);
+        if (state == DialogueState.SpineShow)
+        {
+            chatWindow.ClearDialogue();
+        }
         previousChatWindow.gameObject.SetActive(false);
         dialogueState = state;
         CurrentChatWindow.SetFastForwardMode(isFastForwarding);

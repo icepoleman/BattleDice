@@ -101,6 +101,7 @@ public class EndSceneManager : MonoBehaviour
             // 返回主選單
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_MENU);
         });
+        SceneLoader.HideLoadingScreen();
     }
 
     void Update()

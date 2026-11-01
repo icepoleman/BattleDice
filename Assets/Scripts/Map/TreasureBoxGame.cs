@@ -107,7 +107,6 @@ public class TreasureBoxGame : MonoBehaviour
     void Start()
     {
         SceneLoader.HideLoadingScreen();
-        GameDataManager.BackUpKey = 1;//增加備用鑰匙數量
         UpdateBackupKeyDisplay();
         diceSprites = AtlasLoader.Instance.GetAllDiceSprites();
         for (int i = 0; i < dices.Length; i++)

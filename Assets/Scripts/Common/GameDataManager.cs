@@ -13,7 +13,7 @@ public static class GameDataManager
     public static HashSet<int> HasSkillIDs { get; set; } = new HashSet<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
-    public static int EndMap { get; set; } = 2;    // 結束地圖 完成後進入結局
+    public static int EndMap { get; set; } = 3;    // 結束地圖 完成後進入結局
     private static string _currentStage;
     public static string CurrentStage
     {

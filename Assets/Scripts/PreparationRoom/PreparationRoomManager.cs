@@ -213,6 +213,7 @@ public class PreparationRoomManager : MonoBehaviour
             case 0:
                 // 初始狀態
                 isLevel_0 = true;
+                btn_shop.gameObject.SetActive(false);
                 break;
             case 1:
                 // 第一關，增加一些裝飾或特效
