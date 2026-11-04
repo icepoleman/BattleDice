@@ -13,9 +13,9 @@ public class ShopSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
     [SerializeField] TextMeshProUGUI text_skillTitle;
     [SerializeField] TextMeshProUGUI text_skillCondition_title;
     [SerializeField] TextMeshProUGUI text_skillCondition;
-    [SerializeField] TextMeshProUGUI text_skillCondition_dice;
     [SerializeField] TextMeshProUGUI text_skillEffect;
     [SerializeField] TextMeshProUGUI text_price;
+    [SerializeField] Image img_skillIcon;
 
     [Header("Buff提示")]
     [SerializeField] GameObject obj_buffTip;
@@ -28,11 +28,12 @@ public class ShopSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         skillData = _skillData;
 
         btn_card.onClick.AddListener(() => onCardClicked?.Invoke(this));
-        text_skillCondition_dice.text = "";
         text_skillCondition_title.text = LanguageManager.GetText("T_Skill_Condition_Title");
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
         text_skillEffect.text = skillData.effectText;
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        img_skillIcon.SetNativeSize();
 
         // 顯示價格
         text_price.text = skillData.price.ToString();
@@ -40,18 +41,18 @@ public class ShopSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         // 已擁有則按鈕不可點擊
         //btn_card.interactable = !isOwned;
 
-        if (skillData.requirementType == SkillRequirementType.SpecificDices)
-            BurnConditionDices();
+       /* if (skillData.requirementType == SkillRequirementType.SpecificDices)
+            BurnConditionDices();*/
     }
 
     void BurnConditionDices()
     {
-        text_skillCondition.gameObject.SetActive(false);
+       /* text_skillCondition.gameObject.SetActive(false);
         text_skillCondition_dice.text = "";
         for (int i = 0; i < skillData.needDicesData.Length; i++)
         {
             text_skillCondition_dice.text += LanguageManager.GetFormat("Shop_Skill_Condition_Dice", skillData.needDicesData[i]);
-        }
+        }*/
     }
     private int currentLinkIndex = -1;
     public void OnPointerMove(PointerEventData eventData)

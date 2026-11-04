@@ -379,7 +379,7 @@ public class CSVReader
     }
 
     // 載入敵人資料
-    // CSV 欄位: enemyId, enemyName, goldReward, gearReward, maxBlood, diceCount, skillIDs, initialBuffs
+    // CSV 欄位: enemyId, enemyName, maxBlood, diceCount, skillIDs, initialBuffs
     // skillIDs 格式: 101|102|103
     // initialBuffs 格式: buffID:usageCount:duration | buffID:usageCount:duration
     public static Dictionary<int, EnemyConfigData> LoadEnemyCSV(string fileName)
@@ -410,14 +410,14 @@ public class CSVReader
             {
                 enemyId = v.Length > 0 && !string.IsNullOrWhiteSpace(v[0]) && int.TryParse(v[0], out int enemyId) ? enemyId : 0,
                 enemyName = v.Length > 1 ? v[1] : "",
-                maxBlood = v.Length > 4 && !string.IsNullOrWhiteSpace(v[4]) ? float.Parse(v[4]) : 100f,
-                diceCount = v.Length > 5 && !string.IsNullOrWhiteSpace(v[5]) && int.TryParse(v[5], out int diceCount) ? diceCount : 2,
-                skillIDs = v.Length > 6 ? ParseIntArrayStatic(v[6]) : new int[] { },
-                initialBuffs = v.Length > 7 ? ParseBuffSeeds(v[7]) : null,
-                enemyType = v.Length > 8 ? v[8] : "Zako",
-                diceSides = v.Length > 9 ? ParseIntArrayStatic(v[9]) : new int[] { 1, 2, 3, 4, 5, 6 },
-                wildDiceRate = v.Length > 10 ? float.Parse(v[10]) : 0f,
-                openStage = v.Length > 11 && !string.IsNullOrWhiteSpace(v[11]) && int.TryParse(v[11], out int openStage) ? openStage : 0,
+                maxBlood = v.Length > 2 && !string.IsNullOrWhiteSpace(v[2]) ? float.Parse(v[2]) : 100f,
+                diceCount = v.Length > 3 && !string.IsNullOrWhiteSpace(v[3]) && int.TryParse(v[3], out int diceCount) ? diceCount : 2,
+                skillIDs = v.Length > 4 ? ParseIntArrayStatic(v[4]) : new int[] { },
+                initialBuffs = v.Length > 5 ? ParseBuffSeeds(v[5]) : null,
+                enemyType = v.Length > 6 ? v[6] : "Zako",
+                diceSides = v.Length > 7 ? ParseIntArrayStatic(v[7]) : new int[] { 1, 2, 3, 4, 5, 6 },
+                wildDiceRate = v.Length > 8 ? float.Parse(v[8]) : 0f,
+                openStage = v.Length > 9 && !string.IsNullOrWhiteSpace(v[9]) && int.TryParse(v[9], out int openStage) ? openStage : 0,
             };
 
             if (data.enemyId > 0)

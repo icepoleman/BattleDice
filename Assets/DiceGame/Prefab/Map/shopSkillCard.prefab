@@ -1258,5 +1258,6 @@ MonoBehaviour:
   text_skillCondition_dice: {fileID: 8321611880221620321}
   text_skillEffect: {fileID: 6396547525121566948}
   text_price: {fileID: 5160392731733344392}
+  img_skillIcon: {fileID: 6366465912988992391}
   obj_buffTip: {fileID: 3625216304168750279}
   text_buffTip: {fileID: 6046648447153554043}

@@ -13,7 +13,7 @@ public class SupBtn : MonoBehaviour
     private int currentCharge = 0;
     void Start()
     {
-        btn_use.onClick.AddListener(OnUseButtonClick);
+       // btn_use.onClick.AddListener(OnUseButtonClick);
     }
     public void SetSupData(SupData data)
     {
