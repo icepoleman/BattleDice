@@ -67,7 +67,6 @@ public class PreparationRoomManager : MonoBehaviour
             GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
-            shopPanel.SetUp("MajoShop");
             CloseFire();
         });
         btn_changeSkill.onClick.AddListener(async () =>

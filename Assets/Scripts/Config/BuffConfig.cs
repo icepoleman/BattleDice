@@ -23,6 +23,7 @@ public struct BuffConfigData
     public BuffEffectType buffEffectType;// 效果類型   
     public int[] effectValues;           // 效果數值列表      
     public string describe;              // Buff 效果描述
+    public bool ignoreFirstCountdown;         // 是否忽略第一次倒數
 }
 
 // Buff 配置資料庫

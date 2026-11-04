@@ -46,17 +46,16 @@ public class WinLoseView : MonoBehaviour
                     txt_gear.text = reward.rewardValue.ToString();
                     break;
                 case TreasureBoxRewardType.Skill:
-                    var allNotGetSkills = SkillDatabase.GetAllPlayerNotGetSkills();
-                    if (allNotGetSkills == null || allNotGetSkills.Count == 0)
+                    SkillConfigData? skillReward = SkillDatabase.GetRandomPlayerNotGetSkill("Event");
+                    if (skillReward == null)
                     {
                         skillCard.gameObject.SetActive(false);
                         break;
                     }
 
-                    SkillConfigData skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
-                    skillCard.SetData(skillReward, null);
+                    skillCard.SetData(skillReward.Value, null);
                     skillCard.gameObject.SetActive(true);
-                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, skillReward.skillID);
+                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, skillReward.Value.skillID);
                     break;
                 case TreasureBoxRewardType.Key:
                     img_key.SetActive(true);

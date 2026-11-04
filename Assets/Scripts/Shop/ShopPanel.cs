@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class ShopPanel : MonoBehaviour
 {
-    string shopTag = "Shop";   // 商店技能的Tag
+    string shopTag = "MajoShop";   // 商店技能的Tag
     [SerializeField] GameObject shopSkillCardPrefab;
     [SerializeField] Transform skillCardParent;
     [SerializeField] TextMeshProUGUI text_gold;
@@ -19,11 +19,11 @@ public class ShopPanel : MonoBehaviour
         RefreshGoldDisplay();
         GenerateShopItems();
     }
-    public void SetUp(string _shopTag = "MajoShop")
+   /*public void SetUp(string _shopTag = "MajoShop")
     {
         shopTag = _shopTag;
         GenerateShopItems();
-    }
+    }*/
 
     void RefreshGoldDisplay()
     {

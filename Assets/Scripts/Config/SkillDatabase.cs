@@ -1,5 +1,6 @@
 // 技能配置資料庫 - 從 CSV 載入
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class SkillDatabase
 {
@@ -26,11 +27,12 @@ public static class SkillDatabase
         SkillLocalizationHelper.LocalizeAllSkills(_skills);
     }
 
-    public static List<SkillConfigData> GetAllPlayerNotGetSkills()
+    public static List<SkillConfigData> GetAllPlayerNotGetSkills(string ignoreTag = "")
     {
         List<SkillConfigData> playerSkills = new List<SkillConfigData>();
         foreach (var skill in Skills.Values)
         {
+            if (ignoreTag != "" && skill.tag == ignoreTag) continue;
             // 排除怪物技能 已持有技能
             if (skill.skillID < 100 && !GameDataManager.HasSkillIDs.Contains(skill.skillID)) 
             {
@@ -38,6 +40,15 @@ public static class SkillDatabase
             }
         }
         return playerSkills;
+    }
+
+    public static SkillConfigData? GetRandomPlayerNotGetSkill(string ignoreTag = "")
+    {
+        List<SkillConfigData> playerSkills = GetAllPlayerNotGetSkills(ignoreTag);
+        if (playerSkills == null || playerSkills.Count == 0)
+            return null;
+
+        return playerSkills[Random.Range(0, playerSkills.Count)];
     }
 
     // 載入額外的 CSV 並合併到技能庫

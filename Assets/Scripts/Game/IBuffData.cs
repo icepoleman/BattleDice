@@ -53,6 +53,7 @@ public interface IBuffData
     void DurationDecrease(); //回合結束時減少持續時間
     void RemoveBuffEffect(ICharacterData character); // 移除 Buff 效果
     bool canRemove { get; set; }
+    bool ignoreFirstCountdown { get; set; } // 為 true 時，下一次倒數略過
 }
 public class BaseBuff : IBuffData
 {
@@ -68,6 +69,7 @@ public class BaseBuff : IBuffData
     //紀錄玩家骰子數量
     public int recordedDiceCount { get; set; } = 0;
     public bool canRemove { get; set; } = false;
+    public bool ignoreFirstCountdown { get; set; } = false;
 
     // 預設建構子
     public BaseBuff() { }
@@ -89,6 +91,7 @@ public class BaseBuff : IBuffData
         buffTrigger = config.buffTrigger;
         buffEffectType = config.buffEffectType;
         effectValues = config.effectValues != null ? new List<int>(config.effectValues) : new List<int>();
+        ignoreFirstCountdown = config.ignoreFirstCountdown;
     }
 
     public void SetBuffData(int _usageCount = 0, int _duration = 0)
@@ -123,7 +126,6 @@ public class BaseBuff : IBuffData
     protected void UseBuff(ICharacterData character)
     {
         EventCenter.Dispatch(GameEvent.EVENT_USE_BUFF, buffName, character.isPlayer);//通知使用buff
-        usageCount--;
         switch (buffEffectType)
         {
             case BuffEffectType.HP:
@@ -229,6 +231,14 @@ public class BaseBuff : IBuffData
                 Debug.LogWarning($"{buffName} 未處理的 BuffEffectType: {buffEffectType}");
                 break;
         }
+        if (buffType == BuffType.ChargeBased)
+        {
+            usageCount--;
+            if (usageCount <= 0)
+            {
+                EventCenter.Dispatch(GameEvent.EVENT_UPDATE_BUFF);
+            }
+        }
     }
     public void RemoveBuffEffect(ICharacterData character)
     {
@@ -315,6 +325,11 @@ public class BaseBuff : IBuffData
     }
     public void DurationDecrease()
     {
+        if (ignoreFirstCountdown)
+        {
+            ignoreFirstCountdown = false;
+            return;
+        }
         duration--;
     }
 }

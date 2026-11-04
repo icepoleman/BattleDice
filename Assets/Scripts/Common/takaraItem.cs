@@ -17,7 +17,6 @@ public class takaraItem : MonoBehaviour
 
     public void SetData(TreasureBoxReward reward)
     {
-        var allNotGetSkills = SkillDatabase.GetAllPlayerNotGetSkills();
         selectedReward = new TreasureBoxReward
         {
             rewardType = reward.rewardType,
@@ -27,7 +26,8 @@ public class takaraItem : MonoBehaviour
 
         if (reward.rewardType == TreasureBoxRewardType.Skill)
         {
-            if (allNotGetSkills == null || allNotGetSkills.Count == 0)
+            SkillConfigData? skillReward = SkillDatabase.GetRandomPlayerNotGetSkill("Event");
+            if (skillReward == null)
             {
                 selectedReward.rewardType = TreasureBoxRewardType.Gold;
                 selectedReward.rewardValue = 300;
@@ -35,18 +35,17 @@ public class takaraItem : MonoBehaviour
                 obj_gear.SetActive(false);
                 skillCard.gameObject.SetActive(false);
                 txt_amount.gameObject.SetActive(true);
-                txt_amount.text = "x300";
+                txt_amount.text = "300";
                 return;
             }
 
-            var skillReward = allNotGetSkills[Random.Range(0, allNotGetSkills.Count)];
             selectedReward.rewardType = TreasureBoxRewardType.Skill;
-            selectedReward.rewardValue = skillReward.skillID;
+            selectedReward.rewardValue = skillReward.Value.skillID;
             obj_gold.SetActive(false);
             obj_gear.SetActive(false);
             skillCard.gameObject.SetActive(true);
             txt_amount.gameObject.SetActive(false);
-            skillCard.SetData(skillReward, null);
+            skillCard.SetData(skillReward.Value, null);
             return;
         }
 

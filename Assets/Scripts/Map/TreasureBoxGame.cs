@@ -201,44 +201,37 @@ public class TreasureBoxGame : MonoBehaviour
     {
         levelRewardDict[1] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 4.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 1f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 0.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 2f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 1.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 0.6f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 0.4f },
         };
         levelRewardDict[2] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 4.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 50, probability = 1.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80, probability = 0.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 2f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 4, probability = 1f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 0.45f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 0.2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 0.35f },
         };
         levelRewardDict[3] = new List<TreasureBoxReward>
         {
-           new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 80, probability = 4.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 90, probability = 1.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100, probability = 0.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 5, probability = 2f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 7, probability = 1f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.5f },
+           new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 10, probability = 0.45f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 0.15F },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 0.05f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 0.2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 0.1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 3, probability = 0.05f },
         };
         levelRewardDict[4] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 100, probability = 4.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 120, probability = 1.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 150, probability = 0.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 7, probability = 2f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 10, probability = 1f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 20, probability = 0.45f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 0.15f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 50, probability = 0.05f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 0.2f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.1f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.05f },
         };
         levelRewardDict[5] = new List<TreasureBoxReward>
         {
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 15, probability = 0.5f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 9.5f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 10, probability = 0.05f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 1, probability = 0.95f },
         };
     }
 

@@ -144,6 +144,8 @@ public class GameUiView : MonoBehaviour
         }
         foreach (var buff in buffs)
         {
+            if (buff == null || !buff.CanUseBuff())
+                continue;
             GameObject buffIcon = Instantiate(prefab_buffCard, buffParent);
             buffIcon.transform.localScale = Vector3.one;
             buffIcon.transform.localPosition = Vector3.zero;

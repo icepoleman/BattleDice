@@ -175,6 +175,7 @@ public class CSVReader
             data.buffEffectType = values.Length > 3 ? ParseBuffEffectType(values[3]) : BuffEffectType.HP;
             data.effectValues = values.Length > 4 ? ParseIntArray(values[4]) : new int[] { };
             data.describe = values.Length > 5 ? values[5] : "";
+            data.ignoreFirstCountdown = values.Length > 6 ? bool.Parse(values[6]) : false;
 
             if (data.buffID > 0)
             {
