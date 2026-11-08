@@ -13,7 +13,7 @@ public class SupBtn : MonoBehaviour
     private int currentCharge = 0;
     void Start()
     {
-       // btn_use.onClick.AddListener(OnUseButtonClick);
+        btn_use.onClick.AddListener(OnUseButtonClick);
     }
     public void SetSupData(SupData data)
     {
@@ -46,8 +46,8 @@ public class SupBtn : MonoBehaviour
 
         foreach (int value in chargeValues)
         {
-            // 萬用骰 0 直接充能，其他點數需符合需求
-            if (value == BaseSkill.WILD_DICE || Array.IndexOf(supData.needDicesData, value) >= 0)
+            // 點數需符合需求
+            if (Array.IndexOf(supData.needDicesData, value) >= 0)
             {
                 if (!GameDataManager.supChargeList.TryGetValue(supData.supID, out currentCharge))
                 {

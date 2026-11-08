@@ -1,5 +1,5 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
-H_JailerGirl_1,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,Bgm_H_Room
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+H_JailerGirl_0,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,Bgm_H_Room
 ,,雫轉動一旁火把。,,,,,,,,,,
 ,,牆壁隨著震動打開了一個隱藏的空間。,,,,,shake,,,,,
 ,,空間後方的柵欄門也隨之升起。,,,,,,,,,,
@@ -66,4 +66,8 @@ H_JailerGirl_1,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,Bgm_H_Room
 ,,雫一臉狐疑，但也沒多想就到一旁做自己的事。,,,,,,,,,,
 ,,你不禁呼了一口氣。,,,,,,,,,,
 ,,畢竟...這樣可悲又可憐的性幻想，實在難以啟齒。,,,,,,,,,,
-SAVEROOM,,,,,,,,,1,,,
+SAVEROOM,,,,,,,,,1.0,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

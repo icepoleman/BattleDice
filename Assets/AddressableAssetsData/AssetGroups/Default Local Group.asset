@@ -20,6 +20,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bda8fa7fef5c6449b78b487a926c7a9
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy16_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c045a1ac682a9540831fb483613c19a
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy7_0.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c261341fd710664a8df5ec66eb203b1
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy2_2.png
     m_ReadOnly: 0
@@ -52,6 +62,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1fbbc08d9152f064bbe5b8315ddd96e5
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy4_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 228fabd45e9a6114abf524a2d1c58ffc
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy10_0.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -105,8 +120,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43206345cc40c98489c48e0b4271186e
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy10_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45647f5df823be642968dbcc8b4a7d0c
     m_Address: Assets/DiceGame_ab/Game/Prefabs/MapShopPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46bf2aa20f773274ab3806bfe0951a4a
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy8_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -135,6 +160,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d2e1c972ff89034091c6367bfc09d41
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_5_0.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4da882132b3bbd147a6725be36a3146e
     m_Address: Assets/DiceGame_ab/StageMap/Prefabs/Map_Prologue3.prefab
     m_ReadOnly: 0
@@ -155,6 +185,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b13228cd1de4cd47a8527482a73b4da
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy5_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63af7bb6ef0b9b74abfc2aec34ea97fd
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy3_0.png
     m_ReadOnly: 0
@@ -162,6 +197,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b0ac4447778b194e92b4acd121676fa
     m_Address: Assets/DiceGame_ab/Common/Prefabs/SkillDetailHint.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 719339b54c3512d48933402d11d14833
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy8_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -185,6 +225,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ae0af5b3a3a5e64385ae492e3624a92
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy10_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7bc142ede69e44a458ff7dade0c10f4b
     m_Address: Assets/DiceGame_ab/Game/Prefabs/winLosePanel.prefab
     m_ReadOnly: 0
@@ -195,8 +240,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 812c31cdef95f72439825de1fa83f7bd
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_5_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 836a16a80ed346e478107a6e9a63ba2c
     m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_witch_H.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83ab47422ccc7424fb4a1ec68bb5fd94
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy0_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -207,6 +262,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d0bfc75c67ff4642b8b315f3eb2d414
     m_Address: Assets/DiceGame_ab/Common/Prefabs/SexEventItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d5b5e8a3b79edb4c97a6732684c45db
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy16_0.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -227,6 +287,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2d46d44987d7414a9bf8bc1562cc9a3
     m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_saveHouse.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a46ae2cb44b21304598c11fc05747959
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy16_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -320,6 +385,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9bb4552c8271d64280f9a515b8fb25e
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy8_0.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd2f2b6b29aa91b459d53c58f8bf41ce
     m_Address: Assets/DiceGame_ab/AVG/Backgrounds/bg_jailGirl_H0.png
     m_ReadOnly: 0
@@ -335,8 +405,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d97595b665145474ca92a24a31bdf93e
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy7_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db5234ee45fcf514687d969f3b91968d
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy4_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df1f31f25f183fa44990c022add484d4
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy0_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -362,6 +442,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9c42a86672f89c4bbf3db1ccd676856
     m_Address: Assets/DiceGame_ab/AVG/Characters/Enemy/cookduck.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed539c04a41f9474489203d39a189e6e
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy7_1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
