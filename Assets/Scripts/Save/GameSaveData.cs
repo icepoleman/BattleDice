@@ -23,6 +23,7 @@ public class GameSaveData
     public int gold;                     // 當前金幣數量
     public int gear;                  // 當前齒輪數量(強化素材)
     public int backUpKey;                // 備用鑰匙數量
+    public int recycleCount;             // 回收骰子數量
     
     // 升級等級存儲
     public int powerUpLevel_MaxBlood;

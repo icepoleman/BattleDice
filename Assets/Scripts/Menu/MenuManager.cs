@@ -36,6 +36,40 @@ public class MenuManager : MonoBehaviour
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
         AtlasLoader.Instance.Init();
     }
+    private void Start()
+    {
+        SteamAchievementManager.Instance.UnlockAchievement("TEST_001");//test
+        btn_newGame.onClick.AddListener(OnNewGameClicked);
+        btn_exitGame.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+            Application.Quit();
+        });
+        btn_continue.onClick.AddListener(async () =>
+        {
+            GameObject loadPanel = await UIManager.ShowCommonPanel("SaveLoadPanel");
+            loadPanel.GetComponent<SaveLoadPanel>().SetUp(SaveLoadPanel.PanelType.Load);
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+        });
+        btn_setting.onClick.AddListener(async () =>
+        {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+            await UIManager.ShowCommonPanel("SetPanel");
+        });
+        btn_creator.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlaySFX("Sound_Click1");
+            creatorPanelPopup.OpenPanel();
+        });
+
+        btn_continue.interactable = SaveManager.HasAnySave();
+
+        // TEST
+        BuffDatabase.LoadFromCSV();
+
+        AudioManager.Instance.PlayBGM("Bgm_Menu");
+        SceneLoader.HideLoadingScreen();
+    }
     private void LoadSavedSettingsIfHasSave()
     {
         if (GameDataManager.isFirstOpen)
@@ -108,40 +142,6 @@ public class MenuManager : MonoBehaviour
         ChatWindow.TypingSpeed = textSpeedValues[savedIndex];
     }
 
-    private void Start()
-    {
-        btn_newGame.onClick.AddListener(OnNewGameClicked);
-        btn_exitGame.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlaySFX("Sound_Click1");
-            Application.Quit();
-        });
-        btn_continue.onClick.AddListener(async () =>
-        {
-            GameObject loadPanel = await UIManager.ShowCommonPanel("SaveLoadPanel");
-            loadPanel.GetComponent<SaveLoadPanel>().SetUp(SaveLoadPanel.PanelType.Load);
-            AudioManager.Instance.PlaySFX("Sound_Click1");
-        });
-        btn_setting.onClick.AddListener(async () =>
-        {
-            AudioManager.Instance.PlaySFX("Sound_Click1");
-            await UIManager.ShowCommonPanel("SetPanel");
-        });
-        btn_creator.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlaySFX("Sound_Click1");
-            creatorPanelPopup.OpenPanel();
-        });
-
-        btn_continue.interactable = SaveManager.HasAnySave();
-
-        // TEST
-        BuffDatabase.LoadFromCSV();
-
-        AudioManager.Instance.PlayBGM("Bgm_Menu");
-        SceneLoader.HideLoadingScreen();
-    }
-
     async void OnNewGameClicked()
     {
         anim_menu.Play("fadeOut");
@@ -155,6 +155,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;
+        GameDataManager.RecycleCount = 0;
         GameDataManager.Gear = 0;
         GameDataManager.PlayerData.keepDiceCount = 1;
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 5 }; //預設技能

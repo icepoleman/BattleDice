@@ -10,6 +10,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [SerializeField] Image diceImage;
     [SerializeField] Button diceButton;
     [SerializeField] Animator anim_lock;
+    [SerializeField] GameObject obj_diceDestroyEffect;
     Action<ManaRollerDice> clickCallback;  // 改為傳遞自己
     Action<ManaRollerDice> rightClickCallback;
     public int sideNum;
@@ -37,7 +38,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isPointerDown||isFrozen) return;
+        if (isPointerDown || isFrozen) return;
         if (!isSelected)
         {
             transform.DOKill();
@@ -47,7 +48,7 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isPointerDown||isFrozen) return;
+        if (isPointerDown || isFrozen) return;
         transform.DOKill();
         transform.DOScale(1f, 0.15f).SetEase(Ease.OutQuad);
     }
@@ -179,5 +180,16 @@ public class ManaRollerDice : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public bool IsFrozen()
     {
         return isFrozen;
+    }
+
+    public void PlayDestroyEffect()
+    {
+        if (obj_diceDestroyEffect == null) return;
+
+        GameObject effect = Instantiate(obj_diceDestroyEffect);
+        effect.transform.position = transform.position;
+        effect.transform.localScale = new Vector3(1f, 1f, 1f);
+        Destroy(effect, 2f);
+        Destroy(gameObject); // 銷毀骰子物件
     }
 }

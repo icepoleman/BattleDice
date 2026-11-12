@@ -14,6 +14,13 @@ public static class GameDataManager
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
     public static int EndMap { get; set; } = 3;    // 結束地圖 完成後進入結局
+    public const int RecycleMaxCount = 5;
+    private static int recycleCount;
+    public static int RecycleCount
+    {
+        get => recycleCount;
+        set => recycleCount = Math.Max(0, Math.Min(value, RecycleMaxCount));
+    }
     private static string _currentStage;
     public static string CurrentStage
     {

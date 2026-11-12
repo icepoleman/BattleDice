@@ -8,7 +8,7 @@ public class SupBtn : MonoBehaviour
     [SerializeField] private TMP_Text chargeTxt;
     [SerializeField] private Slider chargeSlider;
     [SerializeField] private Button btn_use;
-
+    [SerializeField] private TMP_Text txt_skillDes;
     private SupData supData;
     private int currentCharge = 0;
     void Start()
@@ -18,6 +18,7 @@ public class SupBtn : MonoBehaviour
     public void SetSupData(SupData data)
     {
         supData = data;
+        txt_skillDes.text = LanguageManager.GetText("T_SupPowerUp_" + supData.supID);
         currentCharge = supData != null && supData.supID != null &&
             GameDataManager.supChargeList.TryGetValue(supData.supID, out int savedCharge)
                 ? savedCharge

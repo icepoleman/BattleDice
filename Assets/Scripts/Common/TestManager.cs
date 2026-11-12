@@ -92,6 +92,7 @@ public class TestManager : MonoBehaviour
         GameDataManager.PlayerData.skillIDs = new List<int>() { 1, 2 }; //預設技能
         GameDataManager.PlayerData.diceCount = 6;
         GameDataManager.PlayerData.maxRollCount = 5;
+        GameDataManager.PlayerData.keepDiceCount = 3;
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
     }
     private void EnterHEvent(int index)

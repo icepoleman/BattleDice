@@ -45,6 +45,10 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
     [SerializeField] TextMeshProUGUI text_buffTip;
     List<Sprite> diceSprites = new List<Sprite>();
     [SerializeField] Material diceMtl;
+    [Header("回收骰子")]
+    private int recycleMaxCount = GameDataManager.RecycleMaxCount;
+    [SerializeField] TextMeshProUGUI text_recycleCount;
+    [SerializeField] Button btn_recycleDiceBag;
 
     void Awake()
     {
@@ -66,6 +70,8 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
 
         btn_roll.onClick.AddListener(() => { RollDices(); });//擲骰子
         btn_turnEnd.onClick.AddListener(() => { EventCenter.Dispatch(GameEvent.EVENT_CLICK_TURN_END); });//結束回合
+        btn_recycleDiceBag.onClick.AddListener(OnRecycleDiceBagClicked);
+        UpdateRecycleCountUI();
 
         BtnMode(manaRollerMode.Off);
         isOpen = true;
@@ -164,6 +170,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
         maxFreezeCount = _keepDiceCount;
         text_freezeCount.text = maxFreezeCount.ToString();
         maxDiceCount = GameDataManager.PlayerData.manaRollerMaxDiceCount;
+        UpdateRecycleCountUI();
 
         foreach (var sideNum in _dices)
         {
@@ -197,6 +204,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
                 break;
         }
         currentMode = mode;
+        UpdateRecycleCountUI();
     }
 
     bool firstSetSkill = false;
@@ -270,7 +278,51 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
         {
             Destroy(child.gameObject);
         }
+        UpdateRecycleCountUI();
     }
+
+    public void RecycleUnfrozenDices()
+    {
+        for (int i = manaDiceList.Count - 1; i >= 0; i--)
+        {
+            ManaRollerDice dice = manaDiceList[i];
+            if (dice.IsFrozen())
+            {
+                continue;
+            }
+            dice.PlayDestroyEffect();
+            manaDiceList.RemoveAt(i);
+            GameDataManager.RecycleCount++;
+        }
+
+        UpdateRecycleCountUI();
+    }
+
+    public void OnRecycleDiceBagClicked()
+    {
+        if (!CanUseRecycleDiceBag())
+        {
+            return;
+        }
+
+        EventCenter.Dispatch(GameEvent.EVENT_GENERATE_MANA_DICE, new int[] { 0 }, 1);
+        GameDataManager.RecycleCount = 0;
+        UpdateRecycleCountUI();
+    }
+
+    void UpdateRecycleCountUI()
+    {
+        text_recycleCount.text = $"{GameDataManager.RecycleCount}/{recycleMaxCount}";
+        btn_recycleDiceBag.interactable = CanUseRecycleDiceBag();
+    }
+
+    bool CanUseRecycleDiceBag()
+    {
+        return currentMode == manaRollerMode.Idle
+            && manaDiceList.Count < maxDiceCount
+            && GameDataManager.RecycleCount == recycleMaxCount;
+    }
+
     bool CanFreezeDice()
     {
         return freezeCount < maxFreezeCount;
@@ -328,11 +380,12 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
 
         foreach (var dice in toRemove)
         {
+            dice.PlayDestroyEffect();
             manaDiceList.Remove(dice);
-            Destroy(dice.gameObject);
         }
 
         text_freezeCount.text = (maxFreezeCount - freezeCount).ToString();
+        UpdateRecycleCountUI();
     }
 
     /// <summary>
@@ -393,6 +446,7 @@ public class ManaRoller : MonoBehaviour, IPointerMoveHandler, IPointerExitHandle
             , diceMtl
         );
         manaDiceList.Add(diceScript);
+        UpdateRecycleCountUI();
     }
     #region BUFF說明的Tooltip
     private int currentLinkIndex = -1;

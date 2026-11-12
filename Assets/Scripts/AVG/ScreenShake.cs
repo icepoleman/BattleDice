@@ -8,6 +8,7 @@ public class ScreenShake : MonoBehaviour
     private Vector3 originalLocalPosition;
     private Vector2 originalAnchoredPosition;
     private RectTransform rectTransform;
+    [SerializeField] private AnimationCurve shakeCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 
     private void Awake()
     {
@@ -78,7 +79,8 @@ public class ScreenShake : MonoBehaviour
 
         while (elapsed < duration)
         {
-            float decay = Mathf.Clamp01(1f - (elapsed / duration));
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float decay = shakeCurve.Evaluate(progress);
             Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * strength * decay;
 
             if (rectTransform != null)

@@ -578,6 +578,7 @@ public class DiceGame : MonoBehaviour
     {
         playerData.TurnEndBuffDecrease();
         Debug.Log("Turn End button clicked");
+        manaRoller.RecycleUnfrozenDices();
         manaRoller.BtnMode(manaRollerMode.Off);
         ChangeState(TurnState.enemyTurn);
     }

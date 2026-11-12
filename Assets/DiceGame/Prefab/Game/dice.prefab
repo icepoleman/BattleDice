@@ -446,7 +446,7 @@ RectTransform:
   m_GameObject: {fileID: 5558608361617925205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99935997, y: 0.99935997, z: 0.99935997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2764476040008988093}
@@ -556,6 +556,7 @@ MonoBehaviour:
   diceImage: {fileID: 2438794493528653480}
   diceButton: {fileID: -6422941426565087033}
   anim_lock: {fileID: 4430151078830129912}
+  obj_diceDestroyEffect: {fileID: 1429954232896169633, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
   sideNum: 0
   isSelected: 0
   diceSprites:

@@ -253,6 +253,7 @@ public static class SaveManager
         currentSave.gold = GameDataManager.Gold;
         currentSave.gear = GameDataManager.Gear;
         currentSave.backUpKey = GameDataManager.BackUpKey;
+        currentSave.recycleCount = GameDataManager.RecycleCount;
         
         // 存儲升級等級
         currentSave.powerUpLevel_MaxBlood = GameDataManager.GetPowerUpLevel(PowerUpType.MaxBlood);
@@ -298,6 +299,7 @@ public static class SaveManager
                 GameDataManager.Gold = currentSave.gold;
                 GameDataManager.Gear = currentSave.gear;
                 GameDataManager.BackUpKey = currentSave.backUpKey;
+                GameDataManager.RecycleCount = currentSave.recycleCount;
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
                 
                 // 讀取升級等級
