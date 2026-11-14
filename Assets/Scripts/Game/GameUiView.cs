@@ -270,7 +270,7 @@ public class GameUiView : MonoBehaviour
         _instFlyText.transform.localScale = Vector3.one;
 
         Text textMesh = _instFlyText.GetComponent<Text>();
-        if (damage > 0)
+        if (damage >= 0)
             textMesh.text = "-" + damage.ToString();
         else
             textMesh.text = "+" + (-damage).ToString();

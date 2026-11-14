@@ -165,6 +165,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.charactersAffinity = new int[] { 0, 0, 0, 0 };//角色親密度歸零
         GameDataManager.SocialPoint = 0;//社交點數歸零
         GameDataManager.unlockedAffinityStages.Clear();//解鎖的親密度關卡
+        GameDataManager.BackUpKey = 1;
 
         await UIManager.ShowCommonPanel("ChangeNamePanel");
     }

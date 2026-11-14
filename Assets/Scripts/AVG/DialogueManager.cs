@@ -238,7 +238,6 @@ public class DialogueManager : MonoBehaviour
                 return;
             case "SAVEROOM":
                 isOver = true;
-                GameDataManager.SafeRoomLevel = int.Parse(dialogueDatas[pageIndex].Flag);
                 EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
                 return;
             case "DIE":

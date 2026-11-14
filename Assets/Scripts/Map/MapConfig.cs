@@ -9,13 +9,6 @@ public static class MapConfig
         "Map_Prologue2",        // 魔女
         "Map_Prologue3",        // 狼女
     };
-    public static int[] MapChapter = new int[]//地圖章節
-    {
-        1,
-        1, 
-        1, 
-        2,
-    };
     //关卡名称
     public static readonly string[] StageNames = new string[]
     {

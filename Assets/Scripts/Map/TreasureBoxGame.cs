@@ -12,7 +12,7 @@ public class TreasureBoxGame : MonoBehaviour
     [SerializeField] private Button btn_up;
     [SerializeField] private Button btn_down;
     [SerializeField] private GameObject[] lastPointList;
-
+    [SerializeField] private Button btn_hint;
     [Header("獎勵")]
     [SerializeField] private takaraItem[] takaraItems;
     [SerializeField] private Button btn_getReward;
@@ -28,6 +28,7 @@ public class TreasureBoxGame : MonoBehaviour
     [SerializeField] private ParticleSystem brokenKeyParticle;
     [Header("Anim")]
     [SerializeField] private Animator anim_takara;
+
     private int backupKey = 0;
     private Vector3[] levelKeyPositions = new Vector3[5]
     {
@@ -116,6 +117,7 @@ public class TreasureBoxGame : MonoBehaviour
         SetInitialRollPoint();
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
+        btn_hint.onClick.AddListener(async () => await UIManager.ShowCommonPanel("TBoxTeachPanel"));
         btn_getReward.onClick.AddListener(ClaimReward);
         SetLevelRewardDict();
         currentLevel = 1;
@@ -134,7 +136,6 @@ public class TreasureBoxGame : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
         // 重新生成備用鑰匙顯示
         for (int i = 0; i < GameDataManager.BackUpKey; i++)
         {
@@ -351,6 +352,11 @@ public class TreasureBoxGame : MonoBehaviour
         {
             OnWin();
         }
+        else if (GameDataManager.BackUpKey > 0)
+        {
+            OnLose();
+            yield break;
+        }
         else
         {
             OnLose();
@@ -434,9 +440,25 @@ public class TreasureBoxGame : MonoBehaviour
     {
         if (GameDataManager.BackUpKey > 0)
         {
-            GameDataManager.BackUpKey--;
-            EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_BrokenKey"));
-            UpdateBackupKeyDisplay();
+            ConfirmPanel panel = await UIManager.ShowConfirmPanel(
+                LanguageManager.GetText("T_UseKeyCheck"),
+                () =>
+                {
+                    GameDataManager.BackUpKey--;
+                    EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_BrokenKey"));
+                    UpdateBackupKeyDisplay();
+                    isRolling = false;
+                    btn_up.interactable = true;
+                    btn_down.interactable = true;
+                },
+                () => EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP));
+
+            if (panel == null)
+            {
+                isRolling = false;
+                btn_up.interactable = true;
+                btn_down.interactable = true;
+            }
             return;
         }
         btn_getReward.interactable = false;

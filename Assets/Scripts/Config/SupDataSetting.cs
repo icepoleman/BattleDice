@@ -37,7 +37,7 @@ public class SupDataSetting
     }
     public bool IsSupUnlocked(string supID)
     {
-        int nowChapter = MapConfig.MapChapter[GameDataManager.CurrentMap];//依照章節進度解鎖
+        int nowChapter = GameDataManager.GetChapterIndex();//依照章節進度解鎖
         Debug.LogError(nowChapter);
         int unlockLimit = 0;
         switch(supID)

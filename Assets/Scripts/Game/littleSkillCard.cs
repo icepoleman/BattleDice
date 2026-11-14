@@ -1,104 +1,101 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
-using TMPro;
 
-public class littleSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHandler
+public class littleSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] TextMeshProUGUI text_infoTitle;
-    [SerializeField] TextMeshProUGUI text_skillEffect;
     public ISkillData skillData;
-
-    [SerializeField] GameObject obj_buffTip;
-    [SerializeField] TextMeshProUGUI text_buffTip;
-    private int currentLinkIndex = -1;
-    [SerializeField] GameObject obj_chooseVfx;
+    private const float HOVER_SHOW_DELAY = 0.3f;
+    private Coroutine hoverShowCoroutine;
+    private bool hasDispatchedThisHover;
+    private Canvas rootCanvas;
+    [SerializeField] Material chooseMt;
     [SerializeField] Image img_skillIcon;
+
     public void SetData(ISkillData _skillData)
     {
         skillData = _skillData;
-        text_infoTitle.text = skillData.skillName;
-        text_skillEffect.text += LanguageManager.GetText("T_skill_condition_title");
-        text_skillEffect.text += "\n" + skillData.conditionText;
-        text_skillEffect.text += "\n" + LanguageManager.GetText("T_skill_effect_title");
-        text_skillEffect.text += "\n" + skillData.effectText;
         img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
     }
+
     public int GetSkillID()
     {
         return skillData.skillID;
     }
+
     //技能開關   
     public void SkillSwitch(bool isOn)
     {
         //img_skillIcon.color = isOn ? Color.white : Color.gray;
         //可以加特效
-        obj_chooseVfx.SetActive(isOn);
+        img_skillIcon.material = isOn ? chooseMt : null;
     }
-     #region BUFF說明的Tooltip
-    public void OnPointerMove(PointerEventData eventData)
+
+    private void OnDisable()
     {
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(
-            text_skillEffect,
-            eventData.position,
-            eventData.enterEventCamera
-        );
-
-        if (linkIndex != -1)
+        if (hasDispatchedThisHover)
         {
-            if (linkIndex != currentLinkIndex)
-            {
-                currentLinkIndex = linkIndex;
-                TMP_LinkInfo linkInfo = text_skillEffect.textInfo.linkInfo[linkIndex];
-                string linkId = linkInfo.GetLinkID();
-
-                // 取得 link 在文字中的位置（使用第一個字符的位置）
-                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
-                TMP_CharacterInfo charInfo = text_skillEffect.textInfo.characterInfo[firstCharIndex];
-                Vector3 charWorldPos = text_skillEffect.transform.TransformPoint(charInfo.topLeft);
-
-                ShowTooltip(linkId, charWorldPos);
-            }
+            EventCenter.Dispatch(GameEvent.EVENT_HIDE_SKILL_DETAIL);
         }
-        else
-        {
-            if (currentLinkIndex != -1)
-            {
-                currentLinkIndex = -1;
-                HideTooltip();
-            }
-        }
+
+        CancelHoverShow();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        CancelHoverShow();
+        hasDispatchedThisHover = false;
+        hoverShowCoroutine = StartCoroutine(ShowSkillDetailAfterDelay());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        currentLinkIndex = -1;
-        HideTooltip();
+        CancelHoverShow();
+        EventCenter.Dispatch(GameEvent.EVENT_HIDE_SKILL_DETAIL);
     }
 
-    /// <summary>
-    /// 顯示彈窗
-    /// </summary>
-    /// <param name="linkId">link 標籤的 ID，可用於識別要顯示的內容</param>
-    /// <param name="position">link 的世界座標位置</param>
-    void ShowTooltip(string linkId, Vector3 _position)
+    private IEnumerator ShowSkillDetailAfterDelay()
     {
-        obj_buffTip.SetActive(true);
-        BuffConfigData buffData = BuffDatabase.GetBuffConfig(int.Parse(linkId));
-        text_buffTip.text = buffData.describe;
+        yield return new WaitForSeconds(HOVER_SHOW_DELAY);
 
-        // 在 link 上方顯示
-        //Vector3 tipPosition = _position + new Vector3(1.25F, 0.25f, 0);
-        //obj_buffTip.transform.position = tipPosition;
+        if (hasDispatchedThisHover)
+        {
+            yield break;
+        }
 
-        //Debug.Log($"Show Tooltip: {linkId} at {tipPosition}");
+        hasDispatchedThisHover = true;
+        Vector2 screenPos = GetCardScreenPosition();
+        EventCenter.Dispatch(GameEvent.EVENT_SHOW_SKILL_DETAIL, GetSkillID(), screenPos);
     }
 
-    void HideTooltip()
+    private Vector2 GetCardScreenPosition()
     {
-        Debug.Log("Hide Tooltip");
-        obj_buffTip.SetActive(false);
+        RectTransform cardRect = transform as RectTransform;
+
+        if (rootCanvas == null)
+        {
+            rootCanvas = GetComponentInParent<Canvas>();
+        }
+
+        Camera uiCamera = null;
+        if (rootCanvas != null && rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            uiCamera = rootCanvas.worldCamera != null ? rootCanvas.worldCamera : Camera.main;
+        }
+
+        Vector3 worldPos = cardRect != null ? cardRect.TransformPoint(cardRect.rect.center) : transform.position;
+        return RectTransformUtility.WorldToScreenPoint(uiCamera, worldPos);
     }
-    #endregion
+
+    private void CancelHoverShow()
+    {
+        if (hoverShowCoroutine != null)
+        {
+            StopCoroutine(hoverShowCoroutine);
+            hoverShowCoroutine = null;
+        }
+
+        hasDispatchedThisHover = false;
+    }
 }

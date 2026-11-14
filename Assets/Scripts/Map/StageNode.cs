@@ -219,20 +219,24 @@ public class StageNode : MonoBehaviour
                  }*/
                 break;
         }
-        if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
-        {
-            nodeButton.interactable = true;
-            stageImage.color = Color.white;
-            mouseEffect.EffectEnabled = true;
-            mouseOutline.EffectEnabled = true;
-        }
-        else
-        {
-            bool isOpen = currentState == StageState.Unlocked;
-            nodeButton.interactable = isOpen;
-            mouseEffect.EffectEnabled = isOpen;
-            mouseOutline.EffectEnabled = isOpen;
-        }
+        /* if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
+         {
+             nodeButton.interactable = true;
+             stageImage.color = Color.white;
+             mouseEffect.EffectEnabled = true;
+             mouseOutline.EffectEnabled = true;
+         }
+         else
+         {
+             bool isOpen = currentState == StageState.Unlocked;
+             nodeButton.interactable = isOpen;
+             mouseEffect.EffectEnabled = isOpen;
+             mouseOutline.EffectEnabled = isOpen;
+         }*/
+        bool isOpen = currentState == StageState.Unlocked;
+        nodeButton.interactable = isOpen;
+        mouseEffect.EffectEnabled = isOpen;
+        mouseOutline.EffectEnabled = isOpen;
     }
 
     void OnNodeClick()
@@ -250,12 +254,12 @@ public class StageNode : MonoBehaviour
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, int.Parse(stageInfo));
                     break;
                 case StageType.Battle_Hard:
-                    List<int> enemyIds_Erito = EnemyConfig.Instance.GetEnemyIDs("Erito", MapConfig.MapChapter[GameDataManager.CurrentMap]);
+                    List<int> enemyIds_Erito = EnemyConfig.Instance.GetEnemyIDs("Erito", GameDataManager.GetChapterIndex());
                     int randomEritoId = enemyIds_Erito[UnityEngine.Random.Range(0, enemyIds_Erito.Count)];
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomEritoId);
                     break;
                 case StageType.Battle:
-                    List<int> enemyIds_Zako = EnemyConfig.Instance.GetEnemyIDs("Zako", MapConfig.MapChapter[GameDataManager.CurrentMap]);
+                    List<int> enemyIds_Zako = EnemyConfig.Instance.GetEnemyIDs("Zako", GameDataManager.GetChapterIndex());
                     int randomZakoId = enemyIds_Zako[UnityEngine.Random.Range(0, enemyIds_Zako.Count)];
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomZakoId);
                     break;

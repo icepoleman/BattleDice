@@ -906,4 +906,12 @@ public class DiceGame : MonoBehaviour
         GameDataManager.CurrentStage = GameDataManager.PreparationRoomStage;//傳回整備室
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_PREPARATION_ROOM);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            enemyData.RollDice();
+        }
+    }
 }

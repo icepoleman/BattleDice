@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using UniRx;
+using DG.Tweening;
 public class PreparationRoomManager : MonoBehaviour
 {
     [SerializeField] Button btn_powerUp;
@@ -24,6 +25,8 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] Image img_switch; // 開關的Image，用於顯示開關狀態
     [SerializeField] Sprite[] spSwitch; // 開關打開的Sprite
     [SerializeField] EventTrigger doorEventTrigger; // 用於觸發鐵門開啟的事件
+    [SerializeField] GameObject obj_leaveCheck;
+    [SerializeField] GameObject obj_clickBlocker; // 點擊阻擋物件，防止在鐵門開啟時點擊其他UI
     [Header("火焰效果")]
     [SerializeField] GameObject obj_fire; //火焰效果
     [SerializeField] Transform trans_fire;
@@ -47,6 +50,8 @@ public class PreparationRoomManager : MonoBehaviour
     [SerializeField] float doorMoveDuration = 0.5f;
     [SerializeField] float doorOpenedMoveDuration = 1f;
 
+    const float LeaveCheckScaleDuration = 0.2f;
+
     void Start()
     {
         PreLoadAssets();
@@ -54,11 +59,6 @@ public class PreparationRoomManager : MonoBehaviour
         ChangeDoorState(DoorState.Closed);
         btn_powerUp.onClick.AddListener(() =>
         {
-            if (isLevel_0)
-            {
-                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Level0_Hint"));
-                return;
-            }
             Instantiate(powerUpPanelPrefab, transform);
             CloseFire();
         });
@@ -71,11 +71,6 @@ public class PreparationRoomManager : MonoBehaviour
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
-            if (isLevel_0)
-            {
-                EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetText("T_Level0_Hint"));
-                return;
-            }
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
             CloseFire();
         });
@@ -98,6 +93,7 @@ public class PreparationRoomManager : MonoBehaviour
         }
 
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
+        GameDataManager.GetChapterIndex();
         OpenLevel(GameDataManager.SafeRoomLevel);
         Observable.EveryUpdate()
             .Select(_ => GameDataManager.SocialPoint)
@@ -123,7 +119,7 @@ public class PreparationRoomManager : MonoBehaviour
 
     void OnOpenFire(object[] args)
     {
-       // Debug.LogError("打開火焰效果");
+        // Debug.LogError("打開火焰效果");
         //trans_fire.transform.localPosition = new Vector3(13, -257, 0);
         //obj_fire.SetActive(true);
         obj_fire.transform.localScale = new Vector3(100, 100, 1);
@@ -168,13 +164,7 @@ public class PreparationRoomManager : MonoBehaviour
 
         AddDoorTriggerEntry(EventTriggerType.PointerClick, _ =>
         {
-            if (isDoorOpenedLocked)
-            {
-                return;
-            }
-
-            isDoorOpenedLocked = true;
-            ChangeDoorState(DoorState.Opened);
+            ShowLeaveCheck();
         });
 
         AddDoorTriggerEntry(EventTriggerType.PointerExit, _ =>
@@ -204,14 +194,11 @@ public class PreparationRoomManager : MonoBehaviour
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ChangeSkillPanel" + ".prefab");
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "AffinityPanel" + ".prefab");
     }
-    bool isLevel_0 = false;
     void OpenLevel(int level)
     {
         switch (level)
         {
             case 0:
-                // 初始狀態
-                isLevel_0 = true;
                 btn_shop.gameObject.SetActive(false);
                 break;
             case 1:
@@ -258,13 +245,6 @@ public class PreparationRoomManager : MonoBehaviour
         GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
         SaveManager.AutoSave();
         EventCenter.Dispatch(StateEvent.EVENT_ENTER_MAP, GameDataManager.CurrentMap);
-
-        //GameDataManager.SafeRoomLevel=100 todo 多一個gameover結局
-        if (GameDataManager.SafeRoomLevel == 100)
-        {
-            // 處理特殊結局邏輯
-            GameDataManager.SafeRoomLevel = 0;//重置等級以免影響正常遊戲流程
-        }
     }
     void ChangeDoorState(DoorState state)
     {
@@ -344,5 +324,35 @@ public class PreparationRoomManager : MonoBehaviour
         img_doorIron.localPosition = endPos;
         doorMoveCoroutine = null;
         onComplete?.Invoke();
+    }
+    public void OnLeaveCheckConfirm()
+    {
+        HideLeaveCheck();
+        // OnOpenFire(null);
+        isDoorOpenedLocked = true;
+        obj_clickBlocker.SetActive(true);
+        ChangeDoorState(DoorState.Opened);
+    }
+    public void OnLeaveCheckCancel()
+    {
+        HideLeaveCheck();
+        // OnOpenFire(null);
+    }
+
+    void ShowLeaveCheck()
+    {
+        Transform leaveCheckTransform = obj_leaveCheck.transform;
+        leaveCheckTransform.DOKill();
+        obj_leaveCheck.SetActive(true);
+        leaveCheckTransform.localScale = Vector3.zero;
+        leaveCheckTransform.DOScale(Vector3.one, LeaveCheckScaleDuration);
+    }
+
+    void HideLeaveCheck()
+    {
+        Transform leaveCheckTransform = obj_leaveCheck.transform;
+        leaveCheckTransform.DOKill();
+        leaveCheckTransform.DOScale(Vector3.zero, 0f)
+            .OnComplete(() => obj_leaveCheck.SetActive(false));
     }
 }

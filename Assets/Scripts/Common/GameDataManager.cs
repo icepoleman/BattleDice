@@ -14,7 +14,7 @@ public static class GameDataManager
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
     public static int EndMap { get; set; } = 3;    // 結束地圖 完成後進入結局
-    public const int RecycleMaxCount = 5;
+    public const int RecycleMaxCount = 20;
     private static int recycleCount;
     public static int RecycleCount
     {
@@ -88,6 +88,26 @@ public static class GameDataManager
                 break;
         }
         EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_AffinityIncrease", affinityIncrease));
+    }
+    public static int GetChapterIndex()
+    {
+        int chapterIndex = 0;
+        if (CurrentMap < 3)
+        {
+            chapterIndex = 1;
+            SafeRoomLevel = 1;
+        }
+        else if (CurrentMap < 6)
+        {
+            chapterIndex = 2;
+            SafeRoomLevel = 2;
+        }
+        else if (CurrentMap >= 7)
+        {
+            chapterIndex = 3;
+            SafeRoomLevel = 3;
+        }
+        return chapterIndex;
     }
     public static int GetRoleAffinity(string role)
     {

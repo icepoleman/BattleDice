@@ -161,7 +161,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d2e1c972ff89034091c6367bfc09d41
-    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_5_0.png
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy5_0.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 812c31cdef95f72439825de1fa83f7bd
-    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy_5_2.png
+    m_Address: Assets/DiceGame_ab/Game/Sprites/enemy5_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -292,6 +292,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a46ae2cb44b21304598c11fc05747959
     m_Address: Assets/DiceGame_ab/Game/Sprites/enemy16_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a477b1701bf15854a86079f2f29357ca
+    m_Address: Assets/DiceGame_ab/Common/Prefabs/TBoxTeachPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

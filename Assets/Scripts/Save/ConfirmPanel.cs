@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class ConfirmPanel : MonoBehaviour
 {
     [SerializeField] TMPro.TextMeshProUGUI txt_hint;
@@ -9,7 +9,12 @@ public class ConfirmPanel : MonoBehaviour
     public void SetUp(string message, System.Action onConfirm, System.Action onCancel = null)
     {
         txt_hint.text = message;
-        btn_confirm.onClick.AddListener(() => {onConfirm?.Invoke(); Destroy(this.gameObject); });
+        btn_confirm.onClick.AddListener(() => { onConfirm?.Invoke(); Destroy(this.gameObject); });
         btn_cancel.onClick.AddListener(() => { onCancel?.Invoke(); Destroy(this.gameObject); });
+    }
+    void Start()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.OutBack);
     }
 }

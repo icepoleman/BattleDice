@@ -74,8 +74,8 @@ T_Skill_generateDices_randomDice|生成{0}個隨機骰
 T_Skill_Effect_Sp_6|抵擋一次攻擊
 T_Skill_Effect_Sp_17|抵擋一次攻擊，<link="7"><sprite name="Buff_7"></link>x3回合
 T_Skill_Effect_Sp_25|造成<color=#FF1700>50</color>點傷害，對方處於<link="2"><sprite name="Buff_2"></link>狀態則傷害加倍
-T_Skill_Effect_Sp_30|造成<color=#FF1700>30</color>點傷害，隨機造成異常狀態
-T_Skill_Effect_Sp_31|消耗<link="1"><sprite name="Buff_1"></link>，造成30×剩餘回合傷害
+T_Skill_Effect_Sp_30|造成<color=#FF1700>20</color>點傷害，隨機造成異常狀態
+T_Skill_Effect_Sp_31|消耗<link="1"><sprite name="Buff_1"></link>，造成20+20×剩餘回合傷害
 T_Skill_Effect_Sp_34|造成<color=#FF1700>50</color>點傷害，奪取對方所有狀態並轉化為自身狀態
 T_AffinityIncrease|好感度增加 {0} 點
 T_Setting|設定
@@ -153,8 +153,17 @@ T_SupPowerUp_Idol_5|消耗-25，<link="3"><sprite name="Buff_3"></link>x1回合
 T_Teach_Hint1|點擊可以重骰\n點數代表剩餘次數\n(每回合刷新)
 T_Teach_Hint2|右鍵骰子可以鎖定\n鎖定的骰子不會刷新\n回合結束也不會消失
 T_Teach_Hint3|剩餘鎖定骰子次數
+T_Teach_Hint4|點擊箭頭猜下次骰出點數\n大於小於當前數字\n猜對解鎖更多獎勵!!\n但猜錯就一無所有
+T_Teach_Hint5|點擊寶箱能直接領取當前解出的所有獎勵
+T_Teach_Hint6|如果有蒐集到備用解鎖工具會顯示在左上角\n(使用能接續解鎖)
 T_LockDice_Hint|右鍵骰子可以鎖定
 T_Affinity_EventHint|剩餘女角互動次數
 T_UnLockMax_H_Hint|好感度Lv5解鎖
 T_UnLockOther_H_Hint|??????
 T_WasteDiceBag_Hint|回收骰子，集滿按下生成萬能骰
+T_BuyCheck_yes|購買
+T_Canel|取消
+T_yes|是
+T_no|否
+T_LeaveCheck|離開後無法返回\n是否離開?
+T_UseKeyCheck|是否消耗備用鑰匙接續解鎖?
