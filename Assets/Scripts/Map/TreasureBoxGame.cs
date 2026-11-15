@@ -118,6 +118,11 @@ public class TreasureBoxGame : MonoBehaviour
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
         btn_hint.onClick.AddListener(async () => await UIManager.ShowCommonPanel("TBoxTeachPanel"));
+        if(GameDataManager.isFirstOpenTreasureBox)
+        {
+            GameDataManager.isFirstOpenTreasureBox = false;
+            btn_hint.onClick.Invoke();
+        }
         btn_getReward.onClick.AddListener(ClaimReward);
         SetLevelRewardDict();
         currentLevel = 1;

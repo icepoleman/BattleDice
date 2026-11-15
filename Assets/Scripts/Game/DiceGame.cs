@@ -659,8 +659,9 @@ public class DiceGame : MonoBehaviour
             //gameUiView.CreateFlyText(skillOrder.skillName);//之後分類
             switch (skillOrder.skillType)
             {
-                case SkillType.SpSkill:
+                case SkillType.SpSkill://之後補sp演出
                 case SkillType.Attack:
+                    if (skillOrder.values[0] <= 0) return;
                     gameUiView.PlayFightAnim(skillOrder.isPlayerUse);
                     //先做攻擊buff計算 實際用OnAttackCharacter給予傷害
                     attacker.Attack(skillOrder.values[0]);
@@ -760,7 +761,7 @@ public class DiceGame : MonoBehaviour
     {
         float damage = (float)args[0];
         bool isPlayer = (bool)args[1];//攻擊對象
-
+        if (damage <= 0) return;
         if (isPlayer)
         {
             playerData.TakeDamage(damage);

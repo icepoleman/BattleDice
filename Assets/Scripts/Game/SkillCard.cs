@@ -38,7 +38,7 @@ public class SkillCard : MonoBehaviour
             return;
         }
 
-        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite("skill_" + _skillData.skillID);
         img_skillIcon.transform.parent.gameObject.SetActive(true);
         img_skillIcon.SetNativeSize();
         skillData = _skillData;

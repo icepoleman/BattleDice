@@ -65,6 +65,11 @@ public class GameUiView : MonoBehaviour
         {
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "TeachPanel");
         });
+        if (GameDataManager.isFirstOpenDiceGame)
+        {
+            GameDataManager.isFirstOpenDiceGame = false;
+            btn_teach.onClick.Invoke();
+        }
     }
     public async Task UpdatePlayerInfo(PlayerData playerData, EnemyData enemyData)
     {

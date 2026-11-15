@@ -42,6 +42,8 @@ public class StageNode : MonoBehaviour
     [SerializeField] private GameObject linePrefab; // 連線的Prefab
     [Header("節點圖片")]
     [SerializeField] Sprite[] stageSpList;
+    [Header("走過的路徑顯示")]
+    [SerializeField] private GameObject obj_completedIcon; // 用於顯示已完成路徑的物件
     Image stageImage;
     Button nodeButton;
     public StageState currentState;
@@ -201,7 +203,8 @@ public class StageNode : MonoBehaviour
             case StageState.Completed:
                 // 自動存檔
                 SaveManager.AutoSave();
-                stageImage.color = Color.green;
+                stageImage.color = Color.gray;
+                EventCenter.Dispatch(MapEvent.EVENT_UPDATE_MAP_BADGE_POSITION, transform.position);
                 /* switch (rewardType)
                  {
                      case StageType.Gold:

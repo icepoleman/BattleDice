@@ -51,7 +51,7 @@ public class HasSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             btn_card.gameObject.SetActive(false);
         }
         btn_card.onClick.AddListener(() => onCardClicked?.Invoke(this));
-        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite("skill_" + _skillData.skillID);
         img_skillIcon.SetNativeSize();
         skillData = _skillData;
     }

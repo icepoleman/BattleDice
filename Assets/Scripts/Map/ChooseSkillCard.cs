@@ -27,7 +27,7 @@ public class ChooseSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExit
         });
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
-        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(skillData.iconPath);
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite("skill_" + _skillData.skillID);
         img_skillIcon.SetNativeSize();
     }
 

@@ -32,7 +32,7 @@ public class ShopSkillCard : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         text_skillTitle.text = skillData.skillName;
         text_skillCondition.text = skillData.conditionText;
         text_skillEffect.text = skillData.effectText;
-        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite("skill_" + _skillData.skillID);
         img_skillIcon.SetNativeSize();
 
         // 顯示價格

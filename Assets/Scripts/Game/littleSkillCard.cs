@@ -16,7 +16,7 @@ public class littleSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void SetData(ISkillData _skillData)
     {
         skillData = _skillData;
-        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite(_skillData.iconPath);
+        img_skillIcon.sprite = AtlasLoader.Instance.GetSkillSprite("skill_" + _skillData.skillID);
     }
 
     public int GetSkillID()

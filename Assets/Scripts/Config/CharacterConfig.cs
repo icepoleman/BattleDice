@@ -188,10 +188,18 @@ public abstract class BaseCharacterData : ICharacterData
     }
     public virtual void AddBuff(IBuffData buff)
     {
-        // 同一個 Buff 類型可重複套用，且每個實例都是獨立存在，
-        // 不再把不同的同類 Buff 合併成一個 duration 累加的單一物件。
-        // 這樣重複中毒 3 / 3 會變成兩個獨立的中毒狀態，都會在各自回合觸發。
+        IBuffData existingBuff = buffData.FirstOrDefault(existing =>
+            existing.buffID == buff.buffID && !existing.canRemove && existing.CanUseBuff());
         buff.CheckBuffTrigger(BuffTrigger.OnApply, this);
+
+        if (existingBuff != null)
+        {
+            existingBuff.SetBuffData(
+                existingBuff.usageCount + buff.usageCount,
+                existingBuff.duration + buff.duration);
+            return;
+        }
+
         buffData.Add(buff);
     }
     public virtual void RemoveBuff(IBuffData buff)//只被動作內部呼叫

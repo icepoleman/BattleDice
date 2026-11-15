@@ -42,13 +42,22 @@ public static class SkillDatabase
         return playerSkills;
     }
 
-    public static SkillConfigData? GetRandomPlayerNotGetSkill(string ignoreTag = "")
+    public static SkillConfigData? GetRandomTreasureSkill(string ignoreTag = "")
     {
-        List<SkillConfigData> playerSkills = GetAllPlayerNotGetSkills(ignoreTag);
-        if (playerSkills == null || playerSkills.Count == 0)
+        List<SkillConfigData> treasureSkills = new List<SkillConfigData>();
+        foreach (var skill in Skills.Values)
+        {
+            if (skill.showInTreasure &&
+                !GameDataManager.HasSkillIDs.Contains(skill.skillID) &&
+                (ignoreTag == "" || skill.tag != ignoreTag))
+            {
+                treasureSkills.Add(skill);
+            }
+        }
+        if (treasureSkills.Count == 0)
             return null;
 
-        return playerSkills[Random.Range(0, playerSkills.Count)];
+        return treasureSkills[Random.Range(0, treasureSkills.Count)];
     }
 
     // 載入額外的 CSV 並合併到技能庫

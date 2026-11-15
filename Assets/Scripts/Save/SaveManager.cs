@@ -254,6 +254,8 @@ public static class SaveManager
         currentSave.gear = GameDataManager.Gear;
         currentSave.backUpKey = GameDataManager.BackUpKey;
         currentSave.recycleCount = GameDataManager.RecycleCount;
+        currentSave.isFirstOpenTreasureBox = GameDataManager.isFirstOpenTreasureBox;
+        currentSave.isFirstOpenDiceGame = GameDataManager.isFirstOpenDiceGame;
         
         // 存儲升級等級
         currentSave.powerUpLevel_MaxBlood = GameDataManager.GetPowerUpLevel(PowerUpType.MaxBlood);
@@ -301,6 +303,8 @@ public static class SaveManager
                 GameDataManager.BackUpKey = currentSave.backUpKey;
                 GameDataManager.RecycleCount = currentSave.recycleCount;
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
+                GameDataManager.isFirstOpenTreasureBox = currentSave.isFirstOpenTreasureBox;
+                GameDataManager.isFirstOpenDiceGame = currentSave.isFirstOpenDiceGame;
                 
                 // 讀取升級等級
                 GameDataManager.SetPowerUpLevel(PowerUpType.MaxBlood, currentSave.powerUpLevel_MaxBlood);

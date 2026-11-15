@@ -26,16 +26,16 @@ public class takaraItem : MonoBehaviour
 
         if (reward.rewardType == TreasureBoxRewardType.Skill)
         {
-            SkillConfigData? skillReward = SkillDatabase.GetRandomPlayerNotGetSkill("Event");
+            SkillConfigData? skillReward = SkillDatabase.GetRandomTreasureSkill("Event");
             if (skillReward == null)
             {
-                selectedReward.rewardType = TreasureBoxRewardType.Gold;
-                selectedReward.rewardValue = 300;
-                obj_gold.SetActive(true);
-                obj_gear.SetActive(false);
+                selectedReward.rewardType = TreasureBoxRewardType.Gear;
+                selectedReward.rewardValue = 10;
+                obj_gold.SetActive(false);
+                obj_gear.SetActive(true);
                 skillCard.gameObject.SetActive(false);
                 txt_amount.gameObject.SetActive(true);
-                txt_amount.text = "300";
+                txt_amount.text = "10";
                 return;
             }
 

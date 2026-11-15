@@ -41,7 +41,7 @@ public static class SkillFactory
         int[] generateDices = null,
         string tag = "",
         int price = 0,
-        string iconPath = ""
+        bool showInTreasure = false
         )
     {
         return new SkillConfigData
@@ -60,7 +60,7 @@ public static class SkillFactory
             generateDicesData = generateDices ?? new int[] { },
             tag = tag,
             price = price,
-            iconPath = iconPath
+            showInTreasure = showInTreasure
         };
     }
 }

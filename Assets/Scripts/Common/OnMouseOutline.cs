@@ -2,11 +2,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OnMouseOutline : MonoBehaviour
+public class OnMouseOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Material outline;
     [SerializeField] bool effectEnabled = true;
-    EventTrigger eventTrigger;
     Image self_img;
     Material originalMaterial;
 
@@ -19,7 +18,6 @@ public class OnMouseOutline : MonoBehaviour
     void Start()
     {
         self_img = GetComponent<Image>();
-        eventTrigger = GetComponent<EventTrigger>();
 
         if (self_img == null)
         {
@@ -27,35 +25,21 @@ public class OnMouseOutline : MonoBehaviour
         }
 
         originalMaterial = self_img.material;
+    }
 
-        if (eventTrigger == null)
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (effectEnabled && self_img != null)
         {
-            eventTrigger = gameObject.AddComponent<EventTrigger>();
-        }
-
-        AddTrigger(EventTriggerType.PointerEnter, _ =>
-        {
-            if (!effectEnabled)
-            {
-                return;
-            }
-
             self_img.material = outline;
-        });
+        }
+    }
 
-        AddTrigger(EventTriggerType.PointerExit, _ =>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (effectEnabled && self_img != null)
         {
-            if (!effectEnabled)
-            {
-                return;
-            }
-
             self_img.material = null;
-        });
-
-        if (!effectEnabled)
-        {
-            self_img.material = originalMaterial;
         }
     }
 
@@ -77,15 +61,5 @@ public class OnMouseOutline : MonoBehaviour
         {
             self_img.material = originalMaterial;
         }
-    }
-
-    void AddTrigger(EventTriggerType type, UnityEngine.Events.UnityAction<BaseEventData> callback)
-    {
-        EventTrigger.Entry entry = new EventTrigger.Entry
-        {
-            eventID = type
-        };
-        entry.callback.AddListener(callback);
-        eventTrigger.triggers.Add(entry);
     }
 }

@@ -14,7 +14,7 @@ public static class GameDataManager
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
     public static int EndMap { get; set; } = 3;    // 結束地圖 完成後進入結局
-    public const int RecycleMaxCount = 20;
+    public const int RecycleMaxCount = 10;
     private static int recycleCount;
     public static int RecycleCount
     {
@@ -50,6 +50,7 @@ public static class GameDataManager
         { "Idol", new string[] { "H_Idol_1","H_Idol_2" } },
         { "Warden", new string[] { "H_Warden_1","H_Warden_2" } }
     };
+    public static HashSet<string> ClearMapStageMark { get; set; } = new HashSet<string>();//紀錄當前完成關卡標記
     public static int SocialPoint { get; set; } = 0;//社交點數 用於解鎖好感度關卡
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
@@ -59,6 +60,8 @@ public static class GameDataManager
 
     public static bool DreamMode { get; set; } = false;//回看模式
     public static bool isFirstOpen = true; //避免回大廳重複調整解析度
+    public static bool isFirstOpenTreasureBox = true;
+    public static bool isFirstOpenDiceGame = true;
 
     //提升好感度
     public static async void AddAffinity(string role, int affinityIncrease)

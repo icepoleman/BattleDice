@@ -46,7 +46,7 @@ public class WinLoseView : MonoBehaviour
                     txt_gear.text = reward.rewardValue.ToString();
                     break;
                 case TreasureBoxRewardType.Skill:
-                    SkillConfigData? skillReward = SkillDatabase.GetRandomPlayerNotGetSkill("Event");
+                    SkillConfigData? skillReward = SkillDatabase.GetRandomTreasureSkill();
                     if (skillReward == null)
                     {
                         skillCard.gameObject.SetActive(false);

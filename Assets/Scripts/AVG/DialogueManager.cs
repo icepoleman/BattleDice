@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
 
     Animator animator;
     bool isOpen = false;
-    
+
     SkeletonAnimation spineCharacter;
 
     //字典 紀錄常用名稱
@@ -825,8 +825,8 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogueDatas[i].Chapter == "BATTLE")
             {
-                Debug.Log("跳過劇情，進入戰鬥: " + int.Parse(dialogueDatas[i].Flag));
-                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, int.Parse(dialogueDatas[i].Flag));
+                float flagValue = float.Parse(dialogueDatas[pageIndex].Flag);
+                EventCenter.Dispatch(StateEvent.EVENT_ENTER_DICEGAME, (int)flagValue);
                 return;
             }
         }
