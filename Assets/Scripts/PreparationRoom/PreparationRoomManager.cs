@@ -60,19 +60,16 @@ public class PreparationRoomManager : MonoBehaviour
         btn_powerUp.onClick.AddListener(() =>
         {
             Instantiate(powerUpPanelPrefab, transform);
-            CloseFire();
         });
         btn_shop.onClick.AddListener(async () =>
         {
             GameObject shopPanelPrefab = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
             GameObject shopPanelObj = Instantiate(shopPanelPrefab, transform);
             ShopPanel shopPanel = shopPanelObj.GetComponent<ShopPanel>();
-            CloseFire();
         });
         btn_changeSkill.onClick.AddListener(async () =>
         {
             await UIManager.ShowPanel(ABconfig.GAME_PREFABS + "ChangeSkillPanel");
-            CloseFire();
         });
         btn_edit.onClick.AddListener(async () =>
         {
@@ -88,7 +85,6 @@ public class PreparationRoomManager : MonoBehaviour
             {
                 AffinityPanel affinityPanel = (await UIManager.ShowCommonPanel("AffinityPanel")).GetComponent<AffinityPanel>();
                 affinityPanel.SetUp(btn.name);
-                CloseFire();
             });
         }
 
@@ -101,34 +97,7 @@ public class PreparationRoomManager : MonoBehaviour
             .StartWith(GameDataManager.SocialPoint)
             .Subscribe(UpdateSocialPointText)
             .AddTo(this);
-        AddEventListeners();
         SceneLoader.HideLoadingScreen();
-    }
-    void AddEventListeners()
-    {
-        EventCenter.AddListener(PreparationRoomEvent.OPEN_FIRE, OnOpenFire);
-    }
-    void RemoveEventListeners()
-    {
-        EventCenter.RemoveListener(PreparationRoomEvent.OPEN_FIRE, OnOpenFire);
-    }
-    void Onestroy()
-    {
-        RemoveEventListeners();
-    }
-
-    void OnOpenFire(object[] args)
-    {
-        // Debug.LogError("打開火焰效果");
-        //trans_fire.transform.localPosition = new Vector3(13, -257, 0);
-        //obj_fire.SetActive(true);
-        obj_fire.transform.localScale = new Vector3(100, 100, 1);
-    }
-    void CloseFire()
-    {
-        //trans_fire.transform.localPosition = new Vector3(13, 3000, 0);
-        //obj_fire.SetActive(false);
-        obj_fire.transform.localScale = Vector3.zero;
     }
 
     void UpdateSocialPointText(int socialPoint)

@@ -64,7 +64,6 @@ public class MapEvent
     public const string EVENT_UPDATE_MAP_BADGE_POSITION = "MapEvent_UpdateMapBadgePosition";
     public const string EVENT_RECOVER_HEALTH = "MapEvent_RecoverHealth"; //回血關卡通知
     public const string EVENT_OPEN_MAP_SHOP = "MapEvent_OpenMapShop";//開啟地圖商店
-    public const string EVENT_UNCHOOSE_SKILL = "MapEvent_UnchooseSkill";//取消選取技能
     public const string EVENT_ENTER_STAGE_STORY = "MapEvent_EnterStageStory";//進入劇情關卡
     public const string EVENT_ENTER_STAGE_BATTLE = "MapEvent_EnterStageBattle";//進入戰鬥關卡
     public const string EVENT_ENTER_STAGE_SAVEPOINT = "MapEvent_EnterStageSavepoint";//進入整備室關卡
@@ -74,8 +73,4 @@ public class AdvEvent
 {
     public const string EVENT_SHAKE_SCREEN = "AdvEvent_ShakeScreen";//畫面震動
     public const string EVENT_CLICK_CHOICE = "AdvEvent_ClickChoice";//點擊選項
-}
-public class PreparationRoomEvent
-{
-    public const string OPEN_FIRE = "OPEN_FIRE";//開關火焰
 }

@@ -1,4 +1,4 @@
-技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,Combo(怪物用) 破壞骰?,生成骰子,出處Tag,Price,寶箱出現,第 17 欄,第 18 欄,第 19 欄,第 20 欄
+技能ID,名稱,技能類型,需求tpye,needDices,數值,條件文字,效果文字,SelfBuffs,TargetBuffs,破壞骰,生成骰子,出處Tag,Price,寶箱出現,第 17 欄,第 18 欄,第 19 欄,第 20 欄
 1,衝撞,Attack,SameDices,2,20,相同×2,20點傷害,,,,,MajoShop,100,TRUE,,,,
 2,重擊,Attack,SameDices,3,40,相同×3,40點傷害,,,,,MajoShop,100,TRUE,,,,
 3,重踏,Attack,SameDices,4,100,相同×4,100點傷害,,,,,MajoShop,100,TRUE,,,,
@@ -26,7 +26,7 @@
 25,弱點破壞,SpSkill,SpecificDices,5|5,50,5・5,造成50點傷害，如果敵方撕裂則造成100點傷害,,,,,MajoShop,300,,,,,
 26,淤泥炮,Attack,SpecificDices,5|5,30,5・5・5,50點傷害，敵方中毒5回合,,1:0:5,,,MajoShop,300,TRUE,,,,
 27,螺旋鑽,Attack,SpecificDices,6|6,40,6・6,造成40點傷害，敵方暈眩,,3:0:1,,,MajoShop,300,,,,,
-28,星爆氣流斬,Attack,SpecificDices,6|6|6|6,160,6・6・6・6,160點傷害，破壞敵方2顆骰子,,,2,,Event,,,,,,
+28,星爆氣流斬,Attack,SpecificDices,6|6|6|6,160,6・6・6・6,160點傷害，敵方暈眩,,3:0:1,,,Event,,,,,,
 29,自爆,Buff,AnyDices,5,,骰子×5,雙方定時炸彈5回合,16:0:5,16:0:5,,,Event,,,,,,
 30,刺槍術,SpSkill,SameDices,2,20,骰子×2,20點傷害，隨機造成異常狀態,,,,,MajoShop,100,,,,,
 31,毒爆術,SpSkill,SameDices,3,20,骰子×3,消耗中毒狀態，造成20×剩餘回合傷害,,,,,Event,,,,,,

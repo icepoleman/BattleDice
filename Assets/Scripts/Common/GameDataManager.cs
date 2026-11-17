@@ -188,10 +188,12 @@ public static class GameDataManager
         if (!HasSkillIDs.Contains(skillID))
         {
             HasSkillIDs.Add(skillID);
-            if (PlayerData.skillIDs.Count < 4)//技能沒滿會自動加入
+            if (PlayerData.skillIDs.Count < 4 && !PlayerData.skillIDs.Contains(skillID))//技能沒滿會自動加入
             {
-                PlayerData.skillIDs.Add(skillID);
+                List<int> skillIDs = new List<int>(PlayerData.skillIDs) { skillID };
+                PlayerData.skillIDs = skillIDs;
             }
+            SaveManager.AutoSave();
             EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, $"獲得新技能: {SkillDatabase.GetSkillConfig(skillID).skillName}");
         }
     }

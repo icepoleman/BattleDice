@@ -18,14 +18,9 @@ public class ChangeSkillView : MonoBehaviour
     List<int> chosenSkillsID = new List<int>();
     [SerializeField] Button btn_back;
 
-    void OnEnable()
-    {
-        EventCenter.AddListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
-    void OnDestroy()
-    {
-        EventCenter.RemoveListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
+    List<ChooseSkillCard> chosenSkillCards = new List<ChooseSkillCard>();
+    List<HasSkillCard> hasSkillCards = new List<HasSkillCard>();
+
     async void Start()
     {
         // 從GameDataManager取得擁有的技能ID
@@ -61,13 +56,34 @@ public class ChangeSkillView : MonoBehaviour
         GameObject cardObj = Instantiate(chosenSkillCardPrefab, chosenSkillCardParent);
         cardObj.SetActive(true);
         ChooseSkillCard card = cardObj.GetComponent<ChooseSkillCard>();
-        card.SetData(config);
+        card.SetData(config, OnChosenSkillCardClicked);
+        chosenSkillCards.Add(card);
     }
-    void OnUnchooseSkill(object[] args)
+    void OnChosenSkillCardClicked(ChooseSkillCard card)
+    {
+        UnchooseSkill(card.SkillID);
+    }
+    void UnchooseSkill(int skillID)
     {
         penShake.AnimationState.SetAnimation(0, "pen", false);
-        int skillID = (int)args[0];
-        chosenSkillsID.Remove(skillID);
+        chosenSkillsID.RemoveAll(id => id == skillID);
+
+        foreach (var chosenCard in chosenSkillCards)
+        {
+            if (chosenCard != null && chosenCard.SkillID == skillID)
+            {
+                Destroy(chosenCard.gameObject);
+            }
+        }
+        chosenSkillCards.RemoveAll(chosenCard => chosenCard == null || chosenCard.SkillID == skillID);
+
+        foreach (var hasSkillCard in hasSkillCards)
+        {
+            if (hasSkillCard != null && hasSkillCard.SkillID == skillID)
+            {
+                hasSkillCard.isChosen = false;
+            }
+        }
     }
     void CreateHasSkillCard(SkillConfigData config, bool isChosen)
     {
@@ -75,18 +91,18 @@ public class ChangeSkillView : MonoBehaviour
         HasSkillCard card = cardObj.GetComponent<HasSkillCard>();
         cardObj.SetActive(true);
         card.SetData(config, OnHasSkillCardClicked);
+        hasSkillCards.Add(card);
         card.isChosen = isChosen;
     }
 
-    async void OnHasSkillCardClicked(HasSkillCard card)
+    void OnHasSkillCardClicked(HasSkillCard card)
     {
         int skillID = card.SkillID;
 
         if (card.isChosen)
         {
             // 取消選擇：從已選擇列表移除
-            card.isChosen = false;
-            EventCenter.Dispatch(MapEvent.EVENT_UNCHOOSE_SKILL, skillID);
+            UnchooseSkill(skillID);
         }
         else
         {
@@ -123,6 +139,5 @@ public class ChangeSkillView : MonoBehaviour
         GameDataManager.PlayerData.skillIDs = new List<int>(chosenSkillsID);
         SaveManager.AutoSave();
         Destroy(this.gameObject);
-        EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
     }
 }

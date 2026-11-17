@@ -118,7 +118,7 @@ public class TreasureBoxGame : MonoBehaviour
         btn_up.onClick.AddListener(() => RollAndJudge(true));
         btn_down.onClick.AddListener(() => RollAndJudge(false));
         btn_hint.onClick.AddListener(async () => await UIManager.ShowCommonPanel("TBoxTeachPanel"));
-        if(GameDataManager.isFirstOpenTreasureBox)
+        if (GameDataManager.isFirstOpenTreasureBox)
         {
             GameDataManager.isFirstOpenTreasureBox = false;
             btn_hint.onClick.Invoke();
@@ -223,7 +223,7 @@ public class TreasureBoxGame : MonoBehaviour
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gold, rewardValue = 30, probability = 0.05f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 1, probability = 0.2f },
             new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 2, probability = 0.1f },
-            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Skill, rewardValue = 3, probability = 0.05f },
+            new TreasureBoxReward { rewardType = TreasureBoxRewardType.Gear, rewardValue = 3, probability = 0.05f },
         };
         levelRewardDict[4] = new List<TreasureBoxReward>
         {

@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float fastForwardInterval = 0.05f; // 快轉時每行間隔時間
     private bool isFastForwarding = false;
     private bool isHandlingSpineModel = false;
+    private bool isWaitingAfterShootEnd = false;
     private float fastForwardTimer = 0f;
 
     // 跳過確認彈窗
@@ -110,7 +111,7 @@ public class DialogueManager : MonoBehaviour
         if (!canSkip) return;
         ChatWindow activeChatWindow = CurrentChatWindow;
         ctrlPressed = Input.GetKey(KeyCode.LeftControl);
-        shouldFastForward = !isHandlingSpineModel &&
+        shouldFastForward = !isHandlingSpineModel && !isWaitingAfterShootEnd &&
             (ctrlPressed || activeChatWindow.tog_skip.isOn) && !onChoose && !isOver;
 
         if (shouldFastForward)
@@ -195,7 +196,7 @@ public class DialogueManager : MonoBehaviour
     bool isOver;
     public async void OnNextClick()
     {
-        if (isOver) return;
+        if (isOver || isWaitingAfterShootEnd) return;
 
         // 處理選項文字顯示後的跳轉
         if (pendingJumpTag != null)
@@ -360,6 +361,9 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
+                if (dialogueDatas[_page].CameraAnim == "shootWhite")
+                    AnimShootEnd();
+
                 animator.Play(dialogueDatas[_page].CameraAnim);
             }
         }
@@ -856,11 +860,18 @@ public class DialogueManager : MonoBehaviour
         SkipDialogue();
     }
 
-    public void AnimShootEnd()
+    public async void AnimShootEnd()
     {
+        Debug.LogError("Spine動畫播放結束事件");
+        if (isWaitingAfterShootEnd) return;
+
+        isWaitingAfterShootEnd = true;
         //閃白光換模型
         if (spineCharacter != null)
             spineCharacter.AnimationState.SetAnimation(0, "End", true);
+
+        await Task.Delay(3000);
+        isWaitingAfterShootEnd = false;
     }
 
     #region 選項按鈕

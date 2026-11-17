@@ -76,7 +76,7 @@ T_Skill_Effect_Sp_17|抵擋一次攻擊，<link="7"><sprite name="Buff_7"></link
 T_Skill_Effect_Sp_25|造成<color=#FF1700>50</color>點傷害，對方處於<link="2"><sprite name="Buff_2"></link>狀態則傷害加倍
 T_Skill_Effect_Sp_30|造成<color=#FF1700>20</color>點傷害，隨機造成異常狀態
 T_Skill_Effect_Sp_31|消耗<link="1"><sprite name="Buff_1"></link>，造成20+20×剩餘回合傷害
-T_Skill_Effect_Sp_34|造成<color=#FF1700>50</color>點傷害，奪取對方所有狀態並轉化為自身狀態
+T_Skill_Effect_Sp_34|造成<color=#FF1700>30</color>點傷害，奪取對方所有狀態並轉化為自身狀態
 T_AffinityIncrease|好感度增加 {0} 點
 T_Setting|設定
 T_Shop_BuyPrice|價格：{0}金幣

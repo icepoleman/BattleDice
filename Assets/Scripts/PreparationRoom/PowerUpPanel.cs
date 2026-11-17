@@ -23,7 +23,6 @@ public class PowerUpPanel : MonoBehaviour
         btn_close.onClick.AddListener(() => 
         {
             Destroy(gameObject);
-            EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
         });
     }
     

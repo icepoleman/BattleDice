@@ -107,7 +107,6 @@ public class AffinityPanel : MonoBehaviour, IPointerMoveHandler, IPointerExitHan
         roleStr = role;
         btn_back.onClick.AddListener(() =>
         {
-            EventCenter.Dispatch(PreparationRoomEvent.OPEN_FIRE);
             Destroy(gameObject);
         });
         await PortraitManager.LoadRoleIfNeeded(role);

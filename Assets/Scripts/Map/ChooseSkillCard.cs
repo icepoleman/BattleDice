@@ -18,12 +18,11 @@ public class ChooseSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private bool hasDispatchedThisHover;
     private Canvas rootCanvas;
 
-    public async void SetData(SkillConfigData _skillData)
+    public void SetData(SkillConfigData _skillData, Action<ChooseSkillCard> onCardClicked)
     {
         btn_card.onClick.AddListener(() =>
         {
-            EventCenter.Dispatch(MapEvent.EVENT_UNCHOOSE_SKILL, skillData.skillID);
-            Destroy(gameObject);
+            onCardClicked?.Invoke(this);
         });
         skillData = _skillData;
         text_skillTitle.text = skillData.skillName;
@@ -31,28 +30,9 @@ public class ChooseSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExit
         img_skillIcon.SetNativeSize();
     }
 
-    void OnEnable()
-    {
-        EventCenter.AddListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
-
-    void OnDestroy()
-    {
-        EventCenter.RemoveListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
-
     void OnDisable()
     {
         CancelHoverShow();
-    }
-
-    void OnUnchooseSkill(object[] args)
-    {
-        int skillID = (int)args[0];
-        if (skillID == this.SkillID)
-        {
-            Destroy(gameObject);
-        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

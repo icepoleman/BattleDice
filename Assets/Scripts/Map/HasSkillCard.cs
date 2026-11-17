@@ -56,29 +56,11 @@ public class HasSkillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         skillData = _skillData;
     }
 
-    void OnEnable()
-    {
-        EventCenter.AddListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
-    void OnDestroy()
-    {
-        EventCenter.RemoveListener(MapEvent.EVENT_UNCHOOSE_SKILL, OnUnchooseSkill);
-    }
     void OnDisable()
     {
         CancelHoverShow();
         StopChoosePulse();
     }
-    void OnUnchooseSkill(object[] args)
-    {
-        int skillID = (int)args[0];
-        if (skillID == this.SkillID)
-        {
-            isChosen = false;
-            Debug.Log("Unchoose skill: " + skillID);
-        }
-    }
-
     private void StartChoosePulse()
     {
         StopChoosePulse();
