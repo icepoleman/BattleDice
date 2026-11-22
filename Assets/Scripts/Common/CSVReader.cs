@@ -113,16 +113,15 @@ public class CSVReader
     {
         List<MapData> lines = new List<MapData>();
 
-        string resourcePath = $"Language/{LanguageManager.CurrentLanguage}/Map/{fileName}";
-        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
-
-        if (textAsset == null)
+        string csvPath = Path.Combine(Application.streamingAssetsPath, "Game", "Map", $"Map{fileName}.csv");
+        if (!File.Exists(csvPath))
         {
-            Debug.LogError("❌ 找不到地圖 CSV 檔案: " + resourcePath);
+            Debug.LogError("❌ 找不到地圖 CSV 檔案: " + csvPath);
             return null;
         }
 
-        string[] allLines = textAsset.text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 
         bool isFirstLine = true;
         foreach (string line in allLines)
@@ -133,14 +132,20 @@ public class CSVReader
             string[] values = line.Split(',');
 
             MapData data = new MapData();
-            data.stageID = values.Length > 0 ? values[0] : "";
-            data.type = values.Length > 1 ? values[1] : "";
-            data.stageInfo = values.Length > 2 ? values[2] : "";
+            data.stageID = values.Length > 0 ? values[0].Trim() : "";
+            data.type = values.Length > 1 && System.Enum.TryParse(values[1].Trim(), true, out StageType stageType)
+                ? stageType
+                : StageType.Story;
+            data.stageInfo = values.Length > 2 ? values[2].Trim() : "";
+            data.completedStory = values.Length > 3 ? values[3].Trim() : "";
+            data.nextStageNodesID = values.Length > 4 && !string.IsNullOrWhiteSpace(values[4])
+                ? System.Array.ConvertAll(values[4].Split('|'), id => id.Trim())
+                : new string[0];
 
             lines.Add(data);
         }
 
-        Debug.Log($"✅ 從 Resources 載入地圖資料完成，共 {lines.Count} 行: {resourcePath}");
+        Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {csvPath}");
         return lines;
     }
     //載入BUFF資料

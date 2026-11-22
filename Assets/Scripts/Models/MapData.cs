@@ -5,6 +5,8 @@
 public class MapData
 {
     public string stageID;
-    public string type;
+    public StageType type;
     public string stageInfo;
+    public string completedStory;
+    public string[] nextStageNodesID;
 }

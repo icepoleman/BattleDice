@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading.Tasks;
 using TMPro;
 using UniRx;
@@ -14,15 +12,15 @@ public class MapManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI txt_blood;
     [SerializeField] TextMeshProUGUI text_gold;
     [SerializeField] TextMeshProUGUI text_gear;
-    [SerializeField] Transform trans_mapParent;
+    [SerializeField] Transform trans_mapRoot;
+    [SerializeField] GameObject mapColumnPrefab;
+    [SerializeField] StageNode stageNodePrefab;
     [SerializeField] TextMeshProUGUI text_stageName;
     [SerializeField] Button btn_changeSkill;
     [SerializeField] Button btn_edit;
 
-    private Scrollbar scrollbar_map;
+    [SerializeField] Scrollbar scrollbar_map;
 
-    private AsyncOperationHandle<GameObject> mapHandle;
-    private GameObject currentMapInstance;
     //List<MapData> mapDatas = new List<MapData>();//關卡資料
     async void Start()
     {
@@ -64,7 +62,6 @@ public class MapManager : MonoBehaviour
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_STORY, OnEnterStageStory);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_BATTLE, OnEnterStageBattle);
         EventCenter.RemoveListener(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT, OnEnterStageSavepoint);
-        // 卸載 Addressables 資源
         UnloadMapPrefab();
     }
     async void OnCompleteMap(object[] param)
@@ -82,8 +79,8 @@ public class MapManager : MonoBehaviour
         {
             GameDataManager.MapScrollValue = 0f;//重置地圖滾動位置
             GameDataManager.CurrentMap += 1;
-            GameDataManager.PreparationRoomStage = "StartPoint";//起點 初始整備室
-            GameDataManager.CurrentStage = "StartPoint";
+            GameDataManager.PreparationRoomStage = "1-1";//起點 初始整備室
+            GameDataManager.CurrentStage = "1-1";
             LoadMapPrefab();
             await Task.Delay(2000);
             //Destroy(_clearMap);
@@ -147,62 +144,82 @@ public class MapManager : MonoBehaviour
         text_gear.text = GameDataManager.Gear.ToString();
     }
 
-    // 載入地圖 Prefab
+    // 依地圖 CSV 生成欄位與關卡節點
     private async void LoadMapPrefab()
     {
         text_stageName.text = MapConfig.GetStageName(GameDataManager.CurrentMap);
-        string mapPrefabAddress = MapConfig.GetMapAddress(GameDataManager.CurrentMap);
-        try
+        if (trans_mapRoot == null || mapColumnPrefab == null || stageNodePrefab == null)
         {
-            Debug.Log($"開始載入地圖: {ABconfig.MAP_PREFABS + mapPrefabAddress + ".prefab"}");
-
-            mapHandle = Addressables.LoadAssetAsync<GameObject>(ABconfig.MAP_PREFABS + mapPrefabAddress + ".prefab");
-            GameObject mapPrefab = await mapHandle.Task;
-
-            if (mapHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                // 實例化地圖 prefab
-                currentMapInstance = Instantiate(mapPrefab, trans_mapParent);
-                currentMapInstance.transform.localPosition = Vector3.zero;
-                currentMapInstance.transform.localScale = Vector3.one;
-                scrollbar_map = currentMapInstance.GetComponentInChildren<Scrollbar>();
-                currentMapInstance.GetComponentInChildren<ScrollRect>().scrollSensitivity = 20f;
-                if (GameDataManager.MapScrollValue > 0)
-                {
-                    float scrollValue = Mathf.Clamp01(GameDataManager.MapScrollValue + 0.06f);
-                    scrollbar_map.value = scrollValue;
-                }
-
-                await Task.Delay(100);
-                EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);
-                await Task.Delay(100);
-                SceneLoader.HideLoadingScreen();
-            }
-            else
-            {
-                Debug.LogError($"載入地圖失敗: {mapHandle.OperationException}");
-            }
+            Debug.LogError("地圖生成失敗：請設定 trans_mapRoot、mapColumnPrefab 與 stageNodePrefab。");
+            return;
         }
-        catch (System.Exception e)
+
+        UnloadMapPrefab();
+        List<MapData> mapDatas = CSVReader.Instance.LoadMapCSV(GameDataManager.CurrentMap.ToString());
+        if (mapDatas == null)
         {
-            Debug.LogError($"載入地圖時發生錯誤: {e.Message}");
+            return;
         }
+
+        Dictionary<string, Transform> columnsById = new Dictionary<string, Transform>();
+        Dictionary<string, StageNode> nodesById = new Dictionary<string, StageNode>();
+        foreach (MapData mapData in mapDatas)
+        {
+            string[] stageIdParts = mapData.stageID.Split('-');
+            string columnId = stageIdParts[0];
+            if (!columnsById.TryGetValue(columnId, out Transform columnTransform))
+            {
+                GameObject column = Instantiate(mapColumnPrefab, trans_mapRoot, false);
+                column.name = $"Column_{columnId}";
+                columnTransform = column.transform;
+                columnsById[columnId] = columnTransform;
+            }
+
+            StageNode stageNode = Instantiate(stageNodePrefab, columnTransform, false);
+            stageNode.name = mapData.stageID;
+            stageNode.SetMapData(mapData);
+            nodesById[mapData.stageID] = stageNode;
+        }
+
+        foreach (MapData mapData in mapDatas)
+        {
+            if (!nodesById.TryGetValue(mapData.stageID, out StageNode stageNode))
+                continue;
+
+            List<StageNode> nextNodes = new List<StageNode>();
+            foreach (string nextStageId in mapData.nextStageNodesID)
+            {
+                if (nodesById.TryGetValue(nextStageId, out StageNode nextNode))
+                    nextNodes.Add(nextNode);
+                else
+                    Debug.LogWarning($"地圖 {GameDataManager.CurrentMap} 找不到連線目標節點: {nextStageId}");
+            }
+            stageNode.SetNextStageNodes(nextNodes);
+        }
+
+        ScrollRect scrollRect = trans_mapRoot.GetComponentInParent<ScrollRect>();
+        if (scrollRect == null)
+            scrollRect = trans_mapRoot.GetComponentInChildren<ScrollRect>();
+        if (scrollRect != null)
+            scrollRect.scrollSensitivity = 20f;
+        if (scrollbar_map != null && GameDataManager.MapScrollValue > 0)
+            scrollbar_map.value = Mathf.Clamp01(GameDataManager.MapScrollValue + 0.06f);
+
+        await Task.Yield();
+        EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);
+        await Task.Yield();
+        SceneLoader.HideLoadingScreen();
     }
 
-    // 卸載地圖 Prefab
+    // 清除目前生成的地圖欄位
     private void UnloadMapPrefab()
     {
-        if (currentMapInstance != null)
-        {
-            Destroy(currentMapInstance);
-            currentMapInstance = null;
-            Debug.Log("地圖實例已銷毀");
-        }
+        if (trans_mapRoot == null)
+            return;
 
-        if (mapHandle.IsValid())
+        for (int i = trans_mapRoot.childCount - 1; i >= 0; i--)
         {
-            Addressables.Release(mapHandle);
-            Debug.Log("地圖 Addressables 資源已釋放");
+            Destroy(trans_mapRoot.GetChild(i).gameObject);
         }
     }
 }

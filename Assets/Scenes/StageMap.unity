@@ -672,10 +672,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 104220455708410680, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 612064362266976975, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
       propertyPath: m_Name
       value: Canvas_MainUI
@@ -760,10 +756,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2176389043980516036, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2788024172072770613, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1177388962}
+    - target: {fileID: 8497393441534551854, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497393441534551854, guid: 0d923f5b0b8aba54fa30e6e38fbf4bcf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

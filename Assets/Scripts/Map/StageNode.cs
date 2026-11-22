@@ -18,12 +18,13 @@ public enum StageType
     Battle_Hard,//困難戰鬥關卡
     Battle_Boss,
     SavePoint,
-    Blood,
+    Heal,
     MapShop,//地圖商店
     Gold,
     Skill,
     Gear,
     Takara,//寶箱
+    H
 }
 public class StageNode : MonoBehaviour
 {
@@ -61,6 +62,16 @@ public class StageNode : MonoBehaviour
     public void SetStageInfo(string _info)//測試用
     {
         stageInfo = _info;
+    }
+    public void SetMapData(MapData data)
+    {
+        stageType = data.type;
+        stageInfo = data.stageInfo;
+        completedStory = data.completedStory;
+    }
+    public void SetNextStageNodes(List<StageNode> nodes)
+    {
+        nextStageNodes = nodes;
     }
     async void GoNextStage()
     {
@@ -104,7 +115,7 @@ public class StageNode : MonoBehaviour
                 stageImage.sprite = stageSpList[7];
                 break;
             case StageType.Battle_Boss:
-                //stageImage.sprite = stageSpList[(int)stageType];
+                stageImage.sprite = stageSpList[(int)stageType];
                 break;
             default:
                 stageImage.sprite = stageSpList[(int)stageType];
@@ -248,6 +259,13 @@ public class StageNode : MonoBehaviour
         {
             GameDataManager.TmpCompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
+
+            if (!string.IsNullOrWhiteSpace(stageInfo) && !int.TryParse(stageInfo, out _))
+            {
+                EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, stageInfo);
+                return;
+            }
+
             switch (stageType)
             {
                 case StageType.Story:
@@ -287,7 +305,7 @@ public class StageNode : MonoBehaviour
                     Debug.Log($"齒輪: {stageInfo}");
                     GoNextStage();
                     break;
-                case StageType.Blood:
+                case StageType.Heal:
                     if (stageInfo == "")
                         stageInfo = "1000";//如果沒有設定回血數量就默認1000
                     EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, int.Parse(stageInfo)); //回血

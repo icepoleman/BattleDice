@@ -149,9 +149,9 @@ public class MenuManager : MonoBehaviour
         //等一秒
         await Task.Delay(1500);
         //Todo 加入載入存檔
-        GameDataManager.PreparationRoomStage = "StartPoint";//初始整備室
+        GameDataManager.PreparationRoomStage = "1-1";//初始整備室
         GameDataManager.CurrentMap = 1;
-        GameDataManager.CurrentStage = "StartPoint";
+        GameDataManager.CurrentStage = "1-1";
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;
