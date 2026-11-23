@@ -71,7 +71,7 @@ public class MapManager : MonoBehaviour
         UnloadMapPrefab();
         await Task.Delay(100);
         Debug.LogError($"當前地圖: {GameDataManager.CurrentMap}，結束地圖: {GameDataManager.EndMap}");
-        if (GameDataManager.CurrentMap == GameDataManager.EndMap)
+        if (GameDataManager.AllMapInfo[GameDataManager.CurrentMap].mapID == GameDataManager.EndMap)
         {
             EventCenter.Dispatch(StateEvent.EVENT_ENTER_END_SCENE);
         }
@@ -83,6 +83,7 @@ public class MapManager : MonoBehaviour
             GameDataManager.CurrentStage = "1-1";
             LoadMapPrefab();
             await Task.Delay(2000);
+            EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
             //Destroy(_clearMap);
         }
     }
@@ -118,7 +119,7 @@ public class MapManager : MonoBehaviour
     {
         GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ShopPanel" + ".prefab");
         //開啟三選一事件
-       // GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
+        // GameObject mapShopPanel = await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "MapShopPanel" + ".prefab");
         Instantiate(mapShopPanel, transform);
     }
     void OnEnterStageStory(object[] param)
@@ -147,7 +148,8 @@ public class MapManager : MonoBehaviour
     // 依地圖 CSV 生成欄位與關卡節點
     private async void LoadMapPrefab()
     {
-        text_stageName.text = MapConfig.GetStageName(GameDataManager.CurrentMap);
+        MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
+        text_stageName.text = nowMapInfo.mapName;
         if (trans_mapRoot == null || mapColumnPrefab == null || stageNodePrefab == null)
         {
             Debug.LogError("地圖生成失敗：請設定 trans_mapRoot、mapColumnPrefab 與 stageNodePrefab。");
@@ -155,7 +157,7 @@ public class MapManager : MonoBehaviour
         }
 
         UnloadMapPrefab();
-        List<MapData> mapDatas = CSVReader.Instance.LoadMapCSV(GameDataManager.CurrentMap.ToString());
+        List<MapData> mapDatas = CSVReader.Instance.LoadMapCSV(nowMapInfo.mapID);
         if (mapDatas == null)
         {
             return;

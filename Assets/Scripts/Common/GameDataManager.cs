@@ -13,7 +13,7 @@ public static class GameDataManager
     public static HashSet<int> HasSkillIDs { get; set; } = new HashSet<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
-    public static int EndMap { get; set; } = 3;    // 結束地圖 完成後進入結局
+    public static String EndMap { get; set; } = "Map3-2";    // 結束地圖 完成後進入結局
     public const int RecycleMaxCount = 10;
     private static int recycleCount;
     public static int RecycleCount
@@ -63,6 +63,13 @@ public static class GameDataManager
     public static bool isFirstOpenTreasureBox = true;
     public static bool isFirstOpenDiceGame = true;
 
+    public static List<MapInfoData> AllMapInfo { get; set; } = new List<MapInfoData>();
+
+
+    public static MapInfoData GetNowMapInfo()
+    {
+        return AllMapInfo[CurrentMap];
+    }
     //提升好感度
     public static async void AddAffinity(string role, int affinityIncrease)
     {
@@ -92,26 +99,7 @@ public static class GameDataManager
         }
         EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE, LanguageManager.GetFormat("T_AffinityIncrease", affinityIncrease));
     }
-    public static int GetChapterIndex()
-    {
-        int chapterIndex = 0;
-        if (CurrentMap < 3)
-        {
-            chapterIndex = 1;
-            SafeRoomLevel = 1;
-        }
-        else if (CurrentMap < 6)
-        {
-            chapterIndex = 2;
-            SafeRoomLevel = 2;
-        }
-        else if (CurrentMap >= 7)
-        {
-            chapterIndex = 3;
-            SafeRoomLevel = 3;
-        }
-        return chapterIndex;
-    }
+
     public static int GetRoleAffinity(string role)
     {
         switch (role)

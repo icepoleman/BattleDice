@@ -265,7 +265,7 @@ public class StageNode : MonoBehaviour
                 EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, stageInfo);
                 return;
             }
-
+            MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
             switch (stageType)
             {
                 case StageType.Story:
@@ -275,22 +275,16 @@ public class StageNode : MonoBehaviour
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, int.Parse(stageInfo));
                     break;
                 case StageType.Battle_Hard:
-                    List<int> enemyIds_Erito = EnemyConfig.Instance.GetEnemyIDs("Erito", GameDataManager.GetChapterIndex());
+                    List<int> enemyIds_Erito = EnemyConfig.Instance.GetEnemyIDs("Erito", nowMapInfo.chapter);
                     int randomEritoId = enemyIds_Erito[UnityEngine.Random.Range(0, enemyIds_Erito.Count)];
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomEritoId);
                     break;
                 case StageType.Battle:
-                    List<int> enemyIds_Zako = EnemyConfig.Instance.GetEnemyIDs("Zako", GameDataManager.GetChapterIndex());
+                    List<int> enemyIds_Zako = EnemyConfig.Instance.GetEnemyIDs("Zako", nowMapInfo.chapter);
                     int randomZakoId = enemyIds_Zako[UnityEngine.Random.Range(0, enemyIds_Zako.Count)];
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_BATTLE, randomZakoId);
                     break;
                 case StageType.SavePoint:
-                    GameDataManager.SocialPoint += 1;//每次進入整備室增加社交點數
-                    if (stageInfo != "")
-                    {
-                        GameDataManager.SafeRoomLevel = int.Parse(stageInfo);
-                        Debug.Log($"進入整備室關卡: {stageID}，整備室等級提升至 {stageInfo}");
-                    }
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
                     break;

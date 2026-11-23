@@ -54,6 +54,9 @@ public class PreparationRoomManager : MonoBehaviour
 
     void Start()
     {
+        MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
+        GameDataManager.SocialPoint += nowMapInfo.addSocialPoint;
+
         PreLoadAssets();
         SetUpDoorSwitchEventTrigger();
         ChangeDoorState(DoorState.Closed);
@@ -89,8 +92,7 @@ public class PreparationRoomManager : MonoBehaviour
         }
 
         btn_girls.ForEach(btn => btn.gameObject.SetActive(false));
-        GameDataManager.GetChapterIndex();
-        OpenLevel(GameDataManager.SafeRoomLevel);
+        OpenLevel(nowMapInfo.saveRoomLevel);
         Observable.EveryUpdate()
             .Select(_ => GameDataManager.SocialPoint)
             .DistinctUntilChanged()

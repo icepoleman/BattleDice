@@ -113,7 +113,7 @@ public class CSVReader
     {
         List<MapData> lines = new List<MapData>();
 
-        string csvPath = Path.Combine(Application.streamingAssetsPath, "Game", "Map", $"Map{fileName}.csv");
+        string csvPath = Path.Combine(Application.streamingAssetsPath, "Game", "Map", $"{fileName}.csv");
         if (!File.Exists(csvPath))
         {
             Debug.LogError("❌ 找不到地圖 CSV 檔案: " + csvPath);
@@ -148,6 +148,12 @@ public class CSVReader
         Debug.Log($"✅ 從 StreamingAssets 載入地圖資料完成，共 {lines.Count} 行: {csvPath}");
         return lines;
     }
+    // 載入所有地圖資訊
+    public List<MapInfoData> LoadAllMapInfoCSV()
+    {
+        return MapConfig.LoadAllMapInfoCSV();
+    }
+
     //載入BUFF資料
     public Dictionary<int, BuffConfigData> LoadBuffCSV()
     {

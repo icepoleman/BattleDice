@@ -37,19 +37,20 @@ public class SupDataSetting
     }
     public bool IsSupUnlocked(string supID)
     {
-        int nowChapter = GameDataManager.GetChapterIndex();//依照章節進度解鎖
+        MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
+        int nowChapter = nowMapInfo.chapter;//依照章節進度解鎖
         Debug.LogError(nowChapter);
         int unlockLimit = 0;
         switch(supID)
         {
             case "Witch":
-                unlockLimit = 2;
-                break;
-            case "WolfGirl":
                 unlockLimit = 3;
                 break;
-            case "Idol":
+            case "WolfGirl":
                 unlockLimit = 4;
+                break;
+            case "Idol":
+                unlockLimit = 5;
                 break;
         }
         return nowChapter >= unlockLimit;

@@ -56,6 +56,7 @@ public class StateManager : MonoBehaviour
             Destroy(gameObject);
         }
         SupDataSetting.Instance.SetUp();
+        GameDataManager.AllMapInfo = CSVReader.Instance.LoadAllMapInfoCSV();
     }
     void OnDestroy()
     {

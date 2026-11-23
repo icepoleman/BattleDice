@@ -1,35 +1,87 @@
 // MapConfig.cs
-public static class MapConfig
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using UnityEngine;
+
+public class MapConfig
 {
-    // 地图顺序配置，想插入只需修改这个列表
-    public static readonly string[] MapOrder = new string[]
+    private static Dictionary<int, string> stageNames;
+
+    public static Dictionary<int, string> StageNames
     {
-        "TestMap",             // 测试地图
-        "Map_Prologue1",      // 第1张
-        "Map_Prologue2",        // 魔女
-        "Map_Prologue3",        // 狼女
-    };
-    //关卡名称
-    public static readonly string[] StageNames = new string[]
-    {
-        "測試關卡",
-        "廢物牢房",
-        "監獄走廊",
-        "東側監獄",
-        "第四關",
-        "第五關",
-    };
-    public static string GetMapAddress(int index)
-    {
-        if (index < 0 || index >= MapOrder.Length)
-            return MapOrder[MapOrder.Length - 1]; // 最后一张
-        return MapOrder[index];
+        get
+        {
+            if (stageNames == null)
+                LoadAllMapInfoCSV();
+
+            return stageNames;
+        }
     }
-    // 获取关卡名称
-    public static string GetStageName(int mapIndex)
+
+    public static List<MapInfoData> LoadAllMapInfoCSV()
     {
-        if (mapIndex < 0 || mapIndex >= StageNames.Length)
-            return StageNames[StageNames.Length - 1]; // 最后一关
-        return StageNames[mapIndex];
+        List<MapInfoData> mapInfos = new List<MapInfoData>();
+        stageNames = new Dictionary<int, string>();
+
+        string csvPath = Path.Combine(Application.streamingAssetsPath, "Game", "Map", "AllMapInfo.csv");
+        if (!File.Exists(csvPath))
+        {
+            Debug.LogError("找不到地圖資訊 CSV 檔案: " + csvPath);
+            return mapInfos;
+        }
+
+        string csvText = File.ReadAllText(csvPath);
+        string[] allLines = csvText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+
+        for (int i = 1; i < allLines.Length; i++)
+        {
+            string line = allLines[i];
+            if (string.IsNullOrWhiteSpace(line))
+                continue;
+
+            string[] values = line.Split(',');
+            MapInfoData data = new MapInfoData
+            {
+                mapID = values.Length > 0 ? values[0].Trim() : "",
+                mapName = values.Length > 1 ? values[1].Trim() : "",
+                chapter = ParseInt(values.Length > 2 ? values[2] : ""),
+                addSocialPoint = ParseInt(values.Length > 3 ? values[3] : ""),
+                saveRoomLevel = ParseInt(values.Length > 4 ? values[4] : "")
+            };
+
+            mapInfos.Add(data);
+
+            if (TryGetMapNumber(data.mapID, out int mapNumber) && !stageNames.ContainsKey(mapNumber))
+                stageNames.Add(mapNumber, data.mapName);
+        }
+
+        Debug.Log($"從 StreamingAssets 載入地圖資訊完成，共 {mapInfos.Count} 筆: {csvPath}");
+        return mapInfos;
+    }
+
+    private static int ParseInt(string value)
+    {
+        if (float.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float number))
+            return (int)number;
+
+        return 0;
+    }
+
+    private static bool TryGetMapNumber(string mapID, out int mapNumber)
+    {
+        mapNumber = 0;
+        if (string.IsNullOrWhiteSpace(mapID))
+            return false;
+
+        string numberText = mapID.Trim();
+        if (numberText.StartsWith("Map", System.StringComparison.OrdinalIgnoreCase))
+            numberText = numberText.Substring(3);
+
+        int separatorIndex = numberText.IndexOf('-');
+        if (separatorIndex >= 0)
+            numberText = numberText.Substring(0, separatorIndex);
+
+        return int.TryParse(numberText, out mapNumber);
     }
 }
