@@ -20,9 +20,6 @@ public enum StageType
     SavePoint,
     Heal,
     MapShop,//地圖商店
-    Gold,
-    Skill,
-    Gear,
     Takara,//寶箱
     H
 }
@@ -41,8 +38,6 @@ public class StageNode : MonoBehaviour
     [Header("連線設定")]
     [SerializeField] private Transform lineRoot; // 用於存放連線的父物件
     [SerializeField] private GameObject linePrefab; // 連線的Prefab
-    [Header("節點圖片")]
-    [SerializeField] Sprite[] stageSpList;
     [Header("走過的路徑顯示")]
     [SerializeField] private GameObject obj_completedIcon; // 用於顯示已完成路徑的物件
     Image stageImage;
@@ -63,15 +58,20 @@ public class StageNode : MonoBehaviour
     {
         stageInfo = _info;
     }
-    public void SetMapData(MapData data)
+    public void SetMapData(MapData data, Sprite sp_stage)
     {
         stageType = data.type;
         stageInfo = data.stageInfo;
         completedStory = data.completedStory;
+        stageImage = GetComponent<Image>();
+        stageImage.sprite = sp_stage;
+        stageImage.SetNativeSize();
     }
     public void SetNextStageNodes(List<StageNode> nodes)
     {
         nextStageNodes = nodes;
+        Canvas.ForceUpdateCanvases();
+        DrawLinesToNextNodes();
     }
     async void GoNextStage()
     {
@@ -96,36 +96,6 @@ public class StageNode : MonoBehaviour
         stageImage = GetComponent<Image>();
         nodeButton = GetComponent<Button>();
         nodeButton.onClick.AddListener(OnNodeClick);
-
-        //lineSprite = Resources.Load<Sprite>("Sprites/LineSprite"); // 確保有一個名為 LineSprite 的白色方形圖片在 Resources/Sprites 資料夾中
-
-        if (stageSpList == null || stageSpList.Length == 0)
-        {
-            await Task.Yield();
-            Canvas.ForceUpdateCanvases();
-            DrawLinesToNextNodes();
-            return;
-        }
-        switch (stageType)
-        {
-            case StageType.Gold:
-            case StageType.Gear:
-            case StageType.Skill:
-            case StageType.Takara:
-                stageImage.sprite = stageSpList[7];
-                break;
-            case StageType.Battle_Boss:
-                stageImage.sprite = stageSpList[(int)stageType];
-                break;
-            default:
-                stageImage.sprite = stageSpList[(int)stageType];
-                break;
-        }
-        stageImage.SetNativeSize();
-
-        await Task.Yield();
-        Canvas.ForceUpdateCanvases();
-        DrawLinesToNextNodes();
     }
 
     void DrawLinesToNextNodes()
@@ -216,37 +186,8 @@ public class StageNode : MonoBehaviour
                 SaveManager.AutoSave();
                 stageImage.color = Color.gray;
                 EventCenter.Dispatch(MapEvent.EVENT_UPDATE_MAP_BADGE_POSITION, transform.position);
-                /* switch (rewardType)
-                 {
-                     case StageType.Gold:
-                         EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(rewardInfo)); //取得金幣
-                         break;
-                     case StageType.Gear:
-                         EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(rewardInfo)); //取得齒輪
-                         break;
-                     case StageType.Skill:
-                         EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(rewardInfo)); //取得技能
-                         break;
-                     case StageType.Takara:
-                         EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
-                         break;
-                 }*/
                 break;
         }
-        /* if (stageType == StageType.SavePoint && currentState == StageState.Completed)//整備室完成後仍然可以點擊
-         {
-             nodeButton.interactable = true;
-             stageImage.color = Color.white;
-             mouseEffect.EffectEnabled = true;
-             mouseOutline.EffectEnabled = true;
-         }
-         else
-         {
-             bool isOpen = currentState == StageState.Unlocked;
-             nodeButton.interactable = isOpen;
-             mouseEffect.EffectEnabled = isOpen;
-             mouseOutline.EffectEnabled = isOpen;
-         }*/
         bool isOpen = currentState == StageState.Unlocked;
         nodeButton.interactable = isOpen;
         mouseEffect.EffectEnabled = isOpen;
@@ -288,33 +229,11 @@ public class StageNode : MonoBehaviour
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
                     break;
-                /* case StageType.Item:
-                     Debug.Log($"取得道具: {stageID}{stageInfo}");
-                     EventCenter.Dispatch(StateEvent.EVENT_GET_ITEM, stageInfo); //取得道具
-                     GoNextStage();
-                     break;*/
-                case StageType.Gear:
-                    //EventCenter.Dispatch(StateEvent.EVENT_GET_GEAR, int.Parse(stageInfo)); //取得齒輪
-                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX); //開啟寶箱事件
-                    Debug.Log($"齒輪: {stageInfo}");
-                    GoNextStage();
-                    break;
                 case StageType.Heal:
                     if (stageInfo == "")
                         stageInfo = "1000";//如果沒有設定回血數量就默認1000
                     EventCenter.Dispatch(MapEvent.EVENT_RECOVER_HEALTH, int.Parse(stageInfo)); //回血
                     Debug.Log($"回復血量");
-                    GoNextStage();
-                    break;
-                case StageType.Gold:
-                    //EventCenter.Dispatch(StateEvent.EVENT_GET_GOLD, int.Parse(stageInfo)); //取得金幣
-                    EventCenter.Dispatch(MapEvent.EVENT_OPEN_TREASURE_BOX);
-                    Debug.Log($"金幣: {stageInfo}");
-                    GoNextStage();
-                    break;
-                case StageType.Skill:
-                    EventCenter.Dispatch(StateEvent.EVENT_GET_SKILL, int.Parse(stageInfo)); //取得技能
-                    Debug.Log($"技能: {stageInfo}");
                     GoNextStage();
                     break;
                 case StageType.MapShop:
@@ -328,11 +247,5 @@ public class StageNode : MonoBehaviour
                     break;
             }
         }
-        /* if (stageType != StageType.Battle && GameDataManager.TmpCompletedStory != "")
-         {
-             string tmpStory = GameDataManager.TmpCompletedStory;
-             GameDataManager.TmpCompletedStory = "";
-             EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_STORY, tmpStory);
-         }*/
     }
 }

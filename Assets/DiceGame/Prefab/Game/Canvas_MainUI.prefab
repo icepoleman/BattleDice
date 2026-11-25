@@ -226,6 +226,16 @@ MonoBehaviour:
   btn_changeSkill: {fileID: 5979151588824513437}
   btn_edit: {fileID: 226480003712520235}
   scrollbar_map: {fileID: 7229210174460529108}
+  stageSpList:
+  - {fileID: 21300000, guid: 821145dcd0eafdf4b83eccbcd53befd7, type: 3}
+  - {fileID: 21300000, guid: 85714bb8a6b6fa743a3f8379f3f994df, type: 3}
+  - {fileID: 21300000, guid: 44fff62e4c5dd6f4fa5398758082b853, type: 3}
+  - {fileID: 21300000, guid: ec3b958ba2b66374392a890148ff2020, type: 3}
+  - {fileID: 21300000, guid: ca656ada0a931784abf502ed395d1240, type: 3}
+  - {fileID: 21300000, guid: 93454c791ef49244591ce48c50c5a6fb, type: 3}
+  - {fileID: 21300000, guid: 52d7028f00a02974ea82e546af3c6c53, type: 3}
+  - {fileID: 21300000, guid: f0e758437cae2ea479be661376689649, type: 3}
+  - {fileID: 21300000, guid: 8c20ac476f1cf7e45a9e740bb4d55c00, type: 3}
 --- !u!1 &764930913217290935
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
+﻿Chapter,Character,Dialogue,Portrait,Pos,ChoiceText,JumpTo,Camera,Anim,Flag,Background,Tag,Sound
 H_JailerGirl_0,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,Bgm_H_Room
 ,,雫轉動一旁火把。,,,,,,,,,,
 ,,牆壁隨著震動打開了一個隱藏的空間。,,,,,shake,,,,,
@@ -40,7 +40,7 @@ H_JailerGirl_0,JailerGirl,就是這裡。,normal,Center,,,,,,bg_jail,,Bgm_H_Room
 ,JailerGirl,你...你在靠過來我就要叫了...,,,,,,,,,,
 ,Hero,你叫阿！,,,,,,,SpineSpeed_1.2,,,
 ,Hero,叫破喉嚨也沒人會理你！,,,,,,,,,,
-,JailerGirl,破喉嚨！破喉嚨！,,,,,,,,,,
+,JailerGirl,拜...拜託不要...,,,,,,,,,,
 ,JailerGirl,嗚...,,,,,,,,,,
 ,JailerGirl,你...你真的要?,,,,,,,,,,
 ,,感覺眼前小獄卒的下體濕潤了起來。,,,,,,,SpineSpeed_1,,,

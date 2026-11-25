@@ -21,6 +21,9 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] Scrollbar scrollbar_map;
 
+    [Header("節點圖片")]
+    [SerializeField] Sprite[] stageSpList;
+
     //List<MapData> mapDatas = new List<MapData>();//關卡資料
     async void Start()
     {
@@ -77,25 +80,19 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            GameDataManager.MapScrollValue = 0f;//重置地圖滾動位置
             GameDataManager.CurrentMap += 1;
-            GameDataManager.PreparationRoomStage = "1-1";//起點 初始整備室
-            GameDataManager.CurrentStage = "1-1";
-            LoadMapPrefab();
-            await Task.Delay(2000);
-            EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
+            LoadMapPrefab(true);
             //Destroy(_clearMap);
         }
     }
     async void OnRecoverHealth(object[] param)
     {
-        int recoverAmount = (int)param[0];
-        GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-        /* GameDataManager.PlayerData.currentBlood += recoverAmount;
-         if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
-         {
-             GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
-         }*/
+        int recoverAmount = Mathf.CeilToInt(GameDataManager.PlayerData.maxBlood * 0.3f / 10f) * 10;
+        GameDataManager.PlayerData.currentBlood += recoverAmount;
+        if (GameDataManager.PlayerData.currentBlood > GameDataManager.PlayerData.maxBlood)
+        {
+            GameDataManager.PlayerData.currentBlood = GameDataManager.PlayerData.maxBlood;
+        }
         UpdateBloodFill();
         txt_blood.text = $"{GameDataManager.PlayerData.currentBlood}/{GameDataManager.PlayerData.maxBlood}";
         EventCenter.Dispatch(StateEvent.EVENT_SHOW_HINT_BUBBLE,
@@ -146,7 +143,7 @@ public class MapManager : MonoBehaviour
     }
 
     // 依地圖 CSV 生成欄位與關卡節點
-    private async void LoadMapPrefab()
+    private async void LoadMapPrefab(bool openSaveRoom = false)
     {
         MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
         text_stageName.text = nowMapInfo.mapName;
@@ -179,7 +176,8 @@ public class MapManager : MonoBehaviour
 
             StageNode stageNode = Instantiate(stageNodePrefab, columnTransform, false);
             stageNode.name = mapData.stageID;
-            stageNode.SetMapData(mapData);
+            Sprite stageSprite = GetStageSprite(mapData.type);
+            stageNode.SetMapData(mapData, stageSprite);
             nodesById[mapData.stageID] = stageNode;
         }
 
@@ -210,7 +208,17 @@ public class MapManager : MonoBehaviour
         await Task.Yield();
         EventCenter.Dispatch(MapEvent.EVENT_OPEN_TARGET_STAGE_NODE, GameDataManager.CurrentStage);
         await Task.Yield();
-        SceneLoader.HideLoadingScreen();
+        if (openSaveRoom)
+        {
+            GameDataManager.MapScrollValue = 0f;//重置地圖滾動位置
+            GameDataManager.PreparationRoomStage = "1-1";//起點 初始整備室
+            GameDataManager.CurrentStage = "1-1";
+            EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
+        }
+        else
+        {
+            SceneLoader.HideLoadingScreen();
+        }
     }
 
     // 清除目前生成的地圖欄位
@@ -223,5 +231,17 @@ public class MapManager : MonoBehaviour
         {
             Destroy(trans_mapRoot.GetChild(i).gameObject);
         }
+    }
+
+    private Sprite GetStageSprite(StageType stageType)
+    {
+        int spriteIndex = (int)stageType;
+        if (stageSpList == null || spriteIndex < 0 || spriteIndex >= stageSpList.Length)
+        {
+            Debug.LogWarning($"找不到對應的關卡圖片: {stageType}");
+            return null;
+        }
+
+        return stageSpList[spriteIndex];
     }
 }
