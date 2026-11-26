@@ -256,6 +256,8 @@ public static class SaveManager
         currentSave.recycleCount = GameDataManager.RecycleCount;
         currentSave.isFirstOpenTreasureBox = GameDataManager.isFirstOpenTreasureBox;
         currentSave.isFirstOpenDiceGame = GameDataManager.isFirstOpenDiceGame;
+        currentSave.tmpClearMapStageMark = GameDataManager.tmpClearMapStageMark.ToList();
+        currentSave.clearMapStageMark = GameDataManager.ClearMapStageMark.ToList();
         
         // 存儲升級等級
         currentSave.powerUpLevel_MaxBlood = GameDataManager.GetPowerUpLevel(PowerUpType.MaxBlood);
@@ -305,6 +307,8 @@ public static class SaveManager
                 GameDataManager.PreparationRoomStage = currentSave.preparationRoomStage;
                 GameDataManager.isFirstOpenTreasureBox = currentSave.isFirstOpenTreasureBox;
                 GameDataManager.isFirstOpenDiceGame = currentSave.isFirstOpenDiceGame;
+                GameDataManager.tmpClearMapStageMark = new HashSet<string>(currentSave.tmpClearMapStageMark ?? new List<string>());
+                GameDataManager.ClearMapStageMark = new HashSet<string>(currentSave.clearMapStageMark ?? new List<string>());
                 
                 // 讀取升級等級
                 GameDataManager.SetPowerUpLevel(PowerUpType.MaxBlood, currentSave.powerUpLevel_MaxBlood);
@@ -366,6 +370,7 @@ public static class SaveManager
         try
         {
             globalUnlockData.unlocked_H_Stages = GameDataManager.unlocked_H_Stages.ToList();
+            globalUnlockData.allClearMapStageMark = GameDataManager.ALLClearMapStageMark.ToList();
             string json = JsonUtility.ToJson(globalUnlockData, true);
             System.IO.File.WriteAllText(globalUnlockFilePath, json);
             Debug.Log("全域解鎖資料儲存成功");
@@ -388,18 +393,21 @@ public static class SaveManager
                 string json = System.IO.File.ReadAllText(globalUnlockFilePath);
                 globalUnlockData = JsonUtility.FromJson<GlobalUnlockData>(json);
                 GameDataManager.unlocked_H_Stages = new HashSet<string>(globalUnlockData.unlocked_H_Stages ?? new List<string>());
+                GameDataManager.ALLClearMapStageMark = new HashSet<string>(globalUnlockData.allClearMapStageMark ?? new List<string>());
                 Debug.Log($"全域解鎖資料讀取成功，已解鎖 H 關卡數: {GameDataManager.unlocked_H_Stages.Count}");
             }
             else
             {
                 Debug.Log("找不到全域解鎖檔案，使用預設值");
                 GameDataManager.unlocked_H_Stages = new HashSet<string>();
+                GameDataManager.ALLClearMapStageMark = new HashSet<string>();
             }
         }
         catch (System.Exception e)
         {
             Debug.LogError("全域解鎖資料讀取失敗: " + e.Message);
             GameDataManager.unlocked_H_Stages = new HashSet<string>();
+            GameDataManager.ALLClearMapStageMark = new HashSet<string>();
         }
     }
 }

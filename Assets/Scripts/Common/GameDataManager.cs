@@ -12,6 +12,42 @@ public static class GameDataManager
     public static PlayerData PlayerData { get; set; } = new PlayerData();    // 玩家資料
     public static HashSet<int> HasSkillIDs { get; set; } = new HashSet<int>();    // 擁有的技能ID
     public static int CurrentMap { get; set; } = 1;    // 當前地圖
+    public static HashSet<string> tmpClearMapStageMark { get; set; } = new HashSet<string>();//紀錄當前完成關卡標記
+    public static HashSet<string> ClearMapStageMark { get; set; } = new HashSet<string>();//紀錄當前完成關卡
+    public static HashSet<string> ALLClearMapStageMark { get; set; } = new HashSet<string>();//總計錄
+
+    public static string GetMapStageMark(string stageId)
+    {
+        return $"Map{CurrentMap}:{stageId}";
+    }
+
+    public static void RecordMapStage(string stageId)
+    {
+        tmpClearMapStageMark.Add(GetMapStageMark(stageId));
+    }
+
+    public static void CommitSavePointStageRecords()
+    {
+        foreach (string mark in tmpClearMapStageMark)
+        {
+            ClearMapStageMark.Add(mark);
+        }
+    }
+
+    public static void CompleteCurrentMapStageRecords()
+    {
+        foreach (string mark in ClearMapStageMark)
+        {
+            ALLClearMapStageMark.Add(mark);
+        }
+        foreach (string mark in tmpClearMapStageMark)
+        {
+            ALLClearMapStageMark.Add(mark);
+        }
+        ClearMapStageMark.Clear();
+        tmpClearMapStageMark.Clear();
+    }
+
     public static float MapScrollValue { get; set; } = 0f; // 地圖滾動位置
     public static String EndMap { get; set; } = "Map3-2";    // 結束地圖 完成後進入結局
     public const int RecycleMaxCount = 10;
@@ -50,7 +86,6 @@ public static class GameDataManager
         { "Idol", new string[] { "H_Idol_1","H_Idol_2" } },
         { "Warden", new string[] { "H_Warden_1","H_Warden_2" } }
     };
-    public static HashSet<string> ClearMapStageMark { get; set; } = new HashSet<string>();//紀錄當前完成關卡標記
     public static int SocialPoint { get; set; } = 0;//社交點數 用於解鎖好感度關卡
     public static HashSet<string> unlockedAffinityStages { get; set; } = new HashSet<string>();//已解鎖親密度關卡ID
     public static int[] charactersAffinity = { 0, 0, 0, 0 };//角色親密度
@@ -64,7 +99,6 @@ public static class GameDataManager
     public static bool isFirstOpenDiceGame = true;
 
     public static List<MapInfoData> AllMapInfo { get; set; } = new List<MapInfoData>();
-
 
     public static MapInfoData GetNowMapInfo()
     {

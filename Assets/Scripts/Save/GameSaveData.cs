@@ -26,6 +26,8 @@ public class GameSaveData
     public int recycleCount;             // 回收骰子數量
     public bool isFirstOpenTreasureBox = true;
     public bool isFirstOpenDiceGame = true;
+    public List<string> tmpClearMapStageMark = new List<string>();
+    public List<string> clearMapStageMark = new List<string>();
     
     // 升級等級存儲
     public int powerUpLevel_MaxBlood;
@@ -65,5 +67,6 @@ public class SettingsSaveData
 public class GlobalUnlockData
 {
     public List<string> unlocked_H_Stages = new List<string>();
+    public List<string> allClearMapStageMark = new List<string>();
     // 未來可加其他全存檔共用資料
 }

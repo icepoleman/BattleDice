@@ -379,6 +379,7 @@ public class DiceGame : MonoBehaviour
         {
             obj_lose.SetActive(true);
             await Task.Delay(2000);
+            GameDataManager.tmpClearMapStageMark.Clear();
             EventCenter.Dispatch(GameEvent.EVENT_ESCAPE_BATTLE);
             return;
         }

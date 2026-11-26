@@ -70,6 +70,9 @@ public class MapManager : MonoBehaviour
     async void OnCompleteMap(object[] param)
     {
         Debug.Log("完成當前地圖，準備載入下一張地圖");
+        GameDataManager.CompleteCurrentMapStageRecords();
+        SaveManager.SaveGlobalUnlock();
+        SaveManager.AutoSave();
         // GameObject _clearMap = Instantiate(await AddressableManager.LoadAssetAsync<GameObject>(ABconfig.GAME_PREFABS + "ClearMapPanel" + ".prefab"), transform);
         UnloadMapPrefab();
         await Task.Delay(100);
@@ -81,6 +84,7 @@ public class MapManager : MonoBehaviour
         else
         {
             GameDataManager.CurrentMap += 1;
+            GameDataManager.tmpClearMapStageMark.Add(GameDataManager.GetMapStageMark("1-1"));//初始整備室
             LoadMapPrefab(true);
             //Destroy(_clearMap);
         }

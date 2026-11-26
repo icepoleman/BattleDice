@@ -164,19 +164,24 @@ public class StageNode : MonoBehaviour
         if (targetStage == gameObject.name)
         {
             GoNextStage();
-            await Task.Delay(500);
+           // await Task.Delay(500);
             SetState(StageState.Completed);
         }
     }
     public void SetState(StageState newState)
     {
         currentState = newState;
-
+        obj_completedIcon.SetActive(false);
         // 根據狀態顯示對應視覺
         switch (currentState)
         {
             case StageState.Locked:
                 stageImage.color = Color.gray;
+                string mapStageMark = GameDataManager.GetMapStageMark(stageID);
+                bool hasCompletedMark = GameDataManager.tmpClearMapStageMark.Contains(mapStageMark)
+                    || GameDataManager.ClearMapStageMark.Contains(mapStageMark);
+                if (obj_completedIcon != null)
+                    obj_completedIcon.SetActive(hasCompletedMark);
                 break;
             case StageState.Unlocked:
                 stageImage.color = Color.white;
@@ -200,6 +205,8 @@ public class StageNode : MonoBehaviour
         {
             GameDataManager.TmpCompletedStory = completedStory;
             GameDataManager.CurrentStage = stageID;
+            GameDataManager.RecordMapStage(stageID);
+            SaveManager.AutoSave();
 
             if (!string.IsNullOrWhiteSpace(stageInfo) && !int.TryParse(stageInfo, out _))
             {
@@ -227,6 +234,7 @@ public class StageNode : MonoBehaviour
                     break;
                 case StageType.SavePoint:
                     GameDataManager.PreparationRoomStage = stageID; //記錄當前整備室關卡
+                    SaveManager.AutoSave();
                     EventCenter.Dispatch(MapEvent.EVENT_ENTER_STAGE_SAVEPOINT);
                     break;
                 case StageType.Heal:

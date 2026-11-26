@@ -54,6 +54,7 @@ public class PreparationRoomManager : MonoBehaviour
 
     void Start()
     {
+        GameDataManager.CommitSavePointStageRecords();
         MapInfoData nowMapInfo = GameDataManager.GetNowMapInfo();
         GameDataManager.SocialPoint += nowMapInfo.addSocialPoint;
 

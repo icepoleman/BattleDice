@@ -31,6 +31,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Animator anim_menu;
     void Awake()
     {
+        SaveManager.LoadGlobalUnlock();
         LoadSavedSettingsIfHasSave();
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SaveLoadPanel" + ".prefab");
         AddressableManager.PreloadAssetAsync<GameObject>(ABconfig.COMMON_PREFABS + "SetPanel" + ".prefab");
@@ -152,6 +153,7 @@ public class MenuManager : MonoBehaviour
         GameDataManager.PreparationRoomStage = "1-1";//初始整備室
         GameDataManager.CurrentMap = 0;
         GameDataManager.CurrentStage = "1-1";
+        GameDataManager.tmpClearMapStageMark.Add(GameDataManager.GetMapStageMark("1-1"));//初始整備室
         GameDataManager.PlayerData.currentBlood = 100;
         GameDataManager.PlayerData.maxBlood = 100;
         GameDataManager.Gold = 0;
